@@ -1,5 +1,17 @@
 # FandomApp
 
+**TEAMWORK AGREEMENTS**
+What will you do to ensure your code is readable?
+- adding comments
+- proper tabbing and spacing 
+- appropriate variable names and constants
+
+What procedure will you put in place to ensure committed code is functional?
+we will test and debug methods as we implement them.
+
+How do you plan to test your code?
+
+
 **PROFILES**
 
 yes we are changing flavour to a fandom app 
@@ -21,7 +33,7 @@ The information to describe the profiles would contain:
 events will be age specific 
 over 13 to create a user.
 
-**EVENTS **
+**EVENTS**
 
 Messsage class :
 sender 
