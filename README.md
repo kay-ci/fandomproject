@@ -12,7 +12,16 @@ How do you plan to test your code?
 unit testing and debugging, writing a test class which we will use for our test class later on.
 
 How do you plan to divide the work?
+Karekin: UserMessages and Message
+Kayci: User and Profile
+Fred: Fandom, Search and Events
+Everyone: Utilities
 
+How will you ensure that your application is robust and does not fail due to user errors?
+Lots of validation provided by the Utilities class
+
+How will you ensure you have stand alone classes can be tested?
+Our Utilities class is a stand alone class that will be unit tested
 
 **PROFILES**
 yes we are changing flavour to a fandom app 
@@ -27,6 +36,7 @@ user:
 - DeleteAccount()
 - ChangeUsername()
 - RegisterAccount()
+- ToString()
 - GetEvents()
 
 
@@ -45,12 +55,17 @@ Profiles:
 - A list of other interest and hobbies
 - CreateProfile()
 - EditProfile()
+- ToString()
 - ClearProfile()
 
 Fandom: 
 - FandomName
+- Category
+- Description
+- Picture
+- ToString()
 
-
+// Events will be age specific over 13 to create a user
 Events:
 - EventTitle
 - Date (date and time)
@@ -80,22 +95,24 @@ UserMessages:
 - ReadMessage()
 - SortMessages()
 
+Search:
+FindUser() will take as parameter 'country', 'city', 'category', 'fandom' and an optional secondary parameter: 'keyword'
+FindEvent() will take as parameter 'country', 'city', 'category', 'fandom' and an optional secondary parameter: 'keyword'
+//The way the optional parameter will work is that it will either be filled out or an empty string. If it is an
+//empty string, the method will act as if there is no keyword
+
+Utilities:
+- ValidateIfInt() //Checks if user input is an integer. For Console.Read()
+- ValidateIntRange() //Checks if provided int is whithin range (one of the parameters of this method)
+- ValidateCorrectUserData() //Checks if the values provided to create a new user make sense
+- ValidateCorrectEventData() //Checks if the values provided to create a new event make sense
+- ValidateIfUserIsOfAge() //Takes two parameters: user's age and age requirement. Will check if age is >=
+//Will use above method also when creating an event to make sure the creator is of the age they specified
 
 
-events will be age specific 
-over 13 to create a user.
+Unit tests:
+Search:
+- Make sure both FindUser and FindEvent return the expected things with mock data, testing all parameters
 
-**EVENTS**
-
-Messsage class :
-sender 
-receiver 
-messsage
-bool read
-
-usermessages : manage 
-2 lists<Message> (inbox, sent)
-user id
-
-SendMessage()
-ReadMessage()
+Utilities:
+- Make sure all of the validation methods will return the expected results for different parameters
