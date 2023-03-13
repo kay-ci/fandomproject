@@ -96,8 +96,8 @@ UserMessages:
 - SortMessages()
 
 Search:
-FindUser() will take as parameter 'country', 'city', 'category', 'fandom' and an optional secondary parameter: 'keyword'
-FindEvent() will take as parameter 'country', 'city', 'category', 'fandom' and an optional secondary parameter: 'keyword'
+- FindUser(): takes as parameter (country, city, category, fandom) and optional secondary parameter: 'keyword'
+- FindEvent(): takes as parameter (country, city, category, fandom) and optional secondary parameter: 'keyword'
 //The way the optional parameter will work is that it will either be filled out or an empty string. If it is an
 //empty string, the method will act as if there is no keyword
 
