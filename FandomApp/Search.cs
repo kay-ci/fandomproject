@@ -1,3 +1,4 @@
+using userInfo;
 public class Search
 {
     public User FindUser() {
