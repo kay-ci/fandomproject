@@ -1,3 +1,4 @@
-public class Fandom{
-
+public class Fandom
+{
+    
 }
