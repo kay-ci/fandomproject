@@ -8,6 +8,10 @@ public class Event
     public User Owner {get; set;}
     public List<User>? Attendees {get; set;}
     
+    //constructor
+    public Event() {
+
+    }
     public void CreateEvent() {
         throw new NotImplementedException();
     }
