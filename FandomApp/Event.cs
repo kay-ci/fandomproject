@@ -1,3 +1,4 @@
+using userInfo;
 public class Event
 {
     public string? Title {get; set;}
