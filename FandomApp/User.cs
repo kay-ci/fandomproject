@@ -1,17 +1,17 @@
 namespace userInfo{
     public class User{
-        string? UserName {get; set;}
-        Profile? UserProfile {get; set;}
-        List<UserMessage>? Messages {get; set;}
+        public string? UserName {get; set;}
+        public Profile? UserProfile {get; set;}
+        public UserMessage Messages {get; set;}
 
-        List<Event> Events {get;}
+        public List<Event> Events {get;}
         
         //constructor
-        public User(string userName, Profile userProfile, List<UserMessage> messages, List<Event> events){
+        public User(string userName, Profile userProfile, List<Event> events){
             UserName = userName;
             UserProfile = userProfile;
-            Messages = messages;
             Events = events;
+            Messages = new UserMessage(this);
         }
         //This method adds a user to the database
         public void RegisterAccount(User user){
