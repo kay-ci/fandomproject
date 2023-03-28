@@ -1,6 +1,17 @@
 public class Fandom
 {
-    public string Name {get; set;}
+    private string name;
+    private string category;
+    public string Name {
+        get{ return name;}
+        set{
+            if (string.IsNullOrEmpty(value)) {
+                throw new ArgumentNullException();
+            }
+            name = value;
+
+        }
+    }
     public string Category {get; set;}
     public string? Description {get; set;}
 
