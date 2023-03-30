@@ -13,7 +13,7 @@ namespace userInfo{
             Events = events;
             Messages = new UserMessage(this);
         }
-        //This method adds a user to the database
+        //This method adds a user to the database by providing username and password
         public void RegisterAccount(User user){
             
         }
