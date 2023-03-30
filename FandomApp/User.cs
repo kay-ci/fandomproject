@@ -1,3 +1,5 @@
+using System.Text.RegularExpressions;
+
 namespace userInfo{
     public class User{
         public string? UserName {get; set;}
@@ -13,12 +15,14 @@ namespace userInfo{
             Events = events;
             Messages = new UserMessage(this);
         }
-        //This method adds a user to the database by providing username and password
-        public void RegisterAccount(User user){
-            
+        public User(string userName, Profile userProfile){
+            UserName = userName;
+            UserProfile = userProfile;
+            Messages = new UserMessage(this);
         }
+
         //This method will allow a user to change their password
-        public void ChangePassword(){
+        public void ChangePassword(Login user, string newPassword){
             
         }
 
