@@ -2,7 +2,7 @@ namespace userInfo{
     public class Profile{
         string? Name {get; set;}
         string? Pronouns {get; set;}
-        int Age {get;}
+        public int Age {get;}
         string? Country {get; set;}
         string? City {get; set;}
         List<string>? Categories {get; set;} //might change to enum

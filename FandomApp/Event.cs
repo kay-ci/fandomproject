@@ -10,7 +10,9 @@ public class Event
         get{ return this.minAge; } 
         private set
         {
-            if (value < 13) {
+            const int MinimumAge = 13;
+
+            if (value < MinimumAge) {
                 throw new  ArgumentException("The minimum age must be over 13!");
             }
             this.minAge = value;
@@ -36,7 +38,7 @@ public class Event
         throw new NotImplementedException();
     }
 
-    //this method 
+    //this method edit the event and update the database
     public void EditEvent() {
         
         //Console.WriteLine("Enter 'E' if you want to edit the categories");
@@ -45,20 +47,27 @@ public class Event
     }
 
     public void AddAttendee(User attendee) {
-        bool check = true;
-        if (check) {
-            throw new ArgumentException("You must pass a user object");
+
+        var profile = attendee.UserProfile;
+
+        if (profile?.Age >= this.MinAge){
+            throw new ArgumentException("Attendee must meet the event's age requirement");
         }
 
-        this.Attendees.Add(attendee);
+        this.Attendees?.Add(attendee);
     }
 
+    //
     public void RemoveAttendee() {
         throw new NotImplementedException();
     }
 
     //this method will print out the list of attendees
+    //may not be needed because it's not a console app
     public void ShowAttendees() {
         throw new NotImplementedException();
     }
+
+    //possible helper method
+    //private bool AttendeeVerification() {}
 }
