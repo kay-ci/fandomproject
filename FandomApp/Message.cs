@@ -1,4 +1,4 @@
-namespace userInfo{
+namespace FandomApp{
     public class Message{
         public int id {get{return this.id;}}
         public User sender {get{return this.sender;} set{this.sender = value;}}

@@ -1,6 +1,6 @@
-namespace userInfo{
+namespace FandomApp{
     public class Profile{
-        string? Name {get; set;}
+        public string? Name {get; set;}
         string? Pronouns {get; set;}
         int Age {get;}
         string? Country {get; set;}
