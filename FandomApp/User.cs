@@ -15,12 +15,15 @@ namespace userInfo{
             Events = events;
             Messages = new UserMessage(this);
         }
+<<<<<<< HEAD
         public User(string userName, Profile userProfile){
             Username = userName;
             UserProfile = userProfile;
             Messages = new UserMessage(this);
         }
 
+=======
+>>>>>>> 02504105326348034eefc45e5104a4b70fb48495
         //This method will allow a user to change their password
         public void ChangePassword(Login userManager, string newPassword){
             if (string.IsNullOrWhiteSpace(newPassword)){
