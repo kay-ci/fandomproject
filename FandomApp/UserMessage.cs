@@ -53,7 +53,7 @@ namespace userInfo{
             // }
 
             //We check if the text is null or empty
-            if(string.IsNullOrWhiteSpace(text)) return;
+            if(string.IsNullOrWhiteSpace(text)) throw new ArgumentException("Text must be filled with text!");
             //Create the message and add it to our Outbox
             Message newMsg = new Message(this.user, recipients, text);
             Outbox.Add(newMsg);

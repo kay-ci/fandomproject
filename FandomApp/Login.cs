@@ -9,5 +9,6 @@ public class Login {
 
     public void Register_User(){
         //Now we register the user that is logged in (CurrentUser)
+        
     }
 }
