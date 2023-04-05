@@ -1,4 +1,4 @@
-using userInfo;
+using UserInfo;
 public class Event
 {
     private int minAge;
@@ -18,6 +18,7 @@ public class Event
             this.minAge = value;
         }
     }
+    //need to check if owner also meet age requirement of event created
     public User Owner {get; private set;}
     public List<User>? Attendees {get; private set;}
     

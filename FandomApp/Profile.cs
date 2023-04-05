@@ -1,4 +1,4 @@
-namespace userInfo{
+namespace UserInfo{
     public class Profile{
         string? Name {get; set;}
         string? Pronouns {get; set;}

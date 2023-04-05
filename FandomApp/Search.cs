@@ -1,4 +1,4 @@
-using userInfo;
+using UserInfo;
 public class Search
 {
     //those methods use the database so they're not implemented

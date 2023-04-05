@@ -1,4 +1,4 @@
-namespace userInfo{
+namespace UserInfo{
     public class User{
         public string? UserName {get; set;}
         public Profile? UserProfile {get; set;}
