@@ -1,6 +1,6 @@
 using System.Text.RegularExpressions;
 
-namespace FandomApp{
+namespace UserInfo{
     public class User{
         public string? Username {get; set;}
         public Profile? UserProfile {get; set;}
@@ -32,7 +32,7 @@ namespace FandomApp{
             if (!pattern.IsMatch(userName)){
                 throw new ArgumentException("Username can only be 1 word!");
             }
-            
+
             Username = userName;
             UserProfile = userProfile;
             Messages = new UserMessage(this);

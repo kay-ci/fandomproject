@@ -1,4 +1,4 @@
-namespace FandomApp{
+namespace UserInfo{
     public class Profile{
         public string? Name {get; set;}
         public string? Pronouns {get; set;}
@@ -61,16 +61,16 @@ namespace FandomApp{
         public void EditProfile(Login userManager, string newName, string newPronoun, int newAge, string newCountry, string newCity, List<string>newCategories, List<Fandom> newFandoms, List<string> newBadges, string newDescription, string newPicture, List<string> newInterests){
             //guard statements
             if(string.IsNullOrWhiteSpace(newName)){
-                throw new ArgumentException("Name cannot be null");
+                throw new ArgumentException("Name cannot be null or white space");
             }
             if(string.IsNullOrWhiteSpace(newPronoun)){
-                throw new ArgumentException("Pronouns cannot be null");
+                throw new ArgumentException("Pronouns cannot be null or white space");
             }
             if(string.IsNullOrWhiteSpace(newCountry)){
-                throw new ArgumentException("Country cannot be null");
+                throw new ArgumentException("Country cannot be null or white space");
             }
             if(string.IsNullOrWhiteSpace(newCity)){
-                throw new ArgumentException("City cannot be null");
+                throw new ArgumentException("City cannot be null or white space");
             }
             
             //modifying database based on new info provided
