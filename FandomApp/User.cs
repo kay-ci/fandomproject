@@ -1,6 +1,6 @@
 using System.Text.RegularExpressions;
 
-namespace userInfo{
+namespace UserInfo{
     public class User{
         public string? Username {get; set;}
         public Profile? UserProfile {get; set;}
