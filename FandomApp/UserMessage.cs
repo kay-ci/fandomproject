@@ -25,30 +25,35 @@ namespace UserInfo{
         //the list of recipients they want to send it to (wip) and then make them write down
         //the text for the message. Once it is written, we confirm if the user wants to send the
         //message. If they do, we update this user's Outbox and the recipients' Inbox
-        public void CreateMessage(List<User> recipients){
-            //This is where we ask the user for the recipients, for now we just take them in as an argument
-            Console.WriteLine($"You ({this.user.UserName}) are currently sending to: \n");
-            foreach(User recipient in recipients){
-                Console.WriteLine($"    {recipient.UserName}\n");
-            }
-            //Now we make the user write the message should add validation to check if text is empty
-            Console.WriteLine("Now please write down the text you want to send:");
-            string text = Console.ReadLine();
-            Console.WriteLine("Are you sure you want to send this? Y/y or N/n");
-            //Here is some validation to make sure the user gives an appropriate answer for the above question
-            bool isAnswered = false;
-            while(isAnswered == false){
-                string answer = Console.ReadLine();
-                //If they answer no, the method will return nothing, ending it
-                if(answer.Equals("N") || answer.Equals("n")) {return;}
-                //If yes, we get out of the loop and continue
-                if(answer.Equals("Y") || answer.Equals("y")){
-                    isAnswered = true;
-                    break;
-                }
-                //If they put some other answer or didn't type anything, we ask them to retype the answer
-                Console.WriteLine("Please type Y or y for yes. N or n for no !");
-            }
+        public void CreateMessage(List<User> recipients, string text){
+            // Commented code is to be removed?
+
+            // //This is where we ask the user for the recipients, for now we just take them in as an argument
+            // Console.WriteLine($"You ({this.user.UserName}) are currently sending to: \n");
+            // foreach(User recipient in recipients){
+            //     Console.WriteLine($"    {recipient.UserName}\n");
+            // }
+            // //Now we make the user write the message should add validation to check if text is empty
+            // Console.WriteLine("Now please write down the text you want to send:");
+            // string text = Console.ReadLine();
+            // Console.WriteLine("Are you sure you want to send this? Y/y or N/n");
+            // //Here is some validation to make sure the user gives an appropriate answer for the above question
+            // bool isAnswered = false;
+            // while(isAnswered == false){
+            //     string answer = Console.ReadLine();
+            //     //If they answer no, the method will return nothing, ending it
+            //     if(answer.Equals("N") || answer.Equals("n")) {return;}
+            //     //If yes, we get out of the loop and continue
+            //     if(answer.Equals("Y") || answer.Equals("y")){
+            //         isAnswered = true;
+            //         break;
+            //     }
+            //     //If they put some other answer or didn't type anything, we ask them to retype the answer
+            //     Console.WriteLine("Please type Y or y for yes. N or n for no !");
+            // }
+
+            //We check if the text is null or empty
+            if(string.IsNullOrWhiteSpace(text)) throw new ArgumentException("Text must be filled with text!");
             //Create the message and add it to our Outbox
             Message newMsg = new Message(this.user, recipients, text);
             Outbox.Add(newMsg);
