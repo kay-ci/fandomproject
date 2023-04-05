@@ -31,8 +31,6 @@ public class UserMessageTests
         recipients.Add(receiver);
         recipients.Add(receiver2);
         recipients.Add(receiver3);
-
-        //Assert
         //This will automatically throw if text is no good!
         sender.Messages.CreateMessage(recipients, textTest1);
     }
@@ -64,8 +62,6 @@ public class UserMessageTests
         recipients.Add(receiver);
         recipients.Add(receiver2);
         recipients.Add(receiver3);
-
-        //Assert
         //This will automatically throw if text is no good!
         sender.Messages.CreateMessage(recipients, textTest2);
     }
@@ -97,14 +93,12 @@ public class UserMessageTests
         recipients.Add(receiver);
         recipients.Add(receiver2);
         recipients.Add(receiver3);
-
-        //Assert
         //This will automatically throw if text is no good!
         sender.Messages.CreateMessage(recipients, textTest3);
     }
 
     [TestMethod]
-    public void Creating_Messsage_Test_Succeed(){
+    public void Creating_Messsage_Then_Read_Message_Test_Succeed(){
         //Arrange
         List<string> categories = new List<string>();
         List<Fandom> fandoms = new List<Fandom>();
@@ -133,5 +127,6 @@ public class UserMessageTests
         //Assert
         //This will automatically throw if text is no good!
         sender.Messages.CreateMessage(recipients, textTest4);
+        StringAssert.Equals(receiver.Messages.ReadMessage(), textTest4);
     }
 }
