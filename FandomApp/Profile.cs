@@ -1,16 +1,16 @@
 namespace FandomApp{
     public class Profile{
         public string? Name {get; set;}
-        string? Pronouns {get; set;}
-        int Age {get;}
-        string? Country {get; set;}
-        string? City {get; set;}
-        List<string>? Categories {get; set;} //might change to enum
-        List<Fandom>? Fandoms {get; set;}
-        List<string>? Badges {get; set;} //might change to enum
-        string? Description {get; set;}
-        string? Picture {get; set;}
-        List<string>? Interests {get; set;}
+        public string? Pronouns {get; set;}
+        public int Age {get;}
+        public string? Country {get; set;}
+        public string? City {get; set;}
+        public List<string>? Categories {get; set;} //might change to enum
+        public List<Fandom>? Fandoms {get; set;}
+        public List<string>? Badges {get; set;} //might change to enum
+        public string? Description {get; set;}
+        public string? Picture {get; set;}
+        public List<string>? Interests {get; set;}
 
         public Profile(string name, string pronouns, int age, string country,string city, List<string>categories, List<Fandom> fandoms, List<string> badges, string description, string picture, List<string> interests){
             if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(pronouns) || string.IsNullOrWhiteSpace(country) || string.IsNullOrWhiteSpace(city)){
@@ -44,13 +44,21 @@ namespace FandomApp{
             Country = country;
             City = city;
             Description = " ";
+            Categories = new List<string>();
+            Fandoms = new List<Fandom>();
+            Badges = new List<string>();
+            Picture = "default/pic/url";
+            Interests = new List<string>();
         }
 
         //This method creates a profile for a user
         public void CreateProfile(Login userManager){
             
         }
-        public void EditProfile(string newName, string newPronoun, int newAge, string newCountry, string newCity, List<string>newCategories, List<Fandom> newFandoms, List<string> newBadges, string newDescription, string newPicture, List<string> newInterests){
+
+        // this method edits logged in users profile
+        // this might get split into smaller methods 
+        public void EditProfile(Login userManager, string newName, string newPronoun, int newAge, string newCountry, string newCity, List<string>newCategories, List<Fandom> newFandoms, List<string> newBadges, string newDescription, string newPicture, List<string> newInterests){
             //guard statements
             if(string.IsNullOrWhiteSpace(newName)){
                 throw new ArgumentException("Name cannot be null");
@@ -67,6 +75,21 @@ namespace FandomApp{
             
             //modifying database based on new info provided
         }
-        public void ClearProfile(){}
+
+        // this is only to clear the data for visuals but will not be applied to the database
+        // this might get split into smaller methods 
+        public void ClearProfile(Login UserManager){
+            Name = " ";
+            Pronouns = " ";
+            Country = " ";
+            City = " ";
+            Categories.Clear();
+            Description = " ";
+            Fandoms.Clear();
+            Badges.Clear();
+            Picture = "default/pic/url";
+            Interests.Clear();
+
+        }
     }
 }
