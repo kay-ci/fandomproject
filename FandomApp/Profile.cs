@@ -25,6 +25,14 @@ namespace userInfo{
             Picture = picture;
             Interests = interests;
         }
+        public Profile(string name, string pronouns, int age, string country, string city){
+            Name = name;
+            Pronouns = pronouns;
+            Age = age;
+            Country = country;
+            City = city;
+            Description = " ";
+        }
 
         public void CreateProfile(){}
         public void EditProfile(string userChoice){}
