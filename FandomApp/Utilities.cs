@@ -1,3 +1,5 @@
-public class Utilities {
-    
+namespace FandomApp{
+    public class Utilities {
+        
+    }
 }

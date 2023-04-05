@@ -1,3 +1,4 @@
+namespace UserInfo;
 public class Fandom
 {
     private string name;
