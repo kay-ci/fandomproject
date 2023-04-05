@@ -41,8 +41,6 @@ public class Event
 
     //this method edit the event and update the database
     public void EditEvent() {
-        
-        //Console.WriteLine("Enter 'E' if you want to edit the categories");
         //char choice;
         //string[] options = {"title", "date", "location", "categories", "minimum age"};
     }
