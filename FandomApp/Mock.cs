@@ -1,4 +1,4 @@
-namespace UserInfo;
+using UserInfo;
 public class Mock {
     public Profile Profile1;
     public User User1;

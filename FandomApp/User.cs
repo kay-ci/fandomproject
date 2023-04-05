@@ -36,6 +36,7 @@ namespace UserInfo{
             Username = userName;
             UserProfile = userProfile;
             Messages = new UserMessage(this);
+            Events = new List<Event>();
         }
 
         //This method will allow a user to change their password
