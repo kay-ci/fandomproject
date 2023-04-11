@@ -10,11 +10,11 @@ namespace UserInfo{
         
         //constructors
         public User(string userName, Profile userProfile, List<Event> events){
-            if (string.IsNullOrWhiteSpace(Username)){
+            if (string.IsNullOrWhiteSpace(userName)){
                 throw new ArgumentException("username cannot be null");
             }
             //makes sure username is 1 word
-            Regex pattern = new Regex("[A-Za-Z0-9]");
+            Regex pattern = new Regex("[A-Za-z0-9]");
             if (!pattern.IsMatch(userName)){
                 throw new ArgumentException("Username can only be 1 word!");
             }
@@ -25,10 +25,10 @@ namespace UserInfo{
             Messages = new UserMessage(this);
         }
         public User(string userName, Profile userProfile){
-            if (string.IsNullOrWhiteSpace(Username)){
+            if (string.IsNullOrWhiteSpace(userName)){
                 throw new ArgumentException("username cannot be null");
             }
-            Regex pattern = new Regex("[A-Za-Z0-9]");
+            Regex pattern = new Regex("[A-Za-z0-9]");
             if (!pattern.IsMatch(userName)){
                 throw new ArgumentException("Username can only be 1 word!");
             }

@@ -1788,6 +1788,16 @@
         "runtime": {
           "lib/netstandard1.3/System.Xml.XDocument.dll": {}
         }
+      },
+      "FandomApp/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/FandomApp.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/FandomApp.dll": {}
+        }
       }
     }
   },
@@ -6325,10 +6335,16 @@
         "system.xml.xdocument.4.3.0.nupkg.sha512",
         "system.xml.xdocument.nuspec"
       ]
+    },
+    "FandomApp/1.0.0": {
+      "type": "project",
+      "path": "../FandomApp/FandomApp.csproj",
+      "msbuildProject": "../FandomApp/FandomApp.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net6.0": [
+      "FandomApp >= 1.0.0",
       "MSTest.TestAdapter >= 2.2.8",
       "MSTest.TestFramework >= 2.2.8",
       "Microsoft.NET.Test.Sdk >= 17.1.0",
@@ -6341,11 +6357,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "H:\\Year 2\\Sem 4\\Programming IV\\Project\\studybuddy\\FandomAppTests\\FandomAppTests.csproj",
+      "projectUniqueName": "C:\\New folder\\fandomproject\\FandomAppTests\\FandomAppTests.csproj",
       "projectName": "FandomAppTests",
-      "projectPath": "H:\\Year 2\\Sem 4\\Programming IV\\Project\\studybuddy\\FandomAppTests\\FandomAppTests.csproj",
+      "projectPath": "C:\\New folder\\fandomproject\\FandomAppTests\\FandomAppTests.csproj",
       "packagesPath": "C:\\Users\\2141560\\.nuget\\packages\\",
-      "outputPath": "H:\\Year 2\\Sem 4\\Programming IV\\Project\\studybuddy\\FandomAppTests\\obj\\",
+      "outputPath": "C:\\New folder\\fandomproject\\FandomAppTests\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\2141560\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -6359,7 +6375,11 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\New folder\\fandomproject\\FandomApp\\FandomApp.csproj": {
+              "projectPath": "C:\\New folder\\fandomproject\\FandomApp\\FandomApp.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
@@ -6405,7 +6425,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.405\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.404\\RuntimeIdentifierGraph.json"
       }
     }
   }

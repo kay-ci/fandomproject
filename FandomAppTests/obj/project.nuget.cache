@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "4p1wM1aPSOOoZ08tRRxzOn+2MNdGE4EFQmBbkBbnDdhEFM8IOuG55W3HlQdp03JEK6wV65mbju5iJBNQX7cPTA==",
+  "dgSpecHash": "a4AsuE2/5Fju5pIzC9dMOqNFqdqhK4YLPlc3qxFYeDshEkykVMXi2QdA3fpxneJXOFTBb5x43yUIhg0zp933pA==",
   "success": true,
-  "projectFilePath": "H:\\Year 2\\Sem 4\\Programming IV\\Project\\studybuddy\\FandomAppTests\\FandomAppTests.csproj",
+  "projectFilePath": "C:\\New folder\\fandomproject\\FandomAppTests\\FandomAppTests.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\2141560\\.nuget\\packages\\coverlet.collector\\3.1.2\\coverlet.collector.3.1.2.nupkg.sha512",
     "C:\\Users\\2141560\\.nuget\\packages\\microsoft.codecoverage\\17.1.0\\microsoft.codecoverage.17.1.0.nupkg.sha512",

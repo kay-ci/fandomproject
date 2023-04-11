@@ -79,17 +79,20 @@ namespace UserInfo{
         // this is only to clear the data for visuals but will not be applied to the database
         // this might get split into smaller methods 
         public void ClearProfile(Login UserManager){
+            if(Interests != null)
+            Interests.Clear();
+            if(Categories != null)
+            Categories.Clear();
+            if(Fandoms != null)
+            Fandoms.Clear();
+            if(Badges != null)
+            Badges.Clear();
             Name = " ";
             Pronouns = " ";
             Country = " ";
             City = " ";
-            Categories.Clear();
             Description = " ";
-            Fandoms.Clear();
-            Badges.Clear();
             Picture = "default/pic/url";
-            Interests.Clear();
-
         }
     }
 }

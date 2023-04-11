@@ -1,3 +1,4 @@
+using UserInfo;
 namespace FandomAppTests;
 [TestClass]
     public class ProfileTests{
@@ -37,7 +38,7 @@ namespace FandomAppTests;
             Login userManager = new Login(activeUser);
 
             //Act
-            Exception exception = Assert.ThrowsException<ArgumentException>(() => testProfile.EditProfile(userManager, " ", "she/they", 19, "Guatemala", "Laval", categories, fandoms, badges, "Best description ever", interests));
+            Exception exception = Assert.ThrowsException<ArgumentException>(() => testProfile.EditProfile(userManager, " ", "she/they", 19, "Guatemala", "Laval", categories, fandoms, badges, "Best description ever", "path/to/pic.jpeg", interests));
 
             //Assert
             Assert.AreEqual(expectedMessage, exception.Message);
@@ -56,7 +57,7 @@ namespace FandomAppTests;
             Login userManager = new Login(activeUser);
 
             //Act
-            Exception exception = Assert.ThrowsException<ArgumentException>(() => testProfile.EditProfile(userManager, "Kayci Davila", " ", 19, "Guatemala", "Laval", categories, fandoms, badges, "Best description ever", interests));
+            Exception exception = Assert.ThrowsException<ArgumentException>(() => testProfile.EditProfile(userManager, "Kayci Davila", " ", 19, "Guatemala", "Laval", categories, fandoms, badges, "Best description ever", "path/to/pic.jpeg", interests));
 
             //Assert
             Assert.AreEqual(expectedMessage, exception.Message);
@@ -75,7 +76,7 @@ namespace FandomAppTests;
             Login userManager = new Login(activeUser);
 
             //Act
-            Exception exception = Assert.ThrowsException<ArgumentException>(() => testProfile.EditProfile(userManager, "Kayci Davila", "she/they", 19, " ", "Laval", categories, fandoms, badges, "Best description ever", interests));
+            Exception exception = Assert.ThrowsException<ArgumentException>(() => testProfile.EditProfile(userManager, "Kayci Davila", "she/they", 19, " ", "Laval", categories, fandoms, badges, "Best description ever", "path/to/pic.jpeg", interests));
 
             //Assert
             Assert.AreEqual(expectedMessage, exception.Message);
@@ -94,7 +95,7 @@ namespace FandomAppTests;
             Login userManager = new Login(activeUser);
 
             //Act
-            Exception exception = Assert.ThrowsException<ArgumentException>(() => testProfile.EditProfile(userManager, "Kayci Davila", "she/they", 19, "Guatemala", " ", categories, fandoms, badges, "Best description ever", interests));
+            Exception exception = Assert.ThrowsException<ArgumentException>(() => testProfile.EditProfile(userManager, "Kayci Davila", "she/they", 19, "Guatemala", " ", categories, fandoms, badges, "Best description ever", "path/to/pic.jpeg", interests));
 
             //Assert
             Assert.AreEqual(expectedMessage, exception.Message);

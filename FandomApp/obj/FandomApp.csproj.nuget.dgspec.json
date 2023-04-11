@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "H:\\Year 2\\Sem 4\\Programming IV\\Project\\studybuddy\\FandomApp\\FandomApp.csproj": {}
+    "C:\\New folder\\fandomproject\\FandomApp\\FandomApp.csproj": {}
   },
   "projects": {
-    "H:\\Year 2\\Sem 4\\Programming IV\\Project\\studybuddy\\FandomApp\\FandomApp.csproj": {
+    "C:\\New folder\\fandomproject\\FandomApp\\FandomApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "H:\\Year 2\\Sem 4\\Programming IV\\Project\\studybuddy\\FandomApp\\FandomApp.csproj",
+        "projectUniqueName": "C:\\New folder\\fandomproject\\FandomApp\\FandomApp.csproj",
         "projectName": "FandomApp",
-        "projectPath": "H:\\Year 2\\Sem 4\\Programming IV\\Project\\studybuddy\\FandomApp\\FandomApp.csproj",
+        "projectPath": "C:\\New folder\\fandomproject\\FandomApp\\FandomApp.csproj",
         "packagesPath": "C:\\Users\\2141560\\.nuget\\packages\\",
-        "outputPath": "H:\\Year 2\\Sem 4\\Programming IV\\Project\\studybuddy\\FandomApp\\obj\\",
+        "outputPath": "C:\\New folder\\fandomproject\\FandomApp\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\2141560\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -53,7 +53,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.405\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.404\\RuntimeIdentifierGraph.json"
         }
       }
     }

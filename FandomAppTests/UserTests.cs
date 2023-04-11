@@ -1,4 +1,4 @@
-using FandomApp;
+using UserInfo;
 namespace FandomAppTests;
     [TestClass]
     public class UserTests{
