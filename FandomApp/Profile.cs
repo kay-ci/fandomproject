@@ -56,26 +56,6 @@ namespace UserInfo{
             
         }
 
-        // this method edits logged in users profile
-        // this might get split into smaller methods 
-        public void EditProfile(Login userManager, string newName, string newPronoun, int newAge, string newCountry, string newCity, List<string>newCategories, List<Fandom> newFandoms, List<string> newBadges, string newDescription, string newPicture, List<string> newInterests){
-            //guard statements
-            if(string.IsNullOrWhiteSpace(newName)){
-                throw new ArgumentException("Name cannot be null or white space");
-            }
-            if(string.IsNullOrWhiteSpace(newPronoun)){
-                throw new ArgumentException("Pronouns cannot be null or white space");
-            }
-            if(string.IsNullOrWhiteSpace(newCountry)){
-                throw new ArgumentException("Country cannot be null or white space");
-            }
-            if(string.IsNullOrWhiteSpace(newCity)){
-                throw new ArgumentException("City cannot be null or white space");
-            }
-            
-            //modifying database based on new info provided
-        }
-
         // this is only to clear the data for visuals but will not be applied to the database
         // this might get split into smaller methods 
         public void ClearProfile(Login UserManager){

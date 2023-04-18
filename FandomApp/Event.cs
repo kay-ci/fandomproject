@@ -2,10 +2,10 @@ using UserInfo;
 public class Event
 {
     private int minAge;
-    public string? Title {get; private set;}
-    public DateTime Date {get; private set;}
-    public string? Location {get; private set;}
-    public List<string>? Categories {get; private set;}
+    public string? Title {get; set;}
+    public DateTime Date {get; set;}
+    public string? Location {get; set;}
+    public List<string>? Categories {get; set;}
     public int MinAge {
         get{ return this.minAge; } 
         private set
@@ -37,12 +37,6 @@ public class Event
     //this method add the event to the database
     public void CreateEvent() {
         throw new NotImplementedException();
-    }
-
-    //this method edit the event and update the database
-    public void EditEvent() {
-        //char choice;
-        //string[] options = {"title", "date", "location", "categories", "minimum age"};
     }
 
     public void AddAttendee(User attendee) {

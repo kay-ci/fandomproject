@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\New folder\\fandomproject\\FandomApp\\FandomApp.csproj": {}
+    "C:\\zzz\\fandomproject\\FandomApp\\FandomApp.csproj": {}
   },
   "projects": {
-    "C:\\New folder\\fandomproject\\FandomApp\\FandomApp.csproj": {
+    "C:\\zzz\\fandomproject\\FandomApp\\FandomApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\New folder\\fandomproject\\FandomApp\\FandomApp.csproj",
+        "projectUniqueName": "C:\\zzz\\fandomproject\\FandomApp\\FandomApp.csproj",
         "projectName": "FandomApp",
-        "projectPath": "C:\\New folder\\fandomproject\\FandomApp\\FandomApp.csproj",
+        "projectPath": "C:\\zzz\\fandomproject\\FandomApp\\FandomApp.csproj",
         "packagesPath": "C:\\Users\\2141560\\.nuget\\packages\\",
-        "outputPath": "C:\\New folder\\fandomproject\\FandomApp\\obj\\",
+        "outputPath": "C:\\zzz\\fandomproject\\FandomApp\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\2141560\\AppData\\Roaming\\NuGet\\NuGet.Config"

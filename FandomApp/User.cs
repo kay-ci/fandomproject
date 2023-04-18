@@ -14,7 +14,7 @@ namespace UserInfo{
                 throw new ArgumentException("username cannot be null");
             }
             //makes sure username is 1 word
-            Regex pattern = new Regex("[A-Za-z0-9]");
+            Regex pattern = new Regex("^[A-Za-z0-9]+$");
             if (!pattern.IsMatch(userName)){
                 throw new ArgumentException("Username can only be 1 word!");
             }
@@ -28,7 +28,7 @@ namespace UserInfo{
             if (string.IsNullOrWhiteSpace(userName)){
                 throw new ArgumentException("username cannot be null");
             }
-            Regex pattern = new Regex("[A-Za-z0-9]");
+            Regex pattern = new Regex("^[A-Za-z0-9]+$");
             if (!pattern.IsMatch(userName)){
                 throw new ArgumentException("Username can only be 1 word!");
             }

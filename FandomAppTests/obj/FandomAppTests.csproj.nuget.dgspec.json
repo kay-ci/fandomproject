@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\New folder\\fandomproject\\FandomAppTests\\FandomAppTests.csproj": {}
+    "C:\\zzz\\fandomproject\\FandomAppTests\\FandomAppTests.csproj": {}
   },
   "projects": {
-    "C:\\New folder\\fandomproject\\FandomAppTests\\FandomAppTests.csproj": {
+    "C:\\zzz\\fandomproject\\FandomAppTests\\FandomAppTests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\New folder\\fandomproject\\FandomAppTests\\FandomAppTests.csproj",
+        "projectUniqueName": "C:\\zzz\\fandomproject\\FandomAppTests\\FandomAppTests.csproj",
         "projectName": "FandomAppTests",
-        "projectPath": "C:\\New folder\\fandomproject\\FandomAppTests\\FandomAppTests.csproj",
+        "projectPath": "C:\\zzz\\fandomproject\\FandomAppTests\\FandomAppTests.csproj",
         "packagesPath": "C:\\Users\\2141560\\.nuget\\packages\\",
-        "outputPath": "C:\\New folder\\fandomproject\\FandomAppTests\\obj\\",
+        "outputPath": "C:\\zzz\\fandomproject\\FandomAppTests\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\2141560\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -26,8 +26,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\New folder\\fandomproject\\FandomApp\\FandomApp.csproj": {
-                "projectPath": "C:\\New folder\\fandomproject\\FandomApp\\FandomApp.csproj"
+              "C:\\zzz\\fandomproject\\FandomApp\\FandomApp.csproj": {
+                "projectPath": "C:\\zzz\\fandomproject\\FandomApp\\FandomApp.csproj"
               }
             }
           }
@@ -79,14 +79,14 @@
         }
       }
     },
-    "C:\\New folder\\fandomproject\\FandomApp\\FandomApp.csproj": {
+    "C:\\zzz\\fandomproject\\FandomApp\\FandomApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\New folder\\fandomproject\\FandomApp\\FandomApp.csproj",
+        "projectUniqueName": "C:\\zzz\\fandomproject\\FandomApp\\FandomApp.csproj",
         "projectName": "FandomApp",
-        "projectPath": "C:\\New folder\\fandomproject\\FandomApp\\FandomApp.csproj",
+        "projectPath": "C:\\zzz\\fandomproject\\FandomApp\\FandomApp.csproj",
         "packagesPath": "C:\\Users\\2141560\\.nuget\\packages\\",
-        "outputPath": "C:\\New folder\\fandomproject\\FandomApp\\obj\\",
+        "outputPath": "C:\\zzz\\fandomproject\\FandomApp\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\2141560\\AppData\\Roaming\\NuGet\\NuGet.Config"
