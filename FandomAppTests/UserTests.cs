@@ -5,7 +5,7 @@ namespace FandomAppTests;
         [TestMethod]
         public void constructor_null_test(){
             //Arrange
-            string expectedMessage = "username cannot be null";
+            string expectedMessage = "Username should contain only 1 word";
             Profile testProfile = new Profile("Kayci", "she/her", 19, "Canada", "Montreal");
 
             //Act
@@ -17,7 +17,7 @@ namespace FandomAppTests;
         [TestMethod]
         public void constructor_regex_test(){
             //Arrange
-            string expectedMessage = "Username can only be 1 word!";
+            string expectedMessage = "Username should contain only 1 word";
             Profile testProfile = new Profile("Kayci", "she/her", 19, "Canada", "Montreal");
 
             //Act
@@ -31,7 +31,7 @@ namespace FandomAppTests;
             //Arrange
             string expectedMessage = "new password cannot be null";
             Profile testProfile = new Profile("Kayci", "she/her", 19, "Canada", "Montreal");
-            User activeUser = new User("Kayci more that 1 word username", testProfile);
+            User activeUser = new User("Kayci", testProfile);
             Login userManager = new Login(activeUser);
 
             //Act
@@ -43,13 +43,12 @@ namespace FandomAppTests;
         [TestMethod]
         public void change_username_null_test(){
             //Arrange
-            string expectedMessage = "new username cannot be null";
+            string expectedMessage = "Username should contain only 1 word";
             Profile testProfile = new Profile("Kayci", "she/her", 19, "Canada", "Montreal");
-            User activeUser = new User("Kayci more that 1 word username", testProfile);
-            Login userManager = new Login(activeUser);
+            User activeUser = new User("Kayci", testProfile);
 
             //Act
-            Exception exception = Assert.ThrowsException<ArgumentException>(() => activeUser.ChangeUsername(userManager, " "));
+            Exception exception = Assert.ThrowsException<ArgumentException>(() => activeUser.Username = "");
             
             //Assert
             Assert.AreEqual(expectedMessage, exception.Message); 
@@ -57,13 +56,12 @@ namespace FandomAppTests;
         [TestMethod]
         public void change_username_regex_test(){
             //Arrange
-            string expectedMessage = "Username can only be 1 word!";
+            string expectedMessage = "Username should contain only 1 word";
             Profile testProfile = new Profile("Kayci", "she/her", 19, "Canada", "Montreal");
-            User activeUser = new User("Kayci more that 1 word username", testProfile);
-            Login userManager = new Login(activeUser);
+            User activeUser = new User("Kayci", testProfile);
 
             //Act
-            Exception exception = Assert.ThrowsException<ArgumentException>(() =>activeUser.ChangeUsername(userManager, "bad username") );
+            Exception exception = Assert.ThrowsException<ArgumentException>(() => activeUser.Username = "username longer than 1 word");
             
             //Assert
             Assert.AreEqual(expectedMessage, exception.Message); 

@@ -1,55 +1,67 @@
 namespace UserInfo{
     public class Profile{
+        private string _name;
+        private string _pronouns;
+        private int _age;
+        private string _country;
+        private string _city;
         public string? Name {
-            get{ return this.Name; } 
+            get{ return _name; } 
             set{
                 if (!IsValid(value)){
                     throw new ArgumentException("Name cannot be null or contain numbers");
                 }
+                _name = value;
             }
         }
         public string? Pronouns {
-            get{ return this.Pronouns;} 
+            get{ return _pronouns;} 
             set{
                 if (!IsValid(value)){
                     throw new ArgumentException("Pronouns cannot be null or contain numbers");
                 }
+                _pronouns = value;
             }
         }
         public int Age {
-            get{ return this.Age; }
+            get{ return _age; }
             set{
                 if (value < 0 || value > 130){
                     throw new ArgumentException("Age should be between 0-130");
                 }
+                Console.WriteLine(value);
+                _age = value;
             }
         }
         public string? Country {
-            get{ return this.Country; } 
+            get{ return _country; } 
             set{
                 if (!IsValid(value)){
                     throw new ArgumentException("Country cannot be null or contain numbers");
                 }
+                _country = value;
             }
         }
         public string? City {
-            get{ return this.City; } 
+            get{ return _city; } 
             set{
                 if (!IsValid(value)){
                     throw new ArgumentException("City cannot be null or contain numbers");
                 }
+                _city = value;
             }
         }
-        public List<string>? Categories {get; set;} //might change to enum
+        public List<string>? Categories {get; set;}
         public List<Fandom>? Fandoms {get; set;}
-        public List<string>? Badges {get; set;} //might change to enum
+        public List<string>? Badges {get; set;} 
         public string? Description {get; set;}
         public string? Picture {get; set;}
         public List<string>? Interests {get; set;}
 
         // this helper validates string fields that should not be null or contain numbers
         public bool IsValid(string field){
-            if (field.Any(char.IsDigit) || string.IsNullOrWhiteSpace(field)){
+            int number;
+            if (int.TryParse(field, out number) || string.IsNullOrWhiteSpace(field)){
                 return false;
             }
             else{
