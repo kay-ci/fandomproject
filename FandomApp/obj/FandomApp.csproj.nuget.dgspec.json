@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "H:\\Year 2\\Sem 4\\Programming IV\\Project\\studybuddy\\FandomApp\\FandomApp.csproj": {}
+    "C:\\Users\\jenny\\Documents\\W2023\\Programming IV\\FandomProject\\FandomApp\\FandomApp.csproj": {}
   },
   "projects": {
-    "H:\\Year 2\\Sem 4\\Programming IV\\Project\\studybuddy\\FandomApp\\FandomApp.csproj": {
+    "C:\\Users\\jenny\\Documents\\W2023\\Programming IV\\FandomProject\\FandomApp\\FandomApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "H:\\Year 2\\Sem 4\\Programming IV\\Project\\studybuddy\\FandomApp\\FandomApp.csproj",
+        "projectUniqueName": "C:\\Users\\jenny\\Documents\\W2023\\Programming IV\\FandomProject\\FandomApp\\FandomApp.csproj",
         "projectName": "FandomApp",
-        "projectPath": "H:\\Year 2\\Sem 4\\Programming IV\\Project\\studybuddy\\FandomApp\\FandomApp.csproj",
-        "packagesPath": "C:\\Users\\2141560\\.nuget\\packages\\",
-        "outputPath": "H:\\Year 2\\Sem 4\\Programming IV\\Project\\studybuddy\\FandomApp\\obj\\",
+        "projectPath": "C:\\Users\\jenny\\Documents\\W2023\\Programming IV\\FandomProject\\FandomApp\\FandomApp.csproj",
+        "packagesPath": "C:\\Users\\jenny\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\jenny\\Documents\\W2023\\Programming IV\\FandomProject\\FandomApp\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\2141560\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\jenny\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
@@ -53,7 +53,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.405\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.408\\RuntimeIdentifierGraph.json"
         }
       }
     }
