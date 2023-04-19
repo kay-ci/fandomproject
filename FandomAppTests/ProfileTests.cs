@@ -31,7 +31,7 @@ namespace FandomAppTests;
             Profile testProfile = new Profile("Kayci", "she/her", 19, "Canada", "Montreal");
 
             //Act
-            Exception exception = Assert.ThrowsException<ArgumentException>(() => testProfile);
+            Exception exception = Assert.ThrowsException<ArgumentException>(() => testProfile.Name = "");
 
             //Assert
             Assert.AreEqual(expectedMessage, exception.Message);
@@ -39,11 +39,11 @@ namespace FandomAppTests;
         [TestMethod]
         public void edit_null_pronoun_test(){
             //Arrange
-            string expectedMessage = "Pronouns cannot be null or white space";
+            string expectedMessage = "Pronouns cannot be null or contain numbers";
             Profile testProfile = new Profile("Kayci", "she/her", 19, "Canada", "Montreal");
 
             //Act
-            Exception exception = Assert.ThrowsException<ArgumentException>(() => testProfile);
+            Exception exception = Assert.ThrowsException<ArgumentException>(() => testProfile.Pronouns = "123");
 
             //Assert
             Assert.AreEqual(expectedMessage, exception.Message);
@@ -55,7 +55,7 @@ namespace FandomAppTests;
             Profile testProfile = new Profile("Kayci", "she/her", 19, "Canada", "Montreal");
 
             //Act
-            Exception exception = Assert.ThrowsException<ArgumentException>(() => testProfile);
+            Exception exception = Assert.ThrowsException<ArgumentException>(() => testProfile.Country = "");
 
             //Assert
             Assert.AreEqual(expectedMessage, exception.Message);
@@ -67,7 +67,19 @@ namespace FandomAppTests;
             Profile testProfile = new Profile("Kayci", "she/her", 19, "Canada", "Montreal");
 
             //Act
-            Exception exception = Assert.ThrowsException<ArgumentException>(() => testProfile);
+            Exception exception = Assert.ThrowsException<ArgumentException>(() => testProfile.City = "123");
+
+            //Assert
+            Assert.AreEqual(expectedMessage, exception.Message);
+        }
+        [TestMethod]
+        public void wrong_age_range_test(){
+            //Arrange
+            string expectedMessage = "Age should be between 0-130";
+            Profile testProfile = new Profile("Kayci", "she/her", 19, "Canada", "Montreal");
+
+            //Act
+            Exception exception = Assert.ThrowsException<ArgumentException>(() => testProfile.Age = -1);
 
             //Assert
             Assert.AreEqual(expectedMessage, exception.Message);
