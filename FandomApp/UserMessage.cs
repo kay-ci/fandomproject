@@ -4,21 +4,26 @@ namespace UserInfo{
     //This class will contain the Inbox and Outbox, which are Lists containing Message objects
     //It will be linked to the fan by the "user" field
     public class UserMessage{
-        private User user;
+        public int userID {get; set;}
+        public User user {get; set;}
 
-        private List<Message> Inbox = new List<Message>();
-        private List<Message> Outbox = new List<Message>();
+        public List<Message> Inbox {get; set;}
+        public List<Message> Outbox {get; set;}
 
         //Here we have two constructors. This one is for a completely new user
         public UserMessage(User user){
             this.user = user;
+            Inbox = new List<Message>();
+            Outbox = new List<Message>();
         }
         //This method would be used when we are taking a user from the database.
         //Because they already exist, they would have an Inbox and an Outbox already
-        public UserMessage(User user, List<Message> Inbox, List<Message> Outbox){
+        public UserMessage(User user, List<Message> inbox, List<Message> outbox){
             this.user = user;
-            foreach(Message msg in Inbox){ this.Inbox.Add(msg); }
-            foreach(Message msg in Outbox){ this.Outbox.Add(msg); }
+            Inbox = new List<Message>();
+            Outbox = new List<Message>();
+            foreach(Message msg in inbox){ this.Inbox.Add(msg);}
+            foreach(Message msg in outbox){ this.Outbox.Add(msg);}
         }
 
         //This is the most difficult method for this class. Essentially, we confirm with the user

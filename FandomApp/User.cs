@@ -2,6 +2,7 @@ using System.Text.RegularExpressions;
 
 namespace UserInfo{
     public class User{
+        public int userID {get; set;}
         private string _username; 
         public string? Username {
             get{ return _username; } 
@@ -26,6 +27,7 @@ namespace UserInfo{
             UserProfile = userProfile;
             Events = events;
             Messages = new UserMessage(this);
+            
         }
         public User(string userName, Profile userProfile){
             if (!IsValidUsername(userName)){
