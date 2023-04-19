@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "aUyj0WvL6y1FKrxO3s9PGjs2jFIt/HY3OuDUJnJRMenBb9zWQxzDVheD9sYAG88jt7CIsoIjxfwBv1XO3E40Nw==",
+  "dgSpecHash": "l3S1YRW0uKAUFL+V+sfrNkeU7eAEmr6YhQM+v0aRsDcDTO8IkuQzhp88hX8ejoESYTGgYEfZzVHS0HzQYYNOWg==",
   "success": true,
-  "projectFilePath": "C:\\zzz\\fandomproject\\FandomApp\\FandomApp.csproj",
+  "projectFilePath": "C:\\fandomproject\\FandomApp\\FandomApp.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

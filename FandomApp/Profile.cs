@@ -1,10 +1,45 @@
 namespace UserInfo{
     public class Profile{
-        public string? Name {get; set;}
-        public string? Pronouns {get; set;}
-        public int Age {get;}
-        public string? Country {get; set;}
-        public string? City {get; set;}
+        public string? Name {
+            get{ return this.Name; } 
+            set{
+                if (!IsValid(value)){
+                    throw new ArgumentException("Name cannot be null or contain numbers");
+                }
+            }
+        }
+        public string? Pronouns {
+            get{ return this.Pronouns;} 
+            set{
+                if (!IsValid(value)){
+                    throw new ArgumentException("Pronouns cannot be null or contain numbers");
+                }
+            }
+        }
+        public int Age {
+            get{ return this.Age; }
+            set{
+                if (value < 0 || value > 130){
+                    throw new ArgumentException("Age should be between 0-130");
+                }
+            }
+        }
+        public string? Country {
+            get{ return this.Country; } 
+            set{
+                if (!IsValid(value)){
+                    throw new ArgumentException("Country cannot be null or contain numbers");
+                }
+            }
+        }
+        public string? City {
+            get{ return this.City; } 
+            set{
+                if (!IsValid(value)){
+                    throw new ArgumentException("City cannot be null or contain numbers");
+                }
+            }
+        }
         public List<string>? Categories {get; set;} //might change to enum
         public List<Fandom>? Fandoms {get; set;}
         public List<string>? Badges {get; set;} //might change to enum
@@ -12,8 +47,17 @@ namespace UserInfo{
         public string? Picture {get; set;}
         public List<string>? Interests {get; set;}
 
+        // this helper validates string fields that should not be null or contain numbers
+        public bool IsValid(string field){
+            if (field.Any(char.IsDigit) || string.IsNullOrWhiteSpace(field)){
+                return false;
+            }
+            else{
+                return true;
+            }   
+        }  
         public Profile(string name, string pronouns, int age, string country,string city, List<string>categories, List<Fandom> fandoms, List<string> badges, string description, string picture, List<string> interests){
-            if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(pronouns) || string.IsNullOrWhiteSpace(country) || string.IsNullOrWhiteSpace(city)){
+            if (!IsValid(name) || !IsValid(pronouns) || !IsValid(country) || !IsValid(city)){
                 throw new ArgumentException ("String field cannot be null");
             }
             if (age < 0 || age > 130){
@@ -32,7 +76,7 @@ namespace UserInfo{
             Interests = interests;
         }
         public Profile(string name, string pronouns, int age, string country, string city){
-            if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(pronouns) || string.IsNullOrWhiteSpace(country) || string.IsNullOrWhiteSpace(city)){
+            if (!IsValid(name) || !IsValid(pronouns) || !IsValid(country) || !IsValid(city)){
                 throw new ArgumentException ("String field cannot be null");
             }
             if (age < 0 || age > 130){
@@ -67,10 +111,10 @@ namespace UserInfo{
             Fandoms.Clear();
             if(Badges != null)
             Badges.Clear();
-            Name = " ";
-            Pronouns = " ";
-            Country = " ";
-            City = " ";
+            Name = "Name";
+            Pronouns = "Pronouns";
+            Country = "Country";
+            City = "Country";
             Description = " ";
             Picture = "default/pic/url";
         }

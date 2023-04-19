@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\zzz\\fandomproject\\FandomApp\\FandomApp.csproj",
+      "projectUniqueName": "C:\\fandomproject\\FandomApp\\FandomApp.csproj",
       "projectName": "FandomApp",
-      "projectPath": "C:\\zzz\\fandomproject\\FandomApp\\FandomApp.csproj",
+      "projectPath": "C:\\fandomproject\\FandomApp\\FandomApp.csproj",
       "packagesPath": "C:\\Users\\2141560\\.nuget\\packages\\",
-      "outputPath": "C:\\zzz\\fandomproject\\FandomApp\\obj\\",
+      "outputPath": "C:\\fandomproject\\FandomApp\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\2141560\\AppData\\Roaming\\NuGet\\NuGet.Config"
