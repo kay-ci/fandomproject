@@ -2,6 +2,7 @@ using System.Text.RegularExpressions;
 
 namespace UserInfo{
     public class User{
+        public int userID {get; set;}
         public string? Username {get; set;}
         public Profile? UserProfile {get; set;}
         public UserMessage Messages {get; set;}
@@ -23,6 +24,7 @@ namespace UserInfo{
             UserProfile = userProfile;
             Events = events;
             Messages = new UserMessage(this);
+            
         }
         public User(string userName, Profile userProfile){
             if (string.IsNullOrWhiteSpace(userName)){
