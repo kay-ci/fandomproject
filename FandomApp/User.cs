@@ -2,7 +2,17 @@ using System.Text.RegularExpressions;
 
 namespace UserInfo{
     public class User{
-        public string? Username {get; set;}
+        public int userID {get; set;}
+        private string _username; 
+        public string? Username {
+            get{ return _username; } 
+            set{
+                if (!IsValidUsername(value)){
+                    throw new ArgumentException("Username should contain only 1 word");
+                }
+                _username = value;
+            }
+        }
         public Profile? UserProfile {get; set;}
         public UserMessage Messages {get; set;}
 
@@ -10,12 +20,20 @@ namespace UserInfo{
         
         //constructors
         public User(string userName, Profile userProfile, List<Event> events){
+            if (!IsValidUsername(userName)){
+                throw new ArgumentException("Username should contain only 1 word");
+            }
             Username = userName;
             UserProfile = userProfile;
             Events = events;
             Messages = new UserMessage(this);
+            
         }
         public User(string userName, Profile userProfile){
+            if (!IsValidUsername(userName)){
+                throw new ArgumentException("Username should contain only 1 word");
+            }
+
             Username = userName;
             UserProfile = userProfile;
             Messages = new UserMessage(this);
@@ -31,34 +49,28 @@ namespace UserInfo{
             // set the currenly logged in users password
         }
 
-        //This method allows a user to change username
-        public void ChangeUsername(Login userManager, string newUsername){
-            if (string.IsNullOrWhiteSpace(Username)){
-                throw new ArgumentException("new username cannot be null");
-            }
-
-            //check newUsername is 1 word (numbers allowed)
-            Regex pattern = new Regex("[A-Za-Z0-9]");
-            if (!pattern.IsMatch(newUsername)){
-                throw new ArgumentException("Username can only be 1 word!");
-            }
-            
-            //check that it doesnt match another username in database
-
-            //set username
-            userManager.CurrentUser.Username = newUsername;
-
-
-        }
-
-        //This method fetches events a user is a part of 
+        //This method fetches events a user is a part of using query
         public void GetEvents(){
 
         }
 
-        public override string ToString()
-        {
-            return this.ToString();
+        //Database function that will delete the current logged in user
+        public void DeleteUser(Login userManager){
+            //delete user from database
+        }
+
+        public bool IsValidUsername(string username){
+            if (string.IsNullOrWhiteSpace(username)){
+                return false;
+            }
+            //check newUsername is 1 word (numbers allowed)
+            Regex pattern = new Regex("^[A-Za-z0-9]+$");
+            if (!pattern.IsMatch(username)){
+                return false;
+            }
+            
+            return true;
+            
         }
     }
 }

@@ -1,5 +1,5 @@
 namespace FandomAppTests;
-using userInfo;
+using UserInfo;
 
 [TestClass]
 public class UserMessageTests
@@ -13,14 +13,14 @@ public class UserMessageTests
         List<string> badges = new List<string>();
         List<string> interests = new List<string>();
         List<Event> events = new List<Event>();
-        Profile sender_prof = new Profile("Karekin Kiyici", "he/him", 22, "Canada", "Montreal", categories, fandoms, badges, "", interests);
+        Profile sender_prof = new Profile("Karekin Kiyici", "he/him", 22, "Canada", "Montreal", categories, fandoms, badges, "","path/to/pic.jpeg", interests);
         User sender = new User("kareking1", sender_prof, events);
     
-        Profile receiver_prof1 = new Profile("mista", "he/him", 28, "Canada", "Montreal", categories, fandoms, badges, "", interests);
+        Profile receiver_prof1 = new Profile("mista", "he/him", 28, "Canada", "Montreal", categories, fandoms, badges, "","path/to/pic.jpeg", interests);
         User receiver = new User("Sex Pistols", receiver_prof1);    
-        Profile receiver_prof2 = new Profile("Goffy", "he/him", 28, "Canada", "Montreal", categories, fandoms, badges, "", interests);
+        Profile receiver_prof2 = new Profile("Goffy", "he/him", 28, "Canada", "Montreal", categories, fandoms, badges, "","path/to/pic.jpeg", interests);
         User receiver2 = new User("Gaffy", receiver_prof2);
-        Profile receiver_prof3 = new Profile("Teedus", "he/him", 28, "Canada", "Montreal", categories, fandoms, badges, "", interests);
+        Profile receiver_prof3 = new Profile("Teedus", "he/him", 28, "Canada", "Montreal", categories, fandoms, badges, "","path/to/pic.jpeg", interests);
         User receiver3 = new User("HA HA HA HA HA", receiver_prof3);
         
         //Should fail!
@@ -44,14 +44,14 @@ public class UserMessageTests
         List<string> badges = new List<string>();
         List<string> interests = new List<string>();
         List<Event> events = new List<Event>();
-        Profile sender_prof = new Profile("Karekin Kiyici", "he/him", 22, "Canada", "Montreal", categories, fandoms, badges, "", interests);
+        Profile sender_prof = new Profile("Karekin Kiyici", "he/him", 22, "Canada", "Montreal", categories, fandoms, badges, "","path/to/pic.jpeg", interests);
         User sender = new User("kareking1", sender_prof, events);
     
-        Profile receiver_prof1 = new Profile("mista", "he/him", 28, "Canada", "Montreal", categories, fandoms, badges, "", interests);
+        Profile receiver_prof1 = new Profile("mista", "he/him", 28, "Canada", "Montreal", categories, fandoms, badges, "","path/to/pic.jpeg", interests);
         User receiver = new User("Sex Pistols", receiver_prof1);    
-        Profile receiver_prof2 = new Profile("Goffy", "he/him", 28, "Canada", "Montreal", categories, fandoms, badges, "", interests);
+        Profile receiver_prof2 = new Profile("Goffy", "he/him", 28, "Canada", "Montreal", categories, fandoms, badges, "","path/to/pic.jpeg", interests);
         User receiver2 = new User("Gaffy", receiver_prof2);
-        Profile receiver_prof3 = new Profile("Teedus", "he/him", 28, "Canada", "Montreal", categories, fandoms, badges, "", interests);
+        Profile receiver_prof3 = new Profile("Teedus", "he/him", 28, "Canada", "Montreal", categories, fandoms, badges, "","path/to/pic.jpeg", interests);
         User receiver3 = new User("HA HA HA HA HA", receiver_prof3);
         
         //Should also fail
@@ -75,14 +75,14 @@ public class UserMessageTests
         List<string> badges = new List<string>();
         List<string> interests = new List<string>();
         List<Event> events = new List<Event>();
-        Profile sender_prof = new Profile("Karekin Kiyici", "he/him", 22, "Canada", "Montreal", categories, fandoms, badges, "", interests);
+        Profile sender_prof = new Profile("Karekin Kiyici", "he/him", 22, "Canada", "Montreal", categories, fandoms, badges, "","path/to/pic.jpeg", interests);
         User sender = new User("kareking1", sender_prof, events);
     
-        Profile receiver_prof1 = new Profile("mista", "he/him", 28, "Canada", "Montreal", categories, fandoms, badges, "", interests);
+        Profile receiver_prof1 = new Profile("mista", "he/him", 28, "Canada", "Montreal", categories, fandoms, badges, "","path/to/pic.jpeg", interests);
         User receiver = new User("Sex Pistols", receiver_prof1);    
-        Profile receiver_prof2 = new Profile("Goffy", "he/him", 28, "Canada", "Montreal", categories, fandoms, badges, "", interests);
+        Profile receiver_prof2 = new Profile("Goffy", "he/him", 28, "Canada", "Montreal", categories, fandoms, badges, "","path/to/pic.jpeg", interests);
         User receiver2 = new User("Gaffy", receiver_prof2);
-        Profile receiver_prof3 = new Profile("Teedus", "he/him", 28, "Canada", "Montreal", categories, fandoms, badges, "", interests);
+        Profile receiver_prof3 = new Profile("Teedus", "he/him", 28, "Canada", "Montreal", categories, fandoms, badges, "","path/to/pic.jpeg", interests);
         User receiver3 = new User("HA HA HA HA HA", receiver_prof3);
         
         //Should also fail
@@ -105,14 +105,14 @@ public class UserMessageTests
         List<string> badges = new List<string>();
         List<string> interests = new List<string>();
         List<Event> events = new List<Event>();
-        Profile sender_prof = new Profile("Karekin Kiyici", "he/him", 22, "Canada", "Montreal", categories, fandoms, badges, "", interests);
+        Profile sender_prof = new Profile("Karekin Kiyici", "he/him", 22, "Canada", "Montreal", categories, fandoms, badges, "","path/to/pic.jpeg", interests);
         User sender = new User("kareking1", sender_prof, events);
     
-        Profile receiver_prof1 = new Profile("mista", "he/him", 28, "Canada", "Montreal", categories, fandoms, badges, "", interests);
+        Profile receiver_prof1 = new Profile("mista", "he/him", 28, "Canada", "Montreal", categories, fandoms, badges, "","path/to/pic.jpeg", interests);
         User receiver = new User("Sex Pistols", receiver_prof1);    
-        Profile receiver_prof2 = new Profile("Goffy", "he/him", 28, "Canada", "Montreal", categories, fandoms, badges, "", interests);
+        Profile receiver_prof2 = new Profile("Goffy", "he/him", 28, "Canada", "Montreal", categories, fandoms, badges, "","path/to/pic.jpeg", interests);
         User receiver2 = new User("Gaffy", receiver_prof2);
-        Profile receiver_prof3 = new Profile("Teedus", "he/him", 28, "Canada", "Montreal", categories, fandoms, badges, "", interests);
+        Profile receiver_prof3 = new Profile("Teedus", "he/him", 28, "Canada", "Montreal", categories, fandoms, badges, "","path/to/pic.jpeg", interests);
         User receiver3 = new User("HA HA HA HA HA", receiver_prof3);
         
         //Should succeed!
@@ -127,6 +127,6 @@ public class UserMessageTests
         //Assert
         //This will automatically throw if text is no good!
         sender.Messages.CreateMessage(recipients, textTest4);
-        StringAssert.Equals(receiver.Messages.ReadMessage(), textTest4);
+        StringAssert.Equals(receiver.Messages.ReadMessage(0), textTest4);
     }
 }
