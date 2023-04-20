@@ -1,14 +1,14 @@
 namespace UserInfo{
     public class Message{
         public int id {get; set;}
-        public User sender {get; set;}
-        public List<User> recipients = new List<User>();
+        public UserMessage sender {get; set;}
+        public List<UserMessage> recipients = new List<UserMessage>();
         public DateTime timesent {get; set;}
         public string text {get; set;}
         //This field determines if the message has been read or not. Will get updated by UserMessage
         public bool seen {get; set;}
         //Basic constructor, validation done in UserMessage for text
-        public Message(User sender, List<User> recipients, string text){
+        public Message(UserMessage sender, List<UserMessage> recipients, string text){
             this.sender = sender;
             this.timesent = DateTime.Now;
             this.text = text;
