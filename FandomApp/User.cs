@@ -18,6 +18,7 @@ namespace UserInfo{
 
         public List<Event> Events {get;}
         
+        private User(){}
         //constructors
         public User(string userName, Profile userProfile, List<Event> events){
             if (!IsValidUsername(userName)){

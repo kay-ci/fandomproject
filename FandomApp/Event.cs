@@ -23,6 +23,7 @@ public class Event
     public List<User>? Attendees {get; private set;}
     
     //constructor
+    private Event(){}
     public Event(string title, DateTime date, string location, List<String> categories, int minAge, User owner) {
 
         this.Title = title;

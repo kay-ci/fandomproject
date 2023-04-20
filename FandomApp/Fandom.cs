@@ -16,6 +16,7 @@ public class Fandom
     public string? Description {get; set;}
 
     //constructor
+    private Fandom(){}
     public Fandom(string name, string category, string? description) {
         this.Name = name;
         this.Category = category;

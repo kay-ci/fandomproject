@@ -7,6 +7,8 @@ namespace UserInfo{
         public string text {get; set;}
         //This field determines if the message has been read or not. Will get updated by UserMessage
         public bool seen {get; set;}
+
+        private Message(){}
         //Basic constructor, validation done in UserMessage for text
         public Message(User sender, List<User> recipients, string text){
             this.sender = sender;
