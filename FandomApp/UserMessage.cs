@@ -8,11 +8,11 @@ namespace UserInfo{
     //It will be linked to the fan by the "user" field
     public class UserMessage{
         public int userID {get; set;}
+        [InverseProperty("Sender.user")]
         public User user {get; set;}
 
-        [InverseProperty("Recipients")]
+        [InverseProperty("Recipients.Inbox")]
         public List<Message> Inbox {get; set;}
-        [InverseProperty("Sender")]
         public List<Message> Outbox {get; set;}
 
         //Here we have two constructors. This one is for the DBContext
