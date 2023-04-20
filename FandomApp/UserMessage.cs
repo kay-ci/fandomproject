@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+
 namespace UserInfo{
 
     //This class will contain the Inbox and Outbox, which are Lists containing Message objects
