@@ -27,18 +27,11 @@ namespace FandomAppTests;
         [TestMethod]
         public void edit_null_name_test(){
             //Arrange
-            string expectedMessage = "Name cannot be null or white space";
+            string expectedMessage = "Name cannot be null or contain numbers";
             Profile testProfile = new Profile("Kayci", "she/her", 19, "Canada", "Montreal");
-            User activeUser = new User("kc12", testProfile);
-            List<string> categories = new List<string>();
-            List<Fandom> fandoms = new List<Fandom>();
-            List<string> badges = new List<string>();
-            List<string> interests = new List<string>();
-            List<Event> events = new List<Event>();
-            Login userManager = new Login(activeUser);
 
             //Act
-            Exception exception = Assert.ThrowsException<ArgumentException>(() => testProfile.EditProfile(userManager, " ", "she/they", 19, "Guatemala", "Laval", categories, fandoms, badges, "Best description ever", "path/to/pic.jpeg", interests));
+            Exception exception = Assert.ThrowsException<ArgumentException>(() => testProfile.Name = "");
 
             //Assert
             Assert.AreEqual(expectedMessage, exception.Message);
@@ -46,18 +39,11 @@ namespace FandomAppTests;
         [TestMethod]
         public void edit_null_pronoun_test(){
             //Arrange
-            string expectedMessage = "Pronouns cannot be null or white space";
+            string expectedMessage = "Pronouns cannot be null or contain numbers";
             Profile testProfile = new Profile("Kayci", "she/her", 19, "Canada", "Montreal");
-            User activeUser = new User("kc12", testProfile);
-            List<string> categories = new List<string>();
-            List<Fandom> fandoms = new List<Fandom>();
-            List<string> badges = new List<string>();
-            List<string> interests = new List<string>();
-            List<Event> events = new List<Event>();
-            Login userManager = new Login(activeUser);
 
             //Act
-            Exception exception = Assert.ThrowsException<ArgumentException>(() => testProfile.EditProfile(userManager, "Kayci Davila", " ", 19, "Guatemala", "Laval", categories, fandoms, badges, "Best description ever", "path/to/pic.jpeg", interests));
+            Exception exception = Assert.ThrowsException<ArgumentException>(() => testProfile.Pronouns = "123");
 
             //Assert
             Assert.AreEqual(expectedMessage, exception.Message);
@@ -65,18 +51,11 @@ namespace FandomAppTests;
         [TestMethod]
         public void edit_null_country_test(){
             //Arrange
-            string expectedMessage = "Country cannot be null or white space";
+            string expectedMessage = "Country cannot be null or contain numbers";
             Profile testProfile = new Profile("Kayci", "she/her", 19, "Canada", "Montreal");
-            User activeUser = new User("kc12", testProfile);
-            List<string> categories = new List<string>();
-            List<Fandom> fandoms = new List<Fandom>();
-            List<string> badges = new List<string>();
-            List<string> interests = new List<string>();
-            List<Event> events = new List<Event>();
-            Login userManager = new Login(activeUser);
 
             //Act
-            Exception exception = Assert.ThrowsException<ArgumentException>(() => testProfile.EditProfile(userManager, "Kayci Davila", "she/they", 19, " ", "Laval", categories, fandoms, badges, "Best description ever", "path/to/pic.jpeg", interests));
+            Exception exception = Assert.ThrowsException<ArgumentException>(() => testProfile.Country = "");
 
             //Assert
             Assert.AreEqual(expectedMessage, exception.Message);
@@ -84,18 +63,23 @@ namespace FandomAppTests;
         [TestMethod]
         public void edit_null_city_test(){
             //Arrange
-            string expectedMessage = "City cannot be null or white space";
+            string expectedMessage = "City cannot be null or contain numbers";
             Profile testProfile = new Profile("Kayci", "she/her", 19, "Canada", "Montreal");
-            User activeUser = new User("kc12", testProfile);
-            List<string> categories = new List<string>();
-            List<Fandom> fandoms = new List<Fandom>();
-            List<string> badges = new List<string>();
-            List<string> interests = new List<string>();
-            List<Event> events = new List<Event>();
-            Login userManager = new Login(activeUser);
 
             //Act
-            Exception exception = Assert.ThrowsException<ArgumentException>(() => testProfile.EditProfile(userManager, "Kayci Davila", "she/they", 19, "Guatemala", " ", categories, fandoms, badges, "Best description ever", "path/to/pic.jpeg", interests));
+            Exception exception = Assert.ThrowsException<ArgumentException>(() => testProfile.City = "123");
+
+            //Assert
+            Assert.AreEqual(expectedMessage, exception.Message);
+        }
+        [TestMethod]
+        public void wrong_age_range_test(){
+            //Arrange
+            string expectedMessage = "Age should be between 0-130";
+            Profile testProfile = new Profile("Kayci", "she/her", 19, "Canada", "Montreal");
+
+            //Act
+            Exception exception = Assert.ThrowsException<ArgumentException>(() => testProfile.Age = -1);
 
             //Assert
             Assert.AreEqual(expectedMessage, exception.Message);
