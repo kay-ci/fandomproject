@@ -113,7 +113,11 @@ public class UserMessageTests
         Profile receiver_prof2 = new Profile("Goffy", "he/him", 28, "Canada", "Montreal", categories, fandoms, badges, "","path/to/pic.jpeg", interests);
         User receiver2 = new User("Gaffy", receiver_prof2);
         Profile receiver_prof3 = new Profile("Teedus", "he/him", 28, "Canada", "Montreal", categories, fandoms, badges, "","path/to/pic.jpeg", interests);
+<<<<<<< HEAD
         User receiver3 = new User("HA", receiver_prof3);
+=======
+        User receiver3 = new User("HAHAHAHAHA", receiver_prof3);
+>>>>>>> 8349739ab51948b7349b220bbe71e79fdd992450
         
         //Should succeed!
         string textTest4 = "blahh sjefjhsifseji blahhh";

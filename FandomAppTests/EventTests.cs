@@ -19,6 +19,6 @@ public class EventTests
         User owner = new User("userOwner", profile, events);
 
         DateTime date = new DateTime(2023, 12, 12);
-        //FandomApp.Event event = new FandomApp.Event("title", date, "location", categories, 21, owner);
+        Event event_test = new Event("title", date, "location", categories, 21, owner);
     }
 }
