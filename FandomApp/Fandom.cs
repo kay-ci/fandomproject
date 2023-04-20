@@ -15,6 +15,9 @@ public class Fandom
     public string Category {get; set;}
     public string? Description {get; set;}
 
+    public List<User> Fans {get; set;} = new();
+
+
     //constructor
     private Fandom(){}
     public Fandom(string name, string category, string? description) {

@@ -16,7 +16,9 @@ namespace UserInfo{
         public Profile? UserProfile {get; set;}
         public UserMessage Messages {get; set;}
 
-        public List<Event> Events {get;}
+        public List<Event> Events {get;} = new();
+        public List<Fandom> Fandoms {get;} = new();
+
         
         private User(){}
         //constructors
