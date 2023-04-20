@@ -57,17 +57,11 @@ namespace UserInfo{
         public string? Description {get; set;}
         public string? Picture {get; set;}
         public List<string>? Interests {get; set;}
+        public User user {get; set;} = null!;
+        public int userID {get; set;}
 
-        // this helper validates string fields that should not be null or contain numbers
-        public bool IsValid(string field){
-            int number;
-            if (int.TryParse(field, out number) || string.IsNullOrWhiteSpace(field)){
-                return false;
-            }
-            else{
-                return true;
-            }   
-        }  
+        private Profile(){}
+
         public Profile(string name, string pronouns, int age, string country,string city, List<string>categories, List<Fandom> fandoms, List<string> badges, string description, string picture, List<string> interests){
             if (!IsValid(name) || !IsValid(pronouns) || !IsValid(country) || !IsValid(city)){
                 throw new ArgumentException ("String field cannot be null");
@@ -107,6 +101,16 @@ namespace UserInfo{
             Interests = new List<string>();
         }
 
+        // this helper validates string fields that should not be null or contain numbers
+        public bool IsValid(string field){
+            int number;
+            if (int.TryParse(field, out number) || string.IsNullOrWhiteSpace(field)){
+                return false;
+            }
+            else{
+                return true;
+            }   
+        }  
         //This method creates a profile for a user
         public void CreateProfile(Login userManager){
             

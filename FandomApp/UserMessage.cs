@@ -1,4 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace UserInfo{
 
@@ -8,7 +10,9 @@ namespace UserInfo{
         public int userID {get; set;}
         public User user {get; set;}
 
+        [InverseProperty("Recipients")]
         public List<Message> Inbox {get; set;}
+        [InverseProperty("Sender")]
         public List<Message> Outbox {get; set;}
 
         //Here we have three constructors. This one is for the DBContext
@@ -48,7 +52,7 @@ namespace UserInfo{
         //Finally, we return the text inside of the message. Needs validation for the index
         public string ReadMessage(int index){
             Inbox[index].MessageIsRead();
-            return Inbox[index].text;
+            return Inbox[index].Text;
         }
 
         //This method will simply add a new Message object to the Inbox
