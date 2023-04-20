@@ -11,7 +11,9 @@ namespace UserInfo{
         public List<Message> Inbox {get; set;}
         public List<Message> Outbox {get; set;}
 
-        //Here we have two constructors. This one is for a completely new user
+        //Here we have three constructors. This one is for the DBContext
+        private UserMessage(){}
+        //This one is for a completely new user
         public UserMessage(User user){
             this.user = user;
             Inbox = new List<Message>();
@@ -27,10 +29,6 @@ namespace UserInfo{
             foreach(Message msg in outbox){ this.Outbox.Add(msg);}
         }
 
-        //This is the most difficult method for this class. Essentially, we confirm with the user
-        //the list of recipients they want to send it to (wip) and then make them write down
-        //the text for the message. Once it is written, we confirm if the user wants to send the
-        //message. If they do, we update this user's Outbox and the recipients' Inbox
         public void CreateMessage(List<User> recipients, string text){
             //We check if the text is null or empty
             if(string.IsNullOrWhiteSpace(text)) throw new ArgumentException("Text must be filled with text!");
