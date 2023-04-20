@@ -98,7 +98,7 @@ public class UserMessageTests
     }
 
     [TestMethod]
-    public void Creating_Messsage_Then_Read_Message_Test_Succeed(){
+    public void Creating_Message_Then_Read_Message_Test_Succeed(){
         //Arrange
         List<string> categories = new List<string>();
         List<Fandom> fandoms = new List<Fandom>();
@@ -106,14 +106,14 @@ public class UserMessageTests
         List<string> interests = new List<string>();
         List<Event> events = new List<Event>();
         Profile sender_prof = new Profile("Karekin Kiyici", "he/him", 22, "Canada", "Montreal", categories, fandoms, badges, "","path/to/pic.jpeg", interests);
-        User sender = new User("kareking1", sender_prof, events);
+        User sender = new User("kareking1", sender_prof);
     
         Profile receiver_prof1 = new Profile("mista", "he/him", 28, "Canada", "Montreal", categories, fandoms, badges, "","path/to/pic.jpeg", interests);
-        User receiver = new User("Sex Pistols", receiver_prof1);    
+        User receiver = new User("SexPistols", receiver_prof1);    
         Profile receiver_prof2 = new Profile("Goffy", "he/him", 28, "Canada", "Montreal", categories, fandoms, badges, "","path/to/pic.jpeg", interests);
         User receiver2 = new User("Gaffy", receiver_prof2);
         Profile receiver_prof3 = new Profile("Teedus", "he/him", 28, "Canada", "Montreal", categories, fandoms, badges, "","path/to/pic.jpeg", interests);
-        User receiver3 = new User("HA HA HA HA HA", receiver_prof3);
+        User receiver3 = new User("HA", receiver_prof3);
         
         //Should succeed!
         string textTest4 = "blahh sjefjhsifseji blahhh";
@@ -125,7 +125,6 @@ public class UserMessageTests
         recipients.Add(receiver3);
 
         //Assert
-        //This will automatically throw if text is no good!
         sender.Messages.CreateMessage(recipients, textTest4);
         StringAssert.Equals(receiver.Messages.ReadMessage(0), textTest4);
     }
