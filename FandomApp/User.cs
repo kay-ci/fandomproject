@@ -16,8 +16,11 @@ namespace UserInfo{
         public Profile? UserProfile {get; set;}
         public UserMessage Messages {get; set;}
 
-        public List<Event> Events {get;}
+        public List<Event> Events {get;} = new();
+        public List<Fandom> Fandoms {get;} = new();
+
         
+        private User(){}
         //constructors
         public User(string userName, Profile userProfile, List<Event> events){
             if (!IsValidUsername(userName)){

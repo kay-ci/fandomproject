@@ -27,12 +27,12 @@ public class UserMessageTests
         string textTest1 = "";
 
         //Act
-        List<User> recipients = new List<User>();
-        recipients.Add(receiver);
-        recipients.Add(receiver2);
-        recipients.Add(receiver3);
+        List<UserMessage> recipients = new List<UserMessage>();
+        recipients.Add(receiver.Messages);
+        recipients.Add(receiver2.Messages);
+        recipients.Add(receiver3.Messages);
         //This will automatically throw if text is no good!
-        sender.Messages.CreateMessage(recipients, textTest1);
+        sender.Messages.CreateMessage(recipients, textTest1, "test title, doesn't matter yet");
     }
 
     [TestMethod]
@@ -58,12 +58,12 @@ public class UserMessageTests
         string textTest2 = "   ";
 
         //Act
-        List<User> recipients = new List<User>();
-        recipients.Add(receiver);
-        recipients.Add(receiver2);
-        recipients.Add(receiver3);
+        List<UserMessage> recipients = new List<UserMessage>();
+        recipients.Add(receiver.Messages);
+        recipients.Add(receiver2.Messages);
+        recipients.Add(receiver3.Messages);
         //This will automatically throw if text is no good!
-        sender.Messages.CreateMessage(recipients, textTest2);
+        sender.Messages.CreateMessage(recipients, textTest2, "test title, doesn't matter yet");
     }
 
     [TestMethod]
@@ -89,12 +89,12 @@ public class UserMessageTests
         string textTest3 = null;
 
         //Act
-        List<User> recipients = new List<User>();
-        recipients.Add(receiver);
-        recipients.Add(receiver2);
-        recipients.Add(receiver3);
+        List<UserMessage> recipients = new List<UserMessage>();
+        recipients.Add(receiver.Messages);
+        recipients.Add(receiver2.Messages);
+        recipients.Add(receiver3.Messages);
         //This will automatically throw if text is no good!
-        sender.Messages.CreateMessage(recipients, textTest3);
+        sender.Messages.CreateMessage(recipients, textTest3, "test title, doesn't matter yet");
     }
 
     [TestMethod]
@@ -113,23 +113,19 @@ public class UserMessageTests
         Profile receiver_prof2 = new Profile("Goffy", "he/him", 28, "Canada", "Montreal", categories, fandoms, badges, "","path/to/pic.jpeg", interests);
         User receiver2 = new User("Gaffy", receiver_prof2);
         Profile receiver_prof3 = new Profile("Teedus", "he/him", 28, "Canada", "Montreal", categories, fandoms, badges, "","path/to/pic.jpeg", interests);
-<<<<<<< HEAD
         User receiver3 = new User("HA", receiver_prof3);
-=======
-        User receiver3 = new User("HAHAHAHAHA", receiver_prof3);
->>>>>>> 8349739ab51948b7349b220bbe71e79fdd992450
         
         //Should succeed!
         string textTest4 = "blahh sjefjhsifseji blahhh";
 
         //Act
-        List<User> recipients = new List<User>();
-        recipients.Add(receiver);
-        recipients.Add(receiver2);
-        recipients.Add(receiver3);
+        List<UserMessage> recipients = new List<UserMessage>();
+        recipients.Add(receiver.Messages);
+        recipients.Add(receiver2.Messages);
+        recipients.Add(receiver3.Messages);
 
         //Assert
-        sender.Messages.CreateMessage(recipients, textTest4);
+        sender.Messages.CreateMessage(recipients, textTest4, "test title, doesn't matter yet");
         StringAssert.Equals(receiver.Messages.ReadMessage(0), textTest4);
     }
 }
