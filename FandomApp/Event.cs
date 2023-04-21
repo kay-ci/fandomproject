@@ -2,9 +2,29 @@ using UserInfo;
 public class Event
 {
     private int _minAge;
-    public string? Title {get; set;}
+    private string _title;
+    private string _location;
+    public string Title 
+    {
+        get{ return _title;} 
+        set{
+            if (string.IsNullOrWhiteSpace(value)) {
+                throw new ArgumentNullException();
+            }
+            _title = value;
+        }
+    }
     public DateTime Date {get; set;}
-    public string? Location {get; set;}
+    public string Location 
+    {
+        get{ return _location;} 
+        set{
+            if (string.IsNullOrWhiteSpace(value)) {
+                throw new ArgumentNullException();
+            }
+            _location = value;
+        }
+    }
     public List<string>? Categories {get; set;}
     public int MinAge {
         get{ return _minAge; } 
@@ -43,7 +63,7 @@ public class Event
 
         var profile = attendee.UserProfile;
 
-        if (profile?.Age >= this.MinAge){
+        if (profile?.Age < this.MinAge){
             throw new ArgumentException("Attendee must meet the event's age requirement");
         }
 

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\fandomproject\\FandomApp\\FandomApp.csproj": {}
+    "C:\\Users\\jenny\\Documents\\W2023\\Programming IV\\FandomProject\\FandomApp\\FandomApp.csproj": {}
   },
   "projects": {
-    "C:\\fandomproject\\FandomApp\\FandomApp.csproj": {
+    "C:\\Users\\jenny\\Documents\\W2023\\Programming IV\\FandomProject\\FandomApp\\FandomApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\fandomproject\\FandomApp\\FandomApp.csproj",
+        "projectUniqueName": "C:\\Users\\jenny\\Documents\\W2023\\Programming IV\\FandomProject\\FandomApp\\FandomApp.csproj",
         "projectName": "FandomApp",
-        "projectPath": "C:\\fandomproject\\FandomApp\\FandomApp.csproj",
-        "packagesPath": "C:\\Users\\2141560\\.nuget\\packages\\",
-        "outputPath": "C:\\fandomproject\\FandomApp\\obj\\",
+        "projectPath": "C:\\Users\\jenny\\Documents\\W2023\\Programming IV\\FandomProject\\FandomApp\\FandomApp.csproj",
+        "packagesPath": "C:\\Users\\jenny\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\jenny\\Documents\\W2023\\Programming IV\\FandomProject\\FandomApp\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\jenny\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -63,7 +63,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.404\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.408\\RuntimeIdentifierGraph.json"
         }
       }
     }
