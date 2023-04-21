@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "L8CfTRjiNCbhChasmDmes7E+cHVoB/oaJmbiLnyPI6ZuGAK9ui9R0m8ddPBMy808GIrdH2+8pt0/RjPKYbw+7w==",
+  "dgSpecHash": "IXX9ppsJvA08E97tGGYHG4AoXLp9TqIqAtClg66enIlJK5EGl9PHibtPahS9RtcuGeFJZUnUHBG+w1wyi0vvrg==",
   "success": true,
-  "projectFilePath": "c:\\Users\\jenny\\Documents\\W2023\\Programming IV\\FandomProject\\FandomApp\\FandomApp.csproj",
+  "projectFilePath": "C:\\Users\\jenny\\Documents\\W2023\\Programming IV\\FandomProject\\FandomApp\\FandomApp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\jenny\\.nuget\\packages\\castle.core\\5.1.1\\castle.core.5.1.1.nupkg.sha512",
     "C:\\Users\\jenny\\.nuget\\packages\\microsoft.entityframeworkcore\\7.0.0\\microsoft.entityframeworkcore.7.0.0.nupkg.sha512",
@@ -37,12 +37,5 @@
     "C:\\Users\\jenny\\.nuget\\packages\\system.security.principal.windows\\5.0.0\\system.security.principal.windows.5.0.0.nupkg.sha512",
     "C:\\Users\\jenny\\.nuget\\packages\\system.windows.extensions\\6.0.0\\system.windows.extensions.6.0.0.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "Undefined",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Problem reading the cache file c:\\Users\\jenny\\Documents\\W2023\\Programming IV\\FandomProject\\FandomApp\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
-    }
-  ]
+  "logs": []
 }
