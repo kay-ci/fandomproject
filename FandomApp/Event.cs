@@ -3,6 +3,7 @@ public class Event
 {
     private int _minAge;
     private string _title;
+    private DateTime _date;
     private string _location;
     public string Title 
     {
@@ -14,7 +15,16 @@ public class Event
             _title = value;
         }
     }
-    public DateTime Date {get; set;}
+    
+    public DateTime Date {
+        get{ return _date;} 
+        set{
+            if (value > DateTime.Today) {
+                throw new ArgumentException("Date can't be set before today");
+            }
+            _date = value;
+        }
+    }
     public string Location 
     {
         get{ return _location;} 
@@ -31,14 +41,17 @@ public class Event
         private set
         {
             const int MinimumAge = 13;
-
             if (value < MinimumAge) {
                 throw new  ArgumentException("The minimum age must be over 13!");
+            }
+            if (this.Owner.UserProfile?.Age < value)
+            {
+                throw new ArgumentException("The event owner must meet the event's age requirement");
             }
             _minAge = value;
         }
     }
-    //need to check if owner also meet age requirement of event created
+
     public User Owner {get; private set;}
     public List<User>? Attendees {get; private set;}
     
@@ -59,10 +72,9 @@ public class Event
         throw new NotImplementedException();
     }
 
-    public void AddAttendee(User attendee) {
-
+    public void AddAttendee(User attendee) 
+    {
         var profile = attendee.UserProfile;
-
         if (profile?.Age < this.MinAge){
             throw new ArgumentException("Attendee must meet the event's age requirement");
         }
@@ -81,6 +93,4 @@ public class Event
         throw new NotImplementedException();
     }
 
-    //possible helper method
-    //private bool AttendeeVerification() {}
 }

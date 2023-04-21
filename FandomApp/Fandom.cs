@@ -1,18 +1,26 @@
 namespace UserInfo;
 public class Fandom
 {
-    private string name;
-    private string category;
+    private string _name;
+    private string _category;
     public string Name {
-        get{ return name; }
+        get{ return _name; }
         set{
             if (string.IsNullOrEmpty(value)) {
                 throw new ArgumentNullException();
             }
-            name = value;
+            _name = value;
         }
     }
-    public string Category {get; set;}
+    public string Category {
+        get{ return _category; }
+        set{
+            if (string.IsNullOrEmpty(value)) {
+                throw new ArgumentNullException();
+            }
+            _category = value;
+        }
+    }
     public string? Description {get; set;}
 
     //constructor
