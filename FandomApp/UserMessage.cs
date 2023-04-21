@@ -1,5 +1,4 @@
 namespace UserInfo{
-    //This class is filled out a little more than a skeleton class, we decided to get a lil headstart
 
     //This class will contain the Inbox and Outbox, which are Lists containing Message objects
     //It will be linked to the fan by the "user" field
