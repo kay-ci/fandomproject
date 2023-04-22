@@ -1,10 +1,12 @@
 namespace UserInfo{
     public class Profile{
-        private string _name;
-        private string _pronouns;
+        private string? _name;
+        private string? _pronouns;
         private int _age;
-        private string _country;
-        private string _city;
+        private string? _country;
+        private string? _city;
+        private string? _description;
+        private List<Fandom> _fandoms;
         public string Name {
             get{ return _name; } 
             set{
@@ -14,7 +16,7 @@ namespace UserInfo{
                 _name = value;
             }
         }
-        public string? Pronouns {
+        public string Pronouns {
             get{ return _pronouns;} 
             set{
                 if (!IsValid(value)){
@@ -33,7 +35,7 @@ namespace UserInfo{
                 _age = value;
             }
         }
-        public string? Country {
+        public string Country {
             get{ return _country; } 
             set{
                 if (!IsValid(value)){
@@ -42,7 +44,7 @@ namespace UserInfo{
                 _country = value;
             }
         }
-        public string? City {
+        public string City {
             get{ return _city; } 
             set{
                 if (!IsValid(value)){
@@ -51,10 +53,24 @@ namespace UserInfo{
                 _city = value;
             }
         }
+        public string? Description {
+            get{return _description;} 
+            set{if (string.IsNullOrEmpty(value)){
+                    throw new ArgumentException();
+                }
+                _description = value;
+            }
+        }
+        public List<Fandom>? Fandoms {
+            get{return _fandoms;} 
+            set{if (value is not List<Fandom){
+                    throw new ArgumentException("expected List<Fandom>");
+                }
+                _fandoms = value;
+            }
+        }
         public List<string>? Categories {get; set;}
-        public List<Fandom>? Fandoms {get; set;}
         public List<string>? Badges {get; set;} 
-        public string? Description {get; set;}
         public string? Picture {get; set;}
         public List<string>? Interests {get; set;}
         public User user {get; set;} = null!;
@@ -69,15 +85,15 @@ namespace UserInfo{
             if (age < 0 || age > 130){
                 throw new ArgumentException ("Age should be between 0-130");
             }
-            Name = name;
-            Pronouns = pronouns;
-            Age = age;
-            Country = country;
-            City = city;
+            _name = name;
+            _pronouns = pronouns;
+            _age = age;
+            _country = country;
+            _city = city;
             Categories = categories;
-            Fandoms = fandoms;
+            _fandoms = fandoms;
             Badges = badges;
-            Description = description;
+            _description = description;
             Picture = picture;
             Interests = interests;
         }
@@ -88,14 +104,14 @@ namespace UserInfo{
             if (age < 0 || age > 130){
                 throw new ArgumentException ("Age should be between 0-130");
             }
-            Name = name;
-            Pronouns = pronouns;
-            Age = age;
-            Country = country;
-            City = city;
-            Description = " ";
+            _name = name;
+            _pronouns = pronouns;
+            _age = age;
+            _country = country;
+            _city = city;
+            _description = " ";
             Categories = new List<string>();
-            Fandoms = new List<Fandom>();
+            _fandoms = new List<Fandom>();
             Badges = new List<string>();
             Picture = "default/pic/url";
             Interests = new List<string>();

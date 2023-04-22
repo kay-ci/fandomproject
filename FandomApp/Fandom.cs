@@ -8,7 +8,7 @@ public class Fandom
         get{ return _name; }
         set{
             if (!IsValid(value)) {
-                throw new ArgumentNullException();
+                throw new ArgumentException("Name can not be null or a number");
             }
             _name = value;
         }
@@ -17,7 +17,7 @@ public class Fandom
         get{ return _category; } 
         set{
             if (!IsValid(value)){
-                throw new ArgumentException("Category cannot be null or a number");
+                throw new ArgumentException("Category can not be null or a number");
             }
             _category = value;
         }
@@ -38,13 +38,15 @@ public class Fandom
     //constructor
     private Fandom(){}
     public Fandom(string name, string category, string? description) {
+        if (!IsValid(name) || !IsValid(category)){
+            throw new ArgumentException("name and category cannot be null or numbers");
+        }
+        if (string.IsNullOrEmpty(description)){
+            throw new ArgumentException("description can not be null");
+        }
         this.Name = name;
         this.Category = category;
         this.Description = description;
-    }
-
-    public override string ToString() {
-        return $"Fandom name: {this.Name}, category: {this.Category} \nDescription: {this.Description}";
     }
 
     //validate if the field is null or just a number
