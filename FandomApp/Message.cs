@@ -1,10 +1,18 @@
 namespace UserInfo{
     public class Message{
+        private string _text;
         public int Id {get; set;}
         public UserMessage Sender {get; set;} = null!;
         public List<UserMessage> Recipients = new();
         public DateTime Timesent {get; set;}
-        public string Text {get; set;}
+        public string Text {
+            get{ return _text; } 
+            set{ 
+                if (string.IsNullOrWhiteSpace(value)){
+                    throw new ArgumentException("Text property cannot be null");
+                }
+            }
+        }
         public string Title {get; set;}
         //This field determines if the message has been read or not. Will get updated by UserMessage
         public bool Seen {get; set;}

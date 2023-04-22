@@ -5,7 +5,7 @@ namespace UserInfo{
         private int _age;
         private string _country;
         private string _city;
-        public string? Name {
+        public string Name {
             get{ return _name; } 
             set{
                 if (!IsValid(value)){
@@ -100,22 +100,6 @@ namespace UserInfo{
             Picture = "default/pic/url";
             Interests = new List<string>();
         }
-
-        // this helper validates string fields that should not be null or contain numbers
-        public bool IsValid(string field){
-            int number;
-            if (int.TryParse(field, out number) || string.IsNullOrWhiteSpace(field)){
-                return false;
-            }
-            else{
-                return true;
-            }   
-        }  
-        //This method creates a profile for a user
-        public void CreateProfile(Login userManager){
-            
-        }
-
         // this is only to clear the data for visuals but will not be applied to the database
         // this might get split into smaller methods 
         public void ClearProfile(Login UserManager){
@@ -134,5 +118,16 @@ namespace UserInfo{
             Description = " ";
             Picture = "default/pic/url";
         }
+
+        // this helper validates string fields that should not be null or contain numbers
+        public bool IsValid(string field){
+            int number;
+            if (int.TryParse(field, out number) || string.IsNullOrWhiteSpace(field)){
+                return false;
+            }
+            else{
+                return true;
+            }   
+        }  
     }
 }
