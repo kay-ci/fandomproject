@@ -1,6 +1,6 @@
 using UserInfo;
 namespace FandomAppTests;
-//TODO: finish up tests here (need to communitcate with teammates)
+//TODO: Test these tests (cannot acces my c: from home)
 [TestClass]
     public class ProfileTests{
         [TestMethod]
@@ -31,7 +31,7 @@ namespace FandomAppTests;
             string expectedMessage = "name and category cannot be null or numbers";
            
             //Act
-            Exception exception = Assert.ThrowsException<ArgumentException>(() => Message);
+            Exception exception = Assert.ThrowsException<ArgumentException>(() => new Fandom("","","Best fandom ever!"));
             
             //Assert
             Assert.AreEqual(expectedMessage, exception.Message);
@@ -42,7 +42,7 @@ namespace FandomAppTests;
             string expectedMessage = "name and category cannot be null or numbers";
            
             //Act
-            Exception exception = Assert.ThrowsException<ArgumentException>(() => Message);
+            Exception exception = Assert.ThrowsException<ArgumentException>(() => new Fandom("121", "music", "Second best fandom"));
             
             //Assert
             Assert.AreEqual(expectedMessage, exception.Message);
@@ -53,7 +53,7 @@ namespace FandomAppTests;
             string expectedMessage = "description can not be null";
 
             //Act
-            Exception exception = Assert.ThrowsException<ArgumentException>(() => Message);
+            Exception exception = Assert.ThrowsException<ArgumentException>(() => new Fandom("Genshin","gaming",""));
             
             //Assert
             Assert.AreEqual(expectedMessage, exception.Message);
