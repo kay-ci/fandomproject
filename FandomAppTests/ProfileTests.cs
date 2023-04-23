@@ -72,21 +72,7 @@ namespace FandomAppTests;
             //Assert
             Assert.AreEqual(expectedMessage, exception.Message);
         }
-        //TODO: Test this method
-        [TestMethod]
-        public void fandoms_wrong_type_test(){
-            //Arrange
-            string expectedMessage = "expected List<Fandom>";
-            Profile testProfile = new Profile("Kayci", "she/her", 19, "Canada", "Montreal");
-            List<string> newFandoms = new List<string>();
-            newFandoms.add("Fandom!");
 
-            //Act
-            Exception exception = Assert.ThrowsException<ArgumentException>(() => testProfile.Fandoms = newFandoms);
-
-            //Assert
-            Assert.AreEqual(expectedMessage, exception.Message);
-        }
         [TestMethod]
         public void wrong_age_range_test(){
             //Arrange

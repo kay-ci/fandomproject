@@ -2,8 +2,7 @@ using UserInfo;
 namespace FandomAppTests;
 
 [TestClass]
-public class EventTests
-{
+public class EventTests{
     [TestMethod]
     public void AddAttendee_UserUnderMinAge_ThrowException()
     {

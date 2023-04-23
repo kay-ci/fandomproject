@@ -2,7 +2,7 @@ using UserInfo;
 namespace FandomAppTests;
 //TODO: Test these tests (cannot acces my c: from home)
 [TestClass]
-    public class ProfileTests{
+    public class FandomTests{
         [TestMethod]
         public void null_name_set_test(){
             //Arrange

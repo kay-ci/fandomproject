@@ -6,7 +6,6 @@ namespace UserInfo{
         private string? _country;
         private string? _city;
         private string? _description;
-        private List<Fandom> _fandoms;
         public string Name {
             get{ return _name; } 
             set{
@@ -61,14 +60,7 @@ namespace UserInfo{
                 _description = value;
             }
         }
-        public List<Fandom>? Fandoms {
-            get{return _fandoms;} 
-            set{if (value is not List<Fandom){
-                    throw new ArgumentException("expected List<Fandom>");
-                }
-                _fandoms = value;
-            }
-        }
+        public List<Fandom>? Fandoms {get; set;}
         public List<string>? Categories {get; set;}
         public List<string>? Badges {get; set;} 
         public string? Picture {get; set;}
@@ -91,7 +83,7 @@ namespace UserInfo{
             _country = country;
             _city = city;
             Categories = categories;
-            _fandoms = fandoms;
+            Fandoms = fandoms;
             Badges = badges;
             _description = description;
             Picture = picture;
@@ -111,7 +103,7 @@ namespace UserInfo{
             _city = city;
             _description = " ";
             Categories = new List<string>();
-            _fandoms = new List<Fandom>();
+            Fandoms = new List<Fandom>();
             Badges = new List<string>();
             Picture = "default/pic/url";
             Interests = new List<string>();
