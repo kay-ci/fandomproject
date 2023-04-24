@@ -48,10 +48,12 @@ public class Event
         }
     }
 
-    public User Owner {get; private set;}
-    public List<User>? Attendees {get; private set;}
+    public User Owner {get; set;}
+    public List<User>? Attendees {get; set;} = new();
+
     
     //constructor
+    private Event(){}
     public Event(string title, DateTime date, string location, List<String> categories, int minAge, User owner) {
 
         this.Title = title;
