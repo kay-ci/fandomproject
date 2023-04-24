@@ -44,10 +44,6 @@ public class Event
             if (value < MinimumAge) {
                 throw new  ArgumentException("The minimum age must be over 13!");
             }
-            if (this.Owner.UserProfile?.Age < value)
-            {
-                throw new ArgumentException("The event owner must meet the event's age requirement");
-            }
             _minAge = value;
         }
     }
