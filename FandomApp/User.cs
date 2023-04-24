@@ -16,8 +16,11 @@ namespace UserInfo{
         public Profile? UserProfile {get; set;}
         public UserMessage Messages {get; set;}
 
-        public List<Event> Events {get;}
+        public List<Event> Events {get;} = new();
+        public List<Fandom> Fandoms {get;} = new();
+
         
+        private User(){}
         //constructors
         public User(string userName, Profile userProfile, List<Event> events){
             if (!IsValidUsername(userName)){
@@ -47,16 +50,6 @@ namespace UserInfo{
             };
             
             // set the currenly logged in users password
-        }
-
-        //This method fetches events a user is a part of using query
-        public void GetEvents(){
-
-        }
-
-        //Database function that will delete the current logged in user
-        public void DeleteUser(Login userManager){
-            //delete user from database
         }
 
         public bool IsValidUsername(string username){

@@ -72,6 +72,7 @@ namespace FandomAppTests;
             //Assert
             Assert.AreEqual(expectedMessage, exception.Message);
         }
+
         [TestMethod]
         public void wrong_age_range_test(){
             //Arrange

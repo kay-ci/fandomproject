@@ -1,4 +1,6 @@
 using UserInfo;
+using Microsoft.EntityFrameworkCore;
+
 public class Login {
 
     public User CurrentUser;
