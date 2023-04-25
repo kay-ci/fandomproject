@@ -14,7 +14,11 @@
     </PackageReference>
     <PackageReference Include="Moq" Version="4.18.4" />
     <PackageReference Include="Oracle.EntityFrameworkCore" Version="7.21.9" />
+<<<<<<< HEAD
     <PackageReference Include="Oracle.ManagedDataAccess.Core" Version="3.21.90" />
+=======
+    <PackageReference Include="Oracle.ManagedDataAccess.Core" Version="3.21.100" />
+>>>>>>> d67e6ea5ef00e17060b5ad8f2065ff97c6d3fbb7
   </ItemGroup>
 
 </Project>

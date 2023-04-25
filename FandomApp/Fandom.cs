@@ -2,32 +2,62 @@ namespace UserInfo;
 public class Fandom
 {
     public int FandomId {get; set;}
-    private string name;
-    private string category;
+    private string _name;
+    private string _category;
+    private string _description;
     public string Name {
-        get{ return name; }
+        get{ return _name; }
         set{
-            if (string.IsNullOrEmpty(value)) {
-                throw new ArgumentNullException();
+            if (!IsValid(value)) {
+                throw new ArgumentException("Name can not be null or a number");
             }
-            name = value;
+            _name = value;
         }
     }
-    public string Category {get; set;}
-    public string? Description {get; set;}
+    public string Category {
+        get{ return _category; } 
+        set{
+            if (!IsValid(value)){
+                throw new ArgumentException("Category can not be null or a number");
+            }
+            _category = value;
+        }
+    }
+    public string? Description {
+        get{ return _description; } 
+        set{
+            if (string.IsNullOrEmpty(value)){
+                throw new ArgumentNullException();
+            }
+            _description = value;
+        }
+    }
 
-    public List<User> Fans {get; set;} = new();
+    public List<User> Fans { get; set; } = new ();
 
 
     //constructor
     private Fandom(){}
     public Fandom(string name, string category, string? description) {
+        if (!IsValid(name) || !IsValid(category)){
+            throw new ArgumentException("name and category cannot be null or numbers");
+        }
+        if (string.IsNullOrEmpty(description)){
+            throw new ArgumentException("description can not be null");
+        }
         this.Name = name;
         this.Category = category;
         this.Description = description;
     }
 
-    public override string ToString() {
-        return $"Fandom name: {this.Name}, category: {this.Category} \nDescription: {this.Description}";
-    }
+    //validate if the field is null or just a number
+    public bool IsValid(string field){
+            int number;
+            if (int.TryParse(field, out number) || string.IsNullOrEmpty(field)){
+                return false;
+            }
+            else{
+                return true;
+            }   
+        }  
 }

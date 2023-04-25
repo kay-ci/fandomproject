@@ -1,12 +1,13 @@
 namespace UserInfo{
     public class Profile{
         public int ProfileId {get; set;}
-        private string _name;
-        private string _pronouns;
+        private string? _name;
+        private string? _pronouns;
         private int _age;
-        private string _country;
-        private string _city;
-        public string? Name {
+        private string? _country;
+        private string? _city;
+        private string? _description;
+        public string Name {
             get{ return _name; } 
             set{
                 if (!IsValid(value)){
@@ -15,7 +16,7 @@ namespace UserInfo{
                 _name = value;
             }
         }
-        public string? Pronouns {
+        public string Pronouns {
             get{ return _pronouns;} 
             set{
                 if (!IsValid(value)){
@@ -34,7 +35,7 @@ namespace UserInfo{
                 _age = value;
             }
         }
-        public string? Country {
+        public string Country {
             get{ return _country; } 
             set{
                 if (!IsValid(value)){
@@ -43,7 +44,7 @@ namespace UserInfo{
                 _country = value;
             }
         }
-        public string? City {
+        public string City {
             get{ return _city; } 
             set{
                 if (!IsValid(value)){
@@ -55,7 +56,14 @@ namespace UserInfo{
         public List<Category>? Categories {get; set;}
         public List<Fandom>? Fandoms {get; set;}
         public List<Badge>? Badges {get; set;} 
-        public string? Description {get; set;}
+        public string? Description {
+            get{return _description;} 
+            set{if (string.IsNullOrEmpty(value)){
+                    throw new ArgumentException();
+                }
+                _description = value;
+            }
+        }
         public string? Picture {get; set;}
         public string? Interests {get; set;}
         public User user {get; set;} = null!;
@@ -70,15 +78,15 @@ namespace UserInfo{
             if (age < 0 || age > 130){
                 throw new ArgumentException ("Age should be between 0-130");
             }
-            Name = name;
-            Pronouns = pronouns;
-            Age = age;
-            Country = country;
-            City = city;
+            _name = name;
+            _pronouns = pronouns;
+            _age = age;
+            _country = country;
+            _city = city;
             Categories = categories;
             Fandoms = fandoms;
             Badges = badges;
-            Description = description;
+            _description = description;
             Picture = picture;
             Interests = interests;
         }
@@ -89,34 +97,19 @@ namespace UserInfo{
             if (age < 0 || age > 130){
                 throw new ArgumentException ("Age should be between 0-130");
             }
-            Name = name;
-            Pronouns = pronouns;
-            Age = age;
-            Country = country;
-            City = city;
-            Description = " ";
+            
+            _name = name;
+            _pronouns = pronouns;
+            _age = age;
+            _country = country;
+            _city = city;
+            _description = " ";
             Categories = new List<Category>();
             Fandoms = new List<Fandom>();
             Badges = new List<Badge>();
             Picture = "default/pic/url";
             Interests = "";
         }
-
-        // this helper validates string fields that should not be null or contain numbers
-        public bool IsValid(string field){
-            int number;
-            if (int.TryParse(field, out number) || string.IsNullOrWhiteSpace(field)){
-                return false;
-            }
-            else{
-                return true;
-            }   
-        }  
-        //This method creates a profile for a user
-        public void CreateProfile(Login userManager){
-            
-        }
-
         // this is only to clear the data for visuals but will not be applied to the database
         // this might get split into smaller methods 
         public void ClearProfile(Login UserManager){
@@ -135,5 +128,16 @@ namespace UserInfo{
             Description = " ";
             Picture = "default/pic/url";
         }
+
+        // this helper validates string fields that should not be null or contain numbers
+        public bool IsValid(string field){
+            int number;
+            if (int.TryParse(field, out number) || string.IsNullOrWhiteSpace(field)){
+                return false;
+            }
+            else{
+                return true;
+            }   
+        }  
     }
 }

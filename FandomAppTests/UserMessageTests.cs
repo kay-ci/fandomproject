@@ -2,8 +2,7 @@ namespace FandomAppTests;
 using UserInfo;
 
 [TestClass]
-public class UserMessageTests
-{
+public class UserMessageTests{
     [TestMethod]
     [ExpectedException(typeof(ArgumentException))]
     public void Creating_Messsage_Test_Fail1(){
