@@ -7,11 +7,10 @@ namespace UserInfo{
     //This class will contain the Inbox and Outbox, which are Lists containing Message objects
     //It will be linked to the fan by the "user" field
     public class UserMessage{
-        public int userID {get; set;}
-        [InverseProperty("Sender.user")]
+        public int UserMessageId {get; set;}
+        public int UserId {get; set;}
         public User user {get; set;}
 
-        [InverseProperty("Recipients.Inbox")]
         public List<Message> Inbox {get; set;}
         public List<Message> Outbox {get; set;}
 
