@@ -19,7 +19,7 @@ public class Event
     public DateTime Date {
         get{ return _date;} 
         set{
-            if (value > DateTime.Today) {
+            if (DateTime.Compare( value, DateTime.Today) < 0) {
                 throw new ArgumentException("Date can't be set before today");
             }
             _date = value;
