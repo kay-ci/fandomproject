@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "tfK3CnuKYPO8ItpiMqg4tPA4rKeYTDtjy/FxNEzk4Xo8sGttF95/tw/QcyCDUJZRTcEn624C7UMkYYIhsPiEEg==",
+  "dgSpecHash": "/aJFNmX5esbmWBjnUK3wMz5yhZi9DHIThiV0lkbE2Vp2ZdgI40jqDS9rl4TZo/9L8I6LoKFADJIOZe7EMOj02w==",
   "success": true,
-  "projectFilePath": "c:\\Users\\jenny\\Documents\\W2023\\Programming IV\\FandomProject\\FandomApp\\FandomApp.csproj",
+  "projectFilePath": "C:\\Users\\jenny\\Documents\\W2023\\Programming IV\\FandomProject\\FandomApp\\FandomApp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\jenny\\.nuget\\packages\\castle.core\\5.1.1\\castle.core.5.1.1.nupkg.sha512",
     "C:\\Users\\jenny\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
