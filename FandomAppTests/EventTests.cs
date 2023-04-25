@@ -8,15 +8,14 @@ public class EventTests{
     public void AddAttendee_AttendeeUnderEventMinAge_ThrowException()
     {
         //Arrange
-        List<string> categories = new List<string>();
+        List<Category> categories = new List<Category>();
         List<Fandom> fandoms = new List<Fandom>();
-        List<string> badges = new List<string>();
-        List<string> interests = new List<string>();
+        List<Badge> badges = new List<Badge>();
 
         List<Event> events = new List<Event>();
     
-        Profile attendee_profile = new Profile("User", "they/them", 15, "Canada", "Montreal", categories, fandoms, badges, "description", "pictures", interests);
-        Profile owner_profile = new Profile("Owner", "they/them", 21, "Canada", "Montreal", categories, fandoms, badges, "description", "pictures", interests);
+        Profile attendee_profile = new Profile("User", "they/them", 15, "Canada", "Montreal", categories, fandoms, badges, "description", "pictures", "interests");
+        Profile owner_profile = new Profile("Owner", "they/them", 21, "Canada", "Montreal", categories, fandoms, badges, "description", "pictures", "interests");
 
         User attendee = new User("usertest", attendee_profile, events);
         User owner = new User("userOwner", owner_profile, events);
@@ -35,13 +34,12 @@ public class EventTests{
     public void SetMinAge_MinAgeUnder13_ThrowException()
     {
         //Arrange
-        List<string> categories = new List<string>();
+        List<Category> categories = new List<Category>();
         List<Fandom> fandoms = new List<Fandom>();
-        List<string> badges = new List<string>();
-        List<string> interests = new List<string>();
+        List<Badge> badges = new List<Badge>();
         List<Event> events = new List<Event>();
     
-        Profile profile = new Profile("Owner", "they/them", 21, "Canada", "Montreal", categories, fandoms, badges, "description", "pictures", interests);
+        Profile profile = new Profile("Owner", "they/them", 21, "Canada", "Montreal", categories, fandoms, badges, "description", "pictures", "interests");
 
         User user = new User("user", profile, events);
         DateTime date = new DateTime(2023, 12, 12);
