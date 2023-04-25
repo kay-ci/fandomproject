@@ -11,7 +11,7 @@ public class UserService{
     private UserService(){
     }
     
-    public static UserService GetInstance(){
+    public static UserService getInstance(){
         if(_instance is null){
             _instance = new UserService();
         }
@@ -19,11 +19,18 @@ public class UserService{
     }
 
 // Do not forget to set context in the class using this service
-    public void SetLibraryContext(FanAppContext context){
+    public void setLibraryContext(FanAppContext context){
         _context = context;
     }
 
-    public List<User> GetUsers(){}
+    public List<User> GetUsers(){
+        List<User> userList = _context.FandomUsers
+            .Include(user => user.Profile)
+            .Include(user => user.Fandom)
+            .Include(user => user.Event)
+            .OrderBy(user => user.userID)
+            .ToList<User>();
+    }
     public User GetUser(int id){}
     public Login AddUser(){}
     public void UpdateUser(Login currentUser){}
