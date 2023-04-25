@@ -55,7 +55,6 @@ public class Event
     public User Owner {get; set;}
     public List<User>? Attendees {get; set;} = new();
 
-    
     //constructor
     private Event(){}
     public Event(string title, DateTime date, string location, List<Category> categories, int minAge, User owner) {
@@ -67,11 +66,6 @@ public class Event
         this.MinAge = minAge;
         this.Owner = owner;
 
-    }
-
-    //this method add the event to the database
-    public void CreateEvent() {
-        throw new NotImplementedException();
     }
 
     public void AddAttendee(User attendee) 
@@ -86,12 +80,6 @@ public class Event
 
     //
     public void RemoveAttendee() {
-        throw new NotImplementedException();
-    }
-
-    //this method will print out the list of attendees
-    //may not be needed because it's not a console app
-    public void ShowAttendees() {
         throw new NotImplementedException();
     }
 
