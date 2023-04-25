@@ -68,4 +68,22 @@ public class UserServiceTests{
         Assert.AreEqual("KayciUsername", user.Username);
         Assert.AreEqual(19, user.UserProfile.Age);
     }
+
+    [TestMethod]
+    public void CreateAccountTest()
+    {
+        //Arrange
+        var mockSet = new Mock<DbSet<User>>();
+        var mockContext = new Mock<FanAppContext>();
+        mockContext.Setup(m => m.FandomUsers).Returns(mockSet.Object);
+        var service = UserService.getInstance();
+        service.setLibraryContext(mockContext.Object);
+
+        //Act
+        service.createAccount("User101", "potato101");
+
+        //Assert
+        mockSet.Verify(m => m.Add(It.IsAny<User>()), Times.Once());
+        mockContext.Verify(m => m.SaveChanges(), Times.Once());
+    }
 }
