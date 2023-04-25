@@ -86,4 +86,35 @@ public class UserServiceTests{
         mockSet.Verify(m => m.Add(It.IsAny<User>()), Times.Once());
         mockContext.Verify(m => m.SaveChanges(), Times.Once());
     }
+
+    [TestMethod]
+    public void LogInTest(){
+        //Arrange
+        var listdata = new List<User>();
+        listdata.Add(new User("KayciUsername", new Profile("Kayci", "she/her", 19, "Canada", "Montreal")));
+        listdata.Add(new User("liliUsername", new Profile("Lili", "they/them", 20, "Ireland", "Dublin")));
+        listdata.Add(new User("bestUser", new Profile("Jim", "he/him", 16, "Canada", "Laval")));
+
+        var data = listdata.AsQueryable();
+
+        var mockSet = new Mock<DbSet<User>>();
+        mockSet.As<IQueryable<User>>().Setup(m => m.Provider).Returns(data.Provider);
+        mockSet.As<IQueryable<User>>().Setup(m => m.Expression).Returns(data.Expression);
+        mockSet.As<IQueryable<User>>().Setup(m => m.ElementType).Returns(data.ElementType);
+        mockSet.As<IQueryable<User>>().Setup(m => m.GetEnumerator()).Returns(data.GetEnumerator());
+ 
+        var mockContext = new Mock<FanAppContext>();
+        mockContext.Setup(m => m.FandomUsers).Returns(mockSet.Object);
+        
+        var service = UserService.getInstance();
+        service.setLibraryContext(mockContext.Object);
+
+        //Act
+        service.createAccount("User101", "potato101");
+        Login loggedInUser = service.LogIn("User101", "potato101")
+
+        //Assert
+        Assert.AreEqual("User101", loggedInUser.CurrentUser.Username);
+    }
+   
 }

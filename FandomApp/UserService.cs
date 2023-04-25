@@ -50,6 +50,7 @@ public class UserService{
         byte[] hash = key.GetBytes(32);
 
         Profile newProfile = new Profile("..name", "..pronouns", 0, "..country", "..city");
+        //add validation make sure username is unique
         User newUser = new User(username, newProfile);
         newUser.Salt = salt;
         newUser.Hash = hash;
@@ -61,7 +62,7 @@ public class UserService{
         try{
             currentUser = GetUser(username);}
         catch{
-            throw new ArgumentException("Username does not exist, Create account");}
+            throw new ArgumentException("Invalid User, Create account");}
         //getting hash of password input
         Rfc2898DeriveBytes key = new Rfc2898DeriveBytes(password, currentUser.Salt, Iterations);
         byte[] hash = key.GetBytes(32);

@@ -18,8 +18,8 @@ namespace UserInfo{
 
         public List<Event> Events {get;} = new();
         public List<Fandom> Fandoms {get;} = new();
-        public byte[] Salt{get;set;}
-        public byte[] Hash{get;set;}
+        public byte[] Salt {get;set;}
+        public byte[] Hash {get;set;}
 
         
         private User(){}
