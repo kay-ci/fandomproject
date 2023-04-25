@@ -1,5 +1,6 @@
 namespace UserInfo{
     public class Profile{
+        public int ProfileId {get; set;}
         private string? _name;
         private string? _pronouns;
         private int _age;
@@ -52,6 +53,9 @@ namespace UserInfo{
                 _city = value;
             }
         }
+        public List<Category>? Categories {get; set;}
+        public List<Fandom>? Fandoms {get; set;}
+        public List<Badge>? Badges {get; set;} 
         public string? Description {
             get{return _description;} 
             set{if (string.IsNullOrEmpty(value)){
@@ -60,17 +64,14 @@ namespace UserInfo{
                 _description = value;
             }
         }
-        public List<Fandom>? Fandoms {get; set;}
-        public List<string>? Categories {get; set;}
-        public List<string>? Badges {get; set;} 
         public string? Picture {get; set;}
-        public List<string>? Interests {get; set;}
+        public string? Interests {get; set;}
         public User user {get; set;} = null!;
         public int userID {get; set;}
 
         private Profile(){}
 
-        public Profile(string name, string pronouns, int age, string country,string city, List<string>categories, List<Fandom> fandoms, List<string> badges, string description, string picture, List<string> interests){
+        public Profile(string name, string pronouns, int age, string country,string city, List<Category>categories, List<Fandom> fandoms, List<Badge> badges, string description, string picture, string interests){
             if (!IsValid(name) || !IsValid(pronouns) || !IsValid(country) || !IsValid(city)){
                 throw new ArgumentException ("String field cannot be null");
             }
@@ -96,23 +97,24 @@ namespace UserInfo{
             if (age < 0 || age > 130){
                 throw new ArgumentException ("Age should be between 0-130");
             }
+            
             _name = name;
             _pronouns = pronouns;
             _age = age;
             _country = country;
             _city = city;
             _description = " ";
-            Categories = new List<string>();
+            Categories = new List<Category>();
             Fandoms = new List<Fandom>();
-            Badges = new List<string>();
+            Badges = new List<Badge>();
             Picture = "default/pic/url";
-            Interests = new List<string>();
+            Interests = "";
         }
         // this is only to clear the data for visuals but will not be applied to the database
         // this might get split into smaller methods 
         public void ClearProfile(Login UserManager){
             if(Interests != null)
-            Interests.Clear();
+            Interests = "Interests";
             if(Categories != null)
             Categories.Clear();
             if(Fandoms != null)

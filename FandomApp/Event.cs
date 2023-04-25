@@ -1,10 +1,15 @@
 using UserInfo;
+using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations.Schema;
 public class Event
 {
+    
+    public int EventId {get; set;}
     private int _minAge;
     private string _title;
     private DateTime _date;
     private string _location;
+    public List<Category> Categories {get; set;}
     public string Title 
     {
         get{ return _title;} 
@@ -35,7 +40,6 @@ public class Event
             _location = value;
         }
     }
-    public List<string>? Categories {get; set;}
     public int MinAge {
         get{ return _minAge; } 
         private set
@@ -47,14 +51,13 @@ public class Event
             _minAge = value;
         }
     }
-
     public User Owner {get; set;}
     public List<User>? Attendees {get; set;} = new();
 
     
     //constructor
     private Event(){}
-    public Event(string title, DateTime date, string location, List<String> categories, int minAge, User owner) {
+    public Event(string title, DateTime date, string location, List<Category> categories, int minAge, User owner) {
 
         this.Title = title;
         this.Date = date;
