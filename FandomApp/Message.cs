@@ -1,23 +1,58 @@
-namespace userInfo{
+namespace UserInfo{
     public class Message{
-        public int id {get{return this.id;}}
-        public User sender {get{return this.sender;} set{this.sender = value;}}
-        public List<User> recipients = new List<User>();
-        public DateTime timesent {get{return this.timesent;} set{this.timesent = value;}}
-        public string text {get{return this.text;} set{this.text = value;}}
+        private string _text;
+        private string _title;
+        public int Id {get; set;}
+        public UserMessage Sender {get; set;} = null!;
+        public List<UserMessage> Recipients = new();
+        public DateTime Timesent {get; set;}
+        public string Text {
+            get{return _text;} 
+            set{ 
+                if (!IsValid(value)){
+                    throw new ArgumentException("Text property cannot be null or whitespace");
+                }
+                _text = value;
+            }
+        }
+        public string Title {
+            get{return _title;} 
+            set{
+                if (!IsValid(value)){
+                    throw new ArgumentException("Title cannot be null or whitespace");
+                }
+                _title = value;
+            }
+        }
         //This field determines if the message has been read or not. Will get updated by UserMessage
-        public bool seen {get{return this.seen;}set{this.seen = value;}}
-        //Basic constructor
-        public Message(User sender, List<User> recipients, string text){
-            this.sender = sender;
-            this.timesent = DateTime.Now;
-            this.text = text;
-            this.seen = false;
-            foreach(User user in recipients){
-                this.recipients.Add(user);
+        public bool Seen {get; set;}
+
+        private Message(){}
+        //Basic constructor, validation done in UserMessage for text
+        public Message(UserMessage sender, List<UserMessage> recipients, string text, string title){
+            if(!IsValid(text) || !IsValid(title)){
+                throw new ArgumentException("text can not be null");
+            }
+            if(!IsValid(title)){
+                throw new ArgumentException("title can not be null");
+            }
+            this.Sender = sender;
+            this.Timesent = DateTime.Now;
+            this.Text = text;
+            this.Title = title;
+            this.Seen = false;
+            this.Recipients = new List<UserMessage>();
+            foreach(UserMessage user in recipients){
+                this.Recipients.Add(user);
             }
         }
         //This method is accessed by UserMessage inside of ReadMessage. Will make the field true.
-        public void MessageIsRead(){ this.seen = true; }
+        public void MessageIsRead(){ this.Seen = true; }
+        public bool IsValid(string field){
+            if (string.IsNullOrWhiteSpace(field)){
+                return false;
+            }
+            return true;
+        }
     }
 }
