@@ -1,5 +1,6 @@
 namespace UserInfo{
     public class Profile{
+        public int ProfileId {get; set;}
         private string _name;
         private string _pronouns;
         private int _age;
@@ -51,18 +52,18 @@ namespace UserInfo{
                 _city = value;
             }
         }
-        public List<string>? Categories {get; set;}
+        public List<Category>? Categories {get; set;}
         public List<Fandom>? Fandoms {get; set;}
-        public List<string>? Badges {get; set;} 
+        public List<Badge>? Badges {get; set;} 
         public string? Description {get; set;}
         public string? Picture {get; set;}
-        public List<string>? Interests {get; set;}
+        public string? Interests {get; set;}
         public User user {get; set;} = null!;
         public int userID {get; set;}
 
         private Profile(){}
 
-        public Profile(string name, string pronouns, int age, string country,string city, List<string>categories, List<Fandom> fandoms, List<string> badges, string description, string picture, List<string> interests){
+        public Profile(string name, string pronouns, int age, string country,string city, List<Category>categories, List<Fandom> fandoms, List<Badge> badges, string description, string picture, string interests){
             if (!IsValid(name) || !IsValid(pronouns) || !IsValid(country) || !IsValid(city)){
                 throw new ArgumentException ("String field cannot be null");
             }
@@ -94,11 +95,11 @@ namespace UserInfo{
             Country = country;
             City = city;
             Description = " ";
-            Categories = new List<string>();
+            Categories = new List<Category>();
             Fandoms = new List<Fandom>();
-            Badges = new List<string>();
+            Badges = new List<Badge>();
             Picture = "default/pic/url";
-            Interests = new List<string>();
+            Interests = "";
         }
 
         // this helper validates string fields that should not be null or contain numbers
@@ -120,7 +121,7 @@ namespace UserInfo{
         // this might get split into smaller methods 
         public void ClearProfile(Login UserManager){
             if(Interests != null)
-            Interests.Clear();
+            Interests = "Interests";
             if(Categories != null)
             Categories.Clear();
             if(Fandoms != null)

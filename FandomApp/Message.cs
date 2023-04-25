@@ -1,6 +1,9 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace UserInfo{
     public class Message{
         public int Id {get; set;}
+        [NotMapped]
         public UserMessage Sender {get; set;} = null!;
         public List<UserMessage> Recipients = new();
         public DateTime Timesent {get; set;}
