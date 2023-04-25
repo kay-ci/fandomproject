@@ -11,15 +11,26 @@ public class UserService{
     private UserService(){
     }
     
-    public static UserService getInstance(){
+    public static UserService GetInstance(){
         if(_instance is null){
             _instance = new UserService();
         }
         return _instance;
     }
 
-    public void setLibraryContext(FanAppContext context){
+// Do not forget to set context in the class using this service
+    public void SetLibraryContext(FanAppContext context){
         _context = context;
     }
 
+    public List<User> GetUsers(){}
+    public User GetUser(int id){}
+    public Login AddUser(){}
+    public void UpdateUser(Login currentUser){}
+    public Profile GetProfile(int userId){}
+    public void AddProfile(int id){}
+    public void UpdateProfile(){}
+
+    public void Login(Login currentUser){}
+    public void Logoff(){}
 }
