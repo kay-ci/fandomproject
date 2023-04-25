@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+using System.Security.Cryptography;
 public class UserService{
     private static UserService? _instance;
     private FanAppContext _context = null!;
@@ -25,19 +25,43 @@ public class UserService{
 
     public List<User> GetUsers(){
         List<User> userList = _context.FandomUsers
-            .Include(user => user.Profile)
-            .Include(user => user.Fandom)
-            .Include(user => user.Event)
+            .Include(user => user.UserProfile)
+            .Include(user => user.Fandoms)
+            .Include(user => user.Events)
+            .Include(user => user.Messages)
             .OrderBy(user => user.userID)
             .ToList<User>();
+        return userList;
     }
-    public User GetUser(int id){}
-    public Login AddUser(){}
-    public void UpdateUser(Login currentUser){}
-    public Profile GetProfile(int userId){}
-    public void AddProfile(int id){}
-    public void UpdateProfile(){}
+    public User GetUser(string username){
+        var query = from user in _context.FandomUsers
+           where user.Username == username
+           select user;
+        var fetcheduser = query.First<User>();
+        return fetcheduser;
+    }
+    public void createAccount(string username, string password){
+        byte[] salt = new byte[8];
+        using (RNGCryptoServiceProvider rngCsp = new RNGCryptoServiceProvider()){
+            rngCsp.GetBytes(salt);
+        }
+        int iterations = 1000;
+        Rfc2898DeriveBytes key = new Rfc2898DeriveBytes(password, salt, iterations);
+        byte[] hash = key.GetBytes(32);
 
-    public void Login(Login currentUser){}
-    public void Logoff(){}
+        Profile newProfile = new Profile("..name", "..pronouns", 0, "..country", "..city");
+        User newUser = new User(username, newProfile);
+        newUser.Salt = salt;
+        newUser.Hash = hash;
+        _context.FandomUsers.Add(newUser);
+        _context.SaveChanges();
+    }
+    // public Login AddUser(){}
+    // public void UpdateUser(Login currentUser){}
+    // public Profile GetProfile(int userId){}
+    // public void AddProfile(int id){}
+    // public void UpdateProfile(){}
+
+    // public void Login(Login currentUser){}
+    // public void Logoff(){}
 }

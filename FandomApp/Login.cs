@@ -9,8 +9,4 @@ public class Login {
         this.CurrentUser = CurrentUser;
     }
 
-    public void Register_User(){
-        //Now we register the user that is logged in (CurrentUser)
-        
-    }
 }
