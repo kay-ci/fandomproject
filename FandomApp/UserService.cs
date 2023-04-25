@@ -67,7 +67,7 @@ public class UserService{
         Rfc2898DeriveBytes key = new Rfc2898DeriveBytes(password, currentUser.Salt, Iterations);
         byte[] hash = key.GetBytes(32);
         //comparing hashes 
-        if(currentUser.Hash == hash){
+        if(currentUser.Hash.SequenceEqual(hash)){
             return new Login(currentUser);
         }
         else throw new ArgumentException("Wrong credentials provided");

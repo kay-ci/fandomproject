@@ -1,10 +1,13 @@
 namespace FandomAppTests;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography;
 using Moq;
 using UserInfo;
 
+
 [TestClass]
 public class UserServiceTests{
+    public const int Iterations = 1000;
     [TestMethod]
     public void GetAllUsers_getsAllUsers()
     {
@@ -91,9 +94,20 @@ public class UserServiceTests{
     public void LogInTest(){
         //Arrange
         var listdata = new List<User>();
-        listdata.Add(new User("KayciUsername", new Profile("Kayci", "she/her", 19, "Canada", "Montreal")));
+        listdata.Add(new User("User101", new Profile("Kayci", "she/her", 19, "Canada", "Montreal")));
         listdata.Add(new User("liliUsername", new Profile("Lili", "they/them", 20, "Ireland", "Dublin")));
         listdata.Add(new User("bestUser", new Profile("Jim", "he/him", 16, "Canada", "Laval")));
+
+        //creating hashed password to test Log In method
+        byte[] salt = new byte[8];
+        using (RNGCryptoServiceProvider rngCsp = new RNGCryptoServiceProvider()){
+            rngCsp.GetBytes(salt);
+        }
+        Rfc2898DeriveBytes key = new Rfc2898DeriveBytes("potato101", salt, Iterations);
+        byte[] hash = key.GetBytes(32);
+
+        listdata[0].Hash = hash;
+        listdata[0].Salt = salt;
 
         var data = listdata.AsQueryable();
 
@@ -110,8 +124,7 @@ public class UserServiceTests{
         service.setLibraryContext(mockContext.Object);
 
         //Act
-        service.createAccount("User101", "potato101");
-        Login loggedInUser = service.LogIn("User101", "potato101")
+        Login loggedInUser = service.LogIn("User101", "potato101");
 
         //Assert
         Assert.AreEqual("User101", loggedInUser.CurrentUser.Username);
