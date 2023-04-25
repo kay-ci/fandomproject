@@ -8,6 +8,7 @@ using System.Security.Cryptography;
 public class UserService{
     private static UserService? _instance;
     private FanAppContext _context = null!;
+    public const int Iterations = 1000;
     private UserService(){
     }
     
@@ -45,8 +46,7 @@ public class UserService{
         using (RNGCryptoServiceProvider rngCsp = new RNGCryptoServiceProvider()){
             rngCsp.GetBytes(salt);
         }
-        int iterations = 1000;
-        Rfc2898DeriveBytes key = new Rfc2898DeriveBytes(password, salt, iterations);
+        Rfc2898DeriveBytes key = new Rfc2898DeriveBytes(password, salt, Iterations);
         byte[] hash = key.GetBytes(32);
 
         Profile newProfile = new Profile("..name", "..pronouns", 0, "..country", "..city");
@@ -56,12 +56,24 @@ public class UserService{
         _context.FandomUsers.Add(newUser);
         _context.SaveChanges();
     }
-    // public Login AddUser(){}
+    public Login LogIn(string username, string password){
+        User currentUser;
+        try{
+            currentUser = GetUser(username);}
+        catch{
+            throw new ArgumentException("Username does not exist, Create account");}
+        //getting hash of password input
+        Rfc2898DeriveBytes key = new Rfc2898DeriveBytes(password, currentUser.Salt, Iterations);
+        byte[] hash = key.GetBytes(32);
+        //comparing hashes 
+        if(currentUser.Hash == hash){
+            return new Login(currentUser);
+        }
+        else throw new ArgumentException("Wrong credentials provided");
+    }
     // public void UpdateUser(Login currentUser){}
     // public Profile GetProfile(int userId){}
     // public void AddProfile(int id){}
     // public void UpdateProfile(){}
-
-    // public void Login(Login currentUser){}
     // public void Logoff(){}
 }
