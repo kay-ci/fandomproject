@@ -156,5 +156,35 @@ public class UserServiceTests{
         //Assert
         Assert.AreEqual("User101", loggedInUser.CurrentUser.Username);
     }
-   
+    
+     [TestMethod]
+    public void GetProfileTest()
+    {
+        //Arrange
+        var listdata = new List<Profile>();
+        listdata.Add(new Profile("Kayci", "she/her", 19, "Canada", "Montreal"));
+        listdata.Add(new Profile("Lili", "they/them", 20, "Ireland", "Dublin"));
+        listdata.Add(new Profile("Christopher", "he/him", 16, "Canada", "Laval"));
+
+        var data = listdata.AsQueryable();
+
+        var mockSet = new Mock<DbSet<User>>();
+        mockSet.As<IQueryable<User>>().Setup(m => m.Provider).Returns(data.Provider);
+        mockSet.As<IQueryable<User>>().Setup(m => m.Expression).Returns(data.Expression);
+        mockSet.As<IQueryable<User>>().Setup(m => m.ElementType).Returns(data.ElementType);
+        mockSet.As<IQueryable<User>>().Setup(m => m.GetEnumerator()).Returns(data.GetEnumerator());
+ 
+        var mockContext = new Mock<FanAppContext>();
+        mockContext.Setup(m => m.FandomUsers).Returns(mockSet.Object);
+        
+        var service = UserService.getInstance();
+        service.setLibraryContext(mockContext.Object);
+
+        //Act
+        User user = service.GetUser("KayciUsername");
+
+        //Assert
+        Assert.AreEqual("KayciUsername", user.Username);
+        Assert.AreEqual(19, user.UserProfile.Age);
+    }
 }
