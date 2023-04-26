@@ -7715,19 +7715,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\jenny\\.nuget\\packages\\": {}
+    "C:\\Users\\1932233\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\Users\\jenny\\Documents\\W2023\\Programming IV\\FandomProject\\FandomAppTests\\FandomAppTests.csproj",
+      "projectUniqueName": "C:\\Users\\1932233\\Desktop\\temp\\fandomproject\\FandomAppTests\\FandomAppTests.csproj",
       "projectName": "FandomAppTests",
-      "projectPath": "c:\\Users\\jenny\\Documents\\W2023\\Programming IV\\FandomProject\\FandomAppTests\\FandomAppTests.csproj",
-      "packagesPath": "C:\\Users\\jenny\\.nuget\\packages\\",
-      "outputPath": "c:\\Users\\jenny\\Documents\\W2023\\Programming IV\\FandomProject\\FandomAppTests\\obj\\",
+      "projectPath": "C:\\Users\\1932233\\Desktop\\temp\\fandomproject\\FandomAppTests\\FandomAppTests.csproj",
+      "packagesPath": "C:\\Users\\1932233\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\1932233\\Desktop\\temp\\fandomproject\\FandomAppTests\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\jenny\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\1932233\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net6.0"
@@ -7739,8 +7739,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "c:\\Users\\jenny\\Documents\\W2023\\Programming IV\\FandomProject\\FandomApp\\FandomApp.csproj": {
-              "projectPath": "c:\\Users\\jenny\\Documents\\W2023\\Programming IV\\FandomProject\\FandomApp\\FandomApp.csproj"
+            "C:\\Users\\1932233\\Desktop\\temp\\fandomproject\\FandomApp\\FandomApp.csproj": {
+              "projectPath": "C:\\Users\\1932233\\Desktop\\temp\\fandomproject\\FandomApp\\FandomApp.csproj"
             }
           }
         }
@@ -7788,7 +7788,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.408\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.405\\RuntimeIdentifierGraph.json"
       }
     }
   }

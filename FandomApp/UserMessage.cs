@@ -19,6 +19,7 @@ namespace UserInfo{
         //This one is for a completely new user
         public UserMessage(User user){
             this.user = user;
+            this.UserId = user.userID;
             Inbox = new List<Message>();
             Outbox = new List<Message>();
         }
