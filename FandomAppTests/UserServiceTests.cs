@@ -9,7 +9,7 @@ using UserInfo;
 public class UserServiceTests{
     public const int Iterations = 1000;
     [TestMethod]
-    public void GetAllUsers_getsAllUsers()
+    public void GetAllUsers()  
     {
         //Arrange
         var listdata = new List<User>();
@@ -29,7 +29,7 @@ public class UserServiceTests{
         mockContext.Setup(m => m.FandomUsers).Returns(mockSet.Object);
         
         var service = UserService.getInstance();
-        service.setLibraryContext(mockContext.Object);
+        service.setFanAppContext(mockContext.Object);
 
         //Act
         var users = service.GetUsers();
@@ -62,7 +62,7 @@ public class UserServiceTests{
         mockContext.Setup(m => m.FandomUsers).Returns(mockSet.Object);
         
         var service = UserService.getInstance();
-        service.setLibraryContext(mockContext.Object);
+        service.setFanAppContext(mockContext.Object);
 
         //Act
         User user = service.GetUser("KayciUsername");
@@ -76,14 +76,26 @@ public class UserServiceTests{
     public void CreateAccountTest()
     {
         //Arrange
+        var listdata = new List<User>();
+        listdata.Add(new User("KayciUsername", new Profile("Kayci", "she/her", 19, "Canada", "Montreal")));
+        listdata.Add(new User("liliUsername", new Profile("Lili", "they/them", 20, "Ireland", "Dublin")));
+        listdata.Add(new User("bestUser", new Profile("Jim", "he/him", 16, "Canada", "Laval")));
+        var data = listdata.AsQueryable();
+
         var mockSet = new Mock<DbSet<User>>();
+        mockSet.As<IQueryable<User>>().Setup(m => m.Provider).Returns(data.Provider);
+        mockSet.As<IQueryable<User>>().Setup(m => m.Expression).Returns(data.Expression);
+        mockSet.As<IQueryable<User>>().Setup(m => m.ElementType).Returns(data.ElementType);
+        mockSet.As<IQueryable<User>>().Setup(m => m.GetEnumerator()).Returns(data.GetEnumerator());
+ 
         var mockContext = new Mock<FanAppContext>();
         mockContext.Setup(m => m.FandomUsers).Returns(mockSet.Object);
+        
         var service = UserService.getInstance();
-        service.setLibraryContext(mockContext.Object);
+        service.setFanAppContext(mockContext.Object);
 
         //Act
-        service.createAccount("User101", "potato101");
+        service.createAccount("newUser", "potato101");
 
         //Assert
         mockSet.Verify(m => m.Add(It.IsAny<User>()), Times.Once());
@@ -108,7 +120,7 @@ public class UserServiceTests{
         mockContext.Setup(m => m.FandomUsers).Returns(mockSet.Object);
         
         var service = UserService.getInstance();
-        service.setLibraryContext(mockContext.Object);
+        service.setFanAppContext(mockContext.Object);
 
         //Act
         Exception exception = Assert.ThrowsException<ArgumentException>(() => service.createAccount("User101", "potato101"));
@@ -148,7 +160,7 @@ public class UserServiceTests{
         mockContext.Setup(m => m.FandomUsers).Returns(mockSet.Object);
         
         var service = UserService.getInstance();
-        service.setLibraryContext(mockContext.Object);
+        service.setFanAppContext(mockContext.Object);
 
         //Act
         Login loggedInUser = service.LogIn("User101", "potato101");
@@ -168,23 +180,25 @@ public class UserServiceTests{
 
         var data = listdata.AsQueryable();
 
-        var mockSet = new Mock<DbSet<User>>();
-        mockSet.As<IQueryable<User>>().Setup(m => m.Provider).Returns(data.Provider);
-        mockSet.As<IQueryable<User>>().Setup(m => m.Expression).Returns(data.Expression);
-        mockSet.As<IQueryable<User>>().Setup(m => m.ElementType).Returns(data.ElementType);
-        mockSet.As<IQueryable<User>>().Setup(m => m.GetEnumerator()).Returns(data.GetEnumerator());
+        var mockSet = new Mock<DbSet<Profile>>();
+        mockSet.As<IQueryable<Profile>>().Setup(m => m.Provider).Returns(data.Provider);
+        mockSet.As<IQueryable<Profile>>().Setup(m => m.Expression).Returns(data.Expression);
+        mockSet.As<IQueryable<Profile>>().Setup(m => m.ElementType).Returns(data.ElementType);
+        mockSet.As<IQueryable<Profile>>().Setup(m => m.GetEnumerator()).Returns(data.GetEnumerator());
  
         var mockContext = new Mock<FanAppContext>();
-        mockContext.Setup(m => m.FandomUsers).Returns(mockSet.Object);
+        mockContext.Setup(m => m.FandomProfiles).Returns(mockSet.Object);
         
         var service = UserService.getInstance();
-        service.setLibraryContext(mockContext.Object);
+        service.setFanAppContext(mockContext.Object);
 
         //Act
-        User user = service.GetUser("KayciUsername");
+        User loggedInUser = new User("User101", new Profile("Kayci", "she/her", 19, "Canada", "Montreal"));
+        Login userManager = new Login(loggedInUser);
+        Profile profile = service.GetProfile(userManager.CurrentUser.userID);
 
         //Assert
-        Assert.AreEqual("KayciUsername", user.Username);
-        Assert.AreEqual(19, user.UserProfile.Age);
+        Assert.AreEqual("she/her", profile.Pronouns);
+        Assert.AreEqual("Kayci", profile.Name);
     }
 }

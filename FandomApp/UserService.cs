@@ -20,7 +20,7 @@ public class UserService{
     }
 
 // Do not forget to set context in the class using this service
-    public void setLibraryContext(FanAppContext context){
+    public void setFanAppContext(FanAppContext context){
         _context = context;
     }
 
@@ -56,12 +56,13 @@ public class UserService{
         if (checkUser != null){
             throw new ArgumentException("User with that username already exist");
         }
-        
-        User newUser = new User(username, newProfile);
-        newUser.Salt = salt;
-        newUser.Hash = hash;
-        _context.FandomUsers.Add(newUser);
-        _context.SaveChanges();
+        else{
+            User newUser = new User(username, newProfile);
+            newUser.Salt = salt;
+            newUser.Hash = hash;
+            _context.FandomUsers.Add(newUser);
+            _context.SaveChanges();
+        }
     }
     public Login LogIn(string username, string password){
         User currentUser;
