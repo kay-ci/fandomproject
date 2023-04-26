@@ -87,7 +87,13 @@ public class UserService{
         userManager.CurrentUser.Fandoms = UpdatedUser.Fandoms;
         _context.SaveChanges();
     }
-    // public Profile GetProfile(int userId){}
+    public Profile GetProfile(int userId){
+        var query = from profile in _context.FandomProfiles
+           where profile.userID == userId
+           select profile;
+        var fetchedProfile = query.First<Profile>();
+        return fetchedProfile;
+    }
     // public void AddProfile(int id){}
     // public void UpdateProfile(){}
     

@@ -89,6 +89,33 @@ public class UserServiceTests{
         mockSet.Verify(m => m.Add(It.IsAny<User>()), Times.Once());
         mockContext.Verify(m => m.SaveChanges(), Times.Once());
     }
+    [TestMethod]
+    public void CreateAccountFailTest()
+    {
+        //Arrange
+        string expectedMessage = "User with that username already exist";
+        var listdata = new List<User>();
+        listdata.Add(new User("User101", new Profile("Kayci", "she/her", 19, "Canada", "Montreal")));
+        var data = listdata.AsQueryable();
+
+        var mockSet = new Mock<DbSet<User>>();
+        mockSet.As<IQueryable<User>>().Setup(m => m.Provider).Returns(data.Provider);
+        mockSet.As<IQueryable<User>>().Setup(m => m.Expression).Returns(data.Expression);
+        mockSet.As<IQueryable<User>>().Setup(m => m.ElementType).Returns(data.ElementType);
+        mockSet.As<IQueryable<User>>().Setup(m => m.GetEnumerator()).Returns(data.GetEnumerator());
+ 
+        var mockContext = new Mock<FanAppContext>();
+        mockContext.Setup(m => m.FandomUsers).Returns(mockSet.Object);
+        
+        var service = UserService.getInstance();
+        service.setLibraryContext(mockContext.Object);
+
+        //Act
+        Exception exception = Assert.ThrowsException<ArgumentException>(() => service.createAccount("User101", "potato101"));
+
+        //Assert
+        Assert.AreEqual(expectedMessage, exception.Message);
+    }
 
     [TestMethod]
     public void LogInTest(){
