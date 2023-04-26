@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.RegularExpressions;
 
 namespace UserInfo{
@@ -15,12 +17,16 @@ namespace UserInfo{
         }
         public Profile? UserProfile {get; set;}
         public UserMessage Messages {get; set;}
+        [InverseProperty("Attendees")]
 
         public List<Event> Events {get;} = new();
         public List<Fandom> Fandoms {get;} = new();
         public byte[] Salt {get;set;}
         public byte[] Hash {get;set;}
 
+        public byte[] Hash {get; set;}
+        public byte[] Salt {get; set;}
+ 
         
         private User(){}
         //constructors

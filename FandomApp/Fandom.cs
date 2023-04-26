@@ -1,6 +1,7 @@
 namespace UserInfo;
 public class Fandom
 {
+    public int FandomId {get; set;}
     private string _name;
     private string _category;
     private string _description;
