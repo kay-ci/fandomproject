@@ -51,7 +51,7 @@ public class UserService{
 
         Profile newProfile = new Profile("..name", "..pronouns", 0, "..country", "..city");
     
-        //add validation make sure username is unique
+        //making sure username is unique
         User checkUser = GetUser(username);
         if (checkUser != null){
             throw new ArgumentException("User with that username already exist");
@@ -78,9 +78,17 @@ public class UserService{
         }
         else throw new ArgumentException("Wrong credentials provided");
     }
-    // public void UpdateUser(Login currentUser){}
+    public void Logoff(Login userManager){
+        userManager.CurrentUser = null;
+    }
+    public void UpdateUser(Login userManager, User UpdatedUser){
+        userManager.CurrentUser.UserProfile = UpdatedUser.UserProfile;
+        userManager.CurrentUser.Events = UpdatedUser.Events;
+        userManager.CurrentUser.Fandoms = UpdatedUser.Fandoms;
+        _context.SaveChanges();
+    }
     // public Profile GetProfile(int userId){}
     // public void AddProfile(int id){}
     // public void UpdateProfile(){}
-    // public void Logoff(){}
+    
 }

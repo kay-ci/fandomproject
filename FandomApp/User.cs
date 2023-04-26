@@ -19,10 +19,10 @@ namespace UserInfo{
         public UserMessage Messages {get; set;}
         [InverseProperty("Attendees")]
 
-        public List<Event> Events {get;} = new();
-        public List<Fandom> Fandoms {get;} = new();
-        public byte[] Salt {get;set;}
-        public byte[] Hash {get;set;}
+        public List<Event> Events {get; set;} = new();
+        public List<Fandom> Fandoms {get; set;} = new();
+        public byte[] Salt {get; set;}
+        public byte[] Hash {get; set;}
         
         private User(){}
         //constructors
