@@ -8,10 +8,10 @@ public class EventTests{
     public void AddAttendee_AttendeeUnderEventMinAge_ThrowException()
     {
         //Arrange
-        List<string> categories = new List<string>();
+        List<Category> categories = new List<Category>();
         List<Fandom> fandoms = new List<Fandom>();
-        List<string> badges = new List<string>();
-        List<string> interests = new List<string>();
+        List<Badge> badges = new List<Badge>();
+        string interests = "List of interests";
 
         List<Event> events = new List<Event>();
     
@@ -35,10 +35,10 @@ public class EventTests{
     public void SetMinAge_MinAgeUnder13_ThrowException()
     {
         //Arrange
-        List<string> categories = new List<string>();
+       List<Category> categories = new List<Category>();
         List<Fandom> fandoms = new List<Fandom>();
-        List<string> badges = new List<string>();
-        List<string> interests = new List<string>();
+        List<Badge> badges = new List<Badge>();
+        string interests = "List of interests";
         List<Event> events = new List<Event>();
     
         Profile profile = new Profile("Owner", "they/them", 21, "Canada", "Montreal", categories, fandoms, badges, "description", "pictures", interests);

@@ -23,10 +23,6 @@ namespace UserInfo{
         public List<Fandom> Fandoms {get;} = new();
         public byte[] Salt {get;set;}
         public byte[] Hash {get;set;}
-
-        public byte[] Hash {get; set;}
-        public byte[] Salt {get; set;}
- 
         
         private User(){}
         //constructors
