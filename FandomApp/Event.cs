@@ -51,6 +51,7 @@ public class Event
             _minAge = value;
         }
     }
+    [NotMapped]
     public User Owner {get; set;}
     public List<User>? Attendees {get; set;} = new();
 

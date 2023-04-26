@@ -50,7 +50,13 @@ public class UserService{
         byte[] hash = key.GetBytes(32);
 
         Profile newProfile = new Profile("..name", "..pronouns", 0, "..country", "..city");
+    
         //add validation make sure username is unique
+        User checkUser = GetUser(username);
+        if (checkUser != null){
+            throw new ArgumentException("User with that username already exist");
+        }
+        
         User newUser = new User(username, newProfile);
         newUser.Salt = salt;
         newUser.Hash = hash;
