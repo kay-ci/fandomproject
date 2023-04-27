@@ -268,7 +268,7 @@ public class UserServiceTests{
 
         //Act
         
-        Profile profile = service.GetProfile(userManager.CurrentUser.userID);
+        Profile profile = service.GetProfile(userManager.CurrentUser);
 
         //Assert
         Assert.AreEqual("she/her", profile.Pronouns);
