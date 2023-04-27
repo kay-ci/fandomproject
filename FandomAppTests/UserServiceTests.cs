@@ -187,7 +187,39 @@ public class UserServiceTests{
         //Assert
         Assert.IsTrue(service.validPassword(userManager.CurrentUser, "newPassword101"));
     }
-    
+    [TestMethod]
+    public void GetAllProfilesTest()  
+    {
+        //Arrange
+        var listdata = new List<Profile>();
+        listdata.Add(new Profile("Kayci", "she/her", 19, "Canada", "Montreal"));
+        listdata.Add(new Profile("Aya", "she/her", 18, "Ireland", "Dublin"));
+        listdata.Add(new Profile("Christopher", "he/him", 26, "Canada", "Laval"));
+
+        var data = listdata.AsQueryable();
+
+        var mockSet = new Mock<DbSet<Profile>>();
+        mockSet.As<IQueryable<Profile>>().Setup(m => m.Provider).Returns(data.Provider);
+        mockSet.As<IQueryable<Profile>>().Setup(m => m.Expression).Returns(data.Expression);
+        mockSet.As<IQueryable<Profile>>().Setup(m => m.ElementType).Returns(data.ElementType);
+        mockSet.As<IQueryable<Profile>>().Setup(m => m.GetEnumerator()).Returns(data.GetEnumerator());
+ 
+        var mockContext = new Mock<FanAppContext>();
+        mockContext.Setup(m => m.FandomProfiles).Returns(mockSet.Object);
+        
+        var service = UserService.getInstance();
+        service.setFanAppContext(mockContext.Object);
+
+        //Act
+        var profiles = service.GetProfiles();
+
+        //Assert
+        Assert.AreEqual(3, profiles.Count);
+        Assert.AreEqual("Kayci", profiles[0].Name);
+        Assert.AreEqual("Ireland", profiles[1].Country);
+        Assert.AreEqual(26, profiles[2].Age);
+    }
+
      [TestMethod]
     public void GetProfileTest()
     {
