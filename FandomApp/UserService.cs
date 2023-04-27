@@ -50,25 +50,15 @@ public class UserService{
         if(string.IsNullOrWhiteSpace(password)){
             throw new ArgumentNullException();
         }
-        //creatign hashed password
-        byte[] salt = new byte[8];
-        using (RNGCryptoServiceProvider rngCsp = new RNGCryptoServiceProvider()){
-            rngCsp.GetBytes(salt);
-        }
-        Rfc2898DeriveBytes key = new Rfc2898DeriveBytes(password, salt, Iterations);
-        byte[] hash = key.GetBytes(32);
-
-        Profile newProfile = new Profile("..name", "..pronouns", 0, "..country", "..city");
-    
-        //making sure username is unique
+        // Make sure username is not already taken
         User? checkUser = GetUser(username);
         if (checkUser != null){
             throw new ArgumentException("User with that username already exist");
         }
         else{
+            Profile newProfile = new Profile("..name", "..pronouns", 0, "..country", "..city");
             User newUser = new User(username, newProfile);
-            newUser.Salt = salt;
-            newUser.Hash = hash;
+            CreatePassword(newUser, password);
             _context.FandomUsers.Add(newUser);
             _context.SaveChanges();
         }
@@ -86,6 +76,16 @@ public class UserService{
     public void Logoff(Login userManager){
         userManager.CurrentUser = null;
     }
+    public void ChangePassword(Login userManager, string oldPassword, string newPassword){
+        if (string.IsNullOrWhiteSpace(newPassword)){
+            throw new ArgumentException("new password cannot be null");}
+        if (userManager.CurrentUser == null){
+            throw new ArgumentException("Current user is null");}
+
+        if (!validPassword(userManager.CurrentUser, oldPassword)){
+            throw new ArgumentException("");
+        }
+    }
     public void UpdateUser(Login userManager, User UpdatedUser){
         if (userManager.CurrentUser != null){
         userManager.CurrentUser.UserProfile = UpdatedUser.UserProfile;
@@ -100,17 +100,11 @@ public class UserService{
         var fetchedProfile = query.First<Profile>();
         return fetchedProfile;
     }
+    public void UpdateProfile(){}
     //This method will allow a user to change their password
-        public void ChangePassword(Login userManager, string newPassword){
-            if (string.IsNullOrWhiteSpace(newPassword)){
-                throw new ArgumentException("new password cannot be null");
-            };
-            
-            // set the currenly logged in users password
-        }
-    // public void UpdateProfile(){}
+        
     
-    // This helper method compares the logged in user's hash with the password's hash
+    // This helper method compares the logged in user's hash with the input password's hash
     public bool validPassword (User currentUser, string password){
         //hashing password
         Rfc2898DeriveBytes key = new Rfc2898DeriveBytes(password, currentUser.Salt, Iterations);
@@ -121,5 +115,18 @@ public class UserService{
             return true;
         }
         return false;
+    }
+    // This helper method creates a new password for a User
+    public void CreatePassword (User currentUser, string password){
+        //creating hashed password
+        byte[] salt = new byte[8];
+        using (RNGCryptoServiceProvider rngCsp = new RNGCryptoServiceProvider()){
+            rngCsp.GetBytes(salt);
+        }
+        Rfc2898DeriveBytes key = new Rfc2898DeriveBytes(password, salt, Iterations);
+        byte[] hash = key.GetBytes(32);
+
+        currentUser.Salt = salt;
+        currentUser.Hash = hash;
     }
 }
