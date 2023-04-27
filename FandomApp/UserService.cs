@@ -34,14 +34,18 @@ public class UserService{
             .ToList<User>();
         return userList;
     }
-    public User GetUser(string username){
+    public User? GetUser(string username){
+        User fetcheduser;
         var query = from user in _context.FandomUsers
            where user.Username == username
            select user;
-        var fetcheduser = query.First<User>();
+        try{
+            fetcheduser = query.First<User>();}
+        catch (InvalidOperationException){
+            return null;}
         return fetcheduser;
     }
-    public void createAccount(string username, string password){
+    public void CreateUser(string username, string password){
         byte[] salt = new byte[8];
         using (RNGCryptoServiceProvider rngCsp = new RNGCryptoServiceProvider()){
             rngCsp.GetBytes(salt);
@@ -95,7 +99,14 @@ public class UserService{
         var fetchedProfile = query.First<Profile>();
         return fetchedProfile;
     }
-    // public void AddProfile(int id){}
+    //This method will allow a user to change their password
+        public void ChangePassword(Login userManager, string newPassword){
+            if (string.IsNullOrWhiteSpace(newPassword)){
+                throw new ArgumentException("new password cannot be null");
+            };
+            
+            // set the currenly logged in users password
+        }
     // public void UpdateProfile(){}
     
 }

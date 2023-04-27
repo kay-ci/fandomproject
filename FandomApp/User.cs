@@ -47,15 +47,6 @@ namespace UserInfo{
             Events = new List<Event>();
         }
 
-        //This method will allow a user to change their password
-        public void ChangePassword(Login userManager, string newPassword){
-            if (string.IsNullOrWhiteSpace(newPassword)){
-                throw new ArgumentException("new password cannot be null");
-            };
-            
-            // set the currenly logged in users password
-        }
-
         public bool IsValidUsername(string username){
             if (string.IsNullOrWhiteSpace(username)){
                 return false;

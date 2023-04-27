@@ -73,13 +73,14 @@ public class UserServiceTests{
     }
 
     [TestMethod]
-    public void CreateAccountTest()
+    public void CreateUserTest()
     {
         //Arrange
         var listdata = new List<User>();
         listdata.Add(new User("KayciUsername", new Profile("Kayci", "she/her", 19, "Canada", "Montreal")));
         listdata.Add(new User("liliUsername", new Profile("Lili", "they/them", 20, "Ireland", "Dublin")));
         listdata.Add(new User("bestUser", new Profile("Jim", "he/him", 16, "Canada", "Laval")));
+
         var data = listdata.AsQueryable();
 
         var mockSet = new Mock<DbSet<User>>();
@@ -95,14 +96,14 @@ public class UserServiceTests{
         service.setFanAppContext(mockContext.Object);
 
         //Act
-        service.createAccount("newUser", "potato101");
+        service.CreateUser("newUser", "potato101");
 
         //Assert
         mockSet.Verify(m => m.Add(It.IsAny<User>()), Times.Once());
         mockContext.Verify(m => m.SaveChanges(), Times.Once());
     }
     [TestMethod]
-    public void CreateAccountFailTest()
+    public void CreateUserFailTest()
     {
         //Arrange
         string expectedMessage = "User with that username already exist";
@@ -123,7 +124,7 @@ public class UserServiceTests{
         service.setFanAppContext(mockContext.Object);
 
         //Act
-        Exception exception = Assert.ThrowsException<ArgumentException>(() => service.createAccount("User101", "potato101"));
+        Exception exception = Assert.ThrowsException<ArgumentException>(() => service.CreateUser("User101", "potato101"));
 
         //Assert
         Assert.AreEqual(expectedMessage, exception.Message);

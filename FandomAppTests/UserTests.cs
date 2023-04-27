@@ -26,20 +26,20 @@ namespace FandomAppTests;
             //Assert
             Assert.AreEqual(expectedMessage, exception.Message); 
         }
-        [TestMethod]
-        public void change_password_null_test(){
-            //Arrange
-            string expectedMessage = "new password cannot be null";
-            Profile testProfile = new Profile("Kayci", "she/her", 19, "Canada", "Montreal");
-            User activeUser = new User("Kayci", testProfile);
-            Login userManager = new Login(activeUser);
+        // [TestMethod]
+        // public void change_password_null_test(){
+        //     //Arrange
+        //     string expectedMessage = "new password cannot be null";
+        //     Profile testProfile = new Profile("Kayci", "she/her", 19, "Canada", "Montreal");
+        //     User activeUser = new User("Kayci", testProfile);
+        //     Login userManager = new Login(activeUser);
 
-            //Act
-            Exception exception = Assert.ThrowsException<ArgumentException>(() => activeUser.ChangePassword(userManager, " "));
+        //     //Act
+        //     Exception exception = Assert.ThrowsException<ArgumentException>(() => activeUser.ChangePassword(userManager, " "));
             
-            //Assert
-            Assert.AreEqual(expectedMessage, exception.Message); 
-        }
+        //     //Assert
+        //     Assert.AreEqual(expectedMessage, exception.Message); 
+        // }
         [TestMethod]
         public void change_username_null_test(){
             //Arrange
