@@ -73,6 +73,9 @@ public class UserService{
         CreatePassword(userManager.CurrentUser, newPassword);
         _context.SaveChanges();
     }
+    public void DeleteUser(Login UserManager){
+
+    }
     /// <summary>
     /// Method <c>GetProfiles</c> fetches all profiles from the table DbSet FandomProfiles.
     /// </summary>
@@ -89,9 +92,9 @@ public class UserService{
     /// <summary>
     /// Method <c>GetProfile</c> fetches a specific profile based on userId.
     /// </summary>
-    public Profile GetProfile(int userId){
+    public Profile GetProfile(User user){
         var query = from profile in _context.FandomProfiles
-           where profile.userID == userId
+           where profile.user == user
            select profile;
         var fetchedProfile = query.First<Profile>();
         return fetchedProfile;

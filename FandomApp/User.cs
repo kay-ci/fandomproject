@@ -60,5 +60,25 @@ namespace UserInfo{
             return true;
             
         }
+        public override bool Equals(object obj){
+            var item = obj as User;
+            if(ReferenceEquals(item, this)){
+                return true;
+            }
+            if(item == null && this == null){
+                return true;
+            }
+            if(item == null){
+                return false;
+            }
+            return (
+                this.Username == item.Username &&
+                this.UserProfile == item.UserProfile &&
+                this.Messages == item.Messages &&
+                this.Events == item.Events &&
+                this.Fandoms == item.Fandoms &&
+                this.Hash.SequenceEqual(item.Hash) &&
+                this.Salt.SequenceEqual(item.Salt));
+        }
     }
 }
