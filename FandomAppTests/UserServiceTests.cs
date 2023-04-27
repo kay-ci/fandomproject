@@ -1,10 +1,11 @@
 namespace FandomAppTests;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Cryptography;
 using Moq;
 using UserInfo;
 
-
+/// <summary>
+/// Class <c>UserServiceTests</c> Tests all interactions made in the Class UserService.
+/// </summary>
 [TestClass]
 public class UserServiceTests{
     public const int Iterations = 1000;
