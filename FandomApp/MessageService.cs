@@ -30,17 +30,17 @@ public class MessageService {
         return fetchedmsg;
     }
 
-    public UserMessage GetUserMessage(int UMId){
+    public UserMessage GetUserMessage(User usr){
         var query = from u_msg in _context.FandomUserMessages
-            where u_msg.UserMessageId == UMId
+            where u_msg.user == usr
             select u_msg;
         var fetchedUMSG = query.First<UserMessage>();
         return fetchedUMSG;
     }
 
-    public List<Message> GetBox(int UMId, bool getInbox){
+    public List<Message> GetBox(User usr, bool getInbox){
         var query = from u_msg in _context.FandomUserMessages
-            where u_msg.UserMessageId == UMId
+            where u_msg.user == usr
             select u_msg;
         var fetchedUMSG = query.First<UserMessage>();
         if(getInbox) return fetchedUMSG.Inbox;
@@ -61,9 +61,11 @@ public class MessageService {
         _context.SaveChanges();
     }
 
-    public void Edit_Message(int MessageId, string text, string title){
+    public void Edit_Message(Message message){
+        var text = message.Text;
+        var title = message.Title;
         var query = from msg in _context.FandomMessages
-            where msg.Id == MessageId
+            where msg.Title == title
             select msg;
         var fetchedmsg = query.First<Message>();
         fetchedmsg.Text = text;

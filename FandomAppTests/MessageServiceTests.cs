@@ -39,7 +39,7 @@ public class MessageServiceTests{
 
         //Act
         var Inbox_Test = new List<Message>();
-        Inbox_Test = service.GetBox(listdata[1].UserMessageId, true);
+        Inbox_Test = service.GetBox(listdata[1].user, true);
 
         //Assert
         Assert.AreEqual("test2", Inbox_Test[1].Text);
@@ -80,7 +80,7 @@ public class MessageServiceTests{
 
         //Act
         var Outbox_Test = new List<Message>();
-        Outbox_Test = service.GetBox(sender.Messages.UserMessageId, false);
+        Outbox_Test = service.GetBox(sender.Messages.user, false);
 
         //Assert
         Assert.AreEqual("test3", Outbox_Test[2].Text);
