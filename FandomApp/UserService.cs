@@ -23,7 +23,6 @@ public class UserService{
     public void setFanAppContext(FanAppContext context){
         _context = context;
     }
-
     public List<User> GetUsers(){
         List<User> userList = _context.FandomUsers
             .Include(user => user.UserProfile)
@@ -34,6 +33,7 @@ public class UserService{
             .ToList<User>();
         return userList;
     }
+    // This method returns a user with a given username 
     public User? GetUser(string username){
         User fetcheduser;
         var query = from user in _context.FandomUsers
@@ -45,7 +45,12 @@ public class UserService{
             return null;}
         return fetcheduser;
     }
+    // This method inserts a new user in the FandomUsers table
     public void CreateUser(string username, string password){
+        if(string.IsNullOrWhiteSpace(password)){
+            throw new ArgumentNullException();
+        }
+        //creatign hashed password
         byte[] salt = new byte[8];
         using (RNGCryptoServiceProvider rngCsp = new RNGCryptoServiceProvider()){
             rngCsp.GetBytes(salt);
