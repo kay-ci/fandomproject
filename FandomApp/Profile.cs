@@ -138,6 +138,32 @@ namespace UserInfo{
             else{
                 return true;
             }   
-        }  
+        }
+        public override bool Equals(object obj){
+            var item = obj as Profile;
+            if(ReferenceEquals(item, this)){
+                return true;
+            }
+            if(item == null && this == null){
+                return true;
+            }
+            if(item == null){
+                return false;
+            }
+            return(
+                this.Name == item.Name &&
+                this.Pronouns == item.Pronouns &&
+                this.Age == item.Age &&
+                this.Country == item.Country &&
+                this.City == item.City &&
+                this.Categories == item.Categories &&
+                this.Fandoms == item.Fandoms &&
+                this.Badges == item.Badges &&
+                this.Description == item._description &&
+                this.Picture == item.Picture &&
+                this.Interests == item.Interests &&
+                this.user == item.user
+            );
+        }
     }
 }
