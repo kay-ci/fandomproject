@@ -189,6 +189,26 @@ public class UserServiceTests{
         Assert.IsTrue(service.validPassword(userManager.CurrentUser, "newPassword101"));
     }
     [TestMethod]
+    public void change_password_null_test(){
+        //Arrange
+        var mockSet = new Mock<DbSet<Profile>>();
+        var mockContext = new Mock<FanAppContext>();
+        mockContext.Setup(m => m.FandomProfiles).Returns(mockSet.Object);
+        var service = UserService.getInstance();
+        service.setFanAppContext(mockContext.Object);
+
+        string expectedMessage = "Password field cannot be null";
+        Profile testProfile = new Profile("Kayci", "she/her", 19, "Canada", "Montreal");
+        User activeUser = new User("Kayci", testProfile);
+        Login userManager = new Login(activeUser);
+
+        //Act
+        Exception exception = Assert.ThrowsException<ArgumentException>(() => service.ChangePassword(userManager," "," "));
+        
+        //Assert
+        Assert.AreEqual(expectedMessage, exception.Message); 
+    }
+    [TestMethod]
     public void GetAllProfilesTest()  
     {
         //Arrange

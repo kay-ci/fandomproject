@@ -62,8 +62,8 @@ public class UserService{
     /// Method <c>ChangePassword</c> updates a user's password, using their old password to authentificate.
     /// </summary>
     public void ChangePassword(Login userManager, string oldPassword, string newPassword){
-        if (string.IsNullOrWhiteSpace(newPassword)){
-            throw new ArgumentException("new password cannot be null");}
+        if (string.IsNullOrWhiteSpace(newPassword) || string.IsNullOrWhiteSpace(oldPassword)){
+            throw new ArgumentException("Password field cannot be null");}
         if (userManager.CurrentUser == null){
             throw new ArgumentException("Current user is null");} 
         //Validating current user's old password before allowing a new password
