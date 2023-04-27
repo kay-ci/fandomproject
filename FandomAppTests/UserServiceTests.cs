@@ -150,9 +150,9 @@ public class UserServiceTests{
         
         var service = UserService.getInstance();
         service.setFanAppContext(mockContext.Object);
+        service.CreatePassword(listdata[0], "potato101"); //sets mock users password for test
         
         //Act
-        service.CreatePassword(listdata[0], "potato101");
         Login loggedInUser = service.LogIn("User101", "potato101");
 
         //Assert
@@ -165,18 +165,6 @@ public class UserServiceTests{
         listdata.Add(new User("User101", new Profile("Kayci", "she/her", 19, "Canada", "Montreal")));
         listdata.Add(new User("liliUsername", new Profile("Lili", "they/them", 20, "Ireland", "Dublin")));
         listdata.Add(new User("bestUser", new Profile("Jim", "he/him", 16, "Canada", "Laval")));
-
-        //creating hashed password to test Log In method
-        byte[] salt = new byte[8];
-        using (RNGCryptoServiceProvider rngCsp = new RNGCryptoServiceProvider()){
-            rngCsp.GetBytes(salt);
-        }
-        Rfc2898DeriveBytes key = new Rfc2898DeriveBytes("potato101", salt, Iterations);
-        byte[] hash = key.GetBytes(32);
-
-        listdata[0].Hash = hash;
-        listdata[0].Salt = salt;
-
         var data = listdata.AsQueryable();
 
         var mockSet = new Mock<DbSet<User>>();
@@ -190,12 +178,14 @@ public class UserServiceTests{
         
         var service = UserService.getInstance();
         service.setFanAppContext(mockContext.Object);
-
+        service.CreatePassword(listdata[0], "potato101"); //sets mock users password for test
+        Login userManager = new Login(listdata[0]); //the currently logged in user
         //Act
-        Login loggedInUser = service.LogIn("User101", "potato101");
+        
+        service.ChangePassword(userManager, "potato101", "newPassword101");
 
         //Assert
-        Assert.AreEqual("User101", loggedInUser.CurrentUser.Username);
+        Assert.IsTrue(service.validPassword(userManager.CurrentUser, "newPassword101"));
     }
     
      [TestMethod]
