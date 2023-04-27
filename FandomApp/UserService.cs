@@ -78,12 +78,7 @@ public class UserService{
         if (currentUser == null){
             throw new ArgumentException("Invalid User, Create account");}
 
-        //hashing password
-        Rfc2898DeriveBytes key = new Rfc2898DeriveBytes(password, currentUser.Salt, Iterations);
-        byte[] hash = key.GetBytes(32);
-
-        //comparing with the username's hash 
-        if(currentUser.Hash.SequenceEqual(hash)){
+        if(validPassword(currentUser, password)){
             return new Login(currentUser);}
         else{
             throw new ArgumentException("Wrong credentials provided");}
@@ -115,4 +110,16 @@ public class UserService{
         }
     // public void UpdateProfile(){}
     
+    // This helper method compares the logged in user's hash with the password's hash
+    public bool validPassword (User currentUser, string password){
+        //hashing password
+        Rfc2898DeriveBytes key = new Rfc2898DeriveBytes(password, currentUser.Salt, Iterations);
+        byte[] hash = key.GetBytes(32);
+
+        //comparing with the username's hash 
+        if(currentUser.Hash.SequenceEqual(hash)){
+            return true;
+        }
+        return false;
+    }
 }
