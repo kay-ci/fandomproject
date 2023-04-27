@@ -13,6 +13,7 @@ public class MessageServiceTests{
         listdata.Add(new UserMessage(new User("liliUsername", new Profile("Lili", "they/them", 20, "Ireland", "Dublin"))));
         listdata.Add(new UserMessage(new User("bestUser", new Profile("Jim", "he/him", 16, "Canada", "Laval"))));
 
+
         User sender = new User("kare", new Profile("Karekin", "he/him", 22, "Canada", "Montreal"));
         var recipients2 = new List<UserMessage>();
         recipients2.Add(listdata[1]);
@@ -38,10 +39,10 @@ public class MessageServiceTests{
 
         //Act
         var Inbox_Test = new List<Message>();
-        Inbox_Test = service.GetBox(listdata[0].UserMessageId, true);
+        Inbox_Test = service.GetBox(listdata[1].UserMessageId, true);
 
         //Assert
-        Assert.AreEqual("test", Inbox_Test[0].Text);
+        Assert.AreEqual("test2", Inbox_Test[1].Text);
     }
 
     [TestMethod]
