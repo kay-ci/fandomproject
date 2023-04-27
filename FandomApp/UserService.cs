@@ -63,8 +63,27 @@ public class UserService{
         var fetchedProfile = query.First<Profile>();
         return fetchedProfile;
     }
-    public void UpdateProfile(){}
-    
+    public void UpdateProfile(Login userManager, Profile newProfile){
+        if(userManager.CurrentUser == null){
+            throw new ArgumentException("Current user is null");}
+        if(userManager.CurrentUser.UserProfile == null){
+          throw new ArgumentException("Current user profile is null");}  
+          
+        Profile currentProfile = userManager.CurrentUser.UserProfile; //added for readability
+        currentProfile.Name = newProfile.Name;
+        currentProfile.Pronouns = newProfile.Pronouns;
+        currentProfile.Age = newProfile.Age;
+        currentProfile.Country = newProfile.Country;
+        currentProfile.City = newProfile.City;
+        currentProfile.Description = newProfile.Description;
+        currentProfile.Categories = newProfile.Categories;
+        currentProfile.Fandoms = newProfile.Fandoms;
+        currentProfile.Badges = newProfile.Badges;
+        currentProfile.Picture = newProfile.Picture;
+        currentProfile.Interests = newProfile.Interests;
+        _context.SaveChanges();
+    }
+
     // This method inserts a new user in the FandomUsers table
     public void CreateUser(string username, string password){
         if(string.IsNullOrWhiteSpace(password)){
@@ -138,5 +157,6 @@ public class UserService{
 
         currentUser.Salt = salt;
         currentUser.Hash = hash;
+        _context.SaveChanges();
     }
 }
