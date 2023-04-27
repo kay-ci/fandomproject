@@ -5,24 +5,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
+
+/// <summary>
+/// Class <c>UserService</c> handles interactions with DbSets FandomUsers, FandomProfiles as well as user authentification.
+/// </summary>
 public class UserService{
     private static UserService? _instance;
     private FanAppContext _context = null!;
     public const int Iterations = 1000;
-    private UserService(){
-    }
-    
+    private UserService(){}
     public static UserService getInstance(){
         if(_instance is null){
             _instance = new UserService();
         }
         return _instance;
     }
-
-// Do not forget to set context in the class using this service
     public void setFanAppContext(FanAppContext context){
         _context = context;
     }
+    /// <summary>
+    /// Method <c>GetUsers</c> fetches all users from DbSet FandomUsers.
+    /// </summary>
     public List<User> GetUsers(){
         List<User> usersList = _context.FandomUsers
             .Include(user => user.UserProfile)
@@ -33,7 +36,9 @@ public class UserService{
             .ToList<User>();
         return usersList;
     }
-    // This method returns a user with a given username 
+    /// <summary>
+    /// Method <c>GetUser</c> returns a user with a given username.
+    /// </summary> 
     public User? GetUser(string username){
         User fetcheduser;
         var query = from user in _context.FandomUsers
@@ -45,7 +50,34 @@ public class UserService{
             return null;}
         return fetcheduser;
     }
-    public void UpdatedUser(){}
+    /// <summary>
+    /// Method <c>UpdateUser</c> updates a user.
+    /// </summary>
+    public void UpdateUser(Login userManager, User UpdatedUser){
+        if (userManager.CurrentUser != null){
+        userManager.CurrentUser.UserProfile = UpdatedUser.UserProfile;
+        userManager.CurrentUser.Events = UpdatedUser.Events;
+        userManager.CurrentUser.Fandoms = UpdatedUser.Fandoms;
+        _context.SaveChanges();}
+    }
+    /// <summary>
+    /// Method <c>ChangePassword</c> updates a user's password, using their old password to authentificate.
+    /// </summary>
+    public void ChangePassword(Login userManager, string oldPassword, string newPassword){
+        if (string.IsNullOrWhiteSpace(newPassword)){
+            throw new ArgumentException("new password cannot be null");}
+        if (userManager.CurrentUser == null){
+            throw new ArgumentException("Current user is null");} 
+        //Validating current user's old password before allowing a new password
+        if (!validPassword(userManager.CurrentUser, oldPassword)){
+            throw new ArgumentException("Old password is not correct");
+        }
+        CreatePassword(userManager.CurrentUser, newPassword);
+        _context.SaveChanges();
+    }
+    /// <summary>
+    /// Method <c>GetProfiles</c> fetches all profiles from the table DbSet FandomProfiles.
+    /// </summary>
     public List<Profile> GetProfiles(){
         List<Profile> profilesList = _context.FandomProfiles
             .Include(profile => profile.Categories)
@@ -56,6 +88,9 @@ public class UserService{
             .ToList<Profile>();
         return profilesList;
     }
+    /// <summary>
+    /// Method <c>GetProfile</c> fetches a specific profile based on userId.
+    /// </summary>
     public Profile GetProfile(int userId){
         var query = from profile in _context.FandomProfiles
            where profile.userID == userId
@@ -63,12 +98,15 @@ public class UserService{
         var fetchedProfile = query.First<Profile>();
         return fetchedProfile;
     }
+    /// <summary>
+    /// Method <c>UpdateProfile</c> updates the currently logged user's profile.
+    /// </summary>
     public void UpdateProfile(Login userManager, Profile newProfile){
         if(userManager.CurrentUser == null){
             throw new ArgumentException("Current user is null");}
         if(userManager.CurrentUser.UserProfile == null){
           throw new ArgumentException("Current user profile is null");}  
-          
+
         Profile currentProfile = userManager.CurrentUser.UserProfile; //added for readability
         currentProfile.Name = newProfile.Name;
         currentProfile.Pronouns = newProfile.Pronouns;
@@ -83,8 +121,9 @@ public class UserService{
         currentProfile.Interests = newProfile.Interests;
         _context.SaveChanges();
     }
-
-    // This method inserts a new user in the FandomUsers table
+    /// <summary>
+    /// Method <c>CreateUser</c> inserts a new user in the DbSet FandomUsers.
+    /// </summary>
     public void CreateUser(string username, string password){
         if(string.IsNullOrWhiteSpace(password)){
             throw new ArgumentNullException();
@@ -102,6 +141,9 @@ public class UserService{
             _context.SaveChanges();
         }
     }
+    /// <summary>
+    /// Method <c>LogIn</c> takes in a <param>username</param> and <param>password</param> to store the currently logged in user.
+    /// </summary>
     public Login LogIn(string username, string password){
         User? currentUser = GetUser(username);
         if (currentUser == null){
@@ -112,28 +154,15 @@ public class UserService{
         else{
             throw new ArgumentException("Wrong credentials provided");}
     }
-    public void Logoff(Login userManager){
+    /// <summary>
+    /// Method <c>LogOff</c> sets the currently logged in user to null.
+    /// </summary>
+    public void LogOff(Login userManager){
         userManager.CurrentUser = null;
     }
-    public void ChangePassword(Login userManager, string oldPassword, string newPassword){
-        if (string.IsNullOrWhiteSpace(newPassword)){
-            throw new ArgumentException("new password cannot be null");}
-        if (userManager.CurrentUser == null){
-            throw new ArgumentException("Current user is null");} 
-        //Validating current user's old password before allowing a new password
-        if (!validPassword(userManager.CurrentUser, oldPassword)){
-            throw new ArgumentException("Old password is not correct");
-        }
-        CreatePassword(userManager.CurrentUser, newPassword);
-    }
-    public void UpdateUser(Login userManager, User UpdatedUser){
-        if (userManager.CurrentUser != null){
-        userManager.CurrentUser.UserProfile = UpdatedUser.UserProfile;
-        userManager.CurrentUser.Events = UpdatedUser.Events;
-        userManager.CurrentUser.Fandoms = UpdatedUser.Fandoms;
-        _context.SaveChanges();}
-    }
-    // This helper method compares the logged in user's hash with the input password's hash
+    /// <summary>
+    /// Method <c>LogIn</c> compares the logged in user's hash with <param>password</param>'s hash.
+    /// </summary>
     public bool validPassword (User currentUser, string password){
         //hashing password
         Rfc2898DeriveBytes key = new Rfc2898DeriveBytes(password, currentUser.Salt, Iterations);
@@ -145,7 +174,9 @@ public class UserService{
         }
         return false;
     }
-    // This helper method creates a new password for a User
+    /// <summary>
+    /// Method <c>LogIn</c> creates a new password for a User.
+    /// </summary>
     public void CreatePassword (User currentUser, string password){
         //creating hashed password
         byte[] salt = new byte[8];
@@ -157,6 +188,5 @@ public class UserService{
 
         currentUser.Salt = salt;
         currentUser.Hash = hash;
-        _context.SaveChanges();
     }
 }
