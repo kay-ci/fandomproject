@@ -61,7 +61,7 @@ public class UserService{
         Profile newProfile = new Profile("..name", "..pronouns", 0, "..country", "..city");
     
         //making sure username is unique
-        User checkUser = GetUser(username);
+        User? checkUser = GetUser(username);
         if (checkUser != null){
             throw new ArgumentException("User with that username already exist");
         }
@@ -74,28 +74,29 @@ public class UserService{
         }
     }
     public Login LogIn(string username, string password){
-        User currentUser;
-        try{
-            currentUser = GetUser(username);}
-        catch{
+        User? currentUser = GetUser(username);
+        if (currentUser == null){
             throw new ArgumentException("Invalid User, Create account");}
-        //getting hash of password input
+
+        //hashing password
         Rfc2898DeriveBytes key = new Rfc2898DeriveBytes(password, currentUser.Salt, Iterations);
         byte[] hash = key.GetBytes(32);
-        //comparing hashes 
+
+        //comparing with the username's hash 
         if(currentUser.Hash.SequenceEqual(hash)){
-            return new Login(currentUser);
-        }
-        else throw new ArgumentException("Wrong credentials provided");
+            return new Login(currentUser);}
+        else{
+            throw new ArgumentException("Wrong credentials provided");}
     }
     public void Logoff(Login userManager){
         userManager.CurrentUser = null;
     }
     public void UpdateUser(Login userManager, User UpdatedUser){
+        if (userManager.CurrentUser != null){
         userManager.CurrentUser.UserProfile = UpdatedUser.UserProfile;
         userManager.CurrentUser.Events = UpdatedUser.Events;
         userManager.CurrentUser.Fandoms = UpdatedUser.Fandoms;
-        _context.SaveChanges();
+        _context.SaveChanges();}
     }
     public Profile GetProfile(int userId){
         var query = from profile in _context.FandomProfiles
