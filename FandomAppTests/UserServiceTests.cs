@@ -220,7 +220,7 @@ public class UserServiceTests{
         Assert.AreEqual(26, profiles[2].Age);
     }
 
-     [TestMethod]
+    [TestMethod]
     public void GetProfileTest()
     {
         //Arrange
@@ -242,14 +242,38 @@ public class UserServiceTests{
         
         var service = UserService.getInstance();
         service.setFanAppContext(mockContext.Object);
-
-        //Act
         User loggedInUser = new User("User101", new Profile("Kayci", "she/her", 19, "Canada", "Montreal"));
         Login userManager = new Login(loggedInUser);
+
+        //Act
+        
         Profile profile = service.GetProfile(userManager.CurrentUser.userID);
 
         //Assert
         Assert.AreEqual("she/her", profile.Pronouns);
         Assert.AreEqual("Kayci", profile.Name);
+    }
+    [TestMethod]
+    public void UpdateProfileTest()
+    {
+        //Arrange
+        var mockSet = new Mock<DbSet<Profile>>();
+        var mockContext = new Mock<FanAppContext>();
+        mockContext.Setup(m => m.FandomProfiles).Returns(mockSet.Object);
+        var service = UserService.getInstance();
+        service.setFanAppContext(mockContext.Object);
+
+        User loggedInUser = new User("User101", new Profile("Kayci", "she/her", 19, "Canada", "Montreal"));
+        Login userManager = new Login(loggedInUser); //the logged in user
+        Profile newProfile = new Profile("Kayci Davila", "she/them", 20, "Russia", "Moscow"); //this profile will be created from user input 
+        //Act
+        service.UpdateProfile(userManager, newProfile);
+
+        //Assert
+        Assert.AreEqual("Kayci Davila", userManager.CurrentUser.UserProfile.Name);
+        Assert.AreEqual("she/them", userManager.CurrentUser.UserProfile.Pronouns);
+        Assert.AreEqual(20, userManager.CurrentUser.UserProfile.Age);
+        Assert.AreEqual("Russia", userManager.CurrentUser.UserProfile.Country);
+        Assert.AreEqual("Moscow", userManager.CurrentUser.UserProfile.City);
     }
 }
