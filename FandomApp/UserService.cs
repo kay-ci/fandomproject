@@ -81,10 +81,11 @@ public class UserService{
             throw new ArgumentException("new password cannot be null");}
         if (userManager.CurrentUser == null){
             throw new ArgumentException("Current user is null");}
-
+        //Validating current user's old password before allowing a new password
         if (!validPassword(userManager.CurrentUser, oldPassword)){
-            throw new ArgumentException("");
+            throw new ArgumentException("Old password is not correct");
         }
+        CreatePassword(userManager.CurrentUser, newPassword);
     }
     public void UpdateUser(Login userManager, User UpdatedUser){
         if (userManager.CurrentUser != null){
