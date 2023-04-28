@@ -7,10 +7,10 @@ public class UserMessageTests{
     [ExpectedException(typeof(ArgumentException))]
     public void Creating_Messsage_Test_Fail1(){
         //Arrange
-        List<string> categories = new List<string>();
+        List<Category> categories = new List<Category>();
         List<Fandom> fandoms = new List<Fandom>();
-        List<string> badges = new List<string>();
-        List<string> interests = new List<string>();
+        List<Badge> badges = new List<Badge>();
+        string interests = "A lot of interests";
         List<Event> events = new List<Event>();
         Profile sender_prof = new Profile("Karekin Kiyici", "he/him", 22, "Canada", "Montreal", categories, fandoms, badges, "","path/to/pic.jpeg", interests);
         User sender = new User("kareking1", sender_prof, events);
@@ -38,10 +38,10 @@ public class UserMessageTests{
     [ExpectedException(typeof(ArgumentException))] 
     public void Creating_Messsage_Test_Fail2(){
         //Arrange
-        List<string> categories = new List<string>();
+         List<Category> categories = new List<Category>();
         List<Fandom> fandoms = new List<Fandom>();
-        List<string> badges = new List<string>();
-        List<string> interests = new List<string>();
+        List<Badge> badges = new List<Badge>();
+        string interests = "A lot of interests";
         List<Event> events = new List<Event>();
         Profile sender_prof = new Profile("Karekin Kiyici", "he/him", 22, "Canada", "Montreal", categories, fandoms, badges, "","path/to/pic.jpeg", interests);
         User sender = new User("kareking1", sender_prof, events);
@@ -69,10 +69,10 @@ public class UserMessageTests{
     [ExpectedException(typeof(ArgumentException))] 
     public void Creating_Messsage_Test_Fail3(){
         //Arrange
-        List<string> categories = new List<string>();
+         List<Category> categories = new List<Category>();
         List<Fandom> fandoms = new List<Fandom>();
-        List<string> badges = new List<string>();
-        List<string> interests = new List<string>();
+        List<Badge> badges = new List<Badge>();
+        string interests = "A lot of interests";
         List<Event> events = new List<Event>();
         Profile sender_prof = new Profile("Karekin Kiyici", "he/him", 22, "Canada", "Montreal", categories, fandoms, badges, "","path/to/pic.jpeg", interests);
         User sender = new User("kareking1", sender_prof, events);
@@ -99,10 +99,10 @@ public class UserMessageTests{
     [TestMethod]
     public void Creating_Message_Then_Read_Message_Test_Succeed(){
         //Arrange
-        List<string> categories = new List<string>();
+        List<Category> categories = new List<Category>();
         List<Fandom> fandoms = new List<Fandom>();
-        List<string> badges = new List<string>();
-        List<string> interests = new List<string>();
+        List<Badge> badges = new List<Badge>();
+        string interests = "A lot of interests";
         List<Event> events = new List<Event>();
         Profile sender_prof = new Profile("Karekin Kiyici", "he/him", 22, "Canada", "Montreal", categories, fandoms, badges, "","path/to/pic.jpeg", interests);
         User sender = new User("kareking1", sender_prof);

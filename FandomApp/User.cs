@@ -19,12 +19,10 @@ namespace UserInfo{
         public UserMessage Messages {get; set;}
         [InverseProperty("Attendees")]
 
-        public List<Event> Events {get;} = new();
-        public List<Fandom> Fandoms {get;} = new();
-
-        public byte[] Hash {get; set;}
+        public List<Event> Events {get; set;} = new();
+        public List<Fandom> Fandoms {get; set;} = new();
         public byte[] Salt {get; set;}
- 
+        public byte[] Hash {get; set;}
         
         private User(){}
         //constructors
@@ -49,15 +47,6 @@ namespace UserInfo{
             Events = new List<Event>();
         }
 
-        //This method will allow a user to change their password
-        public void ChangePassword(Login userManager, string newPassword){
-            if (string.IsNullOrWhiteSpace(newPassword)){
-                throw new ArgumentException("new password cannot be null");
-            };
-            
-            // set the currenly logged in users password
-        }
-
         public bool IsValidUsername(string username){
             if (string.IsNullOrWhiteSpace(username)){
                 return false;
@@ -70,6 +59,26 @@ namespace UserInfo{
             
             return true;
             
+        }
+        public override bool Equals(object obj){
+            var item = obj as User;
+            if(ReferenceEquals(item, this)){
+                return true;
+            }
+            if(item == null && this == null){
+                return true;
+            }
+            if(item == null){
+                return false;
+            }
+            return (
+                this.Username == item.Username &&
+                this.UserProfile == item.UserProfile &&
+                this.Messages == item.Messages &&
+                this.Events == item.Events &&
+                this.Fandoms == item.Fandoms &&
+                this.Hash.SequenceEqual(item.Hash) &&
+                this.Salt.SequenceEqual(item.Salt));
         }
     }
 }

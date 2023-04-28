@@ -16,7 +16,7 @@ public class EventServiceTests{
 
         var mockSet = new Mock<DbSet<Event>>();
         var mockContext = new Mock<FanAppContext>();
-        mockContext.Setup(m => m.Events).Returns(mockSet.Object);
+        mockContext.Setup(m => m.FandomEvents).Returns(mockSet.Object);
 
         EventService ES = new EventService(mockContext.Object);
         

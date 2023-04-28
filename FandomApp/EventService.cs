@@ -16,7 +16,7 @@ public class EventService
     {
         if (GetEvent(new_event.EventId) is null)
         {
-            _context.Events.Add(new_event);
+            _context.FandomEvents.Add(new_event);
             _context.SaveChanges();
             Console.WriteLine("New event added to database!");
         }
@@ -30,7 +30,7 @@ public class EventService
         try
         {
             var eventQuery = 
-                from events in _context.Events 
+                from events in _context.FandomEvents 
                 where events.EventId == eventID
                 select events;
 
@@ -47,7 +47,7 @@ public class EventService
     //this method gets all the events
     public List<Event> GetAllEvents()
     {
-        List<Event> events = _context.Events
+        List<Event> events = _context.FandomEvents
             .Include(e => e.Categories)
             .ToList<Event>();
         
@@ -64,7 +64,7 @@ public class EventService
 
     //this method remove eventfrom database
     public void DeleteEvent(User user, Event fandomEvent) {
-        _context.Events.Remove(fandomEvent);
+        _context.FandomEvents.Remove(fandomEvent);
         _context.SaveChanges();
     }
 
