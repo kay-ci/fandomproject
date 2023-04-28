@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\jenny\\Documents\\W2023\\Programming IV\\FandomProject\\FandomAppTests\\FandomAppTests.csproj": {}
+    "C:\\Users\\jenny\\Documents\\W2023\\Programming IV\\FandomProject\\FandomAppTests\\FandomAppTests.csproj": {}
   },
   "projects": {
-    "c:\\Users\\jenny\\Documents\\W2023\\Programming IV\\FandomProject\\FandomAppTests\\FandomAppTests.csproj": {
+    "C:\\Users\\jenny\\Documents\\W2023\\Programming IV\\FandomProject\\FandomAppTests\\FandomAppTests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\jenny\\Documents\\W2023\\Programming IV\\FandomProject\\FandomAppTests\\FandomAppTests.csproj",
+        "projectUniqueName": "C:\\Users\\jenny\\Documents\\W2023\\Programming IV\\FandomProject\\FandomAppTests\\FandomAppTests.csproj",
         "projectName": "FandomAppTests",
-        "projectPath": "c:\\Users\\jenny\\Documents\\W2023\\Programming IV\\FandomProject\\FandomAppTests\\FandomAppTests.csproj",
+        "projectPath": "C:\\Users\\jenny\\Documents\\W2023\\Programming IV\\FandomProject\\FandomAppTests\\FandomAppTests.csproj",
         "packagesPath": "C:\\Users\\jenny\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\jenny\\Documents\\W2023\\Programming IV\\FandomProject\\FandomAppTests\\obj\\",
+        "outputPath": "C:\\Users\\jenny\\Documents\\W2023\\Programming IV\\FandomProject\\FandomAppTests\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\jenny\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -26,8 +26,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "c:\\Users\\jenny\\Documents\\W2023\\Programming IV\\FandomProject\\FandomApp\\FandomApp.csproj": {
-                "projectPath": "c:\\Users\\jenny\\Documents\\W2023\\Programming IV\\FandomProject\\FandomApp\\FandomApp.csproj"
+              "C:\\Users\\jenny\\Documents\\W2023\\Programming IV\\FandomProject\\FandomApp\\FandomApp.csproj": {
+                "projectPath": "C:\\Users\\jenny\\Documents\\W2023\\Programming IV\\FandomProject\\FandomApp\\FandomApp.csproj"
               }
             }
           }
@@ -79,14 +79,14 @@
         }
       }
     },
-    "c:\\Users\\jenny\\Documents\\W2023\\Programming IV\\FandomProject\\FandomApp\\FandomApp.csproj": {
+    "C:\\Users\\jenny\\Documents\\W2023\\Programming IV\\FandomProject\\FandomApp\\FandomApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\jenny\\Documents\\W2023\\Programming IV\\FandomProject\\FandomApp\\FandomApp.csproj",
+        "projectUniqueName": "C:\\Users\\jenny\\Documents\\W2023\\Programming IV\\FandomProject\\FandomApp\\FandomApp.csproj",
         "projectName": "FandomApp",
-        "projectPath": "c:\\Users\\jenny\\Documents\\W2023\\Programming IV\\FandomProject\\FandomApp\\FandomApp.csproj",
+        "projectPath": "C:\\Users\\jenny\\Documents\\W2023\\Programming IV\\FandomProject\\FandomApp\\FandomApp.csproj",
         "packagesPath": "C:\\Users\\jenny\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\jenny\\Documents\\W2023\\Programming IV\\FandomProject\\FandomApp\\obj\\",
+        "outputPath": "C:\\Users\\jenny\\Documents\\W2023\\Programming IV\\FandomProject\\FandomApp\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\jenny\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -113,6 +113,10 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[7.0.5, )"
+            },
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
