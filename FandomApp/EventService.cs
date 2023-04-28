@@ -1,8 +1,5 @@
 using UserInfo;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 public class EventService
 {
     private FanAppContext _context = null!;
@@ -36,11 +33,10 @@ public class EventService
 
             eventFound = eventQuery.First<Event>();
         }
-        catch (System.Exception)
+        catch (Exception)
         {
-            Console.WriteLine("No event was found");
+            return null;
         }
-
         return eventFound;
     }
 
@@ -55,10 +51,14 @@ public class EventService
     }
 
     //this method allow owner of event to edit it
-    public void EditEvent(User user, Event fandomEvent) {
+    public void EditEvent(User user, Event updatedEvent) {
         
-        var oldEvent = GetEvent(fandomEvent.EventId);
-        
+        var oldEvent = _context.FandomEvents.Where(e => e.EventId == updatedEvent.EventId);
+        if (oldEvent != null)
+        {
+            _context.FandomEvents.Update(updatedEvent);
+            _context.SaveChanges();
+        }
 
     }
 
@@ -70,8 +70,18 @@ public class EventService
 
     //this method will print out the list of attendees
     //may not be needed because it's not a console app
-    public List<User> GetEventAttendees() {
-        throw new NotImplementedException();
+    public List<User> GetEventAttendees(Event fandomEvent) {
+        
+        var attendees = _context.FandomUsers
+                        .Include(user => user.UserProfile)
+                        .Include(user => user.Fandoms)
+                        .Include(user => user.Events)
+                        .Include(user => user.Messages)
+                        .Where(user => user.Events.Contains(fandomEvent))
+                        .OrderBy(user => user.userID)
+                        .ToList<User>();
+
+        return attendees;
     }
 
     //this method find event in database based on country, city, category, fandom, keyword in (title/description)

@@ -25,7 +25,7 @@ public class Event
         get{ return _date;} 
         set{
             if (DateTime.Compare( value, DateTime.Today) < 0) {
-                throw new ArgumentException("Date can't be set before today");
+                throw new ArgumentException("Date must be set in the future");
             }
             _date = value;
         }
