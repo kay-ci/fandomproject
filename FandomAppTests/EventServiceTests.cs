@@ -5,6 +5,7 @@ namespace FandomAppTests;
 
 [TestClass]
 public class EventServiceTests{
+
     [TestMethod]
     public void CreateEvent_NewEvent()
     {
@@ -26,5 +27,148 @@ public class EventServiceTests{
         //Assert
         mockSet.Verify(m => m.Add(It.IsAny<Event>()), Times.Once());
         mockContext.Verify(m => m.SaveChanges(), Times.Once());
+    }
+
+    [TestMethod]
+    public void GetEvent_EventExist_ReturnEvent()
+    {
+        //Arrange
+        Profile owner_profile = new Profile("Owner", "they/them", 21, "Canada", "Montreal", new List<Category>(),  new List<Fandom>(), new List<Badge>(), "description", "pictures", "interests");
+        User owner = new User("Owner", owner_profile);
+
+        var events = new List<Event>();
+        events.Add(new Event("Event1", new DateTime(2023, 12, 12), "Montreal", new List<Category>(), 18, owner));
+        events.Add(new Event("Event2", new DateTime(2023, 12, 12), "Toronto", new List<Category>(), 18, owner));
+        events.Add(new Event("Event3", new DateTime(2023, 12, 12), "Vancouver", new List<Category>(), 18, owner));
+
+        var data = events.AsQueryable();
+
+        var mockSet = new Mock<DbSet<Event>>();
+        mockSet.As<IQueryable<Event>>().Setup(m => m.Provider).Returns(data.Provider);
+        mockSet.As<IQueryable<Event>>().Setup(m => m.Expression).Returns(data.Expression);
+        mockSet.As<IQueryable<Event>>().Setup(m => m.ElementType).Returns(data.ElementType);
+        mockSet.As<IQueryable<Event>>().Setup(m => m.GetEnumerator()).Returns(data.GetEnumerator());
+
+        var mockContext = new Mock<FanAppContext>();
+        mockContext.Setup(m => m.FandomEvents).Returns(mockSet.Object);
+
+        EventService service = new EventService(mockContext.Object);
+        
+        //Act
+        var event_found = service.GetEvent("Event1");
+
+        //Assert
+        Assert.AreEqual("Event1", event_found.Title);
+        Assert.AreEqual("Montreal", event_found.Location);
+    }
+
+    [TestMethod]
+    public void GetEvent_EventDoesntExist_ReturnNull()
+    {
+        //Arrange
+        Profile owner_profile = new Profile("Owner", "they/them", 21, "Canada", "Montreal", new List<Category>(),  new List<Fandom>(), new List<Badge>(), "description", "pictures", "interests");
+        User owner = new User("Owner", owner_profile);
+
+        var events = new List<Event>();
+        events.Add(new Event("Event1", new DateTime(2023, 12, 12), "Montreal", new List<Category>(), 18, owner));
+        events.Add(new Event("Event2", new DateTime(2023, 12, 12), "Toronto", new List<Category>(), 18, owner));
+        events.Add(new Event("Event3", new DateTime(2023, 12, 12), "Vancouver", new List<Category>(), 18, owner));
+
+        var data = events.AsQueryable();
+
+        var mockSet = new Mock<DbSet<Event>>();
+        mockSet.As<IQueryable<Event>>().Setup(m => m.Provider).Returns(data.Provider);
+        mockSet.As<IQueryable<Event>>().Setup(m => m.Expression).Returns(data.Expression);
+        mockSet.As<IQueryable<Event>>().Setup(m => m.ElementType).Returns(data.ElementType);
+        mockSet.As<IQueryable<Event>>().Setup(m => m.GetEnumerator()).Returns(data.GetEnumerator());
+
+        var mockContext = new Mock<FanAppContext>();
+        mockContext.Setup(m => m.FandomEvents).Returns(mockSet.Object);
+
+        EventService service = new EventService(mockContext.Object);
+        
+        //Act
+        var event_found = service.GetEvent("Event");
+
+        //Assert
+        Assert.IsNull(event_found);
+    }
+
+    [TestMethod]
+    public void GetAllEvents_3Events_ReturnListEvent()
+    {
+        //Arrange
+        Profile owner_profile = new Profile("Owner", "they/them", 19, "Canada", "Montreal", new List<Category>(),  new List<Fandom>(), new List<Badge>(), "description", "pictures", "interests");
+        Profile user_profile = new Profile("Fred", "they/them", 21, "Canada", "Montreal", new List<Category>(),  new List<Fandom>(), new List<Badge>(), "description", "pictures", "interests");
+        User owner = new User("Owner", owner_profile);
+        User user = new User("Fred", user_profile);
+
+        var event_list = new List<Event>();
+        event_list.Add(new Event("Event1", new DateTime(2023, 12, 12), "Montreal", new List<Category>(), 18, owner));
+        event_list.Add(new Event("Event2", new DateTime(2023, 12, 12), "Toronto", new List<Category>(), 18, owner));
+        event_list.Add(new Event("Event3", new DateTime(2023, 12, 12), "Vancouver", new List<Category>(), 18, user));
+
+        var data = event_list.AsQueryable();
+
+        var mockSet = new Mock<DbSet<Event>>();
+        mockSet.As<IQueryable<Event>>().Setup(m => m.Provider).Returns(data.Provider);
+        mockSet.As<IQueryable<Event>>().Setup(m => m.Expression).Returns(data.Expression);
+        mockSet.As<IQueryable<Event>>().Setup(m => m.ElementType).Returns(data.ElementType);
+        mockSet.As<IQueryable<Event>>().Setup(m => m.GetEnumerator()).Returns(data.GetEnumerator());
+
+        var mockContext = new Mock<FanAppContext>();
+        mockContext.Setup(m => m.FandomEvents).Returns(mockSet.Object);
+
+        EventService service = new EventService(mockContext.Object);
+        
+        //Act
+        var events = service.GetAllEvents();
+
+        //Assert
+        Assert.AreEqual("Montreal", events[0].Location);
+        Assert.AreEqual("Event2", events[1].Title);
+        Assert.AreEqual("Fred", events[2].Owner.Username);
+        Assert.AreEqual(3, events.Count);
+    }
+
+    [TestMethod]
+    public void EditEvent_Pass()
+    {
+        //Arrange
+        Profile owner_profile = new Profile("Owner", "they/them", 21, "Canada", "Montreal", new List<Category>(),  new List<Fandom>(), new List<Badge>(), "description", "pictures", "interests");
+        User owner = new User("Owner", owner_profile);
+
+        Event e1 = new Event("E1", new DateTime(2023, 12, 12), "Montreal", new List<Category>(), 18, owner);
+        Event e2 = new Event("Event2", new DateTime(2023, 12, 12), "Toronto", new List<Category>(), 18, owner);
+   
+        var event_list = new List<Event>();
+        event_list.Add(new Event("Event1", new DateTime(2023, 12, 12), "Montreal", new List<Category>(), 18, owner));
+        event_list.Add(new Event("Event2", new DateTime(2023, 12, 12), "Toronto", new List<Category>(), 18, owner));
+        event_list.Add(new Event("Event3", new DateTime(2023, 12, 12), "Vancouver", new List<Category>(), 18, owner));
+
+        var data = event_list.AsQueryable();
+
+        var mockSet = new Mock<DbSet<Event>>();
+        mockSet.As<IQueryable<Event>>().Setup(m => m.Provider).Returns(data.Provider);
+        mockSet.As<IQueryable<Event>>().Setup(m => m.Expression).Returns(data.Expression);
+        mockSet.As<IQueryable<Event>>().Setup(m => m.ElementType).Returns(data.ElementType);
+        mockSet.As<IQueryable<Event>>().Setup(m => m.GetEnumerator()).Returns(data.GetEnumerator());
+
+        var mockContext = new Mock<FanAppContext>();
+        mockContext.Setup(m => m.FandomEvents).Returns(mockSet.Object);
+
+        EventService service = new EventService(mockContext.Object);
+    
+        //Act
+        Event new_e = new Event("New event name", new DateTime(2023, 12, 12), "Montreal", new List<Category>(), 18, owner);
+        //e1.EventId = 1;
+        service.CreateEvent(e1);
+        //new_e.EventId = 1;
+        //service.EditEvent(owner, new_e);
+
+        //Assert
+        //Assert.AreEqual(events[0].Title, new_e.Title);
+        //mockSet.Verify(m => m.Update(It.IsAny<Event>()), Times.Once());
+        //mockContext.Verify(m => m.SaveChanges(), Times.Exactly(2));
     }
 }
