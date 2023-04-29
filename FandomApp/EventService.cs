@@ -11,25 +11,24 @@ public class EventService
     //this method add the event to the database
     public void CreateEvent(Event new_event) 
     {
-        if (GetEvent(new_event.EventId) is null)
+        if (GetEvent(new_event.Title) == null)
         {
             _context.FandomEvents.Add(new_event);
             _context.SaveChanges();
-            Console.WriteLine("New event added to database!");
         }
        
     }
 
     //this method retrieve a single event using it's ID
-    public Event? GetEvent(int eventID)
+    public Event? GetEvent(string title)
     {
         Event? eventFound = null;
         try
         {
             var eventQuery = 
-                from events in _context.FandomEvents 
-                where events.EventId == eventID
-                select events;
+                from e in _context.FandomEvents 
+                where e.Title == title
+                select e;
 
             eventFound = eventQuery.First<Event>();
         }
@@ -44,8 +43,8 @@ public class EventService
     public List<Event> GetAllEvents()
     {
         List<Event> events = _context.FandomEvents
-            .Include(e => e.Categories)
-            .ToList<Event>();
+                            .Include(e => e.Categories)
+                            .ToList<Event>();
         
         return events;
     }
@@ -53,8 +52,12 @@ public class EventService
     //this method allow owner of event to edit it
     public void EditEvent(User user, Event updatedEvent) {
         
-        var oldEvent = _context.FandomEvents.Where(e => e.EventId == updatedEvent.EventId);
-        if (oldEvent != null)
+        if (user.Username != updatedEvent.Owner.Username)
+        {
+            throw new ArgumentException("Only the creator of this event can modify it.");
+        }
+        var e = _context.FandomEvents.Any(e => e.EventId == updatedEvent.EventId);
+        if (e != null)
         {
             _context.FandomEvents.Update(updatedEvent);
             _context.SaveChanges();

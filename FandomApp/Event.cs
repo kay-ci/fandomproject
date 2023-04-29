@@ -1,5 +1,4 @@
 using UserInfo;
-using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
 public class Event
 {
@@ -76,11 +75,6 @@ public class Event
         }
 
         this.Attendees?.Add(attendee);
-    }
-
-    //
-    public void RemoveAttendee() {
-        throw new NotImplementedException();
     }
 
 }
