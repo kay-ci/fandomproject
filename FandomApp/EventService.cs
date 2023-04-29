@@ -56,8 +56,8 @@ public class EventService
         {
             throw new ArgumentException("Only the creator of this event can modify it.");
         }
-        var e = _context.FandomEvents.Any(e => e.EventId == updatedEvent.EventId);
-        if (e != null)
+        var ev = _context.FandomEvents.Any(e => e.EventId == updatedEvent.EventId);
+        if (!ev)
         {
             _context.FandomEvents.Update(updatedEvent);
             _context.SaveChanges();
