@@ -50,8 +50,9 @@ public class EventService
     }
 
     //this method allow owner of event to edit it
-    public void EditEvent(User user, Event updatedEvent) {
+    public void EditEvent(Login login, Event updatedEvent) {
         
+        User? user = login.CurrentUser;
         if (user.Username != updatedEvent.Owner.Username)
         {
             throw new ArgumentException("Only the creator of this event can modify it.");
@@ -88,8 +89,52 @@ public class EventService
     }
 
     //this method find event in database based on country, city, category, fandom, keyword in (title/description)
-    public void SearchEvent() {
-        throw new NotImplementedException();
+    public List<Event>? SearchEvent(string keyword, string searchInput) {
+        
+        List<Event>? events_found = null;
+        if (keyword.ToLower() == "location") {
+            events_found = GetEventsByLocation(searchInput);
+        }
+        else if (keyword.ToLower() == "category") {
+            events_found = GetEventsByCategory(searchInput);
+        }
+
+        return events_found;
+    }
+
+    private List<Event>? GetEventsByLocation(string location)
+    {
+        List<Event>? events = null;
+        try
+        {
+            var query = from e in _context.FandomEvents
+                        where e.Location == location
+                        select e;
+
+            events = query.ToList<Event>();
+        }
+        catch (Exception)
+        {
+            return null;
+        }
+        return events;
+    }
+
+    private List<Event>? GetEventsByCategory(string category)
+    {
+        List<Event>? events = null;
+        try
+        {
+            events = _context.FandomEvents
+                    .Include(e => e.Categories)
+                    .Where(e => e.Categories[0].Category_name == category) //Not sure about this line
+                    .ToList<Event>();
+        }
+        catch (Exception)
+        {
+            return null;
+        }
+        return events;
     }
     
 }

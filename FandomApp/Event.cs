@@ -8,7 +8,7 @@ public class Event
     private string _title;
     private DateTime _date;
     private string _location;
-    public List<Category> Categories {get; set;}
+    public List<Category> Categories {get; set;} = new();
     public string Title 
     {
         get{ return _title;} 

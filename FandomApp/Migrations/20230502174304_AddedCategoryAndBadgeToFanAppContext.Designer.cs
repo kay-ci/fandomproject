@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Oracle.EntityFrameworkCore.Metadata;
 using UserInfo;
@@ -11,9 +12,11 @@ using UserInfo;
 namespace FandomApp.Migrations
 {
     [DbContext(typeof(FanAppContext))]
-    partial class FanAppContextModelSnapshot : ModelSnapshot
+    [Migration("20230502174304_AddedCategoryAndBadgeToFanAppContext")]
+    partial class AddedCategoryAndBadgeToFanAppContext
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -87,12 +90,12 @@ namespace FandomApp.Migrations
 
                     OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BadgeId"));
 
-                    b.Property<string>("BadgeName")
-                        .IsRequired()
-                        .HasColumnType("NVARCHAR2(2000)");
-
                     b.Property<int?>("ProfileId")
                         .HasColumnType("NUMBER(10)");
+
+                    b.Property<string>("badgeName")
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR2(2000)");
 
                     b.HasKey("BadgeId");
 
