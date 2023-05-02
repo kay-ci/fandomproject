@@ -73,8 +73,15 @@ public class UserService{
         CreatePassword(userManager.CurrentUser, newPassword);
         _context.SaveChanges();
     }
+    /// <summary>
+    /// Method <c>DeleteUser</c> deletes the logged in users profile and their account.
+    /// </summary>
     public void DeleteUser(Login UserManager){
-
+        if (UserManager.CurrentUser != null){
+            _context.FandomProfiles.Remove(UserManager.CurrentUser.UserProfile);
+            _context.FandomUsers.Remove(UserManager.CurrentUser);
+            _context.SaveChanges();
+        }
     }
     /// <summary>
     /// Method <c>GetProfiles</c> fetches all profiles from the table DbSet FandomProfiles.
