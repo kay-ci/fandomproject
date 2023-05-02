@@ -82,5 +82,19 @@ namespace UserInfo{
             }
 
         }
+        public override bool Equals(object? obj){
+            var item = obj as UserMessage;
+            if(ReferenceEquals(item, this)){
+                return true;
+            }
+            if(item == null){
+                return false;
+            }
+            return (
+                this.user == item.user &&
+                this.Inbox.SequenceEqual(item.Inbox) &&
+                this.Outbox.SequenceEqual(item.Outbox)
+            );
+        }
     }
 }
