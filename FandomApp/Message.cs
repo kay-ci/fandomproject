@@ -57,5 +57,21 @@ namespace UserInfo{
             }
             return true;
         }
+        public override bool Equals(object? obj){
+            var item = obj as Message;
+            if(ReferenceEquals(item, this)){
+                return true;
+            }
+            if(item == null){
+                return false;
+            }
+            return (
+                this.Text == item.Text &&
+                this.Title == item.Title &&
+                this.Sender == item.Sender &&
+                this.Recipients.SequenceEqual(item.Recipients) &&
+                this.Timesent == item.Timesent
+            );
+        }
     }
 }

@@ -109,7 +109,7 @@ public class Event
                 this.Location == item.Location &&
                 this.Owner == item.Owner &&
                 this.Date == item.Date &&
-                this.Categories == item.Categories &&
+                this.Categories.SequenceEqual(item.Categories) &&
                 this.Attendees == item.Attendees
             );
         }
