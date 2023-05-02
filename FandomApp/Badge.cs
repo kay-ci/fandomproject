@@ -10,7 +10,7 @@ namespace UserInfo {
             this.BadgeId = bad_id;
             this.badgeName = name;
         }
-        public override bool Equals(object obj){
+        public override bool Equals(object? obj){
             var item = obj as Badge;
             if(ReferenceEquals(item, this)){
                 return true;
