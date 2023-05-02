@@ -15,9 +15,6 @@ namespace UserInfo {
             if(ReferenceEquals(item, this)){
                 return true;
             }
-            if(item == null && this == null){
-                return true;
-            }
             if(item == null){
                 return false;
             }
