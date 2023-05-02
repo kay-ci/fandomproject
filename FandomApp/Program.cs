@@ -11,23 +11,24 @@ public class Program{
         List<Event> events = new List<Event>();
 
         // Step 1 and 2. User1 Account and Profile
-        Profile profile = new Profile("User1", "they/them", 18, "Canada", "Montreal", categories, fandoms, badges, "description", "pictures", "interests");
-        User user1 = new User("User1", profile, events);
+        Profile profile1 = new Profile("User1", "they/them", 18, "Canada", "Montreal", categories, fandoms, badges, "description", "pictures", "interests");
+        User user1 = new User("User1", profile1, events);
 
         FanAppContext context = new FanAppContext();
         UserService uService = new UserService();
         uService.setFanAppContext(context);
 
-        uService.CreateUser(user1.Username, "hello123");
+        uService.CreateUser("User1", "hello123");
         Login login = new Login(user1);
         
         // Step 3. Create event for user1
         Event event_test = new Event("User1 Event", new DateTime(2023, 12, 12), "Toronto", categories, 18, user1);
+
         // Step 4. Log out of user1
 
-        // Step 5. Create a new user account (user2)
-
-        // Step 6. Create a profile for user2
+        // Step 5 and 6. Create user2 account and profile
+        Profile profile2 = new Profile("User2", "they/them", 24, "Canada", "Montreal", categories, fandoms, badges, "description", "pictures", "interests");
+        User user2 = new User("User2", profile2, events);
 
         // Step 7. Perform a search to find the event created by user1
 
