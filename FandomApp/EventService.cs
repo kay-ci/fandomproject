@@ -127,8 +127,26 @@ public class EventService
         {
             events = _context.FandomEvents
                     .Include(e => e.Categories)
-                    .Where(e => e.Categories.Category_name == category) //Not sure about this line
+                    .Where(e => e.Categories.Any(c => c.Category_name == category)) //Not sure about this line
                     .ToList<Event>();
+        }
+        catch (Exception)
+        {
+            return null;
+        }
+        return events;
+    }
+
+    private List<Event>? GetEventsByFandom(string fandomName)
+    {
+        List<Event>? events = null;
+        try
+        {
+            events = _context.FandomEvents
+                    .Include(e => e.Fandoms)
+                    .Where(e => e.Fandoms.Any(f => f.Name == fandomName))
+                    .ToList<Event>();
+
         }
         catch (Exception)
         {
