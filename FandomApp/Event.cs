@@ -77,4 +77,9 @@ public class Event
         this.Attendees?.Add(attendee);
     }
 
+    public void RemoveAttendee(User attendee) 
+    {
+        this.Attendees?.Remove(attendee);
+    }
+
 }
