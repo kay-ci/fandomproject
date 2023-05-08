@@ -1,5 +1,7 @@
 using UserInfo;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+
 public class EventService
 {
     private FanAppContext _context = null!;
@@ -25,11 +27,11 @@ public class EventService
         Event? eventFound = null;
         try
         {
-            var eventQuery = 
-                from e in _context.FandomEvents 
-                where e.Title == title
-                select e;
-
+            var eventQuery = _context.FandomEvents
+                    .Include(e => e.Categories)
+                    .Include(e => e.Attendees)
+                    .Where(e => e.Title.Equals(title))
+                    .ToList<Event>();
             eventFound = eventQuery.First<Event>();
         }
         catch (Exception)
@@ -44,6 +46,7 @@ public class EventService
     {
         List<Event> events = _context.FandomEvents
                             .Include(e => e.Categories)
+                            .Include(e => e.Attendees)
                             .ToList<Event>();
         
         return events;
@@ -53,11 +56,12 @@ public class EventService
     public void EditEvent(Login login, Event updatedEvent) {
         
         User? user = login.CurrentUser;
-        if (user.Username != updatedEvent.Owner.Username)
+        if (user?.Username != updatedEvent.Owner.Username)
         {
             throw new ArgumentException("Only the creator of this event can modify it.");
         }
-        var ev = _context.FandomEvents.Any(e => e.EventId == updatedEvent.EventId);
+        var ev = _context.FandomEvents
+                .Any(e => e.EventId == updatedEvent.EventId);
         if (!ev)
         {
             _context.FandomEvents.Update(updatedEvent);
@@ -88,15 +92,18 @@ public class EventService
         return attendees;
     }
 
-    //this method find event in database based on country, city, category, fandom, keyword in (title/description)
+    //this method find event in database based on country, city, category, keyword in (title/description)
     public List<Event>? SearchEvent(string keyword, string searchInput) {
         
         List<Event>? events_found = null;
         if (keyword.ToLower() == "location") {
-            events_found = GetEventsByLocation(searchInput);
+            events_found = GetEventsByLocation(searchInput.ToLower());
         }
         else if (keyword.ToLower() == "category") {
-            events_found = GetEventsByCategory(searchInput);
+            events_found = GetEventsByCategory(searchInput.ToLower());
+        }
+        else if (keyword.ToLower() == "keyword") {
+            events_found = GetEventsByKeyword(searchInput.ToLower());
         }
 
         return events_found;
@@ -127,7 +134,8 @@ public class EventService
         {
             events = _context.FandomEvents
                     .Include(e => e.Categories)
-                    .Where(e => e.Categories.Any(c => c.Category_name == category)) //Not sure about this line
+                    .Include(e => e.Attendees)
+                    .Where(e => e.Categories.Any(c => c.Category_name.Equals(category)))
                     .ToList<Event>();
         }
         catch (Exception)
@@ -137,14 +145,15 @@ public class EventService
         return events;
     }
 
-    private List<Event>? GetEventsByFandom(string fandomName)
+    private List<Event>? GetEventsByKeyword(string keyword)
     {
         List<Event>? events = null;
         try
         {
             events = _context.FandomEvents
-                    .Include(e => e.Fandoms)
-                    .Where(e => e.Fandoms.Any(f => f.Name == fandomName))
+                    .Include(e => e.Categories)
+                    .Include(e => e.Attendees)
+                    .Where(e => e.Title.Contains(keyword))
                     .ToList<Event>();
 
         }

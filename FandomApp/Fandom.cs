@@ -34,6 +34,7 @@ public class Fandom
     }
 
     public List<User> Fans { get; set; } = new ();
+    public List<Event>? Events {get; set;} = new ();
 
 
     //constructor

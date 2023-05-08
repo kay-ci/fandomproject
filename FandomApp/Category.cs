@@ -7,8 +7,7 @@ namespace UserInfo {
 
         public Category(){}
 
-        public Category(int cat_id, string name){
-            this.CategoryId = cat_id;
+        public Category(string name){
             this.Category_name = name;
         }
     }

@@ -9,6 +9,7 @@ public class Event
     private DateTime _date;
     private string _location;
     public List<Category> Categories {get; set;} = new();
+    public List<Fandom> Fandoms {get; set;}
     public string Title 
     {
         get{ return _title;} 
@@ -64,7 +65,6 @@ public class Event
         this.Categories = categories;
         this.MinAge = minAge;
         this.Owner = owner;
-
     }
 
     public void AddAttendee(User attendee) 

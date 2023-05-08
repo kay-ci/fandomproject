@@ -6,8 +6,7 @@ namespace UserInfo {
 
         public Badge(){}
 
-        public Badge(int badge_id, string name){
-            this.BadgeId = badge_id;
+        public Badge(string name){
             this.BadgeName = name;
         }
         public override bool Equals(object obj){

@@ -1,20 +1,22 @@
 using UserInfo;
+
 public class Program{
 
     static void Main(string[] args){
 
         //Proof of Concept
 
-        List<Category> categories = new List<Category>(){new Category(1, "music")};
-        List<Category> categories2 = new List<Category>(){new Category(1, "art")};
+        List<Category> categories = new List<Category>(){new Category("music")};
+        List<Category> categories2 = new List<Category>(){new Category("art")};
+        List<Category> categories3 = new List<Category>(){new Category("movies"), new Category("music")};
 
-        List<Fandom> fandoms = new List<Fandom>();
-        List<Badge> badges = new List<Badge>();
-        List<Event> events = new List<Event>();
+        List<Fandom> fandoms = new List<Fandom>(){new Fandom("Beyhive", "Music","This is Beyonce's fandom")};
+        List<Badge> badges = new List<Badge>(){new Badge("Special")};
+        //List<Event> events = new List<Event>();
 
         // Step 1 and 2. User1 Account and Profile
-        Profile profile1 = new Profile("User1", "they/them", 18, "Canada", "Montreal", categories, fandoms, badges, "description", "pictures", "interests");
-        User user1 = new User("User1", profile1, events);
+        Profile profile1 = new Profile("User1", "they/them", 18, "Canada", "Montreal");
+        User user1 = new User("User1", profile1);
 
         FanAppContext context = new FanAppContext();
         //UserService uService = new UserService();
@@ -27,11 +29,13 @@ public class Program{
         EventService es = new EventService(context);
 
         Event event_test = new Event("User1 Event", new DateTime(2023, 12, 12), "Toronto", categories, 18, user1);
+        Event event_test2 = new Event("User1 Event", new DateTime(2023, 12, 12), "Toronto", categories3, 18, user1);
         Event event2 = new Event("User2 Event", new DateTime(2023, 12, 12), "Montreal", categories2, 18, user1);
 
         es.CreateEvent(event_test);
+        es.CreateEvent(event_test2);
         es.CreateEvent(event2);
-        var events_found = es.GetEventsByCategory("music")
+        var events_found = es.GetEventsByCategory("music");
     
         // Step 4. Log out of user1
 
