@@ -4,10 +4,10 @@ using Avalonia.Markup.Xaml;
 
 namespace FandomAppSpace.Views;
 
-public partial class LoginView : Window
+public partial class LoginView : UserControl
 {
     public LoginView()
     {
-        InitializeComponent();
+        
     }
 }
