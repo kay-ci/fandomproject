@@ -7,7 +7,7 @@ public class EventService
     {
         _context = context;
     }
-
+    
     //this method add the event to the database
     public void CreateEvent(Event new_event) 
     {
@@ -120,15 +120,33 @@ public class EventService
         return events;
     }
 
-    private List<Event>? GetEventsByCategory(string category)
+    public List<Event>? GetEventsByCategory(string category)
     {
         List<Event>? events = null;
         try
         {
             events = _context.FandomEvents
                     .Include(e => e.Categories)
-                    .Where(e => e.Categories[0].Category_name == category) //Not sure about this line
+                    .Where(e => e.Categories.Any(c => c.Category_name == category)) //Not sure about this line
                     .ToList<Event>();
+        }
+        catch (Exception)
+        {
+            return null;
+        }
+        return events;
+    }
+
+    private List<Event>? GetEventsByFandom(string fandomName)
+    {
+        List<Event>? events = null;
+        try
+        {
+            events = _context.FandomEvents
+                    .Include(e => e.Fandoms)
+                    .Where(e => e.Fandoms.Any(f => f.Name == fandomName))
+                    .ToList<Event>();
+
         }
         catch (Exception)
         {

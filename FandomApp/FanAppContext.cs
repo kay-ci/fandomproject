@@ -11,6 +11,7 @@ public class FanAppContext : DbContext{
     public virtual DbSet<Badge> FandomBadges { get; set; } = null!;
     public virtual DbSet<UserMessage> FandomUserMessages { get; set; } = null!;
     public virtual DbSet<Fandom> Fandoms { get; set; } = null!;
+    
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         string? oracleUser = Environment.GetEnvironmentVariable("DBUSER");
