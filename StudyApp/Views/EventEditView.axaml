@@ -1,0 +1,66 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="200" d:DesignHeight="300"
+             x:Class="StudyApp.Views.EventEditView">
+  <DockPanel>
+    <Button DockPanel.Dock="Bottom" Command="{Binding Ok}">Done</Button>
+    <TextBlock Text="Edit Event" FontSize="24" DockPanel.Dock="Top"/>
+    <StackPanel>    
+      <Grid ColumnDefinitions="1*,4*"
+            RowDefinitions="*,*,*,*,*,*,*,*,*"  
+            Margin="4">
+        <TextBlock Text="Title: " Grid.Row="0" Grid.Column="0"/>
+        <TextBox AcceptsReturn="False"
+                Text="{Binding Event.Title}"
+                Watermark="Event Title"
+                Grid.Row="0" Grid.Column="1"/>
+
+      <TextBlock Text="Description: " Grid.Row="1" Grid.Column="0"/>
+      <TextBox AcceptsReturn="False"
+              Text="{Binding Event.Description}"
+              Watermark="Event Description"
+              Grid.Row="1" Grid.Column="1"/>
+      
+
+      <TextBlock Text="Location: " Grid.Row="2" Grid.Column="0"/>
+      <TextBox AcceptsReturn="False"
+              Text="{Binding Event.Location}"
+              Watermark="Event Location"
+              Grid.Row="2" Grid.Column="1"/>
+      
+      <TextBlock Text="Subject: " Grid.Row="3" Grid.Column="0"/>
+      <TextBox AcceptsReturn="False"
+              Text="{Binding Event.Subject}"
+              Watermark="Event Subject"
+              Grid.Row="3" Grid.Column="1"/>
+
+      <TextBlock Text="Course: " Grid.Row="4" Grid.Column="0"/>
+      <TextBox AcceptsReturn="False"
+              Text="{Binding Event.Course}"
+              Watermark="Event Course"
+              Grid.Row="4" Grid.Column="1"/>
+
+      <TextBlock Text="Program: " Grid.Row="5" Grid.Column="0"/>
+      <TextBox AcceptsReturn="False"
+              Text="{Binding Event.Program}"
+              Watermark="Event Program"
+              Grid.Row="5" Grid.Column="1"/>
+
+      <TextBlock Text="School: " Grid.Row="6" Grid.Column="0"/>
+      <TextBox AcceptsReturn="False"
+              Text="{Binding Event.School}"
+              Watermark="Event School"
+              Grid.Row="6" Grid.Column="1"/>
+      <TextBlock Text="Date: " Grid.Row="7" Grid.Column="0"/>
+      <DatePicker SelectedDate="{Binding Event.Date}"
+                  Grid.Row="7" Grid.Column="1"/>
+
+      <TextBlock Text="Time: " Grid.Row="8" Grid.Column="0"/>
+      <TimePicker SelectedTime="{Binding Event.TimeOfDay}"
+                  Grid.Row="8" Grid.Column="1"/>
+      </Grid>
+    </StackPanel>
+  </DockPanel>
+</UserControl>

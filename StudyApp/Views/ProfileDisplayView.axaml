@@ -1,0 +1,82 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="StudyApp.Views.ProfileDisplayView">
+  <StackPanel Margin="10,0,0,0">
+    <TextBlock Text="{Binding Profile.User.Username}"
+                FontSize="28"/>
+    
+    <StackPanel Orientation="Horizontal" Spacing="10">
+
+
+      <StackPanel Spacing="2">
+        <TextBlock Text="{Binding Profile.Name, StringFormat='Name: {0}'}"
+                   IsVisible="{Binding Profile.Name, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
+      
+        <TextBlock Text="{Binding Profile.Pronouns, StringFormat='Pronouns: {0}'}"
+                   IsVisible="{Binding Profile.Pronouns, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>  
+      
+        <TextBlock Text="{Binding Profile.Age, StringFormat='Age: {0}'}"
+                   IsVisible="{Binding Profile.Age, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
+
+        <TextBlock Text="{Binding Profile.Description}"
+                   IsVisible="{Binding Profile.Description, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
+
+        <TextBlock Text="{Binding Profile.Program, StringFormat='Program: {0}'}"
+                   IsVisible="{Binding Profile.Program, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
+      
+        <TextBlock Text="{Binding Profile.School, StringFormat='School: {0}'}"
+                   IsVisible="{Binding Profile.School, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
+    
+          
+      </StackPanel>
+
+      <StackPanel Width="200" Spacing="5">
+        <TextBlock Text="Subjects:"/>
+        <ItemsRepeater Items="{Binding Profile.Subjects}">
+          <ItemsRepeater.ItemTemplate>
+            <DataTemplate>
+             <Border Margin="10,0,0,0" Padding="2">
+               <TextBlock Text="{Binding}"/>
+              </Border>
+            </DataTemplate>
+          </ItemsRepeater.ItemTemplate>
+        </ItemsRepeater>
+        <TextBlock Text="CoursesTaking:"/>
+        <ItemsRepeater Items="{Binding Profile.CoursesTaking}">
+          <ItemsRepeater.ItemTemplate>
+            <DataTemplate>
+             <Border Margin="10,0,0,0" Padding="2">
+               <TextBlock Text="{Binding}"/>
+              </Border>
+            </DataTemplate>
+          </ItemsRepeater.ItemTemplate>
+        </ItemsRepeater>
+        <TextBlock Text="CoursesStudying:"/>
+        <ItemsRepeater Items="{Binding Profile.CoursesStudying}">
+          <ItemsRepeater.ItemTemplate>
+            <DataTemplate>
+             <Border Margin="10,0,0,0" Padding="2">
+               <TextBlock Text="{Binding}"/>
+              </Border>
+            </DataTemplate>
+          </ItemsRepeater.ItemTemplate>
+        </ItemsRepeater>
+        <TextBlock Text="Interests:"/>
+        <ItemsRepeater Items="{Binding Profile.Interests}">
+          <ItemsRepeater.ItemTemplate>
+            <DataTemplate>
+             <Border Margin="10,0,0,0" Padding="2">
+               <TextBlock Text="{Binding}"/>
+              </Border>
+            </DataTemplate>
+          </ItemsRepeater.ItemTemplate>
+        </ItemsRepeater>
+      </StackPanel>
+    </StackPanel>
+      <Button Content="Edit Profile"
+              Command="{Binding $parent[Window].DataContext.EditProfile}"/>       
+  </StackPanel>
+</UserControl>

@@ -1,0 +1,49 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="StudyApp.Views.SearchView">
+  <StackPanel>
+    <StackPanel Orientation="Horizontal">
+        
+        <TextBox AcceptsReturn="False"
+                Text="{Binding Keyword}"
+                Watermark="Enter Search"
+                Width="300"/>
+      <Button Command="{Binding EventSearch}">Search Events</Button>
+      <Button Command="{Binding ProfileSearch}">Search Profiles</Button>
+    </StackPanel>
+    <StackPanel IsVisible="{Binding ShowEventResults}">
+      <TextBlock Text="Results:"/>
+      <ItemsRepeater Items="{Binding EventResults}">
+        <ItemsRepeater.ItemTemplate>
+          <DataTemplate>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Padding="2" VerticalAlignment="Center" Text="{Binding Title}"/>
+                <Button Content="View Event"
+                Command="{Binding $parent[Window].DataContext.DisplayEvent}"
+                CommandParameter="{Binding}"/> 
+              </StackPanel>
+          </DataTemplate>
+        </ItemsRepeater.ItemTemplate>
+      </ItemsRepeater>
+      </StackPanel>
+
+      <StackPanel IsVisible="{Binding ShowProfileResults}">
+      <TextBlock Text="Results:"/>
+      <ItemsRepeater Items="{Binding ProfileResults}">
+        <ItemsRepeater.ItemTemplate>
+          <DataTemplate>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Padding="2" VerticalAlignment="Center" Text="{Binding User.Username}"/>
+                <Button Content="View Profile"
+                Command="{Binding $parent[Window].DataContext.DisplayProfile}"
+                CommandParameter="{Binding}"/> 
+              </StackPanel>
+          </DataTemplate>
+        </ItemsRepeater.ItemTemplate>
+      </ItemsRepeater>
+      </StackPanel>
+  </StackPanel>
+</UserControl>

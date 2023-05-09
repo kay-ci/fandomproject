@@ -1,0 +1,35 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="StudyApp.Views.LogInView">
+  <StackPanel HorizontalAlignment="Center"
+              VerticalAlignment="Center"
+              Width="400">
+    <Image Source="/Assets/TitleImage.jpg" />
+    <Grid ColumnDefinitions="1*,4*"
+            RowDefinitions="*,*"  
+            Margin="4">
+        <TextBlock Text="Username: " Grid.Row="0" Grid.Column="0"/>
+        <TextBox AcceptsReturn="False"
+                Text="{Binding Username}"
+                Watermark="Username"
+                Grid.Row="0" Grid.Column="1"/>
+
+      <TextBlock Text="Password: " Grid.Row="1" Grid.Column="0"/>
+      <TextBox AcceptsReturn="False"
+              Text="{Binding Password}"
+              Watermark="Password"
+              PasswordChar="·"
+              Grid.Row="1" Grid.Column="1"/>
+  </Grid>
+  <StackPanel HorizontalAlignment="Center"
+              VerticalAlignment="Center"
+              Orientation="Horizontal"
+              Width="200">
+    <Button Command="{Binding Register}">Register</Button>
+    <Button Command="{Binding Login}">Login</Button>
+  </StackPanel>
+  </StackPanel>
+</UserControl>

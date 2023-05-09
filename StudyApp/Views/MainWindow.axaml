@@ -1,0 +1,30 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="StudyApp.Views.MainWindow"
+        Icon="/Assets/avalonia-logo.ico"
+        Width="600" Height="450"
+        Title="Social Friendship App">
+        <StackPanel>
+        <ContentControl Width="600" Height="420" Content="{Binding Content}"/>
+        <StackPanel HorizontalAlignment="Center"
+                    VerticalAlignment="Bottom"
+                    Orientation="Horizontal"
+                    IsVisible="{Binding VisibleNavigation}">
+                <Button Command="{Binding Profile}"> 
+                        <Image Source="/Assets/Icons/icons-profile.png" Width="20" Height="20"/>
+                </Button>
+                <Button Command="{Binding NewEvent}">
+                        <Image Source="/Assets/Icons/icons-event.png" Width="20" Height="20"/>
+                </Button>
+                <Button Command="{Binding Search}">
+                        <Image Source="/Assets/Icons/icons-search.png" Width="20" Height="20"/>
+                </Button>
+                <Button Command="{Binding Message}">
+                        <Image Source="/Assets/Icons/icons-message.png" Width="20" Height="20"/>
+                </Button>
+                <Button Command="{Binding Logout}">
+                        <Image Source="/Assets/Icons/icons-close.png" Width="20" Height="20"/>
+                </Button>
+        </StackPanel>
+        </StackPanel> 
+</Window>

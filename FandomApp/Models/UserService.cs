@@ -125,7 +125,8 @@ public class UserService{
     /// <summary>
     /// Method <c>CreateUser</c> inserts a new user in the DbSet FandomUsers.
     /// </summary>
-    public void CreateUser(string username, string password){
+    public User CreateUser(string username, string password, Profile profile){
+        User newUser;
         if(string.IsNullOrWhiteSpace(password)){
             throw new ArgumentNullException();
         }
@@ -135,12 +136,12 @@ public class UserService{
             throw new ArgumentException("User with that username already exist");
         }
         else{
-            Profile newProfile = new Profile("..name", "..pronouns", 0, "..country", "..city");
-            User newUser = new User(username, newProfile);
+            newUser = new User(username, profile);
             CreatePassword(newUser, password);
             _context.FandomUsers.Add(newUser);
             _context.SaveChanges();
         }
+        return newUser;
     }
     /// <summary>
     /// Method <c>LogIn</c> takes in a <param>username</param> and <param>password</param> to store the currently logged in user.
