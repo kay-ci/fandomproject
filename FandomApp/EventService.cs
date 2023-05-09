@@ -51,6 +51,8 @@ public class EventService
     {
         List<Event> events = _context.FandomEvents
                             .Include(e => e.Categories)
+                            .Include(e => e.Fandoms)
+                            .Include(e => e.Owner)
                             .Include(e => e.Attendees)
                             .ToList<Event>();
         
@@ -97,20 +99,60 @@ public class EventService
         return attendees;
     }
 
-    //this method find event in database based on country, city, category, keyword in (title/description)
+    //helper method to get Queryable of all the events so i can filter them
+    private IQueryable<Event> GetEvents()
+    {
+        var events = _context.FandomEvents
+                            .Include(e => e.Categories)
+                            .Include(e => e.Fandoms)
+                            .Include(e => e.Owner)
+                            .Include(e => e.Attendees);
+        
+        return events;
+    }
+
+    //this method find event in database based on country, city, category, fandoms, keyword in (title/description)
     public List<Event>? SearchEvent(string keyword, string searchInput) {
         
         List<Event>? events_found = null;
-        if (keyword.ToLower() == "location") {
-            events_found = GetEventsByLocation(searchInput.ToLower());
-        }
-        else if (keyword.ToLower() == "category") {
-            events_found = GetEventsByCategory(searchInput.ToLower());
-        }
-        else if (keyword.ToLower() == "keyword") {
-            events_found = GetEventsByKeyword(searchInput.ToLower());
-        }
+        keyword = keyword.ToLower();
+        searchInput = searchInput.ToLower();
 
+        try
+        {
+            if (keyword == "location") 
+            {
+                events_found = GetEvents()
+                                .Where(e => e.Location.Equals(searchInput))
+                                .ToList<Event>();
+            }
+            else if (keyword == "category") 
+            {
+                events_found = GetEvents()
+                                .Where(e => e.Categories.Any(c => c.Category_name.Equals(searchInput)))
+                                .ToList<Event>();
+            }
+            else if (keyword.ToLower() == "keyword") 
+            {
+                events_found = GetEvents()
+                                .Where(e => e.Title.Contains(searchInput))
+                                .ToList<Event>();
+            }
+            else if (keyword.ToLower() == "fandom") 
+            {
+                events_found = GetEvents()
+                                .Where(e => e.Fandoms.Any(f => f.Name.Equals(searchInput)))
+                                .ToList<Event>();
+            }
+            else if (keyword.ToLower() == "owner") 
+            {
+                events_found = GetEvents()
+                                .Where(e => e.Owner.Username.Equals(searchInput))
+                                .ToList<Event>();
+            }
+        }
+        catch (Exception) { return null; }
+        
         return events_found;
     }
 
@@ -119,11 +161,9 @@ public class EventService
         List<Event>? events = null;
         try
         {
-            var query = from e in _context.FandomEvents
-                        where e.Location == location
-                        select e;
-
-            events = query.ToList<Event>();
+            events = GetEvents()
+                    .Where(e => e.Location.Equals(location))
+                    .ToList<Event>();
         }
         catch (Exception)
         {
@@ -132,13 +172,15 @@ public class EventService
         return events;
     }
 
-    public List<Event>? GetEventsByCategory(string category)
+    private List<Event>? GetEventsByCategory(string category)
     {
         List<Event>? events = null;
         try
         {
             events = _context.FandomEvents
                     .Include(e => e.Categories)
+                    .Include(e => e.Fandoms)
+                    .Include(e => e.Owner)
                     .Include(e => e.Attendees)
                     .Where(e => e.Categories.Any(c => c.Category_name.Equals(category)))
                     .ToList<Event>();
@@ -150,23 +192,5 @@ public class EventService
         return events;
     }
 
-    private List<Event>? GetEventsByKeyword(string keyword)
-    {
-        List<Event>? events = null;
-        try
-        {
-            events = _context.FandomEvents
-                    .Include(e => e.Categories)
-                    .Include(e => e.Attendees)
-                    .Where(e => e.Title.Contains(keyword))
-                    .ToList<Event>();
-
-        }
-        catch (Exception)
-        {
-            return null;
-        }
-        return events;
-    }
     
 }
