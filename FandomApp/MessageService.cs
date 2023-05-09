@@ -22,9 +22,9 @@ public class MessageService {
         _context = context;
     }
 
-    public Message GetMessage(int MessageId){
+    public Message GetMessage(Message mesg){
         var query = from msg in _context.FandomMessages
-            where msg.Id == MessageId
+            where msg.Equals(mesg)
             select msg;
         var fetchedmsg = query.First<Message>();
         return fetchedmsg;
@@ -32,7 +32,7 @@ public class MessageService {
 
     public UserMessage GetUserMessage(User usr){
         var query = from u_msg in _context.FandomUserMessages
-            where u_msg.user == usr
+            where u_msg.user.Equals(usr)
             select u_msg;
         var fetchedUMSG = query.First<UserMessage>();
         return fetchedUMSG;
@@ -40,7 +40,7 @@ public class MessageService {
 
     public List<Message> GetBox(User usr, bool getInbox){
         var query = from u_msg in _context.FandomUserMessages
-            where u_msg.user == usr
+            where u_msg.user.Equals(usr)
             select u_msg;
         var fetchedUMSG = query.First<UserMessage>();
         if(getInbox) return fetchedUMSG.Inbox;
@@ -54,22 +54,23 @@ public class MessageService {
         _context.SaveChanges();
     }
 
-    public void Add_Message(UserMessage sender, List<UserMessage> recipients, string text, string title){
-        var msg = new Message(sender, recipients, text, title);
+    public void Add_Message(UserMessage sender, string text, string title, List<UserMessage>? recipients = null, UserMessage? recipient = null){
+        Message? msg = null;
+        if(recipients != null) msg = new Message(sender, recipients, text, title);
+        else if(recipient != null) msg = new Message(sender, recipient, text, title);
+        else throw new ArgumentException("Both recipients and recipient null, how did we get here?");
 
         _context.FandomMessages.Add(msg);
         _context.SaveChanges();
     }
 
-    public void Edit_Message(Message message){
-        var text = message.Text;
-        var title = message.Title;
+    public void Edit_Message(Message message, string new_text, string new_title){
         var query = from msg in _context.FandomMessages
-            where msg.Title == title
+            where msg == message
             select msg;
         var fetchedmsg = query.First<Message>();
-        fetchedmsg.Text = text;
-        fetchedmsg.Title = title;
+        fetchedmsg.Text = new_text;
+        fetchedmsg.Title = new_title;
         _context.SaveChanges();
     }
 

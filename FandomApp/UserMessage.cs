@@ -23,16 +23,24 @@ namespace UserInfo{
             Inbox = new List<Message>();
             Outbox = new List<Message>();
         }
-        public void CreateMessage(List<UserMessage> recipients, string text, string title){
+        public void CreateMessage(string text, string title, List<UserMessage>? recipients = null, UserMessage? recipient = null){
             //We check if the text is null or empty
             if(string.IsNullOrWhiteSpace(text)) throw new ArgumentException("Text must be filled with text!");
-            //Create the message and add it to our Outbox
-            Message newMsg = new Message(this.user.Messages, recipients, text, title);
-            Outbox.Add(newMsg);
-            //Here we would add the message to the recipients Inboxes... probably will use the AddMessage method below
-            //So, something like:
-            foreach(UserMessage recipient in recipients){
+            if(recipients != null){
+                //Create the message and add it to our Outbox
+                Message newMsg = new Message(this.user.Messages, recipients, text, title);
+                Outbox.Add(newMsg);
+                //Here we would add the message to the recipients Inboxes
+                foreach(UserMessage recip in recipients){
+                    recip.AddMessage(newMsg);
+                }
+            }else if(recipient != null){
+                Message newMsg = new Message(this.user.Messages, recipient, text, title);
+                Outbox.Add(newMsg);
+                //Here we would add the message to the recipient's Inbox
                 recipient.AddMessage(newMsg);
+            }else {
+                throw new ArgumentException("ERROR, both recipient and recipients are null. How did we get here?");
             }
 
         }
@@ -82,6 +90,23 @@ namespace UserInfo{
                 }
             }
 
+        }
+
+        public override bool Equals(object obj){
+            var item = obj as UserMessage;
+            if(ReferenceEquals(item, this)){
+                return true;
+            }
+            if(item == null && this == null){
+                return true;
+            }
+            if(item == null){
+                return false;
+            }
+            return (
+                this.user == item.user &&
+                this.Inbox.Count == item.Inbox.Count &&
+                this.Outbox.Count == item.Outbox.Count);
         }
     }
 }
