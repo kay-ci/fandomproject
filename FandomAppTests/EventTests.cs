@@ -35,19 +35,45 @@ public class EventTests{
     {
         //Arrange
         List<Category> categories = new List<Category>();
-        List<Fandom> fandoms = new List<Fandom>();
-        List<Badge> badges = new List<Badge>();
-        List<Event> events = new List<Event>();
-    
-        Profile profile = new Profile("Owner", "they/them", 21, "Canada", "Montreal", categories, fandoms, badges, "description", "pictures", "interests");
+        Profile profile = new Profile("Owner", "they/them", 21, "Canada", "Montreal");
+        User user = new User("user", profile);
 
-        User user = new User("user", profile, events);
-        DateTime date = new DateTime(2023, 12, 12);
-        
         //Act
         //this should throw error because minimum age can't be under 13
-        Event event_test = new Event("title", date, "location", categories, 12, user);
+        Event event_test = new Event("title", new DateTime(2023, 12, 12), "location", categories, 12, user);
 
+    }
+
+    [TestMethod]
+    public void SetTitle_NullString_ThrowsException()
+    {
+        //Arrange
+        List<Category> categories = new List<Category>();
+        Profile profile = new Profile("User", "they/them", 21, "Canada", "Montreal");
+        User user = new User("user", profile);
+       
+        //Act
+        //Assert
+        Exception exception = Assert.ThrowsException<ArgumentNullException>(() => new Event("",new DateTime(2023, 12, 12), "location", categories, 12, user));
+        
+    }
+
+    [TestMethod]
+    public void SetDateInThePast_DateBeforeToday_ThrowsException()
+    {
+        //Arrange
+        List<Category> categories = new List<Category>();
+        Profile profile = new Profile("User", "they/them", 21, "Canada", "Montreal");
+        User user = new User("user", profile);
+
+        DateTime old_date = new DateTime(2021, 12, 12);
+       
+        //Act
+        Exception exception = Assert.ThrowsException<ArgumentException>(() => new Event("title", old_date, "location", categories, 12, user));
+
+        //Assert
+         Assert.AreEqual("Date must be set in the future", exception.Message);
+        
     }
 
     

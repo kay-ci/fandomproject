@@ -1,6 +1,5 @@
 using UserInfo;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 
 public class EventService
 {
