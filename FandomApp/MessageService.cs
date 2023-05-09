@@ -54,19 +54,14 @@ public class MessageService {
         _context.SaveChanges();
     }
 
-    public void Add_Message(UserMessage sender, string text, string title, List<UserMessage>? recipients = null, UserMessage? recipient = null){
-        Message? msg = null;
-        if(recipients != null) msg = new Message(sender, recipients, text, title);
-        else if(recipient != null) msg = new Message(sender, recipient, text, title);
-        else throw new ArgumentException("Both recipients and recipient null, how did we get here?");
-
+    public void Add_Message(Message msg){
         _context.FandomMessages.Add(msg);
         _context.SaveChanges();
     }
 
     public void Edit_Message(Message message, string new_text, string new_title){
         var query = from msg in _context.FandomMessages
-            where msg == message
+            where msg.Equals(message)
             select msg;
         var fetchedmsg = query.First<Message>();
         fetchedmsg.Text = new_text;
@@ -74,8 +69,12 @@ public class MessageService {
         _context.SaveChanges();
     }
 
-    public void Delete_Message(Message msg){
-        _context.FandomMessages.Remove(msg);
+    public void Delete_Message(Message message){
+        var query = from msg in _context.FandomMessages
+            where msg.Equals(message)
+            select msg;
+        var fetchedmsg = query.First<Message>();
+        _context.FandomMessages.Remove(fetchedmsg);
         _context.SaveChanges();
     }
 }

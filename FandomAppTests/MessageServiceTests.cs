@@ -119,5 +119,149 @@ public class MessageServiceTests{
         Assert.AreEqual(msg_expectation, msg_actual);
     }
 
-    
+    [TestMethod]
+    public void Get_UserMessage_Test_Succeed(){
+        //Arrange
+        var recipients = new List<User>();
+        recipients.Add(new User("KayciUsername", new Profile("Kayci", "she/her", 19, "Canada", "Montreal")));
+        recipients.Add(new User("liliUsername", new Profile("Lili", "they/them", 20, "Ireland", "Dublin")));
+        recipients.Add(new User("bestUser", new Profile("Jim", "he/him", 16, "Canada", "Laval")));
+
+        var data = recipients.AsQueryable();
+
+        var mockSet = new Mock<DbSet<User>>();
+        mockSet.As<IQueryable<User>>().Setup(m => m.Provider).Returns(data.Provider);
+        mockSet.As<IQueryable<User>>().Setup(m => m.Expression).Returns(data.Expression);
+        mockSet.As<IQueryable<User>>().Setup(m => m.ElementType).Returns(data.ElementType);
+        mockSet.As<IQueryable<User>>().Setup(m => m.GetEnumerator()).Returns(data.GetEnumerator());
+
+        var mockContext = new Mock<FanAppContext>();
+        mockContext.Setup(m => m.FandomUsers).Returns(mockSet.Object);
+
+        var service = MessageService.getInstance();
+        service.setLibraryContext(mockContext.Object);
+
+        //Act
+        var usr = new User("KayciUsername", new Profile("Kayci", "she/her", 19, "Canada", "Montreal"));
+        var umsg_expectation = usr.Messages;
+        var umsg_actual = service.GetUserMessage(recipients[0]);
+
+        //Assert
+        Assert.AreEqual(umsg_actual, umsg_expectation); //Cant complete now....
+    }
+
+    [TestMethod]
+    public void Add_Message_Test_Succeed(){
+        //Arrange
+        var sender = new User("KayciUsername", new Profile("Kayci", "she/her", 19, "Canada", "Montreal"));
+        var receiver1 = new User("liliUsername", new Profile("Lili", "they/them", 20, "Ireland", "Dublin"));
+        var receiver2 = new User("bestUser", new Profile("Jim", "he/him", 16, "Canada", "Laval"));
+        var recipients = new List<UserMessage>();
+        recipients.Add(receiver1.Messages);
+        recipients.Add(receiver2.Messages);
+
+        var listdata = new List<Message>();
+        listdata.Add(new Message(sender.Messages, recipients, "text1", "title1"));
+        listdata.Add(new Message(sender.Messages, recipients, "text2", "title2"));
+        listdata.Add(new Message(sender.Messages, recipients, "text3", "title3"));
+
+        var data = listdata.AsQueryable();
+
+        var mockSet = new Mock<DbSet<Message>>();
+        mockSet.As<IQueryable<Message>>().Setup(m => m.Provider).Returns(data.Provider);
+        mockSet.As<IQueryable<Message>>().Setup(m => m.Expression).Returns(data.Expression);
+        mockSet.As<IQueryable<Message>>().Setup(m => m.ElementType).Returns(data.ElementType);
+        mockSet.As<IQueryable<Message>>().Setup(m => m.GetEnumerator()).Returns(data.GetEnumerator());
+
+        var mockContext = new Mock<FanAppContext>();
+        mockContext.Setup(m => m.FandomMessages).Returns(mockSet.Object);
+
+        var service = MessageService.getInstance();
+        service.setLibraryContext(mockContext.Object);
+
+        //Act
+        var new_msg = new Message(sender.Messages, recipients, "text0", "title0");
+        service.Add_Message(new_msg);
+        var msg_actual = service.GetMessage(new_msg);
+
+        //Assert
+        Assert.AreEqual(msg_actual, new_msg);
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(InvalidOperationException))]
+    public void Delete_Message_Test_Succeed(){
+        //Arrange
+        var sender = new User("KayciUsername", new Profile("Kayci", "she/her", 19, "Canada", "Montreal"));
+        var receiver1 = new User("liliUsername", new Profile("Lili", "they/them", 20, "Ireland", "Dublin"));
+        var receiver2 = new User("bestUser", new Profile("Jim", "he/him", 16, "Canada", "Laval"));
+        var recipients = new List<UserMessage>();
+        recipients.Add(receiver1.Messages);
+        recipients.Add(receiver2.Messages);
+
+        var listdata = new List<Message>();
+        listdata.Add(new Message(sender.Messages, recipients, "text1", "title1"));
+        listdata.Add(new Message(sender.Messages, recipients, "text2", "title2"));
+        listdata.Add(new Message(sender.Messages, recipients, "text3", "title3"));
+
+        var data = listdata.AsQueryable();
+
+        var mockSet = new Mock<DbSet<Message>>();
+        mockSet.As<IQueryable<Message>>().Setup(m => m.Provider).Returns(data.Provider);
+        mockSet.As<IQueryable<Message>>().Setup(m => m.Expression).Returns(data.Expression);
+        mockSet.As<IQueryable<Message>>().Setup(m => m.ElementType).Returns(data.ElementType);
+        mockSet.As<IQueryable<Message>>().Setup(m => m.GetEnumerator()).Returns(data.GetEnumerator());
+
+        var mockContext = new Mock<FanAppContext>();
+        mockContext.Setup(m => m.FandomMessages).Returns(mockSet.Object);
+
+        var service = MessageService.getInstance();
+        service.setLibraryContext(mockContext.Object);
+
+        //Act
+        service.Delete_Message(listdata[0]);
+        var msg_expectation = new Message(sender.Messages, recipients, "text1", "title1");
+        var msg_actual = service.GetMessage(msg_expectation);
+
+        //Assert
+        Assert.AreEqual(msg_actual, msg_expectation);
+    }
+
+    [TestMethod]
+    public void Edit_Message_Test_Succeed(){
+        //Arrange
+        var sender = new User("KayciUsername", new Profile("Kayci", "she/her", 19, "Canada", "Montreal"));
+        var receiver1 = new User("liliUsername", new Profile("Lili", "they/them", 20, "Ireland", "Dublin"));
+        var receiver2 = new User("bestUser", new Profile("Jim", "he/him", 16, "Canada", "Laval"));
+        var recipients = new List<UserMessage>();
+        recipients.Add(receiver1.Messages);
+        recipients.Add(receiver2.Messages);
+
+        var listdata = new List<Message>();
+        listdata.Add(new Message(sender.Messages, recipients, "text1", "title1"));
+        listdata.Add(new Message(sender.Messages, recipients, "text2", "title2"));
+        listdata.Add(new Message(sender.Messages, recipients, "text3", "title3"));
+
+        var data = listdata.AsQueryable();
+
+        var mockSet = new Mock<DbSet<Message>>();
+        mockSet.As<IQueryable<Message>>().Setup(m => m.Provider).Returns(data.Provider);
+        mockSet.As<IQueryable<Message>>().Setup(m => m.Expression).Returns(data.Expression);
+        mockSet.As<IQueryable<Message>>().Setup(m => m.ElementType).Returns(data.ElementType);
+        mockSet.As<IQueryable<Message>>().Setup(m => m.GetEnumerator()).Returns(data.GetEnumerator());
+
+        var mockContext = new Mock<FanAppContext>();
+        mockContext.Setup(m => m.FandomMessages).Returns(mockSet.Object);
+
+        var service = MessageService.getInstance();
+        service.setLibraryContext(mockContext.Object);
+
+        //Act
+        service.Edit_Message(listdata[0], "blah", "new_title");
+        var msg_expectation = new Message(sender.Messages, recipients, "blah", "new_title");
+        var msg_actual = service.GetMessage(msg_expectation);
+
+        //Assert
+        Assert.AreEqual(msg_actual, msg_expectation);
+    }
 }
