@@ -19,10 +19,11 @@ public class EventServiceTests{
         var mockContext = new Mock<FanAppContext>();
         mockContext.Setup(m => m.FandomEvents).Returns(mockSet.Object);
 
-        EventService ES = new EventService(mockContext.Object);
+        EventService service = EventService.getInstance();
+        service.setFanAppContext(mockContext.Object);
         
         //Act
-        ES.CreateEvent(event_test);
+        service.CreateEvent(event_test);
 
         //Assert
         mockSet.Verify(m => m.Add(It.IsAny<Event>()), Times.Once());
@@ -52,8 +53,9 @@ public class EventServiceTests{
         var mockContext = new Mock<FanAppContext>();
         mockContext.Setup(m => m.FandomEvents).Returns(mockSet.Object);
 
-        EventService service = new EventService(mockContext.Object);
-        
+        EventService service = EventService.getInstance();
+        service.setFanAppContext(mockContext.Object);
+
         //Act
         var event_found = service.GetEvent("Event1");
 
@@ -85,8 +87,9 @@ public class EventServiceTests{
         var mockContext = new Mock<FanAppContext>();
         mockContext.Setup(m => m.FandomEvents).Returns(mockSet.Object);
 
-        EventService service = new EventService(mockContext.Object);
-        
+        EventService service = EventService.getInstance();
+        service.setFanAppContext(mockContext.Object);
+
         //Act
         var event_found = service.GetEvent("Event");
 
@@ -119,7 +122,8 @@ public class EventServiceTests{
         var mockContext = new Mock<FanAppContext>();
         mockContext.Setup(m => m.FandomEvents).Returns(mockSet.Object);
 
-        EventService service = new EventService(mockContext.Object);
+        EventService service = EventService.getInstance();
+        service.setFanAppContext(mockContext.Object);
         
         //Act
         var events = service.GetAllEvents();
