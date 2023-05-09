@@ -51,8 +51,9 @@ public class Event
             _minAge = value;
         }
     }
-    [NotMapped]
-    public User Owner {get; set;}
+
+    [ForeignKey("userID")]
+    public User Owner {get; set;} = null!;
     public List<User>? Attendees {get; set;} = new();
 
     //constructor
@@ -65,6 +66,7 @@ public class Event
         this.Categories = categories;
         this.MinAge = minAge;
         this.Owner = owner;
+        this.Attendees = new List<User>();
     }
 
     public void AddAttendee(User attendee) 

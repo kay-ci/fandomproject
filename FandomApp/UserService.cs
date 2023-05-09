@@ -28,7 +28,7 @@ public class UserService{
         List<User> usersList = _context.FandomUsers
             .Include(user => user.UserProfile)
             .Include(user => user.Fandoms)
-            .Include(user => user.Events)
+            .Include(user => user.EventsAttending)
             .Include(user => user.Messages)
             .OrderBy(user => user.userID)
             .ToList<User>();
@@ -54,7 +54,7 @@ public class UserService{
     public void UpdateUser(Login userManager, User UpdatedUser){
         if (userManager.CurrentUser != null){
         userManager.CurrentUser.UserProfile = UpdatedUser.UserProfile;
-        userManager.CurrentUser.Events = UpdatedUser.Events;
+        userManager.CurrentUser.EventsAttending = UpdatedUser.EventsAttending;
         userManager.CurrentUser.Fandoms = UpdatedUser.Fandoms;
         _context.SaveChanges();}
     }

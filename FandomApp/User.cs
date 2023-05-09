@@ -17,9 +17,11 @@ namespace UserInfo{
         }
         public Profile? UserProfile {get; set;}
         public UserMessage Messages {get; set;}
+        
+        [InverseProperty("Owner")]
+        public List<Event> EventsCreated {get; set;} = new();
         [InverseProperty("Attendees")]
-
-        public List<Event> Events {get; set;} = new();
+        public List<Event> EventsAttending {get; set;} = new();
         public List<Fandom> Fandoms {get; set;} = new();
         public byte[] Salt {get; set;}
         public byte[] Hash {get; set;}
@@ -32,7 +34,7 @@ namespace UserInfo{
             }
             Username = userName;
             UserProfile = userProfile;
-            Events = events;
+            EventsAttending = events;
             Messages = new UserMessage(this);
             
         }
@@ -44,7 +46,7 @@ namespace UserInfo{
             Username = userName;
             UserProfile = userProfile;
             Messages = new UserMessage(this);
-            Events = new List<Event>();
+            EventsAttending = new List<Event>();
         }
 
         public bool IsValidUsername(string username){
@@ -75,7 +77,7 @@ namespace UserInfo{
                 this.Username == item.Username &&
                 this.UserProfile == item.UserProfile &&
                 this.Messages == item.Messages &&
-                this.Events == item.Events &&
+                this.EventsAttending == item.EventsAttending &&
                 this.Fandoms == item.Fandoms &&
                 this.Hash.SequenceEqual(item.Hash) &&
                 this.Salt.SequenceEqual(item.Salt));

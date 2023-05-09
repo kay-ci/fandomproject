@@ -88,9 +88,9 @@ public class EventService
         var attendees = _context.FandomUsers
                         .Include(user => user.UserProfile)
                         .Include(user => user.Fandoms)
-                        .Include(user => user.Events)
+                        .Include(user => user.EventsAttending)
                         .Include(user => user.Messages)
-                        .Where(user => user.Events.Contains(fandomEvent))
+                        .Where(user => user.EventsAttending.Contains(fandomEvent))
                         .OrderBy(user => user.userID)
                         .ToList<User>();
 
