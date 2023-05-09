@@ -21,13 +21,11 @@ public class Program{
         UserService uService = UserService.getInstance();
         uService.setFanAppContext(context);
 
-        //User new_user1 = uService.CreateUser("User1", "hello123");
+        User user1 = uService.CreateUser("User1", "hello123", profile1);
         //setting user1 profile
         Login login = uService.LogIn("User1", "hello123");
-        User user1 = login.CurrentUser;
-        user1.UserProfile = profile1;
-
-        
+        //User user1 = login.CurrentUser;
+       
         // Step 3. Create event for user1
         EventService evService = EventService.getInstance();
         evService.setFanAppContext(context);
