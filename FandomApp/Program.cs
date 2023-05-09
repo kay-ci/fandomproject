@@ -21,14 +21,16 @@ public class Program
 
         //Proof of Concept
         Program program = new Program();
-        //clearTables();
+        clearTables();
 
         UserService uService = program.uService;
         EventService evService = program.evService;
 
         createUser1(uService, evService);
+        createUser2(uService, evService);
+        modifyUser1(uService, evService);
 
-
+        Console.WriteLine("Program done");
     }
 
     private static void clearTables()
@@ -51,7 +53,7 @@ public class Program
         Profile profile1 = new Profile("User1", "they/them", 18, "Canada", "Montreal");
         User user1 = uService.CreateUser("User1", "hello123", profile1);
         Program.login = uService.LogIn("User1", "hello123");
-        Console.WriteLine($"User {Program.login.CurrentUser} is logged in");
+        Console.WriteLine($"User {Program.login.CurrentUser.Username} is logged in");
 
         // Step 3. Create event for user1
         List<Category> categories1 = new List<Category>(){new Category("music")};
@@ -68,14 +70,10 @@ public class Program
         Profile profile2 = new Profile("User2", "they/them", 24, "Canada", "Vancouver");
         User user2 = uService.CreateUser("User2", "hello123", profile2);
         Program.login = uService.LogIn("User2", "hello123");
-        Console.WriteLine($"User {Program.login.CurrentUser} is now logged in");
-
-        //List<Category> categories2 = new List<Category>(){new Category("art")};
-        //Event event2 = new Event("User2 Event", new DateTime(2023, 12, 12), "Montreal", categories2, 18, user2);
-        //evService.CreateEvent(event2);
+        Console.WriteLine($"User {Program.login.CurrentUser.Username} is now logged in");
 
         // Step 7. Perform a search to find the event created by user1
-        Event user1_event = evService.SearchEvent("owner", "user1").First();
+        Event user1_event = evService.GetEvent("User1 Event");
 
         // Step 8. Mark user2 as attending user1’s event
         user1_event.AddAttendee(user2);
@@ -112,17 +110,16 @@ public class Program
     {
         // 13. Log in as user1
         Program.login = uService.LogIn("User1", "hello123");
-        Console.WriteLine($"User {Program.login.CurrentUser} is now logged in");
+        Console.WriteLine($"User {Program.login.CurrentUser.Username} is now logged in");
 
         // 14. Change user1’s password
         try
         {
             uService.ChangePassword(Program.login, "hello123", "abc12345");
-            Console.WriteLine($"User {Program.login.CurrentUser} password changed");
+            Console.WriteLine($"User {Program.login.CurrentUser.Username} password changed");
         }
         catch (Exception e)
         {
-           Console.WriteLine($"User {Program.login.CurrentUser} password change attempt failed");
            Console.WriteLine(e.Message);
         }
         
@@ -149,20 +146,18 @@ public class Program
         // 18. Find and view the attendees of user1’s event
         try
         {
-            Event ev = evService.GetEvent("User1 event");
+            Event ev = evService.GetEvent("User1 Event");
             var attendees = evService.GetEventAttendees(ev);
             foreach (var attendee in attendees)
             {
                 Console.WriteLine($"Attendee: {attendee.Username}");
             }
-            
         }
         catch (Exception e)
         {
             Console.WriteLine(e.Message);
         }
         
-
         // 19. Modify user1’s event.
         try
         {
@@ -177,15 +172,16 @@ public class Program
         }
     }
 
-    private static void deleteUser1(UserService uService, EventService evService)
+    private static void deleteUser1(UserService uService)
     {
         // 20. Delete user1’s profile
-        uService.Delete(Program.login);
+        
+        //uService.Delete(Program.login);
 
         // 21. Delete user1’s account
     }
 
-    private static void deleteUser2(UserService uService, EventService evService)
+    private static void deleteUser2(UserService uService)
     {
         // 22. Log in as user2
 
