@@ -76,5 +76,21 @@ public class EventTests{
         
     }
 
-    
+    [TestMethod]
+    public void AddAttendee_3Users_AttendeeCountEqual3()
+    {
+        //Arrange
+        User user = new User("user", new Profile("User", "they/them", 21, "Canada", "Montreal"));
+        User user2 = new User("user2", new Profile("User2", "they/them", 18, "Canada", "Toronto"));
+        User user3 = new User("user3", new Profile("User3", "she/her", 20, "US", "Detroit"));
+
+        //Act
+        Event ev =  new Event("title", new DateTime(2023, 12, 12), "Montreal", new List<Category>(), 18, user);
+        ev.AddAttendee(user);
+        ev.AddAttendee(user2);
+        ev.AddAttendee(user3);
+
+        //Assert
+        Assert.AreEqual(3, ev.Attendees.Count);
+    }
 }

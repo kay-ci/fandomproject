@@ -1,13 +1,13 @@
 using UserInfo;
 
-public class Program
+public class Proof
 {
     private static FanAppContext context = new FanAppContext();
     private UserService uService;
     private EventService evService;
     private static Login? login;
     
-    public Program() 
+    public Proof() 
     {
         //Setting all the services needed
         this.uService = UserService.getInstance();
@@ -20,11 +20,11 @@ public class Program
     static void Main(string[] args){
 
         //Proof of Concept
-        Program program = new Program();
+        Proof proof = new Proof();
         clearTables();
 
-        UserService uService = program.uService;
-        EventService evService = program.evService;
+        UserService uService = proof.uService;
+        EventService evService = proof.evService;
 
         createUser1(uService, evService);
         createUser2(uService, evService);
@@ -36,15 +36,15 @@ public class Program
     private static void clearTables()
     {
         //Clearing tables to start
-        Program.context.FandomUsers.RemoveRange(context.FandomUsers);
-        Program.context.FandomProfiles.RemoveRange(context.FandomProfiles);
-        Program.context.FandomMessages.RemoveRange(context.FandomMessages);
-        Program.context.FandomEvents.RemoveRange(context.FandomEvents);
-        Program.context.FandomCategories.RemoveRange(context.FandomCategories);
-        Program.context.FandomBadges.RemoveRange(context.FandomBadges);
-        Program.context.FandomUserMessages.RemoveRange(context.FandomUserMessages);
-        Program.context.Fandoms.RemoveRange(context.Fandoms);
-        Program.context.SaveChanges();
+        Proof.context.FandomUsers.RemoveRange(context.FandomUsers);
+        Proof.context.FandomProfiles.RemoveRange(context.FandomProfiles);
+        Proof.context.FandomMessages.RemoveRange(context.FandomMessages);
+        Proof.context.FandomEvents.RemoveRange(context.FandomEvents);
+        Proof.context.FandomCategories.RemoveRange(context.FandomCategories);
+        Proof.context.FandomBadges.RemoveRange(context.FandomBadges);
+        Proof.context.FandomUserMessages.RemoveRange(context.FandomUserMessages);
+        Proof.context.Fandoms.RemoveRange(context.Fandoms);
+        Proof.context.SaveChanges();
     }
 
     private static void createUser1(UserService uService, EventService evService) 
@@ -52,8 +52,8 @@ public class Program
          // Step 1 and 2. User1 Account and Profile
         Profile profile1 = new Profile("User1", "they/them", 18, "Canada", "Montreal");
         User user1 = uService.CreateUser("User1", "hello123", profile1);
-        Program.login = uService.LogIn("User1", "hello123");
-        Console.WriteLine($"User {Program.login.CurrentUser.Username} is logged in");
+        Proof.login = uService.LogIn("User1", "hello123");
+        Console.WriteLine($"User {Proof.login.CurrentUser.Username} is logged in");
 
         // Step 3. Create event for user1
         List<Category> categories1 = new List<Category>(){new Category("music")};
@@ -61,7 +61,7 @@ public class Program
         evService.CreateEvent(event1);
 
         // Step 4. Log out of user1
-        uService.LogOff(Program.login);
+        uService.LogOff(Proof.login);
     }
 
     private static void createUser2(UserService uService, EventService evService) 
@@ -69,8 +69,8 @@ public class Program
         // Step 5 and 6. Create user2 account and profile
         Profile profile2 = new Profile("User2", "they/them", 24, "Canada", "Vancouver");
         User user2 = uService.CreateUser("User2", "hello123", profile2);
-        Program.login = uService.LogIn("User2", "hello123");
-        Console.WriteLine($"User {Program.login.CurrentUser.Username} is now logged in");
+        Proof.login = uService.LogIn("User2", "hello123");
+        Console.WriteLine($"User {Proof.login.CurrentUser.Username} is now logged in");
 
         // Step 7. Perform a search to find the event created by user1
         Event user1_event = evService.GetEvent("User1 Event");
@@ -82,7 +82,7 @@ public class Program
         Console.WriteLine("User2 will attempt to edit user1's event.\n");
         try
         {
-            evService.EditEvent(Program.login, user1_event);
+            evService.EditEvent(Proof.login, user1_event);
         }
         catch (Exception e)
         {
@@ -109,14 +109,14 @@ public class Program
     private static void modifyUser1(UserService uService, EventService evService) 
     {
         // 13. Log in as user1
-        Program.login = uService.LogIn("User1", "hello123");
-        Console.WriteLine($"User {Program.login.CurrentUser.Username} is now logged in");
+        Proof.login = uService.LogIn("User1", "hello123");
+        Console.WriteLine($"User {Proof.login.CurrentUser.Username} is now logged in");
 
         // 14. Change user1’s password
         try
         {
-            uService.ChangePassword(Program.login, "hello123", "abc12345");
-            Console.WriteLine($"User {Program.login.CurrentUser.Username} password changed");
+            uService.ChangePassword(Proof.login, "hello123", "abc12345");
+            Console.WriteLine($"User {Proof.login.CurrentUser.Username} password changed");
         }
         catch (Exception e)
         {
@@ -124,14 +124,14 @@ public class Program
         }
         
         // 15. Modify user1’s profile
-        Profile new_profile = Program.login.CurrentUser.UserProfile;
+        Profile new_profile = Proof.login.CurrentUser.UserProfile;
         new_profile.Badges = new List<Badge>(){new Badge("Special Fan")};
         new_profile.Fandoms = new List<Fandom>(){new Fandom("Beyhive", "Music","This is Beyonce's fandom")};
         new_profile.City = "Toronto";
 
         try
         {
-            uService.UpdateProfile(Program.login, new_profile);
+            uService.UpdateProfile(Proof.login, new_profile);
             Console.WriteLine("User1 profile updated");
         }
         catch (Exception e)
@@ -163,7 +163,7 @@ public class Program
         {
             Event ev = evService.GetEvent("User1 event");
             ev.Location= "Las Vegas";
-            evService.EditEvent(Program.login, ev);
+            evService.EditEvent(Proof.login, ev);
             Console.WriteLine("User1 event updated");
         }
         catch (Exception e)
