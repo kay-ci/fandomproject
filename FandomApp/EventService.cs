@@ -27,7 +27,7 @@ public class EventService
        
     }
 
-    //this method retrieve a single event using it's ID
+    //this method retrieve a single event using it's title
     public Event? GetEvent(string title)
     {
         Event? eventFound = null;
@@ -35,6 +35,24 @@ public class EventService
         {
             var query = from ev in _context.FandomEvents
                         where ev.Title == title
+                        select ev;
+            eventFound = query.First();
+        }
+        catch (Exception)
+        {
+            return null;
+        }
+        return eventFound;
+    }
+
+    //this method retrieve a single event using it's ID
+    public Event? GetEvent(int id)
+    {
+        Event? eventFound = null;
+        try
+        {
+            var query = from ev in _context.FandomEvents
+                        where ev.EventId == id
                         select ev;
             eventFound = query.First();
         }
@@ -66,14 +84,12 @@ public class EventService
         {
             throw new ArgumentException("Only the creator of this event can modify it.");
         }
-        var ev = _context.FandomEvents
-                .Any(e => e.EventId == updatedEvent.EventId);
-        if (!ev)
+        
+        if (GetEvent(updatedEvent.EventId) != null)
         {
             _context.FandomEvents.Update(updatedEvent);
             _context.SaveChanges();
         }
-
     }
 
     //this method remove eventfrom database
@@ -105,7 +121,7 @@ public class EventService
     }
 
     //helper method to get Queryable of all the events so i can filter them
-    private IQueryable<Event> GetEvents()
+    private IQueryable<Event> GetQueryableEvents()
     {
         var events = _context.FandomEvents
                             .Include(e => e.Categories)
@@ -127,31 +143,31 @@ public class EventService
         {
             if (keyword == "location") 
             {
-                events_found = GetEvents()
+                events_found = GetQueryableEvents()
                                 .Where(e => e.Location.Equals(searchInput))
                                 .ToList<Event>();
             }
             else if (keyword == "category") 
             {
-                events_found = GetEvents()
+                events_found = GetQueryableEvents()
                                 .Where(e => e.Categories.Any(c => c.Category_name.Equals(searchInput)))
                                 .ToList<Event>();
             }
             else if (keyword.ToLower() == "keyword") 
             {
-                events_found = GetEvents()
+                events_found = GetQueryableEvents()
                                 .Where(e => e.Title.Contains(searchInput))
                                 .ToList<Event>();
             }
             else if (keyword.ToLower() == "fandom") 
             {
-                events_found = GetEvents()
+                events_found = GetQueryableEvents()
                                 .Where(e => e.Fandoms.Any(f => f.Name.Equals(searchInput)))
                                 .ToList<Event>();
             }
             else if (keyword.ToLower() == "owner") 
             {
-                events_found = GetEvents()
+                events_found = GetQueryableEvents()
                                 .Where(e => e.Owner.Username.Equals(searchInput))
                                 .ToList<Event>();
             }
@@ -159,22 +175,6 @@ public class EventService
         catch (Exception) { return null; }
         
         return events_found;
-    }
-
-    private List<Event>? GetEventsByLocation(string location)
-    {
-        List<Event>? events = null;
-        try
-        {
-            events = GetEvents()
-                    .Where(e => e.Location.Equals(location))
-                    .ToList<Event>();
-        }
-        catch (Exception)
-        {
-            return null;
-        }
-        return events;
     }
 
 }
