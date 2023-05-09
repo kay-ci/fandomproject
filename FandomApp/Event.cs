@@ -1,5 +1,4 @@
 using UserInfo;
-using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
 public class Event
 {
@@ -9,7 +8,8 @@ public class Event
     private string _title;
     private DateTime _date;
     private string _location;
-    public List<Category> Categories {get; set;}
+    public List<Category> Categories {get; set;} = new();
+    public List<Fandom> Fandoms {get; set;}
     public string Title 
     {
         get{ return _title;} 
@@ -25,7 +25,7 @@ public class Event
         get{ return _date;} 
         set{
             if (DateTime.Compare( value, DateTime.Today) < 0) {
-                throw new ArgumentException("Date can't be set before today");
+                throw new ArgumentException("Date must be set in the future");
             }
             _date = value;
         }
@@ -51,11 +51,11 @@ public class Event
             _minAge = value;
         }
     }
-    [NotMapped]
-    public User Owner {get; set;}
+
+    [ForeignKey("userID")]
+    public User Owner {get; set;} = null!;
     public List<User>? Attendees {get; set;} = new();
 
-    
     //constructor
     private Event(){}
     public Event(string title, DateTime date, string location, List<Category> categories, int minAge, User owner) {
@@ -66,12 +66,7 @@ public class Event
         this.Categories = categories;
         this.MinAge = minAge;
         this.Owner = owner;
-
-    }
-
-    //this method add the event to the database
-    public void CreateEvent() {
-        throw new NotImplementedException();
+        this.Attendees = new List<User>();
     }
 
     public void AddAttendee(User attendee) 
@@ -84,15 +79,13 @@ public class Event
         this.Attendees?.Add(attendee);
     }
 
-    //
-    public void RemoveAttendee() {
-        throw new NotImplementedException();
-    }
-
-    //this method will print out the list of attendees
-    //may not be needed because it's not a console app
-    public void ShowAttendees() {
-        throw new NotImplementedException();
+    public void RemoveAttendee(User attendee) 
+    {
+        if(!Attendees.Contains(attendee))
+        {
+            throw new ArgumentException("This attendee isn't part of the event");
+        }
+        this.Attendees?.Remove(attendee);
     }
 
     public override bool Equals(object? obj){

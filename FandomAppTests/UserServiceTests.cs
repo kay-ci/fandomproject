@@ -97,7 +97,7 @@ public class UserServiceTests{
         service.setFanAppContext(mockContext.Object);
 
         //Act
-        service.CreateUser("newUser", "potato101");
+        service.CreateUser("newUser", "potato101", new Profile("User", "they/them", 21, "Canada", "Montreal"));
 
         //Assert
         mockSet.Verify(m => m.Add(It.IsAny<User>()), Times.Once());
@@ -125,7 +125,7 @@ public class UserServiceTests{
         service.setFanAppContext(mockContext.Object);
 
         //Act
-        Exception exception = Assert.ThrowsException<ArgumentException>(() => service.CreateUser("User101", "potato101"));
+        Exception exception = Assert.ThrowsException<ArgumentException>(() => service.CreateUser("User101", "potato101",new Profile("User", "they/them", 21, "Canada", "Montreal")));
 
         //Assert
         Assert.AreEqual(expectedMessage, exception.Message);

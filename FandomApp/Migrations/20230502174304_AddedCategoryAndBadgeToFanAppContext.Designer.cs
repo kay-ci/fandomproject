@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Oracle.EntityFrameworkCore.Metadata;
 using UserInfo;
@@ -11,9 +12,11 @@ using UserInfo;
 namespace FandomApp.Migrations
 {
     [DbContext(typeof(FanAppContext))]
-    partial class FanAppContextModelSnapshot : ModelSnapshot
+    [Migration("20230502174304_AddedCategoryAndBadgeToFanAppContext")]
+    partial class AddedCategoryAndBadgeToFanAppContext
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,21 +24,6 @@ namespace FandomApp.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             OracleModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("CategoryEvent", b =>
-                {
-                    b.Property<int>("CategoriesCategoryId")
-                        .HasColumnType("NUMBER(10)");
-
-                    b.Property<int>("eventsEventId")
-                        .HasColumnType("NUMBER(10)");
-
-                    b.HasKey("CategoriesCategoryId", "eventsEventId");
-
-                    b.HasIndex("eventsEventId");
-
-                    b.ToTable("CategoryEvent");
-                });
 
             modelBuilder.Entity("Event", b =>
                 {
@@ -59,29 +47,9 @@ namespace FandomApp.Migrations
                         .IsRequired()
                         .HasColumnType("NVARCHAR2(2000)");
 
-                    b.Property<int>("userID")
-                        .HasColumnType("NUMBER(10)");
-
                     b.HasKey("EventId");
 
-                    b.HasIndex("userID");
-
                     b.ToTable("FandomEvents");
-                });
-
-            modelBuilder.Entity("EventFandom", b =>
-                {
-                    b.Property<int>("EventsEventId")
-                        .HasColumnType("NUMBER(10)");
-
-                    b.Property<int>("FandomsFandomId")
-                        .HasColumnType("NUMBER(10)");
-
-                    b.HasKey("EventsEventId", "FandomsFandomId");
-
-                    b.HasIndex("FandomsFandomId");
-
-                    b.ToTable("EventFandom");
                 });
 
             modelBuilder.Entity("EventUser", b =>
@@ -89,12 +57,12 @@ namespace FandomApp.Migrations
                     b.Property<int>("AttendeesuserID")
                         .HasColumnType("NUMBER(10)");
 
-                    b.Property<int>("EventsAttendingEventId")
+                    b.Property<int>("EventsEventId")
                         .HasColumnType("NUMBER(10)");
 
-                    b.HasKey("AttendeesuserID", "EventsAttendingEventId");
+                    b.HasKey("AttendeesuserID", "EventsEventId");
 
-                    b.HasIndex("EventsAttendingEventId");
+                    b.HasIndex("EventsEventId");
 
                     b.ToTable("EventUser");
                 });
@@ -122,12 +90,12 @@ namespace FandomApp.Migrations
 
                     OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BadgeId"));
 
-                    b.Property<string>("BadgeName")
-                        .IsRequired()
-                        .HasColumnType("NVARCHAR2(2000)");
-
                     b.Property<int?>("ProfileId")
                         .HasColumnType("NUMBER(10)");
+
+                    b.Property<string>("badgeName")
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR2(2000)");
 
                     b.HasKey("BadgeId");
 
@@ -148,10 +116,15 @@ namespace FandomApp.Migrations
                         .IsRequired()
                         .HasColumnType("NVARCHAR2(2000)");
 
+                    b.Property<int?>("EventId")
+                        .HasColumnType("NUMBER(10)");
+
                     b.Property<int?>("ProfileId")
                         .HasColumnType("NUMBER(10)");
 
                     b.HasKey("CategoryId");
+
+                    b.HasIndex("EventId");
 
                     b.HasIndex("ProfileId");
 
@@ -314,47 +287,6 @@ namespace FandomApp.Migrations
                     b.ToTable("FandomUserMessages");
                 });
 
-            modelBuilder.Entity("CategoryEvent", b =>
-                {
-                    b.HasOne("UserInfo.Category", null)
-                        .WithMany()
-                        .HasForeignKey("CategoriesCategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Event", null)
-                        .WithMany()
-                        .HasForeignKey("eventsEventId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Event", b =>
-                {
-                    b.HasOne("UserInfo.User", "Owner")
-                        .WithMany("EventsCreated")
-                        .HasForeignKey("userID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Owner");
-                });
-
-            modelBuilder.Entity("EventFandom", b =>
-                {
-                    b.HasOne("Event", null)
-                        .WithMany()
-                        .HasForeignKey("EventsEventId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("UserInfo.Fandom", null)
-                        .WithMany()
-                        .HasForeignKey("FandomsFandomId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("EventUser", b =>
                 {
                     b.HasOne("UserInfo.User", null)
@@ -365,7 +297,7 @@ namespace FandomApp.Migrations
 
                     b.HasOne("Event", null)
                         .WithMany()
-                        .HasForeignKey("EventsAttendingEventId")
+                        .HasForeignKey("EventsEventId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -394,6 +326,10 @@ namespace FandomApp.Migrations
 
             modelBuilder.Entity("UserInfo.Category", b =>
                 {
+                    b.HasOne("Event", null)
+                        .WithMany("Categories")
+                        .HasForeignKey("EventId");
+
                     b.HasOne("UserInfo.Profile", null)
                         .WithMany("Categories")
                         .HasForeignKey("ProfileId");
@@ -439,6 +375,11 @@ namespace FandomApp.Migrations
                     b.Navigation("user");
                 });
 
+            modelBuilder.Entity("Event", b =>
+                {
+                    b.Navigation("Categories");
+                });
+
             modelBuilder.Entity("UserInfo.Profile", b =>
                 {
                     b.Navigation("Badges");
@@ -450,8 +391,6 @@ namespace FandomApp.Migrations
 
             modelBuilder.Entity("UserInfo.User", b =>
                 {
-                    b.Navigation("EventsCreated");
-
                     b.Navigation("Messages")
                         .IsRequired();
 

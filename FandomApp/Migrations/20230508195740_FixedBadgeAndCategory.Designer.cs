@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Oracle.EntityFrameworkCore.Metadata;
 using UserInfo;
@@ -11,9 +12,11 @@ using UserInfo;
 namespace FandomApp.Migrations
 {
     [DbContext(typeof(FanAppContext))]
-    partial class FanAppContextModelSnapshot : ModelSnapshot
+    [Migration("20230508195740_FixedBadgeAndCategory")]
+    partial class FixedBadgeAndCategory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -59,12 +62,7 @@ namespace FandomApp.Migrations
                         .IsRequired()
                         .HasColumnType("NVARCHAR2(2000)");
 
-                    b.Property<int>("userID")
-                        .HasColumnType("NUMBER(10)");
-
                     b.HasKey("EventId");
-
-                    b.HasIndex("userID");
 
                     b.ToTable("FandomEvents");
                 });
@@ -89,12 +87,12 @@ namespace FandomApp.Migrations
                     b.Property<int>("AttendeesuserID")
                         .HasColumnType("NUMBER(10)");
 
-                    b.Property<int>("EventsAttendingEventId")
+                    b.Property<int>("EventsEventId")
                         .HasColumnType("NUMBER(10)");
 
-                    b.HasKey("AttendeesuserID", "EventsAttendingEventId");
+                    b.HasKey("AttendeesuserID", "EventsEventId");
 
-                    b.HasIndex("EventsAttendingEventId");
+                    b.HasIndex("EventsEventId");
 
                     b.ToTable("EventUser");
                 });
@@ -329,17 +327,6 @@ namespace FandomApp.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Event", b =>
-                {
-                    b.HasOne("UserInfo.User", "Owner")
-                        .WithMany("EventsCreated")
-                        .HasForeignKey("userID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Owner");
-                });
-
             modelBuilder.Entity("EventFandom", b =>
                 {
                     b.HasOne("Event", null)
@@ -365,7 +352,7 @@ namespace FandomApp.Migrations
 
                     b.HasOne("Event", null)
                         .WithMany()
-                        .HasForeignKey("EventsAttendingEventId")
+                        .HasForeignKey("EventsEventId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -450,8 +437,6 @@ namespace FandomApp.Migrations
 
             modelBuilder.Entity("UserInfo.User", b =>
                 {
-                    b.Navigation("EventsCreated");
-
                     b.Navigation("Messages")
                         .IsRequired();
 
