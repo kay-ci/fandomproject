@@ -156,9 +156,9 @@ namespace UserInfo{
                 this.Age == item.Age &&
                 this.Country == item.Country &&
                 this.City == item.City &&
-                this.Categories == item.Categories &&
-                this.Fandoms == item.Fandoms &&
-                this.Badges == item.Badges &&
+                this.Categories.SequenceEqual(item.Categories) &&
+                this.Fandoms.SequenceEqual(item.Fandoms) &&
+                this.Badges.SequenceEqual(item.Badges) &&
                 this.Description == item._description &&
                 this.Picture == item.Picture &&
                 this.Interests == item.Interests &&

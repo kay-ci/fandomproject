@@ -88,4 +88,23 @@ public class Event
         this.Attendees?.Remove(attendee);
     }
 
+    public override bool Equals(object? obj){
+            var item = obj as Event;
+            if(ReferenceEquals(item, this)){
+                return true;
+            }
+            if(item == null){
+                return false;
+            }
+            return (
+                this.MinAge == item.MinAge &&
+                this.Title == item.Title &&
+                this.Location == item.Location &&
+                this.Owner == item.Owner &&
+                this.Date == item.Date &&
+                this.Categories.SequenceEqual(item.Categories) &&
+                this.Attendees == item.Attendees
+            );
+        }
+
 }

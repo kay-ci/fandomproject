@@ -91,13 +91,9 @@ namespace UserInfo{
             }
 
         }
-
-        public override bool Equals(object obj){
+        public override bool Equals(object? obj){
             var item = obj as UserMessage;
             if(ReferenceEquals(item, this)){
-                return true;
-            }
-            if(item == null && this == null){
                 return true;
             }
             if(item == null){
@@ -105,8 +101,9 @@ namespace UserInfo{
             }
             return (
                 this.user == item.user &&
-                this.Inbox.Count == item.Inbox.Count &&
-                this.Outbox.Count == item.Outbox.Count);
+                this.Inbox.SequenceEqual(item.Inbox) &&
+                this.Outbox.SequenceEqual(item.Outbox)
+            );
         }
     }
 }
