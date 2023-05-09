@@ -17,6 +17,7 @@
     <PackageReference Include="MSTest.TestAdapter" Version="2.2.8" />
     <PackageReference Include="MSTest.TestFramework" Version="2.2.8" />
     <PackageReference Include="coverlet.collector" Version="3.1.2" />
+    <PackageReference Include="Oracle.EntityFrameworkCore" Version="7.21.9" />
   </ItemGroup>
 
   <ItemGroup>
