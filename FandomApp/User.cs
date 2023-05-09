@@ -65,9 +65,6 @@ namespace UserInfo{
             if(ReferenceEquals(item, this)){
                 return true;
             }
-            if(item == null && this == null){
-                return true;
-            }
             if(item == null){
                 return false;
             }
@@ -75,8 +72,8 @@ namespace UserInfo{
                 this.Username == item.Username &&
                 this.UserProfile == item.UserProfile &&
                 this.Messages == item.Messages &&
-                this.Events == item.Events &&
-                this.Fandoms == item.Fandoms &&
+                this.Events.SequenceEqual(item.Events) &&
+                this.Fandoms.SequenceEqual(item.Fandoms) &&
                 this.Hash.SequenceEqual(item.Hash) &&
                 this.Salt.SequenceEqual(item.Salt));
         }

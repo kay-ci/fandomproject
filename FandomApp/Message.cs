@@ -73,24 +73,22 @@ namespace UserInfo{
             }
             return true;
         }
-
-        public override bool Equals(object obj){
+        
+        public override bool Equals(object? obj){
             var item = obj as Message;
             if(ReferenceEquals(item, this)){
-                return true;
-            }
-            if(item == null && this == null){
                 return true;
             }
             if(item == null){
                 return false;
             }
             return (
+                this.Text == item.Text &&
+                this.Title == item.Title &&
                 this.Sender == item.Sender &&
-                this.Recipient == item.Recipient &&
-                this.Recipients.Count == item.Recipients.Count &&
-                this.Title.Equals(item.Title) &&
-                this.Text.Equals(item.Text));
+                this.Recipients.SequenceEqual(item.Recipients) &&
+                this.Timesent == item.Timesent
+            );
         }
     }
 }
