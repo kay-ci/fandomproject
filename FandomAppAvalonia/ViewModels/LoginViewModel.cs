@@ -1,35 +1,42 @@
-using FandomApp;
-using UserInfo;
+using FandomAppSpace;
 using ReactiveUI;
 using System.Reactive;
-namespace FandomAppSpace.ViewModels;
-public class LoginViewModel : ViewModelBase
+using UserInfo;
+
+namespace FandomAppSpace.ViewModels
 {
-    public string _username;
-    public string _password;
-    public string Username
+    public class LogInViewModel : ViewModelBase
     {
-        get => _username;
-        private set => this.RaiseAndSetIfChanged(ref _username, value);
-    }
-    public string Password 
-    {
-        get => _password;
-        private set => this.RaiseAndSetIfChanged(ref _password, value);
-    }
 
-    public ReactiveCommand<Unit, Unit> Login { get; }
-
-    public ReactiveCommand<Unit, Unit> Register { get; }
-
-
-    public FanAppContext context = new FanAppContext();
-    public UserService service = UserService.getInstance();
-
-    public Login? UserManager { get; private set;}
-    public LoginViewModel()
+        public string _username;
+        public string _password;
+        public Profile _profile;
+        public string Username
         {
-            service.setFanAppContext(context);
+            get => _username;
+            private set => this.RaiseAndSetIfChanged(ref _username, value);
+        }
+        public string Password 
+        {
+            get => _password;
+            private set => this.RaiseAndSetIfChanged(ref _password, value);
+        }
+        public Profile Profile{
+            get => _profile;
+        }
+
+        FanAppContext Context = new FanAppContext();
+        UserService service = UserService.getInstance();
+        Login UserManager;
+        
+        public ReactiveCommand<Unit, Unit> Login { get; }
+
+        public ReactiveCommand<Unit, Unit> Register { get; }
+
+
+        public LogInViewModel()
+        {
+            service.setFanAppContext(Context);
             //Enable the register button only when the user has entered a valid username
             var loginEnabled = this.WhenAnyValue(
                 x => x.Username,
@@ -38,19 +45,19 @@ public class LoginViewModel : ViewModelBase
             //Create the command to bind to the login and register buttons. Enable it only when loginEnabled is set to true.
             Login = ReactiveCommand.Create(() => { }, loginEnabled);
             Register = ReactiveCommand.Create(() => { }, loginEnabled);
+            
         }
 
+        public User? User { get; private set;}
+        public Login RegisterUser(){
+            User newUser = service.CreateUser(Username, Password, Profile);
+            this.UserManager = new Login(newUser);
+            return this.UserManager;
+        }
 
-    public Login RegisterUser(){
-        User newUser = service.CreateUser(Username, Password);
-        this.UserManager = new Login(newUser);
-        return UserManager;
+        public Login LoginUser(){
+            this.UserManager = service.LogIn(Username, Password);
+            return this.UserManager;
+        }
     }
-
-    public User LoginUser(){
-        this.User = new User(Username, Password);
-        return this.User;
-    }
-
-
 }

@@ -15,14 +15,15 @@ public partial class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
+        base.OnFrameworkInitializationCompleted();
+
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
+
             desktop.MainWindow = new MainWindow
             {
                 DataContext = new MainWindowViewModel(),
             };
         }
-
-        base.OnFrameworkInitializationCompleted();
     }
 }

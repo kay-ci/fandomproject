@@ -4,9 +4,9 @@ using Avalonia.Markup.Xaml;
 
 namespace FandomAppSpace.Views;
 
-public partial class LogInView : UserControl
+public partial class SearchView : UserControl
 {
-    public LogInView()
+    public SearchView()
     {
         InitializeComponent();
     }
