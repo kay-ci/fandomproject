@@ -81,6 +81,10 @@ public class Event
 
     public void RemoveAttendee(User attendee) 
     {
+        if(!Attendees.Contains(attendee))
+        {
+            throw new ArgumentException("This attendee isn't part of the event");
+        }
         this.Attendees?.Remove(attendee);
     }
 

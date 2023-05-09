@@ -78,7 +78,13 @@ public class EventService
     }
 
     //this method remove eventfrom database
-    public void DeleteEvent(User user, Event fandomEvent) {
+    public void DeleteEvent(Login login, Event fandomEvent) 
+    {
+        User? user = login.CurrentUser;
+        if (user?.Username != fandomEvent.Owner.Username)
+        {
+            throw new ArgumentException("Only the creator of this event can delete it.");
+        }
         _context.FandomEvents.Remove(fandomEvent);
         _context.SaveChanges();
     }
@@ -172,25 +178,4 @@ public class EventService
         return events;
     }
 
-    private List<Event>? GetEventsByCategory(string category)
-    {
-        List<Event>? events = null;
-        try
-        {
-            events = _context.FandomEvents
-                    .Include(e => e.Categories)
-                    .Include(e => e.Fandoms)
-                    .Include(e => e.Owner)
-                    .Include(e => e.Attendees)
-                    .Where(e => e.Categories.Any(c => c.Category_name.Equals(category)))
-                    .ToList<Event>();
-        }
-        catch (Exception)
-        {
-            return null;
-        }
-        return events;
-    }
-
-    
 }

@@ -1,38 +1,57 @@
 using UserInfo;
 
-public class Program{
+public class Program
+{
+    private static FanAppContext context = new FanAppContext();
+    private UserService uService;
+    private EventService evService;
+    private static Login? login;
+    
+    public Program() 
+    {
+        //Setting all the services needed
+        this.uService = UserService.getInstance();
+        uService.setFanAppContext(context);
 
+        this.evService = EventService.getInstance();
+        evService.setFanAppContext(context);
+
+    }
     static void Main(string[] args){
 
         //Proof of Concept
+        Program program = new Program();
+        //clearTables();
 
-        //Setting all the services needed
-        FanAppContext context = new FanAppContext();
+        UserService uService = program.uService;
+        EventService evService = program.evService;
 
+        createUser1(uService, evService);
+
+
+    }
+
+    private static void clearTables()
+    {
         //Clearing tables to start
-        //context.FandomUsers.RemoveRange(context.FandomUsers);
-        //context.FandomProfiles.RemoveRange(context.FandomProfiles);
-        //context.FandomMessages.RemoveRange(context.FandomMessages);
-        //context.FandomEvents.RemoveRange(context.FandomEvents);
-        //context.FandomCategories.RemoveRange(context.FandomCategories);
-        //context.FandomBadges.RemoveRange(context.FandomBadges);
-        //context.FandomUserMessages.RemoveRange(context.FandomUserMessages);
-        //context.Fandoms.RemoveRange(context.Fandoms);
-        //context.SaveChanges();
+        Program.context.FandomUsers.RemoveRange(context.FandomUsers);
+        Program.context.FandomProfiles.RemoveRange(context.FandomProfiles);
+        Program.context.FandomMessages.RemoveRange(context.FandomMessages);
+        Program.context.FandomEvents.RemoveRange(context.FandomEvents);
+        Program.context.FandomCategories.RemoveRange(context.FandomCategories);
+        Program.context.FandomBadges.RemoveRange(context.FandomBadges);
+        Program.context.FandomUserMessages.RemoveRange(context.FandomUserMessages);
+        Program.context.Fandoms.RemoveRange(context.Fandoms);
+        Program.context.SaveChanges();
+    }
 
-        UserService uService = UserService.getInstance();
-        uService.setFanAppContext(context);
-
-        EventService evService = EventService.getInstance();
-        evService.setFanAppContext(context);
-
-        //List<Fandom> fandoms = new List<Fandom>(){new Fandom("Beyhive", "Music","This is Beyonce's fandom")};
-        //List<Badge> badges = new List<Badge>(){new Badge("Special Fan")};
-
-        // Step 1 and 2. User1 Account and Profile
+    private static void createUser1(UserService uService, EventService evService) 
+    {
+         // Step 1 and 2. User1 Account and Profile
         Profile profile1 = new Profile("User1", "they/them", 18, "Canada", "Montreal");
         User user1 = uService.CreateUser("User1", "hello123", profile1);
-        Login login1 = uService.LogIn("User1", "hello123");
+        Program.login = uService.LogIn("User1", "hello123");
+        Console.WriteLine($"User {Program.login.CurrentUser} is logged in");
 
         // Step 3. Create event for user1
         List<Category> categories1 = new List<Category>(){new Category("music")};
@@ -40,12 +59,16 @@ public class Program{
         evService.CreateEvent(event1);
 
         // Step 4. Log out of user1
-        uService.LogOff(login1);
+        uService.LogOff(Program.login);
+    }
 
+    private static void createUser2(UserService uService, EventService evService) 
+    {
         // Step 5 and 6. Create user2 account and profile
         Profile profile2 = new Profile("User2", "they/them", 24, "Canada", "Vancouver");
         User user2 = uService.CreateUser("User2", "hello123", profile2);
-        Login login2 = uService.LogIn("User2", "hello123");
+        Program.login = uService.LogIn("User2", "hello123");
+        Console.WriteLine($"User {Program.login.CurrentUser} is now logged in");
 
         //List<Category> categories2 = new List<Category>(){new Category("art")};
         //Event event2 = new Event("User2 Event", new DateTime(2023, 12, 12), "Montreal", categories2, 18, user2);
@@ -58,9 +81,10 @@ public class Program{
         user1_event.AddAttendee(user2);
 
         // Step 9. Attempt to edit user1’s event as user2 (should fail)
+        Console.WriteLine("User2 will attempt to edit user1's event.");
         try
         {
-            evService.EditEvent(login2, user1_event);
+            evService.EditEvent(Program.login, user1_event);
         }
         catch (Exception e)
         {
@@ -68,34 +92,104 @@ public class Program{
         }
 
         // Step 10. Perform a search that finds user1’s profile
+        try
+        {
+            User user1 = uService.GetUser("User1");
+            Profile user1profile = uService.GetProfile(user1);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
 
         // Step 11. Send 3 messages from user2 to user1
 
         // Step 12. Log out from user2
+        uService.LogOff(login);
+    }
 
+    private static void modifyUser1(UserService uService, EventService evService) 
+    {
         // 13. Log in as user1
+        Program.login = uService.LogIn("User1", "hello123");
+        Console.WriteLine($"User {Program.login.CurrentUser} is now logged in");
 
         // 14. Change user1’s password
-
+        try
+        {
+            uService.ChangePassword(Program.login, "hello123", "abc12345");
+            Console.WriteLine($"User {Program.login.CurrentUser} password changed");
+        }
+        catch (Exception e)
+        {
+           Console.WriteLine($"User {Program.login.CurrentUser} password change attempt failed");
+           Console.WriteLine(e.Message);
+        }
+        
         // 15. Modify user1’s profile
+        Profile new_profile = Program.login.CurrentUser.UserProfile;
+        new_profile.Badges = new List<Badge>(){new Badge("Special Fan")};
+        new_profile.Fandoms = new List<Fandom>(){new Fandom("Beyhive", "Music","This is Beyonce's fandom")};
+        new_profile.City = "Toronto";
+
+        try
+        {
+            uService.UpdateProfile(Program.login, new_profile);
+            Console.WriteLine("User1 profile updated");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+
 
         // 16. Access messages, viewing text of the messages sent by user2
         // 17. Send a message to user2 from user1.
 
         // 18. Find and view the attendees of user1’s event
+        try
+        {
+            Event ev = evService.GetEvent("User1 event");
+            var attendees = evService.GetEventAttendees(ev);
+            foreach (var attendee in attendees)
+            {
+                Console.WriteLine($"Attendee: {attendee.Username}");
+            }
+            
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        
 
         // 19. Modify user1’s event.
+        try
+        {
+            Event ev = evService.GetEvent("User1 event");
+            ev.Location= "Las Vegas";
+            evService.EditEvent(Program.login, ev);
+            Console.WriteLine("User1 event updated");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+    }
 
+    private static void deleteUser1(UserService uService, EventService evService)
+    {
         // 20. Delete user1’s profile
+        uService.Delete(Program.login);
 
         // 21. Delete user1’s account
+    }
 
-
-
+    private static void deleteUser2(UserService uService, EventService evService)
+    {
         // 22. Log in as user2
 
         // 23. Delete user2’s account
-
 
     }
 }
