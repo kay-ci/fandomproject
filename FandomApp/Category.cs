@@ -10,5 +10,20 @@ namespace UserInfo {
         public Category(string name){
             this.Category_name = name;
         }
+        
+        public override bool Equals(object? obj){
+            var item = obj as Category;
+            if(ReferenceEquals(item, this)){
+                return true;
+            }
+            if(item == null){
+                return false;
+            }
+            return (
+                this.Category_name == item.Category_name
+            );
+        }
+
+
     }
 }
