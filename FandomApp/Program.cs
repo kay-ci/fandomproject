@@ -79,7 +79,7 @@ public class Program
         user1_event.AddAttendee(user2);
 
         // Step 9. Attempt to edit user1’s event as user2 (should fail)
-        Console.WriteLine("User2 will attempt to edit user1's event.");
+        Console.WriteLine("User2 will attempt to edit user1's event.\n");
         try
         {
             evService.EditEvent(Program.login, user1_event);
