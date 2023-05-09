@@ -5,8 +5,15 @@ using System.Linq;
 public class EventService
 {
     private FanAppContext _context = null!;
-    public EventService(FanAppContext context) 
-    {
+    private static EventService? _instance;
+    private EventService(){}
+    public static EventService getInstance(){
+        if(_instance is null){
+            _instance = new EventService();
+        }
+        return _instance;
+    }
+    public void setFanAppContext(FanAppContext context){
         _context = context;
     }
     
@@ -27,12 +34,10 @@ public class EventService
         Event? eventFound = null;
         try
         {
-            var eventQuery = _context.FandomEvents
-                    .Include(e => e.Categories)
-                    .Include(e => e.Attendees)
-                    .Where(e => e.Title.Equals(title))
-                    .ToList<Event>();
-            eventFound = eventQuery.First<Event>();
+            var query = from ev in _context.FandomEvents
+                        where ev.Title == title
+                        select ev;
+            eventFound = query.First();
         }
         catch (Exception)
         {

@@ -16,26 +16,27 @@ public class Program{
 
         // Step 1 and 2. User1 Account and Profile
         Profile profile1 = new Profile("User1", "they/them", 18, "Canada", "Montreal");
-        User user1 = new User("User1", profile1);
 
         FanAppContext context = new FanAppContext();
-        //UserService uService = new UserService();
-        //uService.setFanAppContext(context);
+        UserService uService = UserService.getInstance();
+        uService.setFanAppContext(context);
 
-        //uService.CreateUser("User1", "hello123");
-        //Login login = new Login(user1);
+        User user1 = uService.CreateUser("User1", "hello123");
+        user1.UserProfile = profile1;
+        Login login = uService.LogIn("User1", "hello123");
         
         // Step 3. Create event for user1
-        EventService es = new EventService(context);
+        EventService evService = EventService.getInstance();
+        evService.setFanAppContext(context);
 
         Event event_test = new Event("User1 Event", new DateTime(2023, 12, 12), "Toronto", categories, 18, user1);
         Event event_test2 = new Event("User1 Event", new DateTime(2023, 12, 12), "Toronto", categories3, 18, user1);
         Event event2 = new Event("User2 Event", new DateTime(2023, 12, 12), "Montreal", categories2, 18, user1);
 
-        es.CreateEvent(event_test);
-        es.CreateEvent(event_test2);
-        es.CreateEvent(event2);
-        var events_found = es.GetEventsByCategory("music");
+        evService.CreateEvent(event_test);
+        evService.CreateEvent(event_test2);
+        evService.CreateEvent(event2);
+        var events_found = evService.GetEventsByCategory("music");
     
         // Step 4. Log out of user1
 
