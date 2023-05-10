@@ -182,14 +182,13 @@ public class MessageServiceTests{
         //Act
         var new_msg = new Message(sender.Messages, recipients, "text0", "title0");
         service.Add_Message(new_msg);
-        var msg_actual = service.GetMessage(new_msg);
 
-        //Assert
-        Assert.AreEqual(msg_actual, new_msg);
+        //Assertt
+        mockSet.Verify(m => m.Add(It.IsAny<Message>()), Times.Once());
+        mockContext.Verify(m => m.SaveChanges(), Times.Once());
     }
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
     public void Delete_Message_Test_Succeed(){
         //Arrange
         var sender = new User("KayciUsername", new Profile("Kayci", "she/her", 19, "Canada", "Montreal"));
@@ -220,11 +219,10 @@ public class MessageServiceTests{
 
         //Act
         service.Delete_Message(listdata[0]);
-        var msg_expectation = new Message(sender.Messages, recipients, "text1", "title1");
-        var msg_actual = service.GetMessage(msg_expectation);
 
         //Assert
-        Assert.AreEqual(msg_actual, msg_expectation);
+        mockSet.Verify(m => m.Remove(It.IsAny<Message>()), Times.Once());
+        mockContext.Verify(m => m.SaveChanges(), Times.Once());
     }
 
     [TestMethod]
