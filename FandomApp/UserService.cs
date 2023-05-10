@@ -78,7 +78,8 @@ public class UserService{
     /// </summary>
     public void DeleteUser(Login UserManager){
         if (UserManager.CurrentUser != null){
-            _context.FandomProfiles.Remove(UserManager.CurrentUser.UserProfile);
+            Profile userProfile = GetProfile(UserManager.CurrentUser);
+            _context.FandomProfiles.Remove(userProfile);
             _context.FandomUsers.Remove(UserManager.CurrentUser);
             _context.SaveChanges();
         }
@@ -100,10 +101,15 @@ public class UserService{
     /// Method <c>GetProfile</c> fetches a specific profile based on userId.
     /// </summary>
     public Profile GetProfile(User user){
+        Profile fetchedProfile;
         var query = from profile in _context.FandomProfiles
            where profile.user == user
            select profile;
-        var fetchedProfile = query.First<Profile>();
+        try{
+            fetchedProfile = query.First<Profile>();
+        }catch(Exception){
+            return null;
+        }
         return fetchedProfile;
     }
     /// <summary>

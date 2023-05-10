@@ -12,7 +12,7 @@
             "program": "${workspaceFolder}/FandomApp/bin/Debug/net6.0/FandomApp.dll",
             "args": [],
             "cwd": "${workspaceFolder}/FandomApp",
-            "console": "internalConsole",
+            "console": "integratedTerminal",
             "stopAtEntry": false
         },
         {
