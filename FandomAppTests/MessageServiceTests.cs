@@ -35,7 +35,7 @@ public class MessageServiceTests{
         mockContext.Setup(m => m.FandomUserMessages).Returns(mockSet.Object);
 
         var service = MessageService.getInstance();
-        service.setLibraryContext(mockContext.Object);
+        service.setFanAppContext(mockContext.Object);
 
         //Act
         var Inbox_Test = new List<Message>();
@@ -72,7 +72,7 @@ public class MessageServiceTests{
         mockContext.Setup(m => m.FandomUserMessages).Returns(mockSet.Object);
 
         var service = MessageService.getInstance();
-        service.setLibraryContext(mockContext.Object);
+        service.setFanAppContext(mockContext.Object);
 
         //Act
         var Outbox_Test = new List<Message>();
@@ -109,7 +109,7 @@ public class MessageServiceTests{
         mockContext.Setup(m => m.FandomMessages).Returns(mockSet.Object);
 
         var service = MessageService.getInstance();
-        service.setLibraryContext(mockContext.Object);
+        service.setFanAppContext(mockContext.Object);
 
         //Act
         var msg_expectation = new Message(sender.Messages, recipients, "text1", "title1");
@@ -139,7 +139,7 @@ public class MessageServiceTests{
         mockContext.Setup(m => m.FandomUsers).Returns(mockSet.Object);
 
         var service = MessageService.getInstance();
-        service.setLibraryContext(mockContext.Object);
+        service.setFanAppContext(mockContext.Object);
 
         //Act
         var usr = new User("KayciUsername", new Profile("Kayci", "she/her", 19, "Canada", "Montreal"));
@@ -177,7 +177,7 @@ public class MessageServiceTests{
         mockContext.Setup(m => m.FandomMessages).Returns(mockSet.Object);
 
         var service = MessageService.getInstance();
-        service.setLibraryContext(mockContext.Object);
+        service.setFanAppContext(mockContext.Object);
 
         //Act
         var new_msg = new Message(sender.Messages, recipients, "text0", "title0");
@@ -215,7 +215,7 @@ public class MessageServiceTests{
         mockContext.Setup(m => m.FandomMessages).Returns(mockSet.Object);
 
         var service = MessageService.getInstance();
-        service.setLibraryContext(mockContext.Object);
+        service.setFanAppContext(mockContext.Object);
 
         //Act
         service.Delete_Message(listdata[0]);
@@ -252,7 +252,7 @@ public class MessageServiceTests{
         mockContext.Setup(m => m.FandomMessages).Returns(mockSet.Object);
 
         var service = MessageService.getInstance();
-        service.setLibraryContext(mockContext.Object);
+        service.setFanAppContext(mockContext.Object);
 
         //Act
         service.Edit_Message(listdata[0], "blah", "new_title");

@@ -19,11 +19,10 @@ namespace UserInfo{
         //This one is for a completely new user
         public UserMessage(User user){
             this.user = user;
-            this.UserId = user.userID;
             Inbox = new List<Message>();
             Outbox = new List<Message>();
         }
-        public void CreateMessage(string text, string title, List<UserMessage>? recipients = null, UserMessage? recipient = null){
+        public Message CreateMessage(string text, string title, List<UserMessage>? recipients = null, UserMessage? recipient = null){
             //We check if the text is null or empty
             if(string.IsNullOrWhiteSpace(text)) throw new ArgumentException("Text must be filled with text!");
             if(recipients != null){
@@ -34,11 +33,13 @@ namespace UserInfo{
                 foreach(UserMessage recip in recipients){
                     recip.AddMessage(newMsg);
                 }
+                return newMsg;
             }else if(recipient != null){
                 Message newMsg = new Message(this.user.Messages, recipient, text, title);
                 Outbox.Add(newMsg);
                 //Here we would add the message to the recipient's Inbox
                 recipient.AddMessage(newMsg);
+                return newMsg;
             }else {
                 throw new ArgumentException("ERROR, both recipient and recipients are null. How did we get here?");
             }

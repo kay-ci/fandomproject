@@ -5,6 +5,7 @@ public class Proof
     private static FanAppContext context = new FanAppContext();
     private UserService uService;
     private EventService evService;
+    private MessageService mService;
     private static Login? login;
     
     public Proof() 
@@ -16,6 +17,9 @@ public class Proof
         this.evService = EventService.getInstance();
         evService.setFanAppContext(context);
 
+        this.mService = MessageService.getInstance();
+        mService.setFanAppContext(context);
+
     }
     static void Main(string[] args){
 
@@ -25,10 +29,11 @@ public class Proof
 
         UserService uService = proof.uService;
         EventService evService = proof.evService;
+        MessageService mService = proof.mService;
 
         createUser1(uService, evService);
-        createUser2(uService, evService);
-        modifyUser1(uService, evService);
+        createUser2(uService, evService, mService);
+        modifyUser1(uService, evService, mService);
 
         Console.WriteLine("Program done");
     }
@@ -36,15 +41,15 @@ public class Proof
     private static void clearTables()
     {
         //Clearing tables to start
-        Proof.context.FandomUsers.RemoveRange(context.FandomUsers);
-        Proof.context.FandomProfiles.RemoveRange(context.FandomProfiles);
-        Proof.context.FandomMessages.RemoveRange(context.FandomMessages);
-        Proof.context.FandomEvents.RemoveRange(context.FandomEvents);
-        Proof.context.FandomCategories.RemoveRange(context.FandomCategories);
-        Proof.context.FandomBadges.RemoveRange(context.FandomBadges);
-        Proof.context.FandomUserMessages.RemoveRange(context.FandomUserMessages);
-        Proof.context.Fandoms.RemoveRange(context.Fandoms);
-        Proof.context.SaveChanges();
+        // Proof.context.FandomUsers.RemoveRange(context.FandomUsers);
+        // Proof.context.FandomProfiles.RemoveRange(context.FandomProfiles);
+        // Proof.context.FandomMessages.RemoveRange(context.FandomMessages);
+        // Proof.context.FandomEvents.RemoveRange(context.FandomEvents);
+        // Proof.context.FandomCategories.RemoveRange(context.FandomCategories);
+        // Proof.context.FandomBadges.RemoveRange(context.FandomBadges);
+        // Proof.context.FandomUserMessages.RemoveRange(context.FandomUserMessages);
+        // Proof.context.Fandoms.RemoveRange(context.Fandoms);
+        // Proof.context.SaveChanges();
     }
 
     private static void createUser1(UserService uService, EventService evService) 
@@ -64,7 +69,7 @@ public class Proof
         uService.LogOff(Proof.login);
     }
 
-    private static void createUser2(UserService uService, EventService evService) 
+    private static void createUser2(UserService uService, EventService evService, MessageService mService) 
     {
         // Step 5 and 6. Create user2 account and profile
         Profile profile2 = new Profile("User2", "they/them", 24, "Canada", "Vancouver");
@@ -94,19 +99,26 @@ public class Proof
         {
             User user1 = uService.GetUser("User1");
             Profile user1profile = uService.GetProfile(user1);
+            // Step 11. Send 3 messages from user2 to user1
+            Message msg1 = login.CurrentUser.Messages.CreateMessage("Message 1", "Message 1 Title", null, user1.Messages);
+            Message msg2 = login.CurrentUser.Messages.CreateMessage("Message 2", "Message 2 Title", null, user1.Messages);
+            Message msg3 = login.CurrentUser.Messages.CreateMessage("Message 3", "Message 3 Title", null, user1.Messages);
+            mService.Update_UserMessage(login.CurrentUser);
+            mService.Update_UserMessage(user1);
+            mService.Add_Message(msg1);
+            mService.Add_Message(msg2);
+            mService.Add_Message(msg3);
         }
         catch (Exception e)
         {
             Console.WriteLine(e.Message);
         }
 
-        // Step 11. Send 3 messages from user2 to user1
-
         // Step 12. Log out from user2
         uService.LogOff(login);
     }
 
-    private static void modifyUser1(UserService uService, EventService evService) 
+    private static void modifyUser1(UserService uService, EventService evService, MessageService mService) 
     {
         // 13. Log in as user1
         Proof.login = uService.LogIn("User1", "hello123");
@@ -141,7 +153,15 @@ public class Proof
 
 
         // 16. Access messages, viewing text of the messages sent by user2
+        login.CurrentUser.Messages.ReadMessage(0);
+        login.CurrentUser.Messages.ReadMessage(1);
+        login.CurrentUser.Messages.ReadMessage(2);
         // 17. Send a message to user2 from user1.
+        User user2 = uService.GetUser("User 2");
+        Message msg1 = login.CurrentUser.Messages.CreateMessage("Reply", "Reply Title", null, user2.Messages);
+        mService.Update_UserMessage(login.CurrentUser);
+        mService.Update_UserMessage(user2);
+        mService.Add_Message(msg1);
 
         // 18. Find and view the attendees of user1’s event
         try
