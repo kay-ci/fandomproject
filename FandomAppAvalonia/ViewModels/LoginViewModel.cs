@@ -27,7 +27,8 @@ namespace FandomAppSpace.ViewModels
 
         FanAppContext Context = new FanAppContext();
         UserService service = UserService.getInstance();
-        Login UserManager;
+        public User? User { get; private set;}
+        Login UserManager {get; set;}
         
         public ReactiveCommand<Unit, Unit> Login { get; }
 
@@ -41,14 +42,13 @@ namespace FandomAppSpace.ViewModels
             var loginEnabled = this.WhenAnyValue(
                 x => x.Username,
                 x => !string.IsNullOrWhiteSpace(x));
-
+            
             //Create the command to bind to the login and register buttons. Enable it only when loginEnabled is set to true.
             Login = ReactiveCommand.Create(() => { }, loginEnabled);
             Register = ReactiveCommand.Create(() => { }, loginEnabled);
             
         }
 
-        public User? User { get; private set;}
         public Login RegisterUser(){
             User newUser = service.CreateUser(Username, Password, Profile);
             this.UserManager = new Login(newUser);
