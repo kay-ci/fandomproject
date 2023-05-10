@@ -21,7 +21,8 @@ public class Proof
 
         //Proof of Concept
         Proof proof = new Proof();
-        clearTables();
+        //user clearTable if tables arent empty
+        //clearTables();
 
         UserService uService = proof.uService;
         EventService evService = proof.evService;
