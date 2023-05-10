@@ -37,8 +37,9 @@ namespace UserInfo{
         public bool Sent {get; set;}
 
         private Message(){}
-        //Basic constructor, validation done in UserMessage for text
-        public Message(User sender, List<User> recipients, string text, string title) {
+
+        //Constructor for list of recipients
+        public Message(User sender, List<User> recipients, string title, string text) {
             
             this.Sender = sender;
             this.Timesent = DateTime.Now;
@@ -47,7 +48,28 @@ namespace UserInfo{
             this.Seen = false;
             this.Sent = false;
             this.Recipients = recipients;
-           
+        }
+
+        //Constructor for one recipient
+        public Message(User sender, User recipient, string title, string text) {
+            
+            this.Sender = sender;
+            this.Timesent = DateTime.Now;
+            this.Text = text;
+            this.Title = title;
+            this.Seen = false;
+            this.Sent = false;
+            this.Recipients.Add(recipient);
+        }
+
+        public void MarkAsRead()
+        { 
+            this.Seen = true; 
+        }
+
+        public void MarkAsSent()
+        { 
+            this.Sent = true; 
         }
     
         public bool IsValid(string field){

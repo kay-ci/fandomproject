@@ -104,20 +104,20 @@ public class Proof
             Profile user1profile = uService.GetProfile(user1);
 
             // Step 11. Send 3 Inbox from user2 to user1
-            //Message msg1 = login.CurrentUser.Inbox.CreateMessage("Message 1", "Message 1 Title", null, user1.Inbox);
-            //Message msg2 = login.CurrentUser.Inbox.CreateMessage("Message 2", "Message 2 Title", null, user1.Inbox);
-            //Message msg3 = login.CurrentUser.Inbox.CreateMessage("Message 3", "Message 3 Title", null, user1.Inbox);
-            //mService.Update_UserMessage(login.CurrentUser);
-            //mService.Update_UserMessage(user1);
-            //mService.Add_Message(msg1);
-            //mService.Add_Message(msg2);
-            //mService.Add_Message(msg3);
-
+            Message msg1 = new Message(login.CurrentUser, );
+            Message msg2 = .Inbox.CreateMessage("Message 2", "Message 2 Title", null, user1.Inbox);
+            Message msg3 = login.CurrentUser.Inbox.CreateMessage("Message 3", "Message 3 Title", null, user1.Inbox);
+            
+            mService.AddMessage(msg1);
+            mService.AddMessage(msg2);
+            mService.AddMessage(msg3);
         }
         catch (Exception e)
         {
             Console.WriteLine(e.Message);
         }
+        
+        
 
         // Step 12. Log out from user2
         uService.LogOff(login);
