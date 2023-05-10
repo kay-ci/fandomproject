@@ -53,15 +53,16 @@ namespace FandomAppSpace.ViewModels
         Login UserManager;
         public Profile Profile {get; set;}
         public ReactiveCommand<Unit, Unit> Register { get; }
+        public ReactiveCommand<Unit, Unit> Login { get; }
         public RegisterViewModel()
         {
             Profile = new Profile("...", "...",0,"...", "...");
             var registerEnabled = this.WhenAnyValue(
-                x => x.Username,
+                x => x.Password,
                 x => !string.IsNullOrWhiteSpace(x)
             );
             Register = ReactiveCommand.Create(() => { }, registerEnabled);
-
+            Login = ReactiveCommand.Create(() =>{ });
         }
 
         public Login RegisterUser(){

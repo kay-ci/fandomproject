@@ -63,6 +63,7 @@ namespace FandomAppSpace.ViewModels
             vm.Register.Subscribe(x => {
                 Content = dispvm;vm.RegisterUser();});
             Content = vm;
+            vm.Login.Subscribe(x => {ShowLogin();});
         }
         public void PrepareMainPage(Login u){
             VisibleNavigation = true;

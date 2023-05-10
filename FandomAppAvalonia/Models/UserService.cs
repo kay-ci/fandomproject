@@ -39,11 +39,14 @@ public class UserService{
     /// </summary> 
     public User? GetUser(string username){
         User fetcheduser;
-        var query = from user in _context.FandomUsers
-           where user.Username == username
-           select user;
+        var query =  from user in _context.FandomUsers
+            where user.Username == username
+            join profile in _context.FandomProfiles on user.userID equals profile.userID 
+            select user;
         try{
-            fetcheduser = query.First<User>();}
+            fetcheduser = query.First<User>();
+            fetcheduser.UserProfile = GetProfile(fetcheduser);
+        }
         catch (InvalidOperationException){
             return null;}
         return fetcheduser;
@@ -147,7 +150,9 @@ public class UserService{
         else{
             newUser = new User(username, profile);
             CreatePassword(newUser, password);
+            //profile.userID = newUser.userID;
             _context.FandomUsers.Add(newUser);
+            //_context.FandomProfiles.Add(profile);
             _context.SaveChanges();
         }
         return newUser;

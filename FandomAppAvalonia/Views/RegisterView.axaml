@@ -6,6 +6,7 @@
              x:Class="FandomAppSpace.Views.RegisterView">
   <DockPanel>
     <Button DockPanel.Dock="Bottom" Command="{Binding Register}">Register</Button>
+    <Button DockPanel.Dock="Bottom" Command="{Binding Login}">Login</Button>
     <TextBlock Text="Register Account" FontSize="24" DockPanel.Dock="Top"/>
     <StackPanel>    
       <Grid ColumnDefinitions="1*,4*"
