@@ -4,9 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="FandomAppSpace.Views.RegisterView">
-  Welcome to Avalonia!
   <DockPanel>
-    <Button DockPanel.Dock="Bottom" Command="{Binding Ok}">Done</Button>
+    <Button DockPanel.Dock="Bottom" Command="{Binding Register}">Done</Button>
     <TextBlock Text="Register Account" FontSize="24" DockPanel.Dock="Top"/>
     <StackPanel>    
       <Grid ColumnDefinitions="1*,4*"

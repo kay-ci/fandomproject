@@ -49,7 +49,6 @@ namespace FandomAppSpace.ViewModels
             get => _city;
             private set => this.RaiseAndSetIfChanged(ref _city, value);
         }
-        FanAppContext Context = new FanAppContext();
         UserService service = UserService.getInstance();
         Login UserManager;
         public Profile Profile {get; set;}
@@ -61,7 +60,6 @@ namespace FandomAppSpace.ViewModels
                 x => x.Username,
                 x => !string.IsNullOrWhiteSpace(x)
             );
-            service.setFanAppContext(Context);
             Register = ReactiveCommand.Create(() => { }, registerEnabled);
 
         }

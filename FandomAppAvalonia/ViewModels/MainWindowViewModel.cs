@@ -52,11 +52,18 @@ namespace FandomAppSpace.ViewModels
 
             LogInViewModel vm = new LogInViewModel();
             vm.Login.Subscribe(x => {PrepareMainPage(vm.LoginUser());});
-            vm.Register.Subscribe(x => {PrepareMainPage(vm.RegisterUser());});
+            vm.Register.Subscribe(x => {RegisterPage();});
             Content = vm;
         }
 
-
+        public void RegisterPage(){
+            LogInViewModel dispvm = (LogInViewModel) Content;
+            var vm = new RegisterViewModel();
+            
+            vm.Register.Subscribe(x => {
+                Content = dispvm;vm.RegisterUser();});
+            Content = vm;
+        }
         public void PrepareMainPage(Login u){
             VisibleNavigation = true;
             LoggedInUser = u.CurrentUser;
