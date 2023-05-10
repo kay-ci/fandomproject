@@ -44,9 +44,8 @@ namespace UserInfo{
             Username = userName;
             UserProfile = userProfile;
             EventsAttending = events;
-           // Messages = new UserMessage(this);
-            
         }
+        
         public User(string userName, Profile userProfile){
             if (!IsValidUsername(userName)){
                 throw new ArgumentException("Username should contain only 1 word");
@@ -65,7 +64,7 @@ namespace UserInfo{
                 throw new ArgumentException("The user is not the message's sender. Can't add to Outbox");
             }
             message.Sent = true;
-            this.Outbox?.Add(message);
+            this.Outbox.Add(message);
         }
 
         public bool IsValidUsername(string username){
