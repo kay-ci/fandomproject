@@ -83,6 +83,11 @@ public class MessageService {
         _context.SaveChanges();
     }
 
+    public void Delete_UserMessage(UserMessage u_msg){
+        _context.FandomUserMessages.Remove(u_msg);
+        _context.SaveChanges();
+    }
+
     public void Delete_Message(Message message){
         _context.FandomMessages.Remove(message);
         _context.SaveChanges();
