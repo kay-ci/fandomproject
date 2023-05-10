@@ -29,7 +29,8 @@ public class UserService{
             .Include(user => user.UserProfile)
             .Include(user => user.Fandoms)
             .Include(user => user.EventsAttending)
-            .Include(user => user.Messages)
+            .Include(user => user.Inbox)
+            .Include(user => user.Outbox)
             .OrderBy(user => user.userID)
             .ToList<User>();
         return usersList;

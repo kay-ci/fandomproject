@@ -112,7 +112,8 @@ public class EventService
                         .Include(user => user.UserProfile)
                         .Include(user => user.Fandoms)
                         .Include(user => user.EventsAttending)
-                        .Include(user => user.Messages)
+                        .Include(user => user.Inbox)
+                        .Include(user => user.Outbox)
                         .Where(user => user.EventsAttending.Contains(fandomEvent))
                         .OrderBy(user => user.userID)
                         .ToList<User>();

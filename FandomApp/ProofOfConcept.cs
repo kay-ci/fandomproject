@@ -51,7 +51,6 @@ public class Proof
         Proof.context.FandomEvents.RemoveRange(context.FandomEvents);
         Proof.context.FandomCategories.RemoveRange(context.FandomCategories);
         Proof.context.FandomBadges.RemoveRange(context.FandomBadges);
-        Proof.context.FandomUserMessages.RemoveRange(context.FandomUserMessages);
         Proof.context.Fandoms.RemoveRange(context.Fandoms);
         Proof.context.SaveChanges();
     }
@@ -103,15 +102,16 @@ public class Proof
         {
             User user1 = uService.GetUser("User1");
             Profile user1profile = uService.GetProfile(user1);
-            // Step 11. Send 3 messages from user2 to user1
-            Message msg1 = login.CurrentUser.Messages.CreateMessage("Message 1", "Message 1 Title", null, user1.Messages);
-            Message msg2 = login.CurrentUser.Messages.CreateMessage("Message 2", "Message 2 Title", null, user1.Messages);
-            Message msg3 = login.CurrentUser.Messages.CreateMessage("Message 3", "Message 3 Title", null, user1.Messages);
-            mService.Update_UserMessage(login.CurrentUser);
-            mService.Update_UserMessage(user1);
-            mService.Add_Message(msg1);
-            mService.Add_Message(msg2);
-            mService.Add_Message(msg3);
+
+            // Step 11. Send 3 Inbox from user2 to user1
+            //Message msg1 = login.CurrentUser.Inbox.CreateMessage("Message 1", "Message 1 Title", null, user1.Inbox);
+            //Message msg2 = login.CurrentUser.Inbox.CreateMessage("Message 2", "Message 2 Title", null, user1.Inbox);
+            //Message msg3 = login.CurrentUser.Inbox.CreateMessage("Message 3", "Message 3 Title", null, user1.Inbox);
+            //mService.Update_UserMessage(login.CurrentUser);
+            //mService.Update_UserMessage(user1);
+            //mService.Add_Message(msg1);
+            //mService.Add_Message(msg2);
+            //mService.Add_Message(msg3);
 
         }
         catch (Exception e)
@@ -157,16 +157,17 @@ public class Proof
         }
 
 
-        // 16. Access messages, viewing text of the messages sent by user2
-        login.CurrentUser.Messages.ReadMessage(0);
-        login.CurrentUser.Messages.ReadMessage(1);
-        login.CurrentUser.Messages.ReadMessage(2);
+        // 16. Access Inbox, viewing text of the Inbox sent by user2
+        //login.CurrentUser.Inbox.ReadMessage(0);
+        //login.CurrentUser.Inbox.ReadMessage(1);
+        //login.CurrentUser.Inbox.ReadMessage(2);
+
         // 17. Send a message to user2 from user1.
-        User user2 = uService.GetUser("User 2");
-        Message msg1 = login.CurrentUser.Messages.CreateMessage("Reply", "Reply Title", null, user2.Messages);
-        mService.Update_UserMessage(login.CurrentUser);
-        mService.Update_UserMessage(user2);
-        mService.Add_Message(msg1);
+        //User user2 = uService.GetUser("User 2");
+        //Message msg1 = login.CurrentUser.Inbox.CreateMessage("Reply", "Reply Title", null, user2.Inbox);
+        //mService.Update_UserMessage(login.CurrentUser);
+        //mService.Update_UserMessage(user2);
+        //mService.Add_Message(msg1);
 
 
         // 18. Find and view the attendees of user1’s event

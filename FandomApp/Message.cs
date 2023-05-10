@@ -1,14 +1,18 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace UserInfo{
-    public class Message{
+    public class Message
+    {
         private string _text;
         private string _title;
-        public int Id {get; set;}
-        [NotMapped]
-        public UserMessage Sender {get; set;} = null!;
-        public List<UserMessage>? Recipients = new();
-        public UserMessage? Recipient = null;
+        public int MessageId {get; set;}
+
+        [ForeignKey("userID")]
+        public User Sender {get; set;}
+
+        //[InverseProperty("Inbox")]
+        public List<User>? Recipients {get; set;} = new();
+
         public DateTime Timesent {get; set;}
         public string Text {
             get{return _text;} 
@@ -33,40 +37,22 @@ namespace UserInfo{
 
         private Message(){}
         //Basic constructor, validation done in UserMessage for text
-        public Message(UserMessage sender, List<UserMessage> recipients, string text, string title){
-            if(!IsValid(text) || !IsValid(title)){
-                throw new ArgumentException("text can not be null");
-            }
-            if(!IsValid(title)){
-                throw new ArgumentException("title can not be null");
-            }
+        public Message(User sender, List<User> recipients, string text, string title) {
+            
             this.Sender = sender;
             this.Timesent = DateTime.Now;
             this.Text = text;
             this.Title = title;
             this.Seen = false;
-            this.Recipients = new List<UserMessage>();
-            foreach(UserMessage user in recipients){
-                this.Recipients.Add(user);
-            }
+            this.Recipients = recipients;
+           
         }
-        //This one is for only one recipient
-        public Message(UserMessage sender, UserMessage recipient, string text, string title){
-            if(!IsValid(text) || !IsValid(title)){
-                throw new ArgumentException("text can not be null");
-            }
-            if(!IsValid(title)){
-                throw new ArgumentException("title can not be null");
-            }
-            this.Sender = sender;
-            this.Timesent = DateTime.Now;
-            this.Text = text;
-            this.Title = title;
-            this.Seen = false;
-            this.Recipient = recipient;
-        }
+        
         //This method is accessed by UserMessage inside of ReadMessage. Will make the field true.
-        public void MessageIsRead(){ this.Seen = true; }
+        public void MarkAsRead()
+        { 
+            this.Seen = true; 
+        }
         public bool IsValid(string field){
             if (string.IsNullOrWhiteSpace(field)){
                 return false;

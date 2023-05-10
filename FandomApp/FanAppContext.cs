@@ -9,7 +9,6 @@ public class FanAppContext : DbContext{
     public virtual DbSet<Event> FandomEvents { get; set; } = null!;
     public virtual DbSet<Category> FandomCategories { get; set; } = null!;
     public virtual DbSet<Badge> FandomBadges { get; set; } = null!;
-    public virtual DbSet<UserMessage> FandomUserMessages { get; set; } = null!;
     public virtual DbSet<Fandom> Fandoms { get; set; } = null!;
     
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
