@@ -27,7 +27,7 @@ public class Proof
         //Proof of Concept
         Proof proof = new Proof();
         //user clearTable if tables arent empty
-        //clearTables();
+        clearTables();
 
         UserService uService = proof.uService;
         EventService evService = proof.evService;
@@ -104,21 +104,25 @@ public class Proof
             Profile user1profile = uService.GetProfile(user1);
 
             // Step 11. Send 3 Inbox from user2 to user1
-            Message msg1 = new Message(login.CurrentUser, );
-            Message msg2 = .Inbox.CreateMessage("Message 2", "Message 2 Title", null, user1.Inbox);
-            Message msg3 = login.CurrentUser.Inbox.CreateMessage("Message 3", "Message 3 Title", null, user1.Inbox);
+            Message msg1 = new Message(login.CurrentUser, user1, "Message 1", "Message 1 Text");
+            Message msg2 = new Message(login.CurrentUser, user1, "Message 2", "Message 2 Text");
+            Message msg3 = new Message(login.CurrentUser, user1, "Message 3", "Message 3 Text"); 
+
+            msg1.MarkAsSent();
+            msg2.MarkAsSent();
+            msg3.MarkAsSent();
             
             mService.AddMessage(msg1);
             mService.AddMessage(msg2);
             mService.AddMessage(msg3);
+
+            Console.WriteLine("Messages have been sent to User1");
         }
         catch (Exception e)
         {
             Console.WriteLine(e.Message);
         }
         
-        
-
         // Step 12. Log out from user2
         uService.LogOff(login);
     }
@@ -158,18 +162,26 @@ public class Proof
 
 
         // 16. Access Inbox, viewing text of the Inbox sent by user2
-        //login.CurrentUser.Inbox.ReadMessage(0);
-        //login.CurrentUser.Inbox.ReadMessage(1);
-        //login.CurrentUser.Inbox.ReadMessage(2);
+        Console.WriteLine("Printing messages in user's 1 Inbox");
+        foreach (Message msg in login.CurrentUser.Inbox)
+        {
+            msg.MarkAsRead();
+            Console.WriteLine($"Title: {msg.Title}, {msg.Text}");
+        }
 
-        // 17. Send a message to user2 from user1.
-        //User user2 = uService.GetUser("User 2");
-        //Message msg1 = login.CurrentUser.Inbox.CreateMessage("Reply", "Reply Title", null, user2.Inbox);
-        //mService.Update_UserMessage(login.CurrentUser);
-        //mService.Update_UserMessage(user2);
-        //mService.Add_Message(msg1);
-
-
+        // 17. Send a message to user2 from user1
+        try
+        {
+            User user2 = uService.GetUser("User2");
+            Message msg = new Message(login.CurrentUser, user2, "Reply ", "Reply Text");
+            msg.MarkAsSent();
+            mService.AddMessage(msg);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        
         // 18. Find and view the attendees of user1’s event
         try
         {
@@ -215,6 +227,5 @@ public class Proof
         // 23. Delete user2’s account
         uService.DeleteUser(Proof.login);
         Console.WriteLine("User 2 has been deleted");
-
     }
 }
