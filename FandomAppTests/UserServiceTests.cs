@@ -99,6 +99,9 @@ public class UserServiceTests{
         //Act
         Profile newProfile = new Profile("name", "she/her", 19, "Canada", "Terrebonne");
         User newUser = service.CreateUser("newUser", "potato101", newProfile);
+        // MessageService mService = MessageService.getInstance();
+        //     mService.setFanAppContext(new FanAppContext);
+        //     mService.Add_UserMessage(newUser);
 
         //Assert
         mockSet.Verify(m => m.Add(It.IsAny<User>()), Times.Once());
