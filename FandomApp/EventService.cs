@@ -85,7 +85,7 @@ public class EventService
             throw new ArgumentException("Only the creator of this event can modify it.");
         }
         
-        if (GetEvent(updatedEvent.EventId) != null)
+        if (GetEvent(updatedEvent.EventId) != null || GetEvent(updatedEvent.Title) != null)
         {
             _context.FandomEvents.Update(updatedEvent);
             _context.SaveChanges();
