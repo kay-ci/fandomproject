@@ -18,7 +18,7 @@ public class MessageService {
         return _instance;
     }
 
-    public void setLibraryContext(FanAppContext context){
+    public void setFanAppContext(FanAppContext context){
         _context = context;
     }
 
@@ -48,7 +48,7 @@ public class MessageService {
     }
 
     public void Add_UserMessage(User user){
-        var user_message = new UserMessage(user);
+        var user_message = user.Messages;
 
         _context.FandomUserMessages.Add(user_message);
         _context.SaveChanges();
@@ -56,6 +56,20 @@ public class MessageService {
 
     public void Add_Message(Message msg){
         _context.FandomMessages.Add(msg);
+        _context.SaveChanges();
+    }
+
+    public void Update_UserMessage(User user){
+        var user_message = new UserMessage(user);
+        var query = from u_msg in _context.FandomUserMessages
+            where u_msg.user.Equals(user)
+            select u_msg;
+        var fetchedUMSG = query.First<UserMessage>();
+        
+        fetchedUMSG.Inbox = new List<Message>();
+        fetchedUMSG.Outbox = new List<Message>();
+        foreach(Message msg in user_message.Inbox) fetchedUMSG.Inbox.Add(msg);
+        foreach(Message msg in user_message.Outbox) fetchedUMSG.Outbox.Add(msg);
         _context.SaveChanges();
     }
 
@@ -70,11 +84,7 @@ public class MessageService {
     }
 
     public void Delete_Message(Message message){
-        var query = from msg in _context.FandomMessages
-            where msg.Equals(message)
-            select msg;
-        var fetchedmsg = query.First<Message>();
-        _context.FandomMessages.Remove(fetchedmsg);
+        _context.FandomMessages.Remove(message);
         _context.SaveChanges();
     }
 }
