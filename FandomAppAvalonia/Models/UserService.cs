@@ -28,9 +28,8 @@ public class UserService{
         List<User> usersList = _context.FandomUsers
             .Include(user => user.UserProfile)
             .Include(user => user.Fandoms)
-            .Include(user => user.EventsAttending)
-            .Include(user => user.Inbox)
-            .Include(user => user.Outbox)
+            .Include(user => user.Events)
+            .Include(user => user.Messages)
             .OrderBy(user => user.userID)
             .ToList<User>();
         return usersList;
@@ -40,12 +39,15 @@ public class UserService{
     /// </summary> 
     public User? GetUser(string username){
         User fetcheduser;
-        var query = from user in _context.FandomUsers
-           where user.Username == username
-           select user;
+        var query =  from user in _context.FandomUsers
+            where user.Username == username
+            join profile in _context.FandomProfiles on user.userID equals profile.userID 
+            select user;
         try{
-            fetcheduser = query.First<User>();}
-        catch (Exception){
+            fetcheduser = query.First<User>();
+            fetcheduser.UserProfile = GetProfile(fetcheduser);
+        }
+        catch (InvalidOperationException){
             return null;}
         return fetcheduser;
     }
@@ -55,7 +57,7 @@ public class UserService{
     public void UpdateUser(Login userManager, User UpdatedUser){
         if (userManager.CurrentUser != null){
         userManager.CurrentUser.UserProfile = UpdatedUser.UserProfile;
-        userManager.CurrentUser.EventsAttending = UpdatedUser.EventsAttending;
+        userManager.CurrentUser.Events = UpdatedUser.Events;
         userManager.CurrentUser.Fandoms = UpdatedUser.Fandoms;
         _context.SaveChanges();}
     }
@@ -74,16 +76,12 @@ public class UserService{
         CreatePassword(userManager.CurrentUser, newPassword);
         _context.SaveChanges();
     }
-    /// <summary>
-    /// Method <c>DeleteUser</c> deletes a users profile and account.
-    /// </summary>
     public void DeleteUser(Login UserManager){
-        if (UserManager.CurrentUser != null){
-            Profile userProfile = GetProfile(UserManager.CurrentUser);
-            _context.FandomProfiles.Remove(userProfile);
-            _context.FandomUsers.Remove(UserManager.CurrentUser);
-            _context.SaveChanges();
-        }
+        Profile profile = GetProfile(UserManager.CurrentUser);
+        _context.FandomProfiles.Remove(profile);
+        _context.FandomUsers.Remove(UserManager.CurrentUser);
+        _context.SaveChanges();
+
     }
     /// <summary>
     /// Method <c>GetProfiles</c> fetches all profiles from the table DbSet FandomProfiles.
@@ -152,7 +150,9 @@ public class UserService{
         else{
             newUser = new User(username, profile);
             CreatePassword(newUser, password);
+            //profile.userID = newUser.userID;
             _context.FandomUsers.Add(newUser);
+            //_context.FandomProfiles.Add(profile);
             _context.SaveChanges();
         }
         return newUser;

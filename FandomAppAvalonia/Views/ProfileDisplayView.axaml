@@ -1,0 +1,80 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="FandomAppSpace.Views.ProfileDisplayView">
+  <StackPanel Margin="10,0,0,0">
+    <TextBlock Text="{Binding Profile.user.Username}"
+                FontSize="28"/>
+    
+    <StackPanel Orientation="Horizontal" Spacing="10">
+
+
+      <StackPanel Spacing="2">
+        <TextBlock Text="{Binding Profile.Name, StringFormat='Name: {0}'}"
+                   IsVisible="{Binding Profile.Name, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
+      
+        <TextBlock Text="{Binding Profile.Pronouns, StringFormat='Pronouns: {0}'}"
+                   IsVisible="{Binding Profile.Pronouns, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>  
+      
+        <TextBlock Text="{Binding Profile.Age, StringFormat='Age: {0}'}"
+                   IsVisible="{Binding Profile.Age, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
+
+        <TextBlock Text="{Binding Profile.Description}"
+                   IsVisible="{Binding Profile.Description, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
+
+        <TextBlock Text="{Binding Profile.Country, StringFormat='Country: {0}'}"
+                   IsVisible="{Binding Profile.Country, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
+      
+        <TextBlock Text="{Binding Profile.City, StringFormat='City: {0}'}"
+                   IsVisible="{Binding Profile.City, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
+      </StackPanel>
+
+      <StackPanel Width="200" Spacing="5">
+        <TextBlock Text="Categories:"/>
+        <ItemsRepeater Items="{Binding Profile.Categories}">
+          <ItemsRepeater.ItemTemplate>
+            <DataTemplate>
+             <Border Margin="10,0,0,0" Padding="2">
+               <TextBlock Text="{Binding}"/>
+              </Border>
+            </DataTemplate>
+          </ItemsRepeater.ItemTemplate>
+        </ItemsRepeater>
+        <TextBlock Text="Fandoms:"/>
+        <ItemsRepeater Items="{Binding Profile.Fandoms}">
+          <ItemsRepeater.ItemTemplate>
+            <DataTemplate>
+             <Border Margin="10,0,0,0" Padding="2">
+               <TextBlock Text="{Binding}"/>
+              </Border>
+            </DataTemplate>
+          </ItemsRepeater.ItemTemplate>
+        </ItemsRepeater>
+        <TextBlock Text="Badges:"/>
+        <ItemsRepeater Items="{Binding Profile.Badges}">
+          <ItemsRepeater.ItemTemplate>
+            <DataTemplate>
+             <Border Margin="10,0,0,0" Padding="2">
+               <TextBlock Text="{Binding}"/>
+              </Border>
+            </DataTemplate>
+          </ItemsRepeater.ItemTemplate>
+        </ItemsRepeater>
+        <TextBlock Text="Interests:"/>
+        <ItemsRepeater Items="{Binding Profile.Interests}">
+          <ItemsRepeater.ItemTemplate>
+            <DataTemplate>
+             <Border Margin="10,0,0,0" Padding="2">
+               <TextBlock Text="{Binding}"/>
+              </Border>
+            </DataTemplate>
+          </ItemsRepeater.ItemTemplate>
+        </ItemsRepeater>
+      </StackPanel>
+    </StackPanel>
+      <Button Content="Edit Profile"
+              Command="{Binding $parent[Window].DataContext.EditProfile}"/>       
+  </StackPanel>
+</UserControl>

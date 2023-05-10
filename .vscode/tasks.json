@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/FandomApp/FandomApp.csproj",
+                "${workspaceFolder}/FandomAppAvalonia/FandomAppSpace.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -19,7 +19,7 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/FandomApp/FandomApp.csproj",
+                "${workspaceFolder}/FandomAppAvalonia/FandomAppSpace.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -33,7 +33,7 @@
                 "watch",
                 "run",
                 "--project",
-                "${workspaceFolder}/FandomApp/FandomApp.csproj"
+                "${workspaceFolder}/FandomAppAvalonia/FandomAppSpace.csproj"
             ],
             "problemMatcher": "$msCompile"
         }

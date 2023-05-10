@@ -9,9 +9,11 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/FandomApp/bin/Debug/net6.0/FandomApp.dll",
+            // If you have changed target frameworks, make sure to update the program path.
+            "program": "${workspaceFolder}/FandomAppAvalonia//bin/Debug/net6.0/FandomAppSpace.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/FandomApp",
+            "cwd": "${workspaceFolder}",
+            // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "integratedTerminal",
             "stopAtEntry": false
         },
