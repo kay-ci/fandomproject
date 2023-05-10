@@ -34,6 +34,7 @@ namespace UserInfo{
         }
         //This field determines if the message has been read or not. Will get updated by UserMessage
         public bool Seen {get; set;}
+        public bool Sent {get; set;}
 
         private Message(){}
         //Basic constructor, validation done in UserMessage for text
@@ -44,15 +45,11 @@ namespace UserInfo{
             this.Text = text;
             this.Title = title;
             this.Seen = false;
+            this.Sent = false;
             this.Recipients = recipients;
            
         }
-        
-        //This method is accessed by UserMessage inside of ReadMessage. Will make the field true.
-        public void MarkAsRead()
-        { 
-            this.Seen = true; 
-        }
+    
         public bool IsValid(string field){
             if (string.IsNullOrWhiteSpace(field)){
                 return false;

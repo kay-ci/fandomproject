@@ -50,13 +50,13 @@ namespace UserInfo{
         //This message basically takes an index to extract a Message object from the Inbox
         //Afterwards, we set the bool for if the message has been read to true using MessageIsRead()
         //Finally, we return the text inside of the message. Needs validation for the index
-        public string ReadMessage(int index){
-            if(index >= this.Inbox.Count){
-                throw new ArgumentException("ERROR, index given is larger than amount of messages this user has in their Inbox");
-            }
-            Inbox[index].MarkAsRead();
-            return Inbox[index].Text;
-        }
+        //public string ReadMessage(int index){
+        //    if(index >= this.Inbox.Count){
+        //        throw new ArgumentException("ERROR, index given is larger than amount of messages this user has in their Inbox");
+        //    }
+        //    Inbox[index].MarkAsRead();
+        //    return Inbox[index].Text;
+        //}
 
         //This method will simply add a new Message object to the Inbox
         //Used for when other users send this user a message

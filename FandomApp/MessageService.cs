@@ -39,20 +39,30 @@ public class MessageService {
         return msgFound;
     }
 
-    public void Add_Message(Message msg) {
-        _context.FandomMessages.Add(msg);
-        _context.SaveChanges();
+    public void AddMessage(Message new_message) {
+
+        if (GetMessage(new_message.Title) == null)
+        {
+            _context.FandomMessages.Add(new_message);
+            _context.SaveChanges();
+        }
     }
 
-    public void Edit_Message(Message message, string new_text, string new_title) {
-        var query = from msg in _context.FandomMessages
-            where msg.Equals(message)
-            select msg;
-        var fetchedmsg = query.First<Message>();
-        fetchedmsg.Text = new_text;
-        fetchedmsg.Title = new_title;
-        _context.SaveChanges();
+    public void EditMessage(Login login, Message updatedmessage) {
+
+        User? user = login.CurrentUser;
+        if (user?.Username != updatedmessage.Sender.Username)
+        {
+            throw new ArgumentException("Only the creator of this message can modify it.");
+        }
+        
+        if (GetMessage(updatedmessage.Title) != null)
+        {
+            _context.FandomMessages.Update(updatedmessage);
+            _context.SaveChanges();
+        }
     }
+    
     public void Delete_Message(Message message) {
         _context.FandomMessages.Remove(message);
         _context.SaveChanges();
