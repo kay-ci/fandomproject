@@ -5,41 +5,41 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="FandomAppSpace.Views.RegisterView">
   <DockPanel>
-    <Button DockPanel.Dock="Bottom" Command="{Binding Register}">Done</Button>
+    <Button DockPanel.Dock="Bottom" Command="{Binding Register}">Register</Button>
     <TextBlock Text="Register Account" FontSize="24" DockPanel.Dock="Top"/>
     <StackPanel>    
       <Grid ColumnDefinitions="1*,4*"
-            RowDefinitions="*,*,*,*,*,*"  
+            RowDefinitions="*,*,*,*,*,*,*"  
             Margin="4">
         <TextBlock Text="Name: " Grid.Row="0" Grid.Column="0"/>
         <TextBox AcceptsReturn="False"
-                Text="{Binding Profile.Name}"
+                Text="{Binding Name}"
                 Watermark="Name"
                 Grid.Row="0" Grid.Column="1"/>
 
       <TextBlock Text="Pronouns: " Grid.Row="1" Grid.Column="0"/>
       <TextBox AcceptsReturn="False"
-              Text="{Binding Profile.Pronouns}"
+              Text="{Binding Pronouns}"
               Watermark="Pronouns"
               Grid.Row="1" Grid.Column="1"/>
       
 
       <TextBlock Text="Age: " Grid.Row="2" Grid.Column="0"/>
       <TextBox AcceptsReturn="False"
-              Text="{Binding Profile.Age}"
+              Text="{Binding Age}"
               Watermark="Age"
               Grid.Row="2" Grid.Column="1"/>
       
       <TextBlock Text="Country: " Grid.Row="3" Grid.Column="0"/>
       <TextBox AcceptsReturn="False"
-              Text="{Binding Profile.Country}"
-              Watermark="Program"
+              Text="{Binding Country}"
+              Watermark="Country"
               Grid.Row="3" Grid.Column="1"/>
 
       <TextBlock Text="City: " Grid.Row="4" Grid.Column="0"/>
       <TextBox AcceptsReturn="False"
-              Text="{Binding Profile.City}"
-              Watermark="School"
+              Text="{Binding City}"
+              Watermark="City"
               Grid.Row="4" Grid.Column="1"/>
 
       <TextBlock Text="Username: " Grid.Row="5" Grid.Column="0"/>
@@ -47,12 +47,12 @@
               Text="{Binding Username}"
               Watermark="Username"
               Grid.Row="5" Grid.Column="1"/>
-      <TextBlock Text="Password: " Grid.Row="1" Grid.Column="0"/>
+      <TextBlock Text="Password: " Grid.Row="6" Grid.Column="0"/>
       <TextBox AcceptsReturn="False"
               Text="{Binding Password}"
               Watermark="Password"
               PasswordChar="·"
-              Grid.Row="1" Grid.Column="1"/>       
+              Grid.Row="6" Grid.Column="1"/>       
       </Grid>
     </StackPanel>
   </DockPanel>
