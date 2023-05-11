@@ -27,7 +27,9 @@ namespace FandomAppSpace.ViewModels
         public ReactiveCommand<Unit, Unit> Profile { get; }
         public ReactiveCommand<Unit, Unit> NewEvent { get; }
         public ReactiveCommand<Unit, Unit> Search { get; }
-        public ReactiveCommand<Unit, Unit> Message { get; }
+        public ReactiveCommand<Unit, Unit> CreateMessage { get; }
+        public ReactiveCommand<Unit, Unit> OpenInbox { get; }
+        public ReactiveCommand<Unit, Unit> OpenOutbox { get; }
         public ReactiveCommand<Unit, Unit> Logout { get; }
 
 
@@ -41,7 +43,9 @@ namespace FandomAppSpace.ViewModels
             Profile = ReactiveCommand.Create(() => {DisplayProfile(UserManager.CurrentUser);});
             NewEvent =  ReactiveCommand.Create(() => {CreateEvent();});
             Search  = ReactiveCommand.Create(() => {OpenSearch();});
-            Message = ReactiveCommand.Create(() => {OpenMessages();});
+            CreateMessage = ReactiveCommand.Create(() => {Create_Message();});
+            OpenInbox = ReactiveCommand.Create(() => {Open_Inbox(UserManager.CurrentUser.Inbox);});
+            OpenOutbox = ReactiveCommand.Create(() => {Open_Outbox(UserManager.CurrentUser.Outbox);});
             Logout = ReactiveCommand.Create(() => {ShowLogin();});
             
             ShowLogin();
@@ -111,10 +115,42 @@ namespace FandomAppSpace.ViewModels
             Content = vm;
         }
 
-        //Navigate to message view
-        private void OpenMessages()
-        {
-            throw new NotImplementedException();
+        private void View_Message(Message msg){
+            Content = new MessageViewModel(msg);
+        }
+
+        private void Open_Outbox(List<Message> outbox){
+            Content = new OutboxDisplayViewModel(outbox);
+        }
+
+        private void Open_Inbox(List<Message> inbox){
+            Content = new InboxDisplayViewModel(inbox);
+        }
+
+        private void Create_Message(){
+            var vm = new CreateMessageViewModel();
+
+            vm.Ok.Subscribe(x => {
+                vm.CreateMessage(UserManager);
+                Open_Outbox(UserManager.CurrentUser.Outbox);
+            });
+            vm.Cancel.Subscribe(x => {
+                Open_Inbox(UserManager.CurrentUser.Inbox);
+            });
+            Content = vm;
+        }
+
+        private void Edit_Message(Message msg){
+            var vm = new EditMessageViewModel(msg);
+
+            vm.Ok.Subscribe(x => {
+                vm.EditMessage(UserManager);
+                Open_Outbox(UserManager.CurrentUser.Outbox);
+            });
+            vm.Cancel.Subscribe(x => {
+                Open_Inbox(UserManager.CurrentUser.Inbox);
+            });
+            Content = vm;
         }
 
         //Navigate to search view

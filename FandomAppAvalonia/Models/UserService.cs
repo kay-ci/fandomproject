@@ -47,7 +47,7 @@ public class UserService{
                         .Include(user => user.EventsAttending)
                         .Include(user => user.Inbox)
                         .Include(user => user.Outbox)
-                        .OrderBy(user => user.UserID)
+                        .Where(user => user.Username == username)
                         .ToList()
                         .First<User>();
         }

@@ -7,16 +7,16 @@
   <DockPanel>
     <Button DockPanel.Dock="Bottom" Command="{Binding Ok}">Done</Button>
     <TextBlock Text="Edit Profile" FontSize="24" DockPanel.Dock="Top"/>
-    <StackPanel>    
+    <StackPanel>
+    <ScrollViewer>    
       <Grid ColumnDefinitions="1*,4*"
-            RowDefinitions="*,*,*,*,*,*,*,*,*,*,*"  
+            RowDefinitions="*,*,*,*,*,*,*,*,*,*,*,*,*,*"  
             Margin="4">
         <TextBlock Text="Name: " Grid.Row="0" Grid.Column="0"/>
         <TextBox AcceptsReturn="False"
                 Text="{Binding Profile.Name}"
                 Watermark="Name"
                 Grid.Row="0" Grid.Column="1"/>
-
       <TextBlock Text="Pronouns: " Grid.Row="1" Grid.Column="0"/>
       <TextBox AcceptsReturn="False"
               Text="{Binding Profile.Pronouns}"
@@ -61,7 +61,7 @@
                 <StackPanel Orientation="Horizontal">
                         <TextBlock Padding="2" VerticalAlignment="Center" Text="{Binding BadgeName}"/>
                         <Button Content="Remove Badge"
-                        Command="{Binding RemoveBadge}"/> 
+                        Command="{Binding $parent[UserControl].DataContext.RemoveBadge}" CommandParameter="{Binding}"/> 
                 </StackPanel>
                 </DataTemplate>
                 </ItemsRepeater.ItemTemplate>
@@ -72,16 +72,15 @@
                         Text="{Binding CategoryText}"
                         Watermark="Enter category"
                         Width="300"/>
-                <Button Command="{Binding AddCategory}" CommandParameter="{Binding}">Add Category</Button>
+                <Button Command="{Binding AddCategory}">Add Category</Button>
         </StackPanel>
-        <ItemsRepeater Grid.Row="9" Grid.Column="1" Items="{Binding categories}">
+        <ItemsRepeater Grid.Row="9" Grid.Column="1" Items="{Binding Categories}">
                 <ItemsRepeater.ItemTemplate>
                 <DataTemplate>
                 <StackPanel Orientation="Horizontal">
                         <TextBlock Padding="2" VerticalAlignment="Center" Text="{Binding Category_name}"/>
-                        <Button Content="Remove Fandom"
-                        Command="{Binding RemoveFandom}"
-                        CommandParameter="{Binding}"/> 
+                        <Button Content="Remove Category"
+                        Command="{Binding $parent[UserControl].DataContext.RemoveCategory}" CommandParameter="{Binding}"/> 
                 </StackPanel>
                 </DataTemplate>
                 </ItemsRepeater.ItemTemplate>
@@ -102,19 +101,29 @@
                         Width="100"/>
                 <Button Command="{Binding AddFandom}">Add Fandom</Button>
         </StackPanel>
-        <ItemsRepeater Grid.Row="11" Grid.Column="1" Items="{Binding categories}">
+        <ItemsRepeater Grid.Row="11" Grid.Column="1" Items="{Binding Fandoms}">
                 <ItemsRepeater.ItemTemplate>
                 <DataTemplate>
                 <StackPanel Orientation="Horizontal">
                         <TextBlock Padding="2" VerticalAlignment="Center" Text="{Binding Category_name}"/>
                         <Button Content="Remove Fandom"
-                        Command="{Binding RemoveFandom}"
-                        CommandParameter="{Binding}"/> 
+                        Command="{Binding $parent[UserControl].DataContext.RemoveFandom}" CommandParameter="{Binding}"/> 
                 </StackPanel>
                 </DataTemplate>
                 </ItemsRepeater.ItemTemplate>
         </ItemsRepeater>
+        <TextBlock Text="Interests: " Grid.Row="12" Grid.Column="0"/>
+        <TextBox AcceptsReturn="False"
+                Text="{Binding Profile.Interests}"
+                Watermark="list your interests!"
+                Grid.Row="12" Grid.Column="1"/>
+        <TextBlock Text="Picture: " Grid.Row="13" Grid.Column="0"/>
+        <TextBox AcceptsReturn="False"
+                Text="{Binding Profile.Picture}"
+                Watermark="url for picture"
+                Grid.Row="13" Grid.Column="1"/>
       </Grid>
+      </ScrollViewer>  
     </StackPanel>
   </DockPanel>
 </UserControl>
