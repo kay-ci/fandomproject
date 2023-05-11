@@ -53,7 +53,7 @@
                         Text="{Binding BadgesText}"
                         Watermark="Enter Badge Title"
                         Width="300"/>
-                <Button Command="{Binding AddBadge}"/>Add Badge</Button>
+                <Button Command="{Binding AddBadge}" > Add Badge</Button>
         </StackPanel>
         <ItemsRepeater Grid.Row="6" Grid.Column="1" Items="{Binding categories}">
                 <ItemsRepeater.ItemTemplate>
@@ -73,7 +73,7 @@
                         Text="{Binding CategoryText}"
                         Watermark="Enter category"
                         Width="300"/>
-                <Button Command="{Binding AddCategory}" CommandParameter="{Binding}"/>Add Category</Button>
+                <Button Command="{Binding AddCategory}" CommandParameter="{Binding}">Add Category</Button>
         </StackPanel>
         <ItemsRepeater Grid.Row="7" Grid.Column="1" Items="{Binding categories}">
                 <ItemsRepeater.ItemTemplate>

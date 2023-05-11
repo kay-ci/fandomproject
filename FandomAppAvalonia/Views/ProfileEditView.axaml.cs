@@ -11,9 +11,5 @@ public partial class ProfileEditView : UserControl
 {
     
     public ProfileEditView(){
-        InitializeComponent();
-    }
-    private void InitializeComponent(){
-        
-    }
+        InitializeComponent();}
 }

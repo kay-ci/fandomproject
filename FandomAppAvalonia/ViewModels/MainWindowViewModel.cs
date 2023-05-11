@@ -38,7 +38,7 @@ namespace FandomAppSpace.ViewModels
 
         public MainWindowViewModel()
         {
-            Profile = ReactiveCommand.Create(() => {DisplayProfile(UserManager, UserManager.CurrentUser);});
+            Profile = ReactiveCommand.Create(() => {DisplayProfile(UserManager.CurrentUser);});
             NewEvent =  ReactiveCommand.Create(() => {CreateEvent();});
             Search  = ReactiveCommand.Create(() => {OpenSearch();});
             Message = ReactiveCommand.Create(() => {OpenMessages();});
@@ -68,12 +68,12 @@ namespace FandomAppSpace.ViewModels
         public void PrepareMainPage(Login u){
             VisibleNavigation = true;
             UserManager = u;
-            DisplayProfile(UserManager, UserManager.CurrentUser);
+            DisplayProfile(UserManager.CurrentUser);
         }
 
         //Show profile of a specified user
         
-        private void DisplayProfile(Login UserManager, User chosenUser)
+        private void DisplayProfile(User chosenUser)
         {
             Content = new ProfileDisplayViewModel(UserManager, chosenUser);
         }

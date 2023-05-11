@@ -32,14 +32,14 @@
 
       <StackPanel IsVisible="{Binding ShowProfileResults}">
       <TextBlock Text="Results:"/>
-      <ItemsRepeater Items="{Binding ProfileResults}">
+      <ItemsRepeater Items="{Binding UserResults}">
         <ItemsRepeater.ItemTemplate>
           <DataTemplate>
             <StackPanel Orientation="Horizontal">
-                <TextBlock Padding="2" VerticalAlignment="Center" Text="{Binding User.Username}"/>
+                <TextBlock Padding="2" VerticalAlignment="Center" Text="{Binding Username}"/>
                 <Button Content="View Profile"
                 Command="{Binding $parent[Window].DataContext.DisplayProfile}"
-                CommandParameter="{Binding $parent[Window].DataContext.UserManager}"/> 
+                CommandParameter="{Binding}"/> 
               </StackPanel>
           </DataTemplate>
         </ItemsRepeater.ItemTemplate>

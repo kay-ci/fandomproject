@@ -59,5 +59,8 @@ namespace FandomAppSpace.ViewModels
 
             service.UpdateProfile(userManager, Profile);
         }
+        public void AddBadge(){
+            Badges.Add(new Badge(BadgesText));
+        }
     }
 }
