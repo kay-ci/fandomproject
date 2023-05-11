@@ -1,7 +1,7 @@
 namespace UserInfo;
 public class Fandom
 {
-    public int FandomId {get; set;}
+    public int FandomID {get; set;}
     private string _name;
     private string _category;
     private string _description;
@@ -34,6 +34,7 @@ public class Fandom
     }
 
     public List<User> Fans { get; set; } = new ();
+    public List<Event>? Events {get; set;} = new ();
 
 
     //constructor
@@ -52,12 +53,27 @@ public class Fandom
 
     //validate if the field is null or just a number
     public bool IsValid(string field){
-            int number;
-            if (int.TryParse(field, out number) || string.IsNullOrEmpty(field)){
-                return false;
-            }
-            else{
-                return true;
-            }   
-        }  
+        int number;
+        if (int.TryParse(field, out number) || string.IsNullOrEmpty(field)){
+            return false;
+        }
+        else{
+            return true;
+        }   
+    } 
+    public override bool Equals(object? obj){
+        var item = obj as Fandom;
+        if(ReferenceEquals(item, this)){
+            return true;
+        }
+        if(item == null){
+            return false;
+        }
+        return (
+            this.Name == item.Name &&
+            this.Category == item.Category &&
+            this.Description == item.Description &&
+            this.Fans.SequenceEqual(this.Fans)
+        );
+    } 
 }

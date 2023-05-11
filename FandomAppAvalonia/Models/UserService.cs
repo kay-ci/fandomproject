@@ -25,12 +25,13 @@ public class UserService{
     /// Method <c>GetUsers</c> fetches all users from DbSet FandomUsers.
     /// </summary>
     public List<User> GetUsers(){
-        List<User> usersList = _context.FandomUsers
+        List<User> usersList = _context.USERS
             .Include(user => user.UserProfile)
             .Include(user => user.Fandoms)
-            .Include(user => user.Events)
-            .Include(user => user.Messages)
-            .OrderBy(user => user.userID)
+            .Include(user => user.EventsAttending)
+            .Include(user => user.Inbox)
+            .Include(user => user.Outbox)
+            .OrderBy(user => user.UserID)
             .ToList<User>();
         return usersList;
     }
@@ -39,13 +40,16 @@ public class UserService{
     /// </summary> 
     public User? GetUser(string username){
         User fetcheduser;
-        var query =  from user in _context.FandomUsers
-            where user.Username == username
-            join profile in _context.FandomProfiles on user.userID equals profile.userID 
-            select user;
         try{
-            fetcheduser = query.First<User>();
-            fetcheduser.UserProfile = GetProfile(fetcheduser);
+            fetcheduser = _context.USERS
+                        .Include(user => user.UserProfile)
+                        .Include(user => user.Fandoms)
+                        .Include(user => user.EventsAttending)
+                        .Include(user => user.Inbox)
+                        .Include(user => user.Outbox)
+                        .OrderBy(user => user.UserID)
+                        .ToList()
+                        .First<User>();
         }
         catch (InvalidOperationException){
             return null;}
@@ -57,7 +61,7 @@ public class UserService{
     public void UpdateUser(Login userManager, User UpdatedUser){
         if (userManager.CurrentUser != null){
         userManager.CurrentUser.UserProfile = UpdatedUser.UserProfile;
-        userManager.CurrentUser.Events = UpdatedUser.Events;
+        userManager.CurrentUser.EventsAttending = UpdatedUser.EventsAttending;
         userManager.CurrentUser.Fandoms = UpdatedUser.Fandoms;
         _context.SaveChanges();}
     }
@@ -78,8 +82,8 @@ public class UserService{
     }
     public void DeleteUser(Login UserManager){
         Profile profile = GetProfile(UserManager.CurrentUser);
-        _context.FandomProfiles.Remove(profile);
-        _context.FandomUsers.Remove(UserManager.CurrentUser);
+        _context.PROFILES.Remove(profile);
+        _context.USERS.Remove(UserManager.CurrentUser);
         _context.SaveChanges();
 
     }
@@ -87,12 +91,12 @@ public class UserService{
     /// Method <c>GetProfiles</c> fetches all profiles from the table DbSet FandomProfiles.
     /// </summary>
     public List<Profile> GetProfiles(){
-        List<Profile> profilesList = _context.FandomProfiles
+        List<Profile> profilesList = _context.PROFILES
             .Include(profile => profile.Categories)
             .Include(profile => profile.Fandoms)
             .Include(profile => profile.Badges)
             .Include(profile => profile.user)
-            .OrderBy(profile => profile.ProfileId)
+            .OrderBy(profile => profile.ProfileID)
             .ToList<Profile>();
         return profilesList;
     }
@@ -101,7 +105,7 @@ public class UserService{
     /// </summary>
     public Profile GetProfile(User user){
         Profile fetchedProfile;
-        var query = from profile in _context.FandomProfiles
+        var query = from profile in _context.PROFILES
            where profile.user == user
            select profile;
         try{
@@ -151,7 +155,7 @@ public class UserService{
             newUser = new User(username, profile);
             CreatePassword(newUser, password);
             //profile.userID = newUser.userID;
-            _context.FandomUsers.Add(newUser);
+            _context.USERS.Add(newUser);
             //_context.FandomProfiles.Add(profile);
             _context.SaveChanges();
         }

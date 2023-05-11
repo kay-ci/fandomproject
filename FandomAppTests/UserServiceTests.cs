@@ -27,7 +27,7 @@ public class UserServiceTests{
         mockSet.As<IQueryable<User>>().Setup(m => m.GetEnumerator()).Returns(data.GetEnumerator());
  
         var mockContext = new Mock<FanAppContext>();
-        mockContext.Setup(m => m.FandomUsers).Returns(mockSet.Object);
+        mockContext.Setup(m => m.USERS).Returns(mockSet.Object);
         
         var service = UserService.getInstance();
         service.setFanAppContext(mockContext.Object);
@@ -60,7 +60,7 @@ public class UserServiceTests{
         mockSet.As<IQueryable<User>>().Setup(m => m.GetEnumerator()).Returns(data.GetEnumerator());
  
         var mockContext = new Mock<FanAppContext>();
-        mockContext.Setup(m => m.FandomUsers).Returns(mockSet.Object);
+        mockContext.Setup(m => m.USERS).Returns(mockSet.Object);
         
         var service = UserService.getInstance();
         service.setFanAppContext(mockContext.Object);
@@ -91,7 +91,7 @@ public class UserServiceTests{
         mockSet.As<IQueryable<User>>().Setup(m => m.GetEnumerator()).Returns(data.GetEnumerator());
  
         var mockContext = new Mock<FanAppContext>();
-        mockContext.Setup(m => m.FandomUsers).Returns(mockSet.Object);
+        mockContext.Setup(m => m.USERS).Returns(mockSet.Object);
         
         var service = UserService.getInstance();
         service.setFanAppContext(mockContext.Object);
@@ -123,7 +123,7 @@ public class UserServiceTests{
         mockSet.As<IQueryable<User>>().Setup(m => m.GetEnumerator()).Returns(data.GetEnumerator());
  
         var mockContext = new Mock<FanAppContext>();
-        mockContext.Setup(m => m.FandomUsers).Returns(mockSet.Object);
+        mockContext.Setup(m => m.USERS).Returns(mockSet.Object);
         
         var service = UserService.getInstance();
         service.setFanAppContext(mockContext.Object);
@@ -152,7 +152,7 @@ public class UserServiceTests{
         mockSet.As<IQueryable<User>>().Setup(m => m.GetEnumerator()).Returns(data.GetEnumerator());
  
         var mockContext = new Mock<FanAppContext>();
-        mockContext.Setup(m => m.FandomUsers).Returns(mockSet.Object);
+        mockContext.Setup(m => m.USERS).Returns(mockSet.Object);
         
         var service = UserService.getInstance();
         service.setFanAppContext(mockContext.Object);
@@ -180,7 +180,7 @@ public class UserServiceTests{
         mockSet.As<IQueryable<User>>().Setup(m => m.GetEnumerator()).Returns(data.GetEnumerator());
  
         var mockContext = new Mock<FanAppContext>();
-        mockContext.Setup(m => m.FandomUsers).Returns(mockSet.Object);
+        mockContext.Setup(m => m.USERS).Returns(mockSet.Object);
         
         var service = UserService.getInstance();
         service.setFanAppContext(mockContext.Object);
@@ -198,7 +198,7 @@ public class UserServiceTests{
         //Arrange
         var mockSet = new Mock<DbSet<Profile>>();
         var mockContext = new Mock<FanAppContext>();
-        mockContext.Setup(m => m.FandomProfiles).Returns(mockSet.Object);
+        mockContext.Setup(m => m.PROFILES).Returns(mockSet.Object);
         var service = UserService.getInstance();
         service.setFanAppContext(mockContext.Object);
 
@@ -231,7 +231,7 @@ public class UserServiceTests{
         mockSet.As<IQueryable<Profile>>().Setup(m => m.GetEnumerator()).Returns(data.GetEnumerator());
  
         var mockContext = new Mock<FanAppContext>();
-        mockContext.Setup(m => m.FandomProfiles).Returns(mockSet.Object);
+        mockContext.Setup(m => m.PROFILES).Returns(mockSet.Object);
         
         var service = UserService.getInstance();
         service.setFanAppContext(mockContext.Object);
@@ -264,7 +264,7 @@ public class UserServiceTests{
         mockSet.As<IQueryable<Profile>>().Setup(m => m.GetEnumerator()).Returns(data.GetEnumerator());
  
         var mockContext = new Mock<FanAppContext>();
-        mockContext.Setup(m => m.FandomProfiles).Returns(mockSet.Object);
+        mockContext.Setup(m => m.PROFILES).Returns(mockSet.Object);
         
         var service = UserService.getInstance();
         service.setFanAppContext(mockContext.Object);
@@ -285,7 +285,7 @@ public class UserServiceTests{
         //Arrange
         var mockSet = new Mock<DbSet<Profile>>();
         var mockContext = new Mock<FanAppContext>();
-        mockContext.Setup(m => m.FandomProfiles).Returns(mockSet.Object);
+        mockContext.Setup(m => m.PROFILES).Returns(mockSet.Object);
         var service = UserService.getInstance();
         service.setFanAppContext(mockContext.Object);
 

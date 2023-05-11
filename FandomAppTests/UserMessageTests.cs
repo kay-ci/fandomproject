@@ -7,20 +7,15 @@ public class UserMessageTests{
     [ExpectedException(typeof(ArgumentException))]
     public void Creating_Messsage_Test_Fail1(){
         //Arrange
-        List<Category> categories = new List<Category>();
-        List<Fandom> fandoms = new List<Fandom>();
-        List<Badge> badges = new List<Badge>();
-        string interests = "A lot of interests";
-        List<Event> events = new List<Event>();
-        Profile sender_prof = new Profile("Karekin Kiyici", "he/him", 22, "Canada", "Montreal", categories, fandoms, badges, "","path/to/pic.jpeg", interests);
-        User sender = new User("kareking1", sender_prof, events);
+        Profile sender_prof = new Profile("KarekinKiyici", "he/him", 22, "Canada", "Montreal");
+        User sender = new User("kareking", sender_prof);
     
-        Profile receiver_prof1 = new Profile("mista", "he/him", 28, "Canada", "Montreal", categories, fandoms, badges, "","path/to/pic.jpeg", interests);
-        User receiver = new User("Sex Pistols", receiver_prof1);    
-        Profile receiver_prof2 = new Profile("Goffy", "he/him", 28, "Canada", "Montreal", categories, fandoms, badges, "","path/to/pic.jpeg", interests);
+        Profile receiver_prof1 = new Profile("mista", "he/him", 28, "Canada", "Montreal");
+        User receiver = new User("SexPistols", receiver_prof1);    
+        Profile receiver_prof2 = new Profile("Goffy", "he/him", 28, "Canada", "Montreal");
         User receiver2 = new User("Gaffy", receiver_prof2);
-        Profile receiver_prof3 = new Profile("Teedus", "he/him", 28, "Canada", "Montreal", categories, fandoms, badges, "","path/to/pic.jpeg", interests);
-        User receiver3 = new User("HA HA HA HA HA", receiver_prof3);
+        Profile receiver_prof3 = new Profile("Teedus", "he/him", 28, "Canada", "Montreal");
+        User receiver3 = new User("HAHA", receiver_prof3);
         
         //Should fail!
         string textTest1 = "";
@@ -31,27 +26,22 @@ public class UserMessageTests{
         recipients.Add(receiver2.Messages);
         recipients.Add(receiver3.Messages);
         //This will automatically throw if text is no good!
-        sender.Messages.CreateMessage(recipients, textTest1, "test title, doesn't matter yet");
+        sender.Messages.CreateMessage(textTest1, "test title, doesn't matter yet", recipients);
     }
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentException))] 
     public void Creating_Messsage_Test_Fail2(){
         //Arrange
-         List<Category> categories = new List<Category>();
-        List<Fandom> fandoms = new List<Fandom>();
-        List<Badge> badges = new List<Badge>();
-        string interests = "A lot of interests";
-        List<Event> events = new List<Event>();
-        Profile sender_prof = new Profile("Karekin Kiyici", "he/him", 22, "Canada", "Montreal", categories, fandoms, badges, "","path/to/pic.jpeg", interests);
-        User sender = new User("kareking1", sender_prof, events);
+        Profile sender_prof = new Profile("KarekinKiyici", "he/him", 22, "Canada", "Montreal");
+        User sender = new User("kareking", sender_prof);
     
-        Profile receiver_prof1 = new Profile("mista", "he/him", 28, "Canada", "Montreal", categories, fandoms, badges, "","path/to/pic.jpeg", interests);
-        User receiver = new User("Sex Pistols", receiver_prof1);    
-        Profile receiver_prof2 = new Profile("Goffy", "he/him", 28, "Canada", "Montreal", categories, fandoms, badges, "","path/to/pic.jpeg", interests);
+        Profile receiver_prof1 = new Profile("mista", "he/him", 28, "Canada", "Montreal");
+        User receiver = new User("SexPistols", receiver_prof1);    
+        Profile receiver_prof2 = new Profile("Goffy", "he/him", 28, "Canada", "Montreal");
         User receiver2 = new User("Gaffy", receiver_prof2);
-        Profile receiver_prof3 = new Profile("Teedus", "he/him", 28, "Canada", "Montreal", categories, fandoms, badges, "","path/to/pic.jpeg", interests);
-        User receiver3 = new User("HA HA HA HA HA", receiver_prof3);
+        Profile receiver_prof3 = new Profile("Teedus", "he/him", 28, "Canada", "Montreal");
+        User receiver3 = new User("HAHA", receiver_prof3);
         
         //Should also fail
         string textTest2 = "   ";
@@ -62,30 +52,25 @@ public class UserMessageTests{
         recipients.Add(receiver2.Messages);
         recipients.Add(receiver3.Messages);
         //This will automatically throw if text is no good!
-        sender.Messages.CreateMessage(recipients, textTest2, "test title, doesn't matter yet");
+        sender.Messages.CreateMessage(textTest2, "test title, doesn't matter yet", recipients);
     }
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentException))] 
     public void Creating_Messsage_Test_Fail3(){
         //Arrange
-         List<Category> categories = new List<Category>();
-        List<Fandom> fandoms = new List<Fandom>();
-        List<Badge> badges = new List<Badge>();
-        string interests = "A lot of interests";
-        List<Event> events = new List<Event>();
-        Profile sender_prof = new Profile("Karekin Kiyici", "he/him", 22, "Canada", "Montreal", categories, fandoms, badges, "","path/to/pic.jpeg", interests);
-        User sender = new User("kareking1", sender_prof, events);
+        Profile sender_prof = new Profile("KarekinKiyici", "he/him", 22, "Canada", "Montreal");
+        User sender = new User("kareking", sender_prof);
     
-        Profile receiver_prof1 = new Profile("mista", "he/him", 28, "Canada", "Montreal", categories, fandoms, badges, "","path/to/pic.jpeg", interests);
-        User receiver = new User("Sex Pistols", receiver_prof1);    
-        Profile receiver_prof2 = new Profile("Goffy", "he/him", 28, "Canada", "Montreal", categories, fandoms, badges, "","path/to/pic.jpeg", interests);
+        Profile receiver_prof1 = new Profile("mista", "he/him", 28, "Canada", "Montreal");
+        User receiver = new User("SexPistols", receiver_prof1);    
+        Profile receiver_prof2 = new Profile("Goffy", "he/him", 28, "Canada", "Montreal");
         User receiver2 = new User("Gaffy", receiver_prof2);
-        Profile receiver_prof3 = new Profile("Teedus", "he/him", 28, "Canada", "Montreal", categories, fandoms, badges, "","path/to/pic.jpeg", interests);
-        User receiver3 = new User("HA HA HA HA HA", receiver_prof3);
+        Profile receiver_prof3 = new Profile("Teedus", "he/him", 28, "Canada", "Montreal");
+        User receiver3 = new User("HAHA", receiver_prof3);
         
         //Should also fail
-        string textTest3 = null;
+        string? textTest3 = null;
 
         //Act
         List<UserMessage> recipients = new List<UserMessage>();
@@ -93,26 +78,22 @@ public class UserMessageTests{
         recipients.Add(receiver2.Messages);
         recipients.Add(receiver3.Messages);
         //This will automatically throw if text is no good!
-        sender.Messages.CreateMessage(recipients, textTest3, "test title, doesn't matter yet");
+        sender.Messages.CreateMessage(textTest3, "test title, doesn't matter yet", recipients);
     }
 
     [TestMethod]
     public void Creating_Message_Then_Read_Message_Test_Succeed(){
         //Arrange
-        List<Category> categories = new List<Category>();
-        List<Fandom> fandoms = new List<Fandom>();
-        List<Badge> badges = new List<Badge>();
-        string interests = "A lot of interests";
-        List<Event> events = new List<Event>();
-        Profile sender_prof = new Profile("Karekin Kiyici", "he/him", 22, "Canada", "Montreal", categories, fandoms, badges, "","path/to/pic.jpeg", interests);
-        User sender = new User("kareking1", sender_prof);
+        Profile sender_prof = new Profile("KarekinKiyici", "he/him", 22, "Canada", "Montreal");
+        User sender = new User("kareking", sender_prof);
     
-        Profile receiver_prof1 = new Profile("mista", "he/him", 28, "Canada", "Montreal", categories, fandoms, badges, "","path/to/pic.jpeg", interests);
+        Profile receiver_prof1 = new Profile("mista", "he/him", 28, "Canada", "Montreal");
         User receiver = new User("SexPistols", receiver_prof1);    
-        Profile receiver_prof2 = new Profile("Goffy", "he/him", 28, "Canada", "Montreal", categories, fandoms, badges, "","path/to/pic.jpeg", interests);
+        Profile receiver_prof2 = new Profile("Goffy", "he/him", 28, "Canada", "Montreal");
         User receiver2 = new User("Gaffy", receiver_prof2);
-        Profile receiver_prof3 = new Profile("Teedus", "he/him", 28, "Canada", "Montreal", categories, fandoms, badges, "","path/to/pic.jpeg", interests);
-        User receiver3 = new User("HA", receiver_prof3);
+        Profile receiver_prof3 = new Profile("Teedus", "he/him", 28, "Canada", "Montreal");
+        User receiver3 = new User("HAHA", receiver_prof3);
+
         
         //Should succeed!
         string textTest4 = "blahh sjefjhsifseji blahhh";
@@ -124,7 +105,7 @@ public class UserMessageTests{
         recipients.Add(receiver3.Messages);
 
         //Assert
-        sender.Messages.CreateMessage(recipients, textTest4, "test title, doesn't matter yet");
+        sender.Messages.CreateMessage(textTest4, "test title, doesn't matter yet", null, receiver.Messages);
         StringAssert.Equals(receiver.Messages.ReadMessage(0), textTest4);
     }
 }
