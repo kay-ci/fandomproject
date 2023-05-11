@@ -3,28 +3,36 @@
         x:Class="FandomAppSpace.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
         Width="600" Height="450"
-        Title="Social Friendship App">
+        Title="Fandom App">
         <StackPanel>
-        <ContentControl Width="600" Height="420" Content="{Binding Content}"/>
+        <ContentControl Width="600" Height="400" Content="{Binding Content}"/>
+
         <StackPanel HorizontalAlignment="Center"
                     VerticalAlignment="Bottom"
                     Orientation="Horizontal"
                     IsVisible="{Binding VisibleNavigation}">
+
                 <Button Command="{Binding Profile}"> 
-                        <Image Source="/Assets/Icons/icons-profile.png" Width="20" Height="20"/>
+                        <!--<Image Source="/Assets/Icons/icons-profile.png" Width="20" Height="20"/> -->
+                        My Profile
                 </Button>
                 <Button Command="{Binding NewEvent}">
-                        <Image Source="/Assets/Icons/icons-event.png" Width="20" Height="20"/>
+                        <!--<Image Source="/Assets/Icons/icons-event.png" Width="20" Height="20"/> -->
+                        My Events
                 </Button>
                 <Button Command="{Binding Search}">
-                        <Image Source="/Assets/Icons/icons-search.png" Width="20" Height="20"/>
+                        <!--<Image Source="/Assets/Icons/icons-search.png" Width="20" Height="20"/> -->
+                        Search
                 </Button>
                 <Button Command="{Binding Message}">
-                        <Image Source="/Assets/Icons/icons-message.png" Width="20" Height="20"/>
+                        <!--<Image Source="/Assets/Icons/icons-message.png" Width="20" Height="20"/> -->
+                        Messages
                 </Button>
                 <Button Command="{Binding Logout}">
-                        <Image Source="/Assets/Icons/icons-close.png" Width="20" Height="20"/>
+                        <!--<Image Source="/Assets/Icons/icons-close.png" Width="20" Height="20"/> -->
+                        Log out
                 </Button>
+
         </StackPanel>
         </StackPanel> 
 </Window>

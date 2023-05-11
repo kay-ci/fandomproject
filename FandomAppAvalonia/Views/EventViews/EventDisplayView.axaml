@@ -3,26 +3,52 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="200" d:DesignHeight="300"
-             x:Class="FandomAppSpace.Views.EventDisplayView">
+             x:Class="FandomAppSpace.Views.EventDisplayView"
+             Title="Events Page">
              
   <StackPanel Margin="10,0,0,0">
 
-    <TextBlock Text="{Binding Event.Title}"
-                FontSize="28"/>
+    <TextBlock Text="{Binding Event.Title}" FontSize="28"/>
     
     <StackPanel Orientation="Vertical" Spacing="10">
       <StackPanel Width="300" Spacing="5">
 
-        <TextBlock Text="{Binding Event.Description}"/>
+        <TextBlock Text="{Binding Event.Date}"/>
+        <TextBlock Text="{Binding Event.Location}"/>
+        <TextBlock Text="{Binding Event.MinAge}"/>
         <TextBlock Text="{Binding Event.Owner.Username, StringFormat='Organized By: {0}'}"/>
-
         <TextBlock Text="Attendees:"/>
+
         <ItemsRepeater Items="{Binding Event.Attendees}">
           <ItemsRepeater.ItemTemplate>
             <DataTemplate>
+
              <Border Margin="10,0,0,0" Padding="2">
                <TextBlock Text="{Binding Username}"/>
               </Border>
+
+            </DataTemplate>
+          </ItemsRepeater.ItemTemplate>
+        </ItemsRepeater>
+
+      </StackPanel>
+
+    
+    <StackPanel Spacing="10" IsVisible="{Binding VisibleNavigation}">
+      <TextBlock Text="My Events" FontSize="35"/> 
+
+      <ItemsRepeater Items="{Binding Events}">
+          <ItemsRepeater.ItemTemplate>
+            <DataTemplate>
+
+              <TextBlock Text="{Binding Title}" FontSize="28"/> 
+              <TextBlock Text="{Binding Date}"/>
+              <TextBlock Text="{Binding Location}"/>
+              <TextBlock Text="{Binding MinAge}"/>
+              <TextBlock Text="{Binding Owner.Username, StringFormat='Organized By: {0}'}"/>
+
+              <Button Command="{Binding $parent[UserControl].DataContext.ShowEvent}"> Show All Infos <Button>
+
             </DataTemplate>
           </ItemsRepeater.ItemTemplate>
         </ItemsRepeater>
@@ -41,9 +67,9 @@
         <TextBlock Text="{Binding Event.School, StringFormat='School: {0}'}"
                    IsVisible="{Binding Event.School, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
         
-        <Button Content="Edit Event"
-                Command="{Binding $parent[Window].DataContext.EditEvent}"/>
+        <Button Content="Edit Event" Command="{Binding $parent[Window].DataContext.EditEvent}"/>
       </StackPanel>
+
     </StackPanel>       
   </StackPanel>
 </UserControl>
