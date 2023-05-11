@@ -1,7 +1,5 @@
-﻿using System;
-using System.Reactive.Linq;
+﻿using System.Reactive.Linq;
 using ReactiveUI;
-using FandomAppSpace;
 using System.Reactive;
 using UserInfo;
 namespace FandomAppSpace.ViewModels
@@ -10,8 +8,9 @@ namespace FandomAppSpace.ViewModels
     {
         private ViewModelBase _content;
         private Boolean _visibleNavigation;
-        Login? UserManager;
 
+        //property holding the Current User logged in 
+        Login? UserManager;
         public Boolean VisibleNavigation
         {
             get => _visibleNavigation;
@@ -31,13 +30,9 @@ namespace FandomAppSpace.ViewModels
         public ReactiveCommand<Unit, Unit> Logout { get; }
 
 
-
-
-
-
-
         public MainWindowViewModel()
         {
+            //Buttons
             Profile = ReactiveCommand.Create(() => {ShowPersonalProfile();});
             NewEvent =  ReactiveCommand.Create(() => {CreateEvent();});
             Search  = ReactiveCommand.Create(() => {OpenSearch();});
@@ -98,7 +93,13 @@ namespace FandomAppSpace.ViewModels
         //Create and display a new event
         private void CreateEvent()
         {
-        //    DisplayEvent(new Event());
+
+            Profile owner_profile = new Profile("Owner", "they/them", 21, "Canada", "Montreal");
+            List<Category> categories = new List<Category>(){new Category("Music")};
+
+            User owner = new User("userOwner", owner_profile);
+            
+            DisplayEvent(new Event("Title", new DateTime(2023, 12, 12), "Montreal", categories, 15, owner));
         }
 
         //Display an existing event
@@ -127,9 +128,6 @@ namespace FandomAppSpace.ViewModels
         {
             Content = new SearchViewModel();
         }
-
-
-
 
     }
 }
