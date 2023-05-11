@@ -1,6 +1,8 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace UserInfo{
     public class Profile{
-        public int ProfileId {get; set;}
+        public int ProfileID {get; set;}
         private string? _name;
         private string? _pronouns;
         private int _age;
@@ -66,8 +68,10 @@ namespace UserInfo{
         }
         public string? Picture {get; set;}
         public string? Interests {get; set;}
+        
+        [ForeignKey("UserID")]
         public User user {get; set;} = null!;
-        public int userID {get; set;}
+        
 
         private Profile(){}
 

@@ -1,7 +1,7 @@
 namespace UserInfo {
     public class Badge {
 
-        public int BadgeId {get; set;}
+        public int BadgeID {get; set;}
         public string BadgeName {get; set;}
 
         public Badge(){}

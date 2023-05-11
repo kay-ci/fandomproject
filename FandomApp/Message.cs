@@ -5,9 +5,9 @@ namespace UserInfo{
     {
         private string _text;
         private string _title;
-        public int MessageId {get; set;}
+        public int MessageID {get; set;}
 
-        [ForeignKey("userID")]
+        [ForeignKey("UserID")]
         public User Sender {get; set;}
 
         //[InverseProperty("Inbox")]

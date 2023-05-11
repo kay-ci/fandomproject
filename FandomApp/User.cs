@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 
 namespace UserInfo{
     public class User{
-        public int userID {get; set;}
+        public int UserID {get; set;}
         private string _username; 
         public string? Username {
             get{ return _username; } 

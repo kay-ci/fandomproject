@@ -26,8 +26,6 @@ public class Proof
 
         //Proof of Concept
         Proof proof = new Proof();
-        //user clearTable if tables arent empty
-        clearTables();
 
         UserService uService = proof.uService;
         EventService evService = proof.evService;
@@ -42,18 +40,18 @@ public class Proof
         Console.WriteLine("Program done");
     }
 
-    private static void clearTables()
-    {
-        //Clearing tables to start
-        Proof.context.FandomUsers.RemoveRange(context.FandomUsers);
-        Proof.context.FandomProfiles.RemoveRange(context.FandomProfiles);
-        Proof.context.FandomMessages.RemoveRange(context.FandomMessages);
-        Proof.context.FandomEvents.RemoveRange(context.FandomEvents);
-        Proof.context.FandomCategories.RemoveRange(context.FandomCategories);
-        Proof.context.FandomBadges.RemoveRange(context.FandomBadges);
-        Proof.context.Fandoms.RemoveRange(context.Fandoms);
-        Proof.context.SaveChanges();
-    }
+    //private static void clearTables()
+    //{
+    //    //Clearing tables to start
+    //    Proof.context.USERS.RemoveRange(context.USERS);
+    //    Proof.context.PROFILES.RemoveRange(context.PROFILES);
+    //    Proof.context.MESSAGES.RemoveRange(context.MESSAGES);
+    //    Proof.context.EVENTS.RemoveRange(context.EVENTS);
+    //    Proof.context.CATEGORIES.RemoveRange(context.CATEGORIES);
+    //    Proof.context.BADGES.RemoveRange(context.BADGES);
+    //    Proof.context.FANDOMS.RemoveRange(context.FANDOMS);
+    //    Proof.context.SaveChanges();
+    //}
 
     private static void createUser1(UserService uService, EventService evService) 
     {
