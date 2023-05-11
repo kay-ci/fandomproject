@@ -39,7 +39,7 @@
                 <TextBlock Padding="2" VerticalAlignment="Center" Text="{Binding User.Username}"/>
                 <Button Content="View Profile"
                 Command="{Binding $parent[Window].DataContext.DisplayProfile}"
-                CommandParameter="{Binding}"/> 
+                CommandParameter="{Binding $parent[Window].DataContext.UserManager}"/> 
               </StackPanel>
           </DataTemplate>
         </ItemsRepeater.ItemTemplate>

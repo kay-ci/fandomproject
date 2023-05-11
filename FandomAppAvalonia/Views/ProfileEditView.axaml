@@ -47,16 +47,74 @@
               Text="{Binding Profile.Description}"
               Watermark="Description"
               Grid.Row="5" Grid.Column="1"/>
-      <TextBlock Text="Interests: " Grid.Row="6" Grid.Column="0"/>
-       <TextBox AcceptsReturn="False"
-              Text="{Binding Profile.Interests}"
-              Watermark="Interest"
-              Grid.Row="6" Grid.Column="1"/> 
-       <TextBlock Text="Categories (seperate categories by comma ','): " Grid.Row="7" Grid.Column="0"/>
-        <TextBox AcceptsReturn="False"
-              Text="{Binding CategoryText}"
-              Watermark="Categories"
-              Grid.Row="7" Grid.Column="1"/> 
+        <StackPanel Grid.Row="6" Grid.Column="0" Orientation="Horizontal">
+                <TextBlock Text="Badges:"/>
+                <TextBox AcceptsReturn="False"
+                        Text="{Binding BadgesText}"
+                        Watermark="Enter Badge Title"
+                        Width="300"/>
+                <Button Command="{Binding AddBadge}"/>Add Badge</Button>
+        </StackPanel>
+        <ItemsRepeater Grid.Row="6" Grid.Column="1" Items="{Binding categories}">
+                <ItemsRepeater.ItemTemplate>
+                <DataTemplate>
+                <StackPanel Orientation="Horizontal">
+                        <TextBlock Padding="2" VerticalAlignment="Center" Text="{Binding Category_name}"/>
+                        <Button Content="Remove Fandom"
+                        Command="{Binding RemoveFandom}"
+                        CommandParameter="{Binding}"/> 
+                </StackPanel>
+                </DataTemplate>
+                </ItemsRepeater.ItemTemplate>
+        </ItemsRepeater>
+        <StackPanel Grid.Row="7" Grid.Column="0" Orientation="Horizontal">
+                <TextBlock Text="Categories:"/>
+                <TextBox AcceptsReturn="False"
+                        Text="{Binding CategoryText}"
+                        Watermark="Enter category"
+                        Width="300"/>
+                <Button Command="{Binding AddCategory}" CommandParameter="{Binding}"/>Add Category</Button>
+        </StackPanel>
+        <ItemsRepeater Grid.Row="7" Grid.Column="1" Items="{Binding categories}">
+                <ItemsRepeater.ItemTemplate>
+                <DataTemplate>
+                <StackPanel Orientation="Horizontal">
+                        <TextBlock Padding="2" VerticalAlignment="Center" Text="{Binding Category_name}"/>
+                        <Button Content="Remove Fandom"
+                        Command="{Binding RemoveFandom}"
+                        CommandParameter="{Binding}"/> 
+                </StackPanel>
+                </DataTemplate>
+                </ItemsRepeater.ItemTemplate>
+        </ItemsRepeater>
+        <StackPanel Grid.Row="8" Grid.Column="0" Orientation="Horizontal">
+                <TextBlock Text="Fandoms:"/>
+                <TextBox AcceptsReturn="False"
+                        Text="{Binding FandomName}"
+                        Watermark="Enter fandom name"
+                        Width="300"/>
+                <TextBox AcceptsReturn="False"
+                        Text="{Binding FandomCategory}"
+                        Watermark="Enter fandom's category"
+                        Width="300"/>
+                <TextBox AcceptsReturn="False"
+                        Text="{Binding FandomDescription}"
+                        Watermark="Enter fandom Description"
+                        Width="300"/>
+                <Button Command="{Binding AddFandom}">Add Fandom</Button>
+        </StackPanel>
+        <ItemsRepeater Grid.Row="8" Grid.Column="1" Items="{Binding categories}">
+                <ItemsRepeater.ItemTemplate>
+                <DataTemplate>
+                <StackPanel Orientation="Horizontal">
+                        <TextBlock Padding="2" VerticalAlignment="Center" Text="{Binding Category_name}"/>
+                        <Button Content="Remove Fandom"
+                        Command="{Binding RemoveFandom}"
+                        CommandParameter="{Binding}"/> 
+                </StackPanel>
+                </DataTemplate>
+                </ItemsRepeater.ItemTemplate>
+        </ItemsRepeater>
         <!-- <ComboBox Grid.Row="7" Grid.Column="1" Name="Select">
                 <ComboBox.ItemTemplate>
                 <DataTemplate>
