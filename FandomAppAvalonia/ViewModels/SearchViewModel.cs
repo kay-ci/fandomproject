@@ -83,7 +83,7 @@ namespace FandomAppSpace.ViewModels{
                     if(fandom.Name.Contains(_keyword)) filtered_prof.Add(prof);
                 }
                 foreach(Category cat in prof.Categories){
-                    if(cat.Category_name.Contains(_keyword)) filtered_prof.Add(prof);
+                    if(cat.Name.Contains(_keyword)) filtered_prof.Add(prof);
                 }
             }
             

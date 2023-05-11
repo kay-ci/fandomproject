@@ -186,7 +186,7 @@ public class EventService
             else if (keyword == "category") 
             {
                 events_found = GetQueryableEvents()
-                                .Where(e => e.Categories.Any(c => c.Category_name.Equals(searchInput)))
+                                .Where(e => e.Categories.Any(c => c.Name.Equals(searchInput)))
                                 .ToList<Event>();
             }
             else if (keyword.ToLower() == "word") 
