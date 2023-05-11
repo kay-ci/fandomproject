@@ -2,21 +2,18 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Oracle.EntityFrameworkCore.Metadata;
 using UserInfo;
 
 #nullable disable
 
-namespace FandomApp.Migrations
+namespace FandomAppSpace.Migrations
 {
     [DbContext(typeof(FanAppContext))]
-    [Migration("20230509014154_AddedOwnerToEvents")]
-    partial class AddedOwnerToEvents
+    partial class FanAppContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,13 +24,13 @@ namespace FandomApp.Migrations
 
             modelBuilder.Entity("CategoryEvent", b =>
                 {
-                    b.Property<int>("CategoriesCategoryId")
+                    b.Property<int>("CategoriesCategoryID")
                         .HasColumnType("NUMBER(10)");
 
                     b.Property<int>("eventsEventId")
                         .HasColumnType("NUMBER(10)");
 
-                    b.HasKey("CategoriesCategoryId", "eventsEventId");
+                    b.HasKey("CategoriesCategoryID", "eventsEventId");
 
                     b.HasIndex("eventsEventId");
 
@@ -62,14 +59,14 @@ namespace FandomApp.Migrations
                         .IsRequired()
                         .HasColumnType("NVARCHAR2(2000)");
 
-                    b.Property<int>("userID")
+                    b.Property<int>("UserID")
                         .HasColumnType("NUMBER(10)");
 
                     b.HasKey("EventId");
 
-                    b.HasIndex("userID");
+                    b.HasIndex("UserID");
 
-                    b.ToTable("FandomEvents");
+                    b.ToTable("EVENTS");
                 });
 
             modelBuilder.Entity("EventFandom", b =>
@@ -77,25 +74,25 @@ namespace FandomApp.Migrations
                     b.Property<int>("EventsEventId")
                         .HasColumnType("NUMBER(10)");
 
-                    b.Property<int>("FandomsFandomId")
+                    b.Property<int>("FandomsFandomID")
                         .HasColumnType("NUMBER(10)");
 
-                    b.HasKey("EventsEventId", "FandomsFandomId");
+                    b.HasKey("EventsEventId", "FandomsFandomID");
 
-                    b.HasIndex("FandomsFandomId");
+                    b.HasIndex("FandomsFandomID");
 
                     b.ToTable("EventFandom");
                 });
 
             modelBuilder.Entity("EventUser", b =>
                 {
-                    b.Property<int>("AttendeesuserID")
+                    b.Property<int>("AttendeesUserID")
                         .HasColumnType("NUMBER(10)");
 
                     b.Property<int>("EventsAttendingEventId")
                         .HasColumnType("NUMBER(10)");
 
-                    b.HasKey("AttendeesuserID", "EventsAttendingEventId");
+                    b.HasKey("AttendeesUserID", "EventsAttendingEventId");
 
                     b.HasIndex("EventsAttendingEventId");
 
@@ -104,70 +101,85 @@ namespace FandomApp.Migrations
 
             modelBuilder.Entity("FandomUser", b =>
                 {
-                    b.Property<int>("FandomsFandomId")
+                    b.Property<int>("FandomsFandomID")
                         .HasColumnType("NUMBER(10)");
 
-                    b.Property<int>("FansuserID")
+                    b.Property<int>("FansUserID")
                         .HasColumnType("NUMBER(10)");
 
-                    b.HasKey("FandomsFandomId", "FansuserID");
+                    b.HasKey("FandomsFandomID", "FansUserID");
 
-                    b.HasIndex("FansuserID");
+                    b.HasIndex("FansUserID");
 
                     b.ToTable("FandomUser");
                 });
 
+            modelBuilder.Entity("MessageUser", b =>
+                {
+                    b.Property<int>("InboxMessageID")
+                        .HasColumnType("NUMBER(10)");
+
+                    b.Property<int>("RecipientsUserID")
+                        .HasColumnType("NUMBER(10)");
+
+                    b.HasKey("InboxMessageID", "RecipientsUserID");
+
+                    b.HasIndex("RecipientsUserID");
+
+                    b.ToTable("MessageUser");
+                });
+
             modelBuilder.Entity("UserInfo.Badge", b =>
                 {
-                    b.Property<int>("BadgeId")
+                    b.Property<int>("BadgeID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("NUMBER(10)");
 
-                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BadgeId"));
+                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BadgeID"));
 
                     b.Property<string>("BadgeName")
                         .IsRequired()
                         .HasColumnType("NVARCHAR2(2000)");
 
-                    b.Property<int?>("ProfileId")
+                    b.Property<int?>("ProfileID")
                         .HasColumnType("NUMBER(10)");
 
-                    b.HasKey("BadgeId");
+                    b.HasKey("BadgeID");
 
-                    b.HasIndex("ProfileId");
+                    b.HasIndex("ProfileID");
 
-                    b.ToTable("FandomBadges");
+                    b.ToTable("BADGES");
                 });
 
             modelBuilder.Entity("UserInfo.Category", b =>
                 {
-                    b.Property<int>("CategoryId")
+                    b.Property<int>("CategoryID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("NUMBER(10)");
 
-                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryId"));
+                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryID"));
 
                     b.Property<string>("Category_name")
                         .IsRequired()
                         .HasColumnType("NVARCHAR2(2000)");
 
-                    b.Property<int?>("ProfileId")
+                    b.Property<int?>("ProfileID")
                         .HasColumnType("NUMBER(10)");
 
-                    b.HasKey("CategoryId");
+                    b.HasKey("CategoryID");
 
-                    b.HasIndex("ProfileId");
+                    b.HasIndex("ProfileID");
 
-                    b.ToTable("FandomCategories");
+                    b.ToTable("CATEGORIES");
                 });
 
             modelBuilder.Entity("UserInfo.Fandom", b =>
                 {
-                    b.Property<int>("FandomId")
+                    b.Property<int>("FandomID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("NUMBER(10)");
 
-                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FandomId"));
+                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FandomID"));
 
                     b.Property<string>("Category")
                         .IsRequired()
@@ -180,25 +192,28 @@ namespace FandomApp.Migrations
                         .IsRequired()
                         .HasColumnType("NVARCHAR2(2000)");
 
-                    b.Property<int?>("ProfileId")
+                    b.Property<int?>("ProfileID")
                         .HasColumnType("NUMBER(10)");
 
-                    b.HasKey("FandomId");
+                    b.HasKey("FandomID");
 
-                    b.HasIndex("ProfileId");
+                    b.HasIndex("ProfileID");
 
-                    b.ToTable("Fandoms");
+                    b.ToTable("FANDOMS");
                 });
 
             modelBuilder.Entity("UserInfo.Message", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("MessageID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("NUMBER(10)");
 
-                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MessageID"));
 
                     b.Property<bool>("Seen")
+                        .HasColumnType("NUMBER(1)");
+
+                    b.Property<bool>("Sent")
                         .HasColumnType("NUMBER(1)");
 
                     b.Property<string>("Text")
@@ -212,28 +227,23 @@ namespace FandomApp.Migrations
                         .IsRequired()
                         .HasColumnType("NVARCHAR2(2000)");
 
-                    b.Property<int?>("UserMessageId")
+                    b.Property<int>("UserID")
                         .HasColumnType("NUMBER(10)");
 
-                    b.Property<int?>("UserMessageId1")
-                        .HasColumnType("NUMBER(10)");
+                    b.HasKey("MessageID");
 
-                    b.HasKey("Id");
+                    b.HasIndex("UserID");
 
-                    b.HasIndex("UserMessageId");
-
-                    b.HasIndex("UserMessageId1");
-
-                    b.ToTable("FandomMessages");
+                    b.ToTable("MESSAGES");
                 });
 
             modelBuilder.Entity("UserInfo.Profile", b =>
                 {
-                    b.Property<int>("ProfileId")
+                    b.Property<int>("ProfileID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("NUMBER(10)");
 
-                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProfileId"));
+                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProfileID"));
 
                     b.Property<int>("Age")
                         .HasColumnType("NUMBER(10)");
@@ -263,24 +273,24 @@ namespace FandomApp.Migrations
                         .IsRequired()
                         .HasColumnType("NVARCHAR2(2000)");
 
-                    b.Property<int>("userID")
+                    b.Property<int>("UserID")
                         .HasColumnType("NUMBER(10)");
 
-                    b.HasKey("ProfileId");
+                    b.HasKey("ProfileID");
 
-                    b.HasIndex("userID")
+                    b.HasIndex("UserID")
                         .IsUnique();
 
-                    b.ToTable("FandomProfiles");
+                    b.ToTable("PROFILES");
                 });
 
             modelBuilder.Entity("UserInfo.User", b =>
                 {
-                    b.Property<int>("userID")
+                    b.Property<int>("UserID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("NUMBER(10)");
 
-                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("userID"));
+                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserID"));
 
                     b.Property<byte[]>("Hash")
                         .IsRequired()
@@ -293,35 +303,16 @@ namespace FandomApp.Migrations
                     b.Property<string>("Username")
                         .HasColumnType("NVARCHAR2(2000)");
 
-                    b.HasKey("userID");
+                    b.HasKey("UserID");
 
-                    b.ToTable("FandomUsers");
-                });
-
-            modelBuilder.Entity("UserInfo.UserMessage", b =>
-                {
-                    b.Property<int>("UserMessageId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("NUMBER(10)");
-
-                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserMessageId"));
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("NUMBER(10)");
-
-                    b.HasKey("UserMessageId");
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
-
-                    b.ToTable("FandomUserMessages");
+                    b.ToTable("USERS");
                 });
 
             modelBuilder.Entity("CategoryEvent", b =>
                 {
                     b.HasOne("UserInfo.Category", null)
                         .WithMany()
-                        .HasForeignKey("CategoriesCategoryId")
+                        .HasForeignKey("CategoriesCategoryID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -336,7 +327,7 @@ namespace FandomApp.Migrations
                 {
                     b.HasOne("UserInfo.User", "Owner")
                         .WithMany("EventsCreated")
-                        .HasForeignKey("userID")
+                        .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -353,7 +344,7 @@ namespace FandomApp.Migrations
 
                     b.HasOne("UserInfo.Fandom", null)
                         .WithMany()
-                        .HasForeignKey("FandomsFandomId")
+                        .HasForeignKey("FandomsFandomID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -362,7 +353,7 @@ namespace FandomApp.Migrations
                 {
                     b.HasOne("UserInfo.User", null)
                         .WithMany()
-                        .HasForeignKey("AttendeesuserID")
+                        .HasForeignKey("AttendeesUserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -377,13 +368,28 @@ namespace FandomApp.Migrations
                 {
                     b.HasOne("UserInfo.Fandom", null)
                         .WithMany()
-                        .HasForeignKey("FandomsFandomId")
+                        .HasForeignKey("FandomsFandomID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("UserInfo.User", null)
                         .WithMany()
-                        .HasForeignKey("FansuserID")
+                        .HasForeignKey("FansUserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("MessageUser", b =>
+                {
+                    b.HasOne("UserInfo.Message", null)
+                        .WithMany()
+                        .HasForeignKey("InboxMessageID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("UserInfo.User", null)
+                        .WithMany()
+                        .HasForeignKey("RecipientsUserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -392,50 +398,39 @@ namespace FandomApp.Migrations
                 {
                     b.HasOne("UserInfo.Profile", null)
                         .WithMany("Badges")
-                        .HasForeignKey("ProfileId");
+                        .HasForeignKey("ProfileID");
                 });
 
             modelBuilder.Entity("UserInfo.Category", b =>
                 {
                     b.HasOne("UserInfo.Profile", null)
                         .WithMany("Categories")
-                        .HasForeignKey("ProfileId");
+                        .HasForeignKey("ProfileID");
                 });
 
             modelBuilder.Entity("UserInfo.Fandom", b =>
                 {
                     b.HasOne("UserInfo.Profile", null)
                         .WithMany("Fandoms")
-                        .HasForeignKey("ProfileId");
+                        .HasForeignKey("ProfileID");
                 });
 
             modelBuilder.Entity("UserInfo.Message", b =>
                 {
-                    b.HasOne("UserInfo.UserMessage", null)
-                        .WithMany("Inbox")
-                        .HasForeignKey("UserMessageId");
-
-                    b.HasOne("UserInfo.UserMessage", null)
+                    b.HasOne("UserInfo.User", "Sender")
                         .WithMany("Outbox")
-                        .HasForeignKey("UserMessageId1");
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Sender");
                 });
 
             modelBuilder.Entity("UserInfo.Profile", b =>
                 {
                     b.HasOne("UserInfo.User", "user")
                         .WithOne("UserProfile")
-                        .HasForeignKey("UserInfo.Profile", "userID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("user");
-                });
-
-            modelBuilder.Entity("UserInfo.UserMessage", b =>
-                {
-                    b.HasOne("UserInfo.User", "user")
-                        .WithOne("Messages")
-                        .HasForeignKey("UserInfo.UserMessage", "UserId")
+                        .HasForeignKey("UserInfo.Profile", "UserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -455,17 +450,9 @@ namespace FandomApp.Migrations
                 {
                     b.Navigation("EventsCreated");
 
-                    b.Navigation("Messages")
-                        .IsRequired();
+                    b.Navigation("Outbox");
 
                     b.Navigation("UserProfile");
-                });
-
-            modelBuilder.Entity("UserInfo.UserMessage", b =>
-                {
-                    b.Navigation("Inbox");
-
-                    b.Navigation("Outbox");
                 });
 #pragma warning restore 612, 618
         }

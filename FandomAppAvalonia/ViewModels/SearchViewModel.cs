@@ -59,7 +59,7 @@ namespace FandomAppSpace.ViewModels{
         private void DisplayProfileResults(){
            ShowEventResults = false;
            ShowProfileResults = true;
-           ProfileResults = SearchProfiles(_keyword);
+           ProfileResults = SearchProfiles();
         }
 
         private void DisplayEventResults(){
@@ -68,7 +68,7 @@ namespace FandomAppSpace.ViewModels{
             // EventResults = SearchEvents(_keyword);
         }
 
-        private List<Profile> SearchProfiles(string keyword){
+        private List<Profile> SearchProfiles(){
             List<Profile> profiles = service.GetProfiles();
             if(string.IsNullOrWhiteSpace(_keyword)) return profiles;
             List<Profile> filtered_prof = new List<Profile>();
@@ -76,6 +76,15 @@ namespace FandomAppSpace.ViewModels{
                 if(prof.Name.Contains(_keyword)) filtered_prof.Add(prof);
                 else if(prof.Country.Contains(_keyword)) filtered_prof.Add(prof);
                 else if(prof.City.Contains(_keyword)) filtered_prof.Add(prof);
+                try {
+                    if(prof.Age == Int32.Parse(_keyword)) filtered_prof.Add(prof);
+                }catch{}
+                foreach(Fandom fandom in prof.Fandoms){
+                    if(fandom.Name.Contains(_keyword)) filtered_prof.Add(prof);
+                }
+                foreach(Category cat in prof.Categories){
+                    if(cat.Category_name.Contains(_keyword)) filtered_prof.Add(prof);
+                }
             }
             
             return filtered_prof;

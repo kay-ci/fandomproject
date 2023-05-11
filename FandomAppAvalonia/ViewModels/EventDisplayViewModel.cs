@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using FandomApp;
+using FandomAppSpace;
 
 namespace FandomAppSpace.ViewModels
 {
