@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 public class Event
 {
     
-    public int EventId {get; set;}
+    public int EventID {get; set;}
     private int _minAge;
     private string _title;
     private DateTime _date;

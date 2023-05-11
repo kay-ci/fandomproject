@@ -52,7 +52,7 @@ public class EventService
         try
         {
             var query = from ev in _context.EVENTS
-                        where ev.EventId == id
+                        where ev.EventID == id
                         select ev;
             eventFound = query.First();
         }
@@ -85,7 +85,7 @@ public class EventService
             throw new ArgumentException("Only the creator of this event can modify it.");
         }
         
-        if (GetEvent(updatedEvent.EventId) != null || GetEvent(updatedEvent.Title) != null)
+        if (GetEvent(updatedEvent.EventID) != null || GetEvent(updatedEvent.Title) != null)
         {
             _context.EVENTS.Update(updatedEvent);
             _context.SaveChanges();

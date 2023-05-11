@@ -30,7 +30,7 @@ namespace FandomAppSpace.Migrations
                 name: "EVENTS",
                 columns: table => new
                 {
-                    EventId = table.Column<int>(type: "NUMBER(10)", nullable: false)
+                    EventID = table.Column<int>(type: "NUMBER(10)", nullable: false)
                         .Annotation("Oracle:Identity", "START WITH 1 INCREMENT BY 1"),
                     Title = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false),
                     Date = table.Column<DateTime>(type: "TIMESTAMP(7)", nullable: false),
@@ -40,7 +40,7 @@ namespace FandomAppSpace.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_EVENTS", x => x.EventId);
+                    table.PrimaryKey("PK_EVENTS", x => x.EventID);
                     table.ForeignKey(
                         name: "FK_EVENTS_USERS_UserID",
                         column: x => x.UserID,
@@ -105,16 +105,16 @@ namespace FandomAppSpace.Migrations
                 columns: table => new
                 {
                     AttendeesUserID = table.Column<int>(type: "NUMBER(10)", nullable: false),
-                    EventsAttendingEventId = table.Column<int>(type: "NUMBER(10)", nullable: false)
+                    EventsAttendingEventID = table.Column<int>(type: "NUMBER(10)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_EventUser", x => new { x.AttendeesUserID, x.EventsAttendingEventId });
+                    table.PrimaryKey("PK_EventUser", x => new { x.AttendeesUserID, x.EventsAttendingEventID });
                     table.ForeignKey(
-                        name: "FK_EventUser_EVENTS_EventsAttendingEventId",
-                        column: x => x.EventsAttendingEventId,
+                        name: "FK_EventUser_EVENTS_EventsAttendingEventID",
+                        column: x => x.EventsAttendingEventID,
                         principalTable: "EVENTS",
-                        principalColumn: "EventId",
+                        principalColumn: "EventID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_EventUser_USERS_AttendeesUserID",
@@ -212,11 +212,11 @@ namespace FandomAppSpace.Migrations
                 columns: table => new
                 {
                     CategoriesCategoryID = table.Column<int>(type: "NUMBER(10)", nullable: false),
-                    eventsEventId = table.Column<int>(type: "NUMBER(10)", nullable: false)
+                    eventsEventID = table.Column<int>(type: "NUMBER(10)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CategoryEvent", x => new { x.CategoriesCategoryID, x.eventsEventId });
+                    table.PrimaryKey("PK_CategoryEvent", x => new { x.CategoriesCategoryID, x.eventsEventID });
                     table.ForeignKey(
                         name: "FK_CategoryEvent_CATEGORIES_CategoriesCategoryID",
                         column: x => x.CategoriesCategoryID,
@@ -224,10 +224,10 @@ namespace FandomAppSpace.Migrations
                         principalColumn: "CategoryID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CategoryEvent_EVENTS_eventsEventId",
-                        column: x => x.eventsEventId,
+                        name: "FK_CategoryEvent_EVENTS_eventsEventID",
+                        column: x => x.eventsEventID,
                         principalTable: "EVENTS",
-                        principalColumn: "EventId",
+                        principalColumn: "EventID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -235,17 +235,17 @@ namespace FandomAppSpace.Migrations
                 name: "EventFandom",
                 columns: table => new
                 {
-                    EventsEventId = table.Column<int>(type: "NUMBER(10)", nullable: false),
+                    EventsEventID = table.Column<int>(type: "NUMBER(10)", nullable: false),
                     FandomsFandomID = table.Column<int>(type: "NUMBER(10)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_EventFandom", x => new { x.EventsEventId, x.FandomsFandomID });
+                    table.PrimaryKey("PK_EventFandom", x => new { x.EventsEventID, x.FandomsFandomID });
                     table.ForeignKey(
-                        name: "FK_EventFandom_EVENTS_EventsEventId",
-                        column: x => x.EventsEventId,
+                        name: "FK_EventFandom_EVENTS_EventsEventID",
+                        column: x => x.EventsEventID,
                         principalTable: "EVENTS",
-                        principalColumn: "EventId",
+                        principalColumn: "EventID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_EventFandom_FANDOMS_FandomsFandomID",
@@ -290,9 +290,9 @@ namespace FandomAppSpace.Migrations
                 column: "ProfileID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CategoryEvent_eventsEventId",
+                name: "IX_CategoryEvent_eventsEventID",
                 table: "CategoryEvent",
-                column: "eventsEventId");
+                column: "eventsEventID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EventFandom_FandomsFandomID",
@@ -305,9 +305,9 @@ namespace FandomAppSpace.Migrations
                 column: "UserID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_EventUser_EventsAttendingEventId",
+                name: "IX_EventUser_EventsAttendingEventID",
                 table: "EventUser",
-                column: "EventsAttendingEventId");
+                column: "EventsAttendingEventID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_FANDOMS_ProfileID",
