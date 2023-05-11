@@ -30,16 +30,16 @@
               Watermark="Age"
               Grid.Row="2" Grid.Column="1"/>
       
-      <TextBlock Text="Program: " Grid.Row="3" Grid.Column="0"/>
+      <TextBlock Text="Country: " Grid.Row="3" Grid.Column="0"/>
       <TextBox AcceptsReturn="False"
-              Text="{Binding Profile.Program}"
-              Watermark="Program"
+              Text="{Binding Profile.Country}"
+              Watermark="Country"
               Grid.Row="3" Grid.Column="1"/>
 
-      <TextBlock Text="School: " Grid.Row="4" Grid.Column="0"/>
+      <TextBlock Text="City: " Grid.Row="4" Grid.Column="0"/>
       <TextBox AcceptsReturn="False"
-              Text="{Binding Profile.School}"
-              Watermark="School"
+              Text="{Binding Profile.City}"
+              Watermark="City"
               Grid.Row="4" Grid.Column="1"/>
 
       <TextBlock Text="Description: " Grid.Row="5" Grid.Column="0"/>
@@ -47,6 +47,11 @@
               Text="{Binding Profile.Description}"
               Watermark="Description"
               Grid.Row="5" Grid.Column="1"/>
+      <TextBlock Text="Interests: " Grid.Row="5" Grid.Column="0"/>
+       <TextBox AcceptsReturn="False"
+              Text="{Binding Profile.Interests}"
+              Watermark="Interest"
+              Grid.Row="5" Grid.Column="1"/> 
       </Grid>
     </StackPanel>
   </DockPanel>
