@@ -10,7 +10,7 @@ namespace FandomAppSpace.ViewModels
     {
         private ViewModelBase _content;
         private Boolean _visibleNavigation;
-        User? LoggedInUser;
+        Login? UserManager;
 
         public Boolean VisibleNavigation
         {
@@ -67,14 +67,14 @@ namespace FandomAppSpace.ViewModels
         }
         public void PrepareMainPage(Login u){
             VisibleNavigation = true;
-            LoggedInUser = u.CurrentUser;
+            UserManager = u;
             ShowPersonalProfile();
         }
 
         //Show profile of logged in user
         private void ShowPersonalProfile()
         {
-            DisplayProfile(LoggedInUser.UserProfile);
+            DisplayProfile(UserManager.CurrentUser.UserProfile);
         }
 
         //Show profile of a specified user
@@ -89,7 +89,9 @@ namespace FandomAppSpace.ViewModels
             ProfileDisplayViewModel dispvm = (ProfileDisplayViewModel) Content;
             var vm = new ProfileEditViewModel(dispvm.Profile);
             
-            vm.Ok.Subscribe(x => {Content = dispvm;});
+            vm.Ok.Subscribe(x => {
+                Content = dispvm;
+                vm.UpdateUser(UserManager);});
             Content = vm;
         }
 
