@@ -1,4 +1,7 @@
+using System.ComponentModel.DataAnnotations;
 using System.Reactive;
+using System.Reactive.Linq;
+using Avalonia.Data;
 using FandomAppSpace;
 using ReactiveUI;
 using UserInfo;
@@ -14,52 +17,85 @@ namespace FandomAppSpace.ViewModels
         public int _age;
         public string _country;
         public string _city;
+
+        [Required]
         public string Username
         {
             get => _username;
-            private set => this.RaiseAndSetIfChanged(ref _username, value);
+            private set { 
+                this.RaiseAndSetIfChanged(ref _username, value);
+                
+            }
         }
+        [Required]
         public string Password 
         {
             get => _password;
             private set => this.RaiseAndSetIfChanged(ref _password, value);
         }
+        [Required, RegularExpression("^[a-zA-z]+$", ErrorMessage = ("Only letters are allowed!"))]
         public string Name 
         {
             get => _name;
-            private set => this.RaiseAndSetIfChanged(ref _name, value);
+            private set{ 
+                this.RaiseAndSetIfChanged(ref _name, value);
+                
+            }
         }
+        [Required, RegularExpression("^[a-zA-z]+$", ErrorMessage = ("Only letters are allowed!"))]
         public string Pronouns 
         {
             get => _pronouns;
-            private set => this.RaiseAndSetIfChanged(ref _pronouns, value);
+            private set{
+                this.RaiseAndSetIfChanged(ref _pronouns, value);
+                
+            }
         }
+        [Required, Range(0, 130, ErrorMessage = ("Age must be between 0 and 130"))]
         public int Age 
         {
             get => _age;
-            private set => this.RaiseAndSetIfChanged(ref _age, value);
+            private set{
+                this.RaiseAndSetIfChanged(ref _age, value);
+                
+            }
         }
+        [Required, RegularExpression("^[a-zA-z]+$", ErrorMessage = ("Only letters are allowed!"))]
         public string Country 
         {
             get => _country;
-            private set => this.RaiseAndSetIfChanged(ref _country, value);
+            private set{
+                this.RaiseAndSetIfChanged(ref _country, value);
+                
+            }
         }
+        [Required, RegularExpression("^[a-zA-z]+$", ErrorMessage = ("Only letters are allowed!"))]
         public string City 
         {
             get => _city;
-            private set => this.RaiseAndSetIfChanged(ref _city, value);
+            private set{
+                this.RaiseAndSetIfChanged(ref _city, value);
+                
+            }
         }
         UserService service = UserService.getInstance();
         Login UserManager;
         public Profile Profile {get; set;}
         public ReactiveCommand<Unit, Unit> Register { get; }
-        public RegisterViewModel()
-        {
+        public RegisterViewModel(){
             Profile = new Profile("...", "...",0,"...", "...");
             var registerEnabled = this.WhenAnyValue(
-                x => x.Username,
-                x => !string.IsNullOrWhiteSpace(x)
-            );
+                x => x.Username, x=> x.Password, x=>x.Country, x=>x.City, x=>x.Name, x=>x.Age, x=>x.Pronouns,
+                (user_name, pass_word, country, city, name, age, pronouns) =>
+                    !string.IsNullOrWhiteSpace(user_name) &&
+                    !string.IsNullOrWhiteSpace(pass_word) &&
+                    !string.IsNullOrWhiteSpace(country) &&
+                    !string.IsNullOrWhiteSpace(city) &&
+                    !string.IsNullOrWhiteSpace(name) &&
+                    !string.IsNullOrWhiteSpace(pronouns) &&
+                    age >= 0 && age <= 130)   
+            .DistinctUntilChanged();
+            
             Register = ReactiveCommand.Create(() => { }, registerEnabled);
 
         }
