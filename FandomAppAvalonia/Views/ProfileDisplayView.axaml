@@ -5,7 +5,7 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="FandomAppSpace.Views.ProfileDisplayView">
   <StackPanel Margin="10,0,0,0">
-    <TextBlock Text="{Binding Profile.User.Username}"
+    <TextBlock Text="{Binding Profile.user.Username}"
                 FontSize="28"/>
     
     <StackPanel Orientation="Horizontal" Spacing="10">
@@ -29,21 +29,6 @@
       
         <TextBlock Text="{Binding Profile.City, StringFormat='City: {0}'}"
                    IsVisible="{Binding Profile.City, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
-
-        <TextBlock Text="{Binding Profile.City, StringFormat='City: {0}'}"
-                   IsVisible="{Binding Profile.City, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
-
-        <ListBox Items="{Binding Profile.Categories}">
-          <ListBox.ItemTemplate>
-              <DataTemplate>
-                  <Border Background="Red" CornerRadius="4" Padding="4">
-                      <TextBlock Text="{Binding}"/>
-                  </Border>
-              </DataTemplate>
-          </ListBox.ItemTemplate>
-        </ListBox>
-
-          
       </StackPanel>
 
       <StackPanel Width="200" Spacing="5">

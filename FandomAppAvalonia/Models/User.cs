@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 
 namespace UserInfo{
     public class User{
-        public int userID {get; set;}
+        public int UserID {get; set;}
         private string _username; 
         public string? Username {
             get{ return _username; } 
@@ -16,10 +16,21 @@ namespace UserInfo{
             }
         }
         public Profile? UserProfile {get; set;}
-        public UserMessage Messages {get; set;}
-        [InverseProperty("Attendees")]
 
-        public List<Event> Events {get; set;} = new();
+        //Messages properties of user
+        [InverseProperty("Recipients")]
+        public List<Message> Inbox {get; set;} = new();
+
+        [InverseProperty("Sender")]
+        public List<Message> Outbox {get; set;} = new();
+
+        //Events properties of user
+        [InverseProperty("Owner")]
+        public List<Event> EventsCreated {get; set;} = new();
+        
+        [InverseProperty("Attendees")]
+        public List<Event> EventsAttending {get; set;} = new();
+
         public List<Fandom> Fandoms {get; set;} = new();
         public byte[] Salt {get; set;}
         public byte[] Hash {get; set;}
@@ -32,10 +43,9 @@ namespace UserInfo{
             }
             Username = userName;
             UserProfile = userProfile;
-            Events = events;
-            Messages = new UserMessage(this);
-            
+            EventsAttending = events;
         }
+
         public User(string userName, Profile userProfile){
             if (!IsValidUsername(userName)){
                 throw new ArgumentException("Username should contain only 1 word");
@@ -43,8 +53,7 @@ namespace UserInfo{
 
             Username = userName;
             UserProfile = userProfile;
-            Messages = new UserMessage(this);
-            Events = new List<Event>();
+            EventsAttending = new List<Event>();
         }
 
         public bool IsValidUsername(string username){
@@ -65,18 +74,16 @@ namespace UserInfo{
             if(ReferenceEquals(item, this)){
                 return true;
             }
-            if(item == null && this == null){
-                return true;
-            }
             if(item == null){
                 return false;
             }
             return (
                 this.Username == item.Username &&
                 this.UserProfile == item.UserProfile &&
-                this.Messages == item.Messages &&
-                this.Events == item.Events &&
-                this.Fandoms == item.Fandoms &&
+                this.Inbox.SequenceEqual(item.Inbox) &&
+                this.Outbox.SequenceEqual(item.Outbox) &&
+                this.EventsAttending.SequenceEqual(item.EventsAttending) &&
+                this.Fandoms.SequenceEqual(item.Fandoms) &&
                 this.Hash.SequenceEqual(item.Hash) &&
                 this.Salt.SequenceEqual(item.Salt));
         }

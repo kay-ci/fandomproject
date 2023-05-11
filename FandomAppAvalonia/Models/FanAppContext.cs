@@ -3,12 +3,14 @@ namespace UserInfo;
 
 public class FanAppContext : DbContext{
 
-    public virtual DbSet<User> FandomUsers { get; set; } = null!;
-    public virtual DbSet<Profile> FandomProfiles { get; set; } = null!;
-    public virtual DbSet<Message> FandomMessages { get; set; } = null!;
-    public virtual DbSet<Event> FandomEvents { get; set; } = null!;
-    public virtual DbSet<UserMessage> FandomUserMessages { get; set; } = null!;
-    public virtual DbSet<Fandom> Fandoms { get; set; } = null!;
+    public virtual DbSet<User> USERS { get; set; } = null!;
+    public virtual DbSet<Profile> PROFILES { get; set; } = null!;
+    public virtual DbSet<Message> MESSAGES { get; set; } = null!;
+    public virtual DbSet<Event> EVENTS { get; set; } = null!;
+    public virtual DbSet<Category> CATEGORIES { get; set; } = null!;
+    public virtual DbSet<Badge> BADGES { get; set; } = null!;
+    public virtual DbSet<Fandom> FANDOMS { get; set; } = null!;
+    
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         string? oracleUser = Environment.GetEnvironmentVariable("DBUSER");

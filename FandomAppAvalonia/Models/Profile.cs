@@ -1,6 +1,7 @@
+using System.ComponentModel.DataAnnotations.Schema;
 namespace UserInfo{
     public class Profile{
-        public int ProfileId {get; set;}
+        public int ProfileID {get; set;}
         private string? _name;
         private string? _pronouns;
         private int _age;
@@ -66,8 +67,9 @@ namespace UserInfo{
         }
         public string? Picture {get; set;}
         public string? Interests {get; set;}
+
+        [ForeignKey("UserID")]
         public User user {get; set;} = null!;
-        public int userID {get; set;}
 
         private Profile(){}
 
@@ -156,9 +158,9 @@ namespace UserInfo{
                 this.Age == item.Age &&
                 this.Country == item.Country &&
                 this.City == item.City &&
-                this.Categories == item.Categories &&
-                this.Fandoms == item.Fandoms &&
-                this.Badges == item.Badges &&
+                this.Categories.SequenceEqual(item.Categories) &&
+                this.Fandoms.SequenceEqual(item.Fandoms) &&
+                this.Badges.SequenceEqual(item.Badges) &&
                 this.Description == item._description &&
                 this.Picture == item.Picture &&
                 this.Interests == item.Interests &&

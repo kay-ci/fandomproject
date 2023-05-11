@@ -1,13 +1,17 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace UserInfo{
-    public class Message{
+    public class Message
+    {
         private string _text;
         private string _title;
-        public int Id {get; set;}
-        [NotMapped]
-        public UserMessage Sender {get; set;} = null!;
-        public List<UserMessage> Recipients = new();
+        public int MessageID {get; set;}
+
+        [ForeignKey("UserID")]
+        public User Sender {get; set;}
+
+        public List<User>? Recipients {get; set;} = new();
+
         public DateTime Timesent {get; set;}
         public string Text {
             get{return _text;} 
@@ -29,33 +33,66 @@ namespace UserInfo{
         }
         //This field determines if the message has been read or not. Will get updated by UserMessage
         public bool Seen {get; set;}
+        public bool Sent {get; set;}
 
         private Message(){}
-        //Basic constructor, validation done in UserMessage for text
-        public Message(UserMessage sender, List<UserMessage> recipients, string text, string title){
-            if(!IsValid(text) || !IsValid(title)){
-                throw new ArgumentException("text can not be null");
-            }
-            if(!IsValid(title)){
-                throw new ArgumentException("title can not be null");
-            }
+
+        //Constructor for list of recipients
+        public Message(User sender, List<User> recipients, string title, string text) {
+            
             this.Sender = sender;
             this.Timesent = DateTime.Now;
             this.Text = text;
             this.Title = title;
             this.Seen = false;
-            this.Recipients = new List<UserMessage>();
-            foreach(UserMessage user in recipients){
-                this.Recipients.Add(user);
-            }
+            this.Sent = false;
+            this.Recipients = recipients;
         }
-        //This method is accessed by UserMessage inside of ReadMessage. Will make the field true.
-        public void MessageIsRead(){ this.Seen = true; }
+
+        //Constructor for one recipient
+        public Message(User sender, User recipient, string title, string text) {
+            
+            this.Sender = sender;
+            this.Timesent = DateTime.Now;
+            this.Text = text;
+            this.Title = title;
+            this.Seen = false;
+            this.Sent = false;
+            this.Recipients.Add(recipient);
+        }
+
+        public void MarkAsRead()
+        { 
+            this.Seen = true; 
+        }
+
+        public void MarkAsSent()
+        { 
+            this.Sent = true; 
+        }
+    
         public bool IsValid(string field){
             if (string.IsNullOrWhiteSpace(field)){
                 return false;
             }
             return true;
+        }
+        
+        public override bool Equals(object? obj){
+            var item = obj as Message;
+            if(ReferenceEquals(item, this)){
+                return true;
+            }
+            if(item == null){
+                return false;
+            }
+            return (
+                this.Text == item.Text &&
+                this.Title == item.Title &&
+                this.Sender == item.Sender &&
+                this.Recipients.SequenceEqual(item.Recipients) &&
+                this.Timesent == item.Timesent
+            );
         }
     }
 }
