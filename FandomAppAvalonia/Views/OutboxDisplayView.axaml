@@ -6,16 +6,19 @@
              x:Class="FandomAppSpace.Views.OutboxDisplayView">
   <StackPanel Margin="10,0,0,0">
     <StackPanel Width="200" Spacing="5">
-          <TextBlock Text="Categories:"/>
+          <TextBlock Text="Outbox:"/>
           <ItemsRepeater Items="{Binding Messages}">
             <ItemsRepeater.ItemTemplate>
-              <DataTemplate>
-              <Border Margin="10,0,0,0" Padding="2">
-                <TextBlock Text="{Binding}"/>
-              </Border>
-                <Button Content="View Message"
-                  Command="{Binding $parent[Window].DataContext.ViewMessage({Binding})"/>  
-              </DataTemplate>
+                <DataTemplate>
+                <StackPanel>
+                <Border Margin="10,0,0,0" Padding="2">
+                  <TextBlock Text="{Binding}"/>
+                </Border>
+                  <Button Content="View Message"
+                    Command="{Binding $parent[Window].DataContext.View_Message}"
+                    CommandParameter="{Binding}"/> 
+                    </StackPanel>
+                </DataTemplate>
             </ItemsRepeater.ItemTemplate>
           </ItemsRepeater>
         </StackPanel>     

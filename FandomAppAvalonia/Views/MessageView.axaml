@@ -4,5 +4,36 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="FandomAppSpace.Views.MessageView">
-  Welcome to Avalonia!
+  <StackPanel Margin="10,0,0,0">
+    <TextBlock Text="{Binding Profile.user.Username}"
+                FontSize="28"/>
+    
+    <StackPanel Orientation="Horizontal" Spacing="10">
+
+      <StackPanel Spacing="2">
+        <TextBlock Text="{Binding Msg.Title, StringFormat='TItle: {0}'}"
+                   IsVisible="{Binding Msg.Title, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
+      
+        <TextBlock Text="{Binding Msg.Text, StringFormat='Text: {0}'}"
+                   IsVisible="{Binding Msg.Text, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
+      </StackPanel>
+
+      <StackPanel Width="200" Spacing="5">
+        <TextBlock Text="Recipients:"/>
+        <TextBlock Text="{Binding Msg.recipient, StringFormat='recipient: {0}'}"
+                   IsVisible="{Binding Msg.recipient}"/>
+        <ItemsRepeater Items="{Binding Msg.recipients}">
+            <ItemsRepeater.ItemTemplate>
+              <DataTemplate>
+              <Border Margin="10,0,0,0" Padding="2">
+                <TextBlock Text="{Binding}"/>
+              </Border>
+              </DataTemplate>
+            </ItemsRepeater.ItemTemplate>
+          </ItemsRepeater>
+      </StackPanel>
+    </StackPanel>
+      <Button Content="Edit Message"
+              Command="{Binding $parent[Window].DataContext.Edit_Message}"/>       
+  </StackPanel>
 </UserControl>

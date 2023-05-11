@@ -4,10 +4,8 @@ using Avalonia.Markup.Xaml;
 
 namespace FandomAppSpace.Views;
 
-public partial class InboxDisplayView : UserControl
-{
-    public InboxDisplayView()
-    {
+public partial class InboxDisplayView : UserControl {
+    public InboxDisplayView(){
         InitializeComponent();
     }
 }

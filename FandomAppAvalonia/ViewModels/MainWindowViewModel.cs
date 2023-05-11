@@ -118,27 +118,36 @@ namespace FandomAppSpace.ViewModels
             Content = vm;
         }
 
-        private void View_Message(Message msg)
-        {
+        private void View_Message(Message msg){
             Content = new MessageViewModel(msg);
         }
 
-        private void Open_Outbox(List<Message> outbox)
-        {
+        private void Open_Outbox(List<Message> outbox){
             Content = new OutboxDisplayViewModel(outbox);
         }
 
-        private void Open_Inbox(List<Message> inbox)
-        {
+        private void Open_Inbox(List<Message> inbox){
             Content = new InboxDisplayViewModel(inbox);
         }
 
-        private void Create_Message()
-        {
+        private void Create_Message(){
             var vm = new CreateMessageViewModel();
 
             vm.Ok.Subscribe(x => {
                 vm.CreateMessage(UserManager);
+                Open_Outbox(UserManager.CurrentUser.Outbox);
+            });
+            vm.Cancel.Subscribe(x => {
+                Open_Inbox(UserManager.CurrentUser.Inbox);
+            });
+            Content = vm;
+        }
+
+        private void Edit_Message(Message msg){
+            var vm = new EditMessageViewModel(msg);
+
+            vm.Ok.Subscribe(x => {
+                vm.EditMessage(UserManager);
                 Open_Outbox(UserManager.CurrentUser.Outbox);
             });
             vm.Cancel.Subscribe(x => {

@@ -10,25 +10,42 @@
     <TextBlock Text="Create Message" FontSize="24" DockPanel.Dock="Top"/>
     <StackPanel>    
       <Grid ColumnDefinitions="*,*"
-            RowDefinitions="*,*,*"  
+            RowDefinitions="*,*,*,*"  
             Margin="4">
         <TextBlock Text="Title: " Grid.Row="0" Grid.Column="0"/>
         <TextBox Grid.Row="0" Grid.Column="1" AcceptsReturn="False"
-                Text=""
-                Watermark="Message Title"
-                Grid.Row="0" Grid.Column="1"/>
+                Text="{Binding Title}"
+                Watermark="Message Title"/>
 
       <TextBlock Text="Text: " Grid.Row="1" Grid.Column="0"/>
       <TextBox Grid.Row="1" Grid.Column="1" AcceptsReturn="False"
-              Text=""
-              Watermark="Message Text"
-              Grid.Row="1" Grid.Column="1"/>
+              Text="{Binding Text}"
+              Watermark="Message Text"/>
+      <ItemsRepeater Grid.Row="2" Grid.Column="1" Items="{Binding ObservableRecips}">
+                <ItemsRepeater.ItemTemplate>
+                <DataTemplate>
+                <StackPanel Orientation="Horizontal">
+                        <TextBlock Padding="2" VerticalAlignment="Center" Text="{Binding Username}"/>
+                        <Button Content="Remove user"
+                        Command="{Binding $parent[UserControl].DataContext.RemoveUser}"
+                        CommandParameter="{Binding}"/> 
+                </StackPanel>
+                </DataTemplate>
+                </ItemsRepeater.ItemTemplate>
+        </ItemsRepeater>
+        <ItemsRepeater Grid.Row="3" Grid.Column="1" Items="{Binding ObservableDBUsers}">
+                <ItemsRepeater.ItemTemplate>
+                <DataTemplate>
+                <StackPanel Orientation="Horizontal">
+                        <TextBlock Padding="2" VerticalAlignment="Center" Text="{Binding Username}"/>
+                        <Button Content="Add user"
+                        Command="{Binding $parent[UserControl].DataContext.AddUser}"
+                        CommandParameter="{Binding}"/> 
+                </StackPanel>
+                </DataTemplate>
+                </ItemsRepeater.ItemTemplate>
+        </ItemsRepeater>
 
-      <TextBlock Text="Location: " Grid.Row="2" Grid.Column="0"/>
-      <TextBox Grid.Row="2" Grid.Column="1" AcceptsReturn="False"
-              Text=""
-              Watermark="Recipients"
-              Grid.Row="2" Grid.Column="1"/>
       </Grid>
     </StackPanel>
   </DockPanel>
