@@ -74,13 +74,15 @@ namespace FandomAppSpace.ViewModels
         //Show profile of logged in user
         private void ShowPersonalProfile()
         {
-            DisplayProfile(UserManager.CurrentUser.UserProfile);
+            DisplayProfile(UserManager, UserManager.CurrentUser);
         }
-
+        private void ShowProfile(User chosenUser){
+            DisplayProfile(UserManager, chosenUser);
+        }
         //Show profile of a specified user
-        private void DisplayProfile(Profile p)
+        private void DisplayProfile(Login UserManager, User chosenUser)
         {
-            Content = new ProfileDisplayViewModel(p);
+            Content = new ProfileDisplayViewModel(UserManager, chosenUser);
         }
 
         //Navigate to edit profile view from profile display view

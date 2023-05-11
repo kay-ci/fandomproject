@@ -1,17 +1,27 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using FandomAppSpace;
+using ReactiveUI;
 using UserInfo;
 
 namespace FandomAppSpace.ViewModels
 {
     public class ProfileDisplayViewModel : ViewModelBase
     {
-        public ProfileDisplayViewModel(Profile p)
+        public Boolean ShowEditButton = false;
+        public Profile Profile { get; }
+        public ProfileDisplayViewModel(Login UserManager, User chosenUser)
         {
-            Profile = p;
+            
+            if(chosenUser == UserManager.CurrentUser){
+                ShowEditButton = true;
+                Profile = UserManager.CurrentUser.UserProfile;
+            }
+            else{
+                Profile = chosenUser.UserProfile;
+            }
         }
 
-        public Profile Profile { get; }
+    
     }
 }
