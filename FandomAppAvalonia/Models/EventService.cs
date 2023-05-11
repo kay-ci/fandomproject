@@ -1,6 +1,9 @@
 using UserInfo;
 using Microsoft.EntityFrameworkCore;
 
+/// <summary>
+/// Class <c>EventService</c> handles interactions with DbSets EVENTS, FANDOMS and managing the events.
+/// </summary>
 public class EventService
 {
     private FanAppContext _context = null!;
@@ -16,7 +19,10 @@ public class EventService
         _context = context;
     }
     
-    //this method add the event to the database
+    /// <summary>
+    /// This method add an event to the DbSet EVENTS. 
+    /// <para> It verifies first that the <paramref name="new_event"/>'s Title is not taken </para>
+    /// </summary>
     public void CreateEvent(Event new_event) 
     {
         if (GetEvent(new_event.Title) == null)
@@ -27,7 +33,11 @@ public class EventService
        
     }
 
-    //this method retrieve a single event using it's title
+
+    /// <summary>
+    /// This method retrieve a single event from the database by using it's <paramref name="title"/>. 
+    /// </summary>
+    /// <returns> An <c>Event</c> with the informations or a nullable </returns>
     public Event? GetEvent(string title)
     {
         Event? eventFound = null;
@@ -45,7 +55,10 @@ public class EventService
         return eventFound;
     }
 
-    //this method retrieve a single event using it's ID
+    /// <summary>
+    /// This method retrieve a single event from the database by using it's <paramref name="EventID"/>. 
+    /// </summary>
+    /// <returns> An <typeparamref name="Event"/> with the informations or a <typeparamref name="nullable"/> </returns>
     public Event? GetEvent(int id)
     {
         Event? eventFound = null;
@@ -63,7 +76,10 @@ public class EventService
         return eventFound;
     }
 
-    //this method gets all the events
+    /// <summary>
+    /// This method fetches all the Events from DbSet EVENTS.
+    /// </summary>
+    /// <returns> A list of <typeparamref name="Event"/> </returns>
     public List<Event> GetAllEvents()
     {
         List<Event> events = _context.EVENTS
@@ -76,7 +92,10 @@ public class EventService
         return events;
     }
 
-    //this method allow owner of event to edit it
+    /// <summary>
+    /// This method allows the owner of an event to edit it and update the DbSet EVENTS. 
+    /// <para> It verifies first that the <paramref name="login"/>'s Current user is the <paramref name="updatedEvent"/>'s Owner </para>
+    /// </summary>
     public void EditEvent(Login login, Event updatedEvent) {
         
         User? user = login.CurrentUser;
@@ -92,7 +111,11 @@ public class EventService
         }
     }
 
-    //this method remove eventfrom database
+    /// <summary>
+    /// This method removes the event from the DbSet EVENTS. 
+    /// </summary>
+    /// <param name="login"> The Login object holding the Current User </param>
+    /// <param name="fandomEvent"> The event to delete </param>
     public void DeleteEvent(Login login, Event fandomEvent) 
     {
         User? user = login.CurrentUser;
@@ -104,8 +127,11 @@ public class EventService
         _context.SaveChanges();
     }
 
-    //this method will print out the list of attendees
-    //may not be needed because it's not a console app
+    /// <summary>
+    /// This method fetches all the Event's attendees from DbSet USERS.
+    /// </summary>
+    /// <param name="fandomEvent"> The event to fetch </param>
+    /// <returns> A list of <typeparamref name="User"/> </returns>
     public List<User> GetEventAttendees(Event fandomEvent) {
         
         var attendees = _context.USERS
@@ -121,7 +147,11 @@ public class EventService
         return attendees;
     }
 
-    //helper method to get Queryable of all the events so i can filter them
+    /// <summary>
+    /// This helper method gets a queryable of events in DbSet EVENTS 
+    /// so they can be filtered. <see cref="SearchEvent"/>
+    /// </summary>
+    /// <returns> A IQueryable of <typeparamref name="Event"/> </returns>
     private IQueryable<Event> GetQueryableEvents()
     {
         var events = _context.EVENTS
@@ -133,7 +163,12 @@ public class EventService
         return events;
     }
 
-    //this method find event in database based on country, city, category, fandoms, keyword in (title/description)
+    /// <summary>
+    /// This method fetches all the Events based on either the location, category, fandom, event owner or a word in the title.
+    /// </summary>
+    /// <returns> A list of <typeparamref name="Event"/> of the matching events </returns>
+    /// <param name="keyword"> The string representing the type property to use as a filter.</param>
+    /// <param name="searchInput"> The string value that the property must match. </param>
     public List<Event>? SearchEvent(string keyword, string searchInput) {
         
         List<Event>? events_found = null;
@@ -154,7 +189,7 @@ public class EventService
                                 .Where(e => e.Categories.Any(c => c.Category_name.Equals(searchInput)))
                                 .ToList<Event>();
             }
-            else if (keyword.ToLower() == "keyword") 
+            else if (keyword.ToLower() == "word") 
             {
                 events_found = GetQueryableEvents()
                                 .Where(e => e.Title.Contains(searchInput))
