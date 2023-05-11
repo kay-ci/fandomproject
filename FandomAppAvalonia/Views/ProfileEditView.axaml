@@ -9,7 +9,7 @@
     <TextBlock Text="Edit Profile" FontSize="24" DockPanel.Dock="Top"/>
     <StackPanel>    
       <Grid ColumnDefinitions="1*,4*"
-            RowDefinitions="*,*,*,*,*,*"  
+            RowDefinitions="*,*,*,*,*,*,*,*,*,*,*"  
             Margin="4">
         <TextBlock Text="Name: " Grid.Row="0" Grid.Column="0"/>
         <TextBox AcceptsReturn="False"
@@ -47,11 +47,23 @@
               Text="{Binding Profile.Description}"
               Watermark="Description"
               Grid.Row="5" Grid.Column="1"/>
-      <TextBlock Text="Interests: " Grid.Row="5" Grid.Column="0"/>
+      <TextBlock Text="Interests: " Grid.Row="6" Grid.Column="0"/>
        <TextBox AcceptsReturn="False"
               Text="{Binding Profile.Interests}"
               Watermark="Interest"
-              Grid.Row="5" Grid.Column="1"/> 
+              Grid.Row="6" Grid.Column="1"/> 
+       <TextBlock Text="Categories (seperate categories by comma ','): " Grid.Row="7" Grid.Column="0"/>
+        <TextBox AcceptsReturn="False"
+              Text="{Binding CategoryText}"
+              Watermark="Categories"
+              Grid.Row="7" Grid.Column="1"/> 
+        <!-- <ComboBox Grid.Row="7" Grid.Column="1" Name="Select">
+                <ComboBox.ItemTemplate>
+                <DataTemplate>
+                        <TextBlock Text="{Binding Category_name}" />
+                </DataTemplate>
+                </ComboBox.ItemTemplate>
+        </ComboBox> -->
       </Grid>
     </StackPanel>
   </DockPanel>
