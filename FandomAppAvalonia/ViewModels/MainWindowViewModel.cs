@@ -10,7 +10,7 @@ namespace FandomAppSpace.ViewModels
     {
         private ViewModelBase _content;
         private Boolean _visibleNavigation;
-        User? LoggedInUser;
+        Login? UserManager;
 
         public Boolean VisibleNavigation
         {
@@ -30,7 +30,6 @@ namespace FandomAppSpace.ViewModels
         public ReactiveCommand<Unit, Unit> CreateMessage { get; }
         public ReactiveCommand<Unit, Unit> OpenInbox { get; }
         public ReactiveCommand<Unit, Unit> OpenOutbox { get; }
-        public ReactiveCommand<Unit, Unit> ViewMessage { get; }
         public ReactiveCommand<Unit, Unit> Logout { get; }
 
 
@@ -45,9 +44,8 @@ namespace FandomAppSpace.ViewModels
             NewEvent =  ReactiveCommand.Create(() => {CreateEvent();});
             Search  = ReactiveCommand.Create(() => {OpenSearch();});
             CreateMessage = ReactiveCommand.Create(() => {Create_Message();});
-            OpenInbox = ReactiveCommand.Create(() => {Open_Inbox();});
-            OpenOutbox = ReactiveCommand.Create(() => {Open_Outbox();});
-            ViewMessage = ReactiveCommand.Create(() => {View_Message();});
+            OpenInbox = ReactiveCommand.Create(() => {Open_Inbox(UserManager.CurrentUser.Inbox);});
+            OpenOutbox = ReactiveCommand.Create(() => {Open_Outbox(UserManager.CurrentUser.Outbox);});
             Logout = ReactiveCommand.Create(() => {ShowLogin();});
             
             ShowLogin();
@@ -73,14 +71,14 @@ namespace FandomAppSpace.ViewModels
         }
         public void PrepareMainPage(Login u){
             VisibleNavigation = true;
-            LoggedInUser = u.CurrentUser;
+            UserManager = u;
             ShowPersonalProfile();
         }
 
         //Show profile of logged in user
         private void ShowPersonalProfile()
         {
-            DisplayProfile(LoggedInUser.UserProfile);
+            DisplayProfile(UserManager.CurrentUser.UserProfile);
         }
 
         //Show profile of a specified user
@@ -120,24 +118,33 @@ namespace FandomAppSpace.ViewModels
             Content = vm;
         }
 
-        private void View_Message()
+        private void View_Message(Message msg)
         {
-            throw new NotImplementedException();
+            Content = new MessageViewModel(msg);
         }
 
-        private void Open_Outbox()
+        private void Open_Outbox(List<Message> outbox)
         {
-            throw new NotImplementedException();
+            Content = new OutboxDisplayViewModel(outbox);
         }
 
-        private void Open_Inbox()
+        private void Open_Inbox(List<Message> inbox)
         {
-            throw new NotImplementedException();
+            Content = new InboxDisplayViewModel(inbox);
         }
 
         private void Create_Message()
         {
-            throw new NotImplementedException();
+            var vm = new CreateMessageViewModel();
+
+            vm.Ok.Subscribe(x => {
+                vm.CreateMessage(UserManager);
+                Open_Outbox(UserManager.CurrentUser.Outbox);
+            });
+            vm.Cancel.Subscribe(x => {
+                Open_Inbox(UserManager.CurrentUser.Inbox);
+            });
+            Content = vm;
         }
 
         //Navigate to search view
