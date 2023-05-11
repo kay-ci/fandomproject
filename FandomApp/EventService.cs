@@ -85,7 +85,7 @@ public class EventService
             throw new ArgumentException("Only the creator of this event can modify it.");
         }
         
-        if (GetEvent(updatedEvent.EventId) != null)
+        if (GetEvent(updatedEvent.EventId) != null || GetEvent(updatedEvent.Title) != null)
         {
             _context.FandomEvents.Update(updatedEvent);
             _context.SaveChanges();
@@ -112,7 +112,8 @@ public class EventService
                         .Include(user => user.UserProfile)
                         .Include(user => user.Fandoms)
                         .Include(user => user.EventsAttending)
-                        .Include(user => user.Messages)
+                        .Include(user => user.Inbox)
+                        .Include(user => user.Outbox)
                         .Where(user => user.EventsAttending.Contains(fandomEvent))
                         .OrderBy(user => user.userID)
                         .ToList<User>();

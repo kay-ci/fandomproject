@@ -16,12 +16,21 @@ namespace UserInfo{
             }
         }
         public Profile? UserProfile {get; set;}
-        public UserMessage Messages {get; set;}
-        
+
+        //Messages properties of user
+        [InverseProperty("Recipients")]
+        public List<Message> Inbox {get; set;} = new();
+
+        [InverseProperty("Sender")]
+        public List<Message> Outbox {get; set;} = new();
+
+        //Events properties of user
         [InverseProperty("Owner")]
         public List<Event> EventsCreated {get; set;} = new();
+        
         [InverseProperty("Attendees")]
         public List<Event> EventsAttending {get; set;} = new();
+
         public List<Fandom> Fandoms {get; set;} = new();
         public byte[] Salt {get; set;}
         public byte[] Hash {get; set;}
@@ -35,9 +44,8 @@ namespace UserInfo{
             Username = userName;
             UserProfile = userProfile;
             EventsAttending = events;
-            Messages = new UserMessage(this);
-            
         }
+
         public User(string userName, Profile userProfile){
             if (!IsValidUsername(userName)){
                 throw new ArgumentException("Username should contain only 1 word");
@@ -45,7 +53,6 @@ namespace UserInfo{
 
             Username = userName;
             UserProfile = userProfile;
-            Messages = new UserMessage(this);
             EventsAttending = new List<Event>();
         }
 
@@ -73,7 +80,7 @@ namespace UserInfo{
             return (
                 this.Username == item.Username &&
                 this.UserProfile == item.UserProfile &&
-                this.Messages == item.Messages &&
+                this.Inbox == item.Inbox &&
                 this.EventsAttending.SequenceEqual(item.EventsAttending) &&
                 this.Fandoms.SequenceEqual(item.Fandoms) &&
                 this.Hash.SequenceEqual(item.Hash) &&

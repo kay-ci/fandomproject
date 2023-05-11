@@ -39,7 +39,7 @@ public class MessageServiceTests{
 
         //Act
         var Inbox_Test = new List<Message>();
-        Inbox_Test = service.GetBox(recipients[2].user, true);
+        Inbox_Test = service.GetBox(recipients[2].Owner, true);
 
         //Assert
         Assert.AreEqual("test3", Inbox_Test[1].Text);

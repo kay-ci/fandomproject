@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Oracle.EntityFrameworkCore.Metadata;
 using UserInfo;
@@ -11,9 +12,11 @@ using UserInfo;
 namespace FandomApp.Migrations
 {
     [DbContext(typeof(FanAppContext))]
-    partial class FanAppContextModelSnapshot : ModelSnapshot
+    [Migration("20230510211657_FixedUserMessagesRelations")]
+    partial class FixedUserMessagesRelations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -211,9 +214,6 @@ namespace FandomApp.Migrations
                     OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MessageId"));
 
                     b.Property<bool>("Seen")
-                        .HasColumnType("NUMBER(1)");
-
-                    b.Property<bool>("Sent")
                         .HasColumnType("NUMBER(1)");
 
                     b.Property<string>("Text")

@@ -22,69 +22,48 @@ public class MessageService {
         _context = context;
     }
 
-    public Message GetMessage(Message mesg){
-        var query = from msg in _context.FandomMessages
-            where msg.Equals(mesg)
-            select msg;
-        var fetchedmsg = query.First<Message>();
-        return fetchedmsg;
+    public Message GetMessage(string title) {
+
+        Message? msgFound = null;
+        try
+        {
+            var query = from message in _context.FandomMessages
+                        where message.Title == title
+                        select message;
+            msgFound = query.First();
+        }
+        catch (Exception)
+        {
+            return null;
+        }
+        return msgFound;
     }
 
-    public UserMessage GetUserMessage(User usr){
-        var query = from u_msg in _context.FandomUserMessages
-            where u_msg.user.Equals(usr)
-            select u_msg;
-        var fetchedUMSG = query.First<UserMessage>();
-        return fetchedUMSG;
+    public void AddMessage(Message new_message) {
+
+        if (GetMessage(new_message.Title) == null)
+        {
+            _context.FandomMessages.Add(new_message);
+            _context.SaveChanges();
+        }
     }
 
-    public List<Message> GetBox(User usr, bool getInbox){
-        var query = from u_msg in _context.FandomUserMessages
-            where u_msg.user.Equals(usr)
-            select u_msg;
-        var fetchedUMSG = query.First<UserMessage>();
-        if(getInbox) return fetchedUMSG.Inbox;
-        return fetchedUMSG.Outbox;
-    }
+    public void EditMessage(Login login, Message updatedmessage) {
 
-    public void Add_UserMessage(User user){
-        var user_message = user.Messages;
-
-        _context.FandomUserMessages.Add(user_message);
-        _context.SaveChanges();
-    }
-
-    public void Add_Message(Message msg){
-        _context.FandomMessages.Add(msg);
-        _context.SaveChanges();
-    }
-
-    public void Update_UserMessage(User user){
-        var user_message = new UserMessage(user);
-        var query = from u_msg in _context.FandomUserMessages
-            where u_msg.user.Equals(user)
-            select u_msg;
-        var fetchedUMSG = query.First<UserMessage>();
+        User? user = login.CurrentUser;
+        if (user?.Username != updatedmessage.Sender.Username)
+        {
+            throw new ArgumentException("Only the creator of this message can modify it.");
+        }
         
-        fetchedUMSG.Inbox = new List<Message>();
-        fetchedUMSG.Outbox = new List<Message>();
-        foreach(Message msg in user_message.Inbox) fetchedUMSG.Inbox.Add(msg);
-        foreach(Message msg in user_message.Outbox) fetchedUMSG.Outbox.Add(msg);
-        _context.SaveChanges();
+        //Verifying that the message wasnt sent
+        if (updatedmessage.Sent != true)
+        {
+            _context.FandomMessages.Update(updatedmessage);
+            _context.SaveChanges();
+        } else {
+            throw new ArgumentException("Can't edit a message that was already sent!");
+        }
     }
 
-    public void Edit_Message(Message message, string new_text, string new_title){
-        var query = from msg in _context.FandomMessages
-            where msg.Equals(message)
-            select msg;
-        var fetchedmsg = query.First<Message>();
-        fetchedmsg.Text = new_text;
-        fetchedmsg.Title = new_title;
-        _context.SaveChanges();
-    }
-
-    public void Delete_Message(Message message){
-        _context.FandomMessages.Remove(message);
-        _context.SaveChanges();
-    }
 }

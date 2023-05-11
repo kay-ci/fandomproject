@@ -135,5 +135,31 @@ public class EventServiceTests{
         Assert.AreEqual(3, events.Count);
     }
 
+    [TestMethod]
+    public void EditEvent_LocationDateAndAgeModified_Pass()
+    {
+        //Arrange
+        var mockSet = new Mock<DbSet<Event>>();
+        var mockContext = new Mock<FanAppContext>();
+        mockContext.Setup(m => m.FandomEvents).Returns(mockSet.Object);
+
+        EventService service = EventService.getInstance();
+        service.setFanAppContext(mockContext.Object);
+
+        Profile user_profile = new Profile("User", "they/them", 24, "Canada", "Montreal", new List<Category>(),  new List<Fandom>(), new List<Badge>(), "description", "pictures", "interests");
+        Login login = new Login(new User("User", user_profile));
+
+        Event new_event = new Event("Event1", new DateTime(2023, 12, 12), "Montreal", new List<Category>(), 18, login.CurrentUser); 
+        service.CreateEvent(new_event);
+
+        Event update_event = new Event("Event1", new DateTime(2025, 01, 01), "Las Vegas", new List<Category>(), 21, login.CurrentUser); 
+       
+        //Act
+        service.EditEvent(login, new_event);
+
+        //Assert
+        
+    }
+
     
 }
