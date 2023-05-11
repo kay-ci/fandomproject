@@ -106,7 +106,7 @@ public class MessageServiceTests{
         mockSet.As<IQueryable<Message>>().Setup(m => m.GetEnumerator()).Returns(data.GetEnumerator());
 
         var mockContext = new Mock<FanAppContext>();
-        mockContext.Setup(m => m.FandomMessages).Returns(mockSet.Object);
+        mockContext.Setup(m => m.MESSAGES).Returns(mockSet.Object);
 
         var service = MessageService.getInstance();
         service.setFanAppContext(mockContext.Object);
@@ -136,7 +136,7 @@ public class MessageServiceTests{
         mockSet.As<IQueryable<User>>().Setup(m => m.GetEnumerator()).Returns(data.GetEnumerator());
 
         var mockContext = new Mock<FanAppContext>();
-        mockContext.Setup(m => m.FandomUsers).Returns(mockSet.Object);
+        mockContext.Setup(m => m.USERS).Returns(mockSet.Object);
 
         var service = MessageService.getInstance();
         service.setFanAppContext(mockContext.Object);
@@ -174,7 +174,7 @@ public class MessageServiceTests{
         mockSet.As<IQueryable<Message>>().Setup(m => m.GetEnumerator()).Returns(data.GetEnumerator());
 
         var mockContext = new Mock<FanAppContext>();
-        mockContext.Setup(m => m.FandomMessages).Returns(mockSet.Object);
+        mockContext.Setup(m => m.MESSAGES).Returns(mockSet.Object);
 
         var service = MessageService.getInstance();
         service.setFanAppContext(mockContext.Object);
@@ -212,7 +212,7 @@ public class MessageServiceTests{
         mockSet.As<IQueryable<Message>>().Setup(m => m.GetEnumerator()).Returns(data.GetEnumerator());
 
         var mockContext = new Mock<FanAppContext>();
-        mockContext.Setup(m => m.FandomMessages).Returns(mockSet.Object);
+        mockContext.Setup(m => m.MESSAGES).Returns(mockSet.Object);
 
         var service = MessageService.getInstance();
         service.setFanAppContext(mockContext.Object);
@@ -249,7 +249,7 @@ public class MessageServiceTests{
         mockSet.As<IQueryable<Message>>().Setup(m => m.GetEnumerator()).Returns(data.GetEnumerator());
 
         var mockContext = new Mock<FanAppContext>();
-        mockContext.Setup(m => m.FandomMessages).Returns(mockSet.Object);
+        mockContext.Setup(m => m.MESSAGES).Returns(mockSet.Object);
 
         var service = MessageService.getInstance();
         service.setFanAppContext(mockContext.Object);

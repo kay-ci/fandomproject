@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 
 namespace UserInfo{
     public class User{
-        public int userID {get; set;}
+        public int UserID {get; set;}
         private string _username; 
         public string? Username {
             get{ return _username; } 
@@ -80,7 +80,8 @@ namespace UserInfo{
             return (
                 this.Username == item.Username &&
                 this.UserProfile == item.UserProfile &&
-                this.Inbox == item.Inbox &&
+                this.Inbox.SequenceEqual(item.Inbox) &&
+                this.Outbox.SequenceEqual(item.Outbox) &&
                 this.EventsAttending.SequenceEqual(item.EventsAttending) &&
                 this.Fandoms.SequenceEqual(item.Fandoms) &&
                 this.Hash.SequenceEqual(item.Hash) &&

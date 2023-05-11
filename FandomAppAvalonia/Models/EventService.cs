@@ -21,7 +21,7 @@ public class EventService
     {
         if (GetEvent(new_event.Title) == null)
         {
-            _context.FandomEvents.Add(new_event);
+            _context.EVENTS.Add(new_event);
             _context.SaveChanges();
         }
        
@@ -33,7 +33,7 @@ public class EventService
         Event? eventFound = null;
         try
         {
-            var query = from ev in _context.FandomEvents
+            var query = from ev in _context.EVENTS
                         where ev.Title == title
                         select ev;
             eventFound = query.First();
@@ -51,7 +51,7 @@ public class EventService
         Event? eventFound = null;
         try
         {
-            var query = from ev in _context.FandomEvents
+            var query = from ev in _context.EVENTS
                         where ev.EventId == id
                         select ev;
             eventFound = query.First();
@@ -66,7 +66,7 @@ public class EventService
     //this method gets all the events
     public List<Event> GetAllEvents()
     {
-        List<Event> events = _context.FandomEvents
+        List<Event> events = _context.EVENTS
                             .Include(e => e.Categories)
                             .Include(e => e.Fandoms)
                             .Include(e => e.Owner)
@@ -87,7 +87,7 @@ public class EventService
         
         if (GetEvent(updatedEvent.EventId) != null || GetEvent(updatedEvent.Title) != null)
         {
-            _context.FandomEvents.Update(updatedEvent);
+            _context.EVENTS.Update(updatedEvent);
             _context.SaveChanges();
         }
     }
@@ -100,7 +100,7 @@ public class EventService
         {
             throw new ArgumentException("Only the creator of this event can delete it.");
         }
-        _context.FandomEvents.Remove(fandomEvent);
+        _context.EVENTS.Remove(fandomEvent);
         _context.SaveChanges();
     }
 
@@ -108,14 +108,14 @@ public class EventService
     //may not be needed because it's not a console app
     public List<User> GetEventAttendees(Event fandomEvent) {
         
-        var attendees = _context.FandomUsers
+        var attendees = _context.USERS
                         .Include(user => user.UserProfile)
                         .Include(user => user.Fandoms)
                         .Include(user => user.EventsAttending)
                         .Include(user => user.Inbox)
                         .Include(user => user.Outbox)
                         .Where(user => user.EventsAttending.Contains(fandomEvent))
-                        .OrderBy(user => user.userID)
+                        .OrderBy(user => user.UserID)
                         .ToList<User>();
 
         return attendees;
@@ -124,7 +124,7 @@ public class EventService
     //helper method to get Queryable of all the events so i can filter them
     private IQueryable<Event> GetQueryableEvents()
     {
-        var events = _context.FandomEvents
+        var events = _context.EVENTS
                             .Include(e => e.Categories)
                             .Include(e => e.Fandoms)
                             .Include(e => e.Owner)

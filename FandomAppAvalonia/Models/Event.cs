@@ -52,7 +52,7 @@ public class Event
         }
     }
 
-    [ForeignKey("userID")]
+    [ForeignKey("UserID")]
     public User Owner {get; set;} = null!;
     public List<User>? Attendees {get; set;} = new();
 

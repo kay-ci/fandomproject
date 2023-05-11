@@ -27,7 +27,7 @@ public class MessageService {
         Message? msgFound = null;
         try
         {
-            var query = from message in _context.FandomMessages
+            var query = from message in _context.MESSAGES
                         where message.Title == title
                         select message;
             msgFound = query.First();
@@ -43,7 +43,7 @@ public class MessageService {
 
         if (GetMessage(new_message.Title) == null)
         {
-            _context.FandomMessages.Add(new_message);
+            _context.MESSAGES.Add(new_message);
             _context.SaveChanges();
         }
     }
@@ -59,7 +59,7 @@ public class MessageService {
         //Verifying that the message wasnt sent
         if (updatedmessage.Sent != true)
         {
-            _context.FandomMessages.Update(updatedmessage);
+            _context.MESSAGES.Update(updatedmessage);
             _context.SaveChanges();
         } else {
             throw new ArgumentException("Can't edit a message that was already sent!");
