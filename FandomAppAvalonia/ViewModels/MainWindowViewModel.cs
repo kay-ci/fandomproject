@@ -27,7 +27,10 @@ namespace FandomAppSpace.ViewModels
         public ReactiveCommand<Unit, Unit> Profile { get; }
         public ReactiveCommand<Unit, Unit> NewEvent { get; }
         public ReactiveCommand<Unit, Unit> Search { get; }
-        public ReactiveCommand<Unit, Unit> Message { get; }
+        public ReactiveCommand<Unit, Unit> CreateMessage { get; }
+        public ReactiveCommand<Unit, Unit> OpenInbox { get; }
+        public ReactiveCommand<Unit, Unit> OpenOutbox { get; }
+        public ReactiveCommand<Unit, Unit> ViewMessage { get; }
         public ReactiveCommand<Unit, Unit> Logout { get; }
 
 
@@ -41,7 +44,10 @@ namespace FandomAppSpace.ViewModels
             Profile = ReactiveCommand.Create(() => {ShowPersonalProfile();});
             NewEvent =  ReactiveCommand.Create(() => {CreateEvent();});
             Search  = ReactiveCommand.Create(() => {OpenSearch();});
-            Message = ReactiveCommand.Create(() => {OpenMessages();});
+            CreateMessage = ReactiveCommand.Create(() => {Create_Message();});
+            OpenInbox = ReactiveCommand.Create(() => {Open_Inbox();});
+            OpenOutbox = ReactiveCommand.Create(() => {Open_Outbox();});
+            ViewMessage = ReactiveCommand.Create(() => {View_Message();});
             Logout = ReactiveCommand.Create(() => {ShowLogin();});
             
             ShowLogin();
@@ -114,8 +120,22 @@ namespace FandomAppSpace.ViewModels
             Content = vm;
         }
 
-        //Navigate to message view
-        private void OpenMessages()
+        private void View_Message()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Open_Outbox()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Open_Inbox()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Create_Message()
         {
             throw new NotImplementedException();
         }

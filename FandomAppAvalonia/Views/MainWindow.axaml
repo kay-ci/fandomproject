@@ -19,7 +19,13 @@
                 <Button Command="{Binding Search}">
                         <Image Source="/Assets/Icons/icons-search.png" Width="20" Height="20"/>
                 </Button>
-                <Button Command="{Binding Message}">
+                <Button Command="{Binding CreateMessage}">
+                        <Image Source="/Assets/Icons/icons-message.png" Width="20" Height="20"/>
+                </Button>
+                <Button Command="{Binding OpenInbox}">
+                        <Image Source="/Assets/Icons/icons-message.png" Width="20" Height="20"/>
+                </Button>
+                <Button Command="{Binding OpenOutbox}">
                         <Image Source="/Assets/Icons/icons-message.png" Width="20" Height="20"/>
                 </Button>
                 <Button Command="{Binding Logout}">
