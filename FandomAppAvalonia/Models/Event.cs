@@ -69,16 +69,25 @@ public class Event
         this.Attendees = new List<User>();
     }
 
+    /// <summary>
+    /// This method marks a user as attending an event by adding it to the Attendees List.
+    /// <para> Throwns an ArgumentException if the <paramref name="attendee"/> doesn't meet the minimum age requirement of the event.</para>
+    /// </summary>
+    /// <param name="attendee"> The user to add to the list.</param>
     public void AddAttendee(User attendee) 
     {
         var profile = attendee.UserProfile;
         if (profile?.Age < this.MinAge){
             throw new ArgumentException("Attendee must meet the event's age requirement");
         }
-
         this.Attendees?.Add(attendee);
     }
 
+    /// <summary>
+    /// This method removes the user from the Attendees List.
+    /// <para> Throwns an ArgumentException if the <paramref name="attendee"/> is not in the list.</para>
+    /// </summary>
+    /// <param name="attendee"> The user to remove from the list.</param>
     public void RemoveAttendee(User attendee) 
     {
         if(!Attendees.Contains(attendee))
