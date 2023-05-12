@@ -27,8 +27,6 @@ namespace FandomAppSpace.ViewModels
             get => _confirm;
             private set => this.RaiseAndSetIfChanged(ref _confirm, value);
         }
-        
-        public ReactiveCommand<Unit, Unit> Profile { get; }
 
         public ReactiveCommand<Unit, Unit> ChangePassword { get; }
 
@@ -45,8 +43,6 @@ namespace FandomAppSpace.ViewModels
             
             //Create the command to bind to the login and register buttons. Enable it only when loginEnabled is set to true.
             ChangePassword = ReactiveCommand.Create(() => { }, loginEnabled);
-            Profile = ReactiveCommand.Create(() => { });
-            
         }
 
 

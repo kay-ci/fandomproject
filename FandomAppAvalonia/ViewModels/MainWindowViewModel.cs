@@ -103,9 +103,6 @@ namespace FandomAppSpace.ViewModels
             vm.UpdatePassword();
             DisplayProfile(ViewModelBase.UserManager.CurrentUser);
             });
-            vm.Profile.Subscribe(x => {
-                DisplayProfile(ViewModelBase.UserManager.CurrentUser);
-            });
         }
 
         //Display an existing event

@@ -245,7 +245,20 @@ public class UserService{
         Rfc2898DeriveBytes key = new Rfc2898DeriveBytes(password, salt, Iterations);
         byte[] hash = key.GetBytes(32);
 
-        currentUser.Salt = salt;
-        currentUser.Hash = hash;
+        try{
+            User newUser = GetUser(currentUser.Username);
+            newUser.Salt = salt;
+            newUser.Hash = hash;
+            newUser.Username = currentUser.Username;
+            newUser.UserProfile = currentUser.UserProfile;
+            newUser.Inbox = currentUser.Inbox;
+            newUser.Outbox = currentUser.Outbox;
+            newUser.EventsCreated = currentUser.EventsCreated;
+            newUser.EventsAttending = currentUser.EventsCreated;
+            newUser.Fandoms = currentUser.Fandoms;
+            _context.Update(newUser);
+            _context.SaveChanges();
+        }catch(Exception){
+        }
     }
 }
