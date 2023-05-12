@@ -52,22 +52,31 @@ public class MessageService {
 
     }
 
-    public void EditMessage(Login login, Message updatedmessage) {
+    public void EditMessage(Login login, Message updatedmessage, string oldTitle) {
 
         User? user = login.CurrentUser;
-        if (user?.Username != updatedmessage.Sender.Username)
-        {
+        if (user?.Username != updatedmessage.Sender.Username){
             throw new ArgumentException("Only the creator of this message can modify it.");
         }
         
         //Verifying that the message wasnt sent
-        if (updatedmessage.Sent != true)
+        Message? msgFound = null;
+        try
         {
-            _context.MESSAGES.Update(updatedmessage);
+            var query = from message in _context.MESSAGES
+                        where message.Title == oldTitle
+                        select message;
+            msgFound = query.First();
+            msgFound.Title = updatedmessage.Title;
+            msgFound.Text = updatedmessage.Text;
+            _context.MESSAGES.Update(msgFound);
             _context.SaveChanges();
-        } else {
-            throw new ArgumentException("Can't edit a message that was already sent!");
         }
+        catch (Exception)
+        {
+            throw new Exception("ERROR: DB ERROR");
+        }
+        
     }
 
 }

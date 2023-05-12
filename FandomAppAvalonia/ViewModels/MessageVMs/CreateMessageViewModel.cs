@@ -20,7 +20,6 @@ namespace FandomAppSpace.ViewModels
         ObservableCollection<User> ObservableRecips {get; set;}
         ObservableCollection<User> ObservableDBUsers {get; set;}
         public List<User> Database_users {get; set;} = new();
-        // public string _recipientText;
         [Required]
         public string Title{
             get => _title;
@@ -37,23 +36,14 @@ namespace FandomAppSpace.ViewModels
                 
             }
         }
-        // [Required]
-        // public string RecipientText {
-        //     get => _recipientText;
-        //     private set {
-        //         this.RaiseAndSetIfChanged(ref _recipientText, value);
-        //     }
-        // }
         Login UserManager;
         public CreateMessageViewModel(Login userManager){
             UserManager = userManager;
             ObservableRecips = new ObservableCollection<User>(Recipients);
             Database_users = uService.GetUsers();
             ObservableDBUsers = new ObservableCollection<User>(Database_users);
-            RemoveLogin();
             Ok = ReactiveCommand.Create(() => { });
             Cancel = ReactiveCommand.Create(() => { });
-            // RecipientText = "test";
         }
 
         public CreateMessageViewModel(Login userManager, User chosen_recipient){
@@ -61,23 +51,13 @@ namespace FandomAppSpace.ViewModels
             ObservableRecips = new ObservableCollection<User>(Recipients);
             Database_users = new List<User>(uService.GetUsers());
             ObservableDBUsers = new ObservableCollection<User>(Database_users);
-            RemoveLogin();
             AddRecipient(chosen_recipient);
             
             Ok = ReactiveCommand.Create(() => { });
             Cancel = ReactiveCommand.Create(() => { });
-            // chosen_recipient.Username += ",";
-            // RecipientText = chosen_recipient.Username;
         }
 
         public void CreateMessage(){
-            // string[] str_recipients = RecipientText.Split(",");
-            // foreach(string str_recipient in str_recipients){
-            //     Recipients.Add(U_Service.GetUser(str_recipient));
-            // }
-
-
-            foreach(User usr in ObservableDBUsers) Database_users.Remove(usr);
             if(Recipients.Count != 0) newMsg = new Message(UserManager.CurrentUser, Recipients, Title, Text);
             else throw new ArgumentException("ERROR : Recipients is empty");
             msgService.AddMessage(newMsg);

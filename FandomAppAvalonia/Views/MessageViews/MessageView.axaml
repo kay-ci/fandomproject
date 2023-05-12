@@ -34,6 +34,7 @@
       </StackPanel>
     </StackPanel>
       <Button Content="Edit Message"
-              Command="{Binding $parent[Window].DataContext.Edit_Message}"/>       
+              Command="{Binding $parent[Window].DataContext.Edit_Message}"
+              CommandParameter="{Binding Msg}"/>       
   </StackPanel>
 </UserControl>
