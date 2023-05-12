@@ -7,7 +7,7 @@ using System.Collections.ObjectModel;
 
 namespace FandomAppSpace.ViewModels
 {
-    public class CreateMessageViewModel : MainWindowViewModel
+    public class CreateMessageViewModel : ViewModelBase
     {
         
         public Message? newMsg {get; set;}
@@ -44,9 +44,8 @@ namespace FandomAppSpace.ViewModels
         //         this.RaiseAndSetIfChanged(ref _recipientText, value);
         //     }
         // }
-        Login UserManager;
-        public CreateMessageViewModel(Login userManager){
-            UserManager = userManager;
+      
+        public CreateMessageViewModel(){
             ObservableRecips = new ObservableCollection<User>(Recipients);
             Database_users = uService.GetUsers();
             ObservableDBUsers = new ObservableCollection<User>(Database_users);
@@ -77,7 +76,7 @@ namespace FandomAppSpace.ViewModels
             //     Recipients.Add(U_Service.GetUser(str_recipient));
             // }
 
-            if(Recipients.Count != 0) newMsg = new Message(UserManager.CurrentUser, Recipients, Title, Text);
+            if(Recipients.Count != 0) newMsg = new Message(ViewModelBase.UserManager.CurrentUser, Recipients, Title, Text);
             else throw new ArgumentException("ERROR : Recipients is empty");
             msgService.AddMessage(newMsg);
         }

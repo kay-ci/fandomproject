@@ -25,7 +25,7 @@ public class UserService{
     /// Method <c>GetUsers</c> fetches all users from DbSet USERS.
     /// </summary>
     public List<User> GetUsers(){
-        List<User> usersList = _context.USERS
+        List<User> usersList = _context.USERS.AsNoTrackingWithIdentityResolution()
             .Include(user => user.UserProfile)
             .Include(user => user.Fandoms)
             .Include(user => user.EventsAttending)
@@ -41,7 +41,7 @@ public class UserService{
     public User? GetUser(string username){
         User fetcheduser;
         try{
-            fetcheduser = _context.USERS
+            fetcheduser = _context.USERS.AsNoTrackingWithIdentityResolution()
                         .Include(user => user.UserProfile)
                         .Include(user => user.Fandoms)
                         .Include(user => user.EventsAttending)

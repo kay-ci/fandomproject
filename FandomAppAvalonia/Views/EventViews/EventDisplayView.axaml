@@ -21,13 +21,13 @@
                   <!--<Image Source="/Assets/Icons/icons-event.png" Width="20" Height="20"/> -->
                   Edit Event
           </Button>
-          <Button Command="{Binding Search}">
+          <Button Command="{Binding SearchEventBtn}">
                   <!--<Image Source="/Assets/Icons/icons-search.png" Width="20" Height="20"/> -->
                   Search Events
           </Button>
     </StackPanel>
 
-    <StackPanel Spacing="10" IsVisible="{Binding VisibleNavigation}">
+    <StackPanel Spacing="10">
       <TextBlock Text="My Events" FontSize="35"/> 
 
       <ItemsRepeater Items="{Binding Events}">
