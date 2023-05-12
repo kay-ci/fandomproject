@@ -4,9 +4,9 @@ using Avalonia.Markup.Xaml;
 
 namespace FandomAppSpace.Views;
 
-public partial class ProfileEditView : UserControl
+public partial class NewEventView : UserControl
 {
-    public ProfileEditView()
+    public NewEventView()
     {
         InitializeComponent();
     }

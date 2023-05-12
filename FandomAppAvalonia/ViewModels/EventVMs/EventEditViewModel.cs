@@ -1,24 +1,21 @@
 using System.Reactive;
 using FandomAppSpace;
 using ReactiveUI;
-using UserInfo;
 
 namespace FandomAppSpace.ViewModels
 {
-    public class ProfileEditViewModel : ViewModelBase
+    public class EventEditViewModel : ViewModelBase
     {
         
-        public Profile Profile {get; set;}
+        public Event Event {get; set;}
         public ReactiveCommand<Unit, Unit> Ok { get; }
-        public ProfileEditViewModel(Profile p)
+        public EventEditViewModel(Event e)
         {
-            Profile = p;
+            Event = e;
 
             Ok = ReactiveCommand.Create(() => { });
 
         }
 
-
-        
     }
 }

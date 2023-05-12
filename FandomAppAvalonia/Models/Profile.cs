@@ -105,7 +105,7 @@ namespace UserInfo{
             _age = age;
             _country = country;
             _city = city;
-            _description = " ";
+            _description = "About me";
             Categories = new List<Category>();
             Fandoms = new List<Fandom>();
             Badges = new List<Badge>();
