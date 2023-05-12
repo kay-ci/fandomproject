@@ -1,0 +1,29 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="FandomAppSpace.Views.AllUsersView">
+  <StackPanel Margin="10,0,0,0">
+    <StackPanel Width="200" Spacing="5">
+          <TextBlock Text="Users:"/>
+          <ItemsRepeater Items="{Binding Users}">
+            <ItemsRepeater.ItemTemplate>
+              <DataTemplate>
+              <StackPanel>
+                <Border Margin="10,0,0,0" Padding="2">
+                  <TextBlock Text="{Binding Username}"/>
+                </Border>
+                  <Button Content="View User Profile"
+                    Command="{Binding $parent[Window].DataContext.DisplayProfile}"
+                    CommandParameter="{Binding}"/> 
+                  <Button Content="Send User Message"
+                    Command="{Binding $parent[Window].DataContext.Create_Message}"
+                    CommandParameter="{Binding}"/>
+                    </StackPanel> 
+              </DataTemplate>
+            </ItemsRepeater.ItemTemplate>
+          </ItemsRepeater>
+        </StackPanel>     
+</StackPanel>
+</UserControl>

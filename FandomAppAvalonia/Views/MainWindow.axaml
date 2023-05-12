@@ -24,9 +24,17 @@
                         <!--<Image Source="/Assets/Icons/icons-search.png" Width="20" Height="20"/> -->
                         Search
                 </Button>
-                <Button Command="{Binding Message}">
-                        <!--<Image Source="/Assets/Icons/icons-message.png" Width="20" Height="20"/> -->
-                        Messages
+                <Button Command="{Binding CreateMessage}">
+                        <Image Source="/Assets/Icons/icons-message.png" Width="20" Height="20"/>
+                </Button>
+                <Button Command="{Binding OpenInbox}">
+                        <Image Source="/Assets/Icons/icons-message.png" Width="20" Height="20"/>
+                </Button>
+                <Button Command="{Binding OpenOutbox}">
+                        <Image Source="/Assets/Icons/icons-message.png" Width="20" Height="20"/>
+                </Button>
+                <Button Command="{Binding ViewUsers}">
+                        <Image Source="/Assets/Icons/icons-profile.png" Width="20" Height="20"/>
                 </Button>
                 <Button Command="{Binding Logout}">
                         <!--<Image Source="/Assets/Icons/icons-close.png" Width="20" Height="20"/> -->
