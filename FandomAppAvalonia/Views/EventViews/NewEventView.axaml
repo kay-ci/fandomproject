@@ -11,7 +11,7 @@
     <StackPanel>  
 
       <Grid ColumnDefinitions="1*,4*"
-            RowDefinitions="*,*,*,*,*,*,*,*"  
+            RowDefinitions="*,*,*,*,*,*,*,*,*,*,*,*,*,*"  
             Margin="4">
         
         <TextBlock Text="Title: " Grid.Row="0" Grid.Column="0"/>
@@ -20,26 +20,24 @@
                 Watermark="Title"
                 Grid.Row="0" Grid.Column="1"/>
                 
-        <TextBlock Text="Location: " Grid.Row="1" Grid.Column="0"/>
+        <TextBlock Text="Location: " Grid.Row="2" Grid.Column="0"/>
         <TextBox AcceptsReturn="False"
                 Text="{Binding Location}"
                 Watermark="Location"
-                Grid.Row="1" Grid.Column="1"/>
-
-        <TextBlock Text="Date: " Grid.Row="2" Grid.Column="0"/>
-        <TextBox AcceptsReturn="False"
-                Text="{Binding Date}"
-                Watermark="Date"
                 Grid.Row="2" Grid.Column="1"/>
 
-        <TextBlock Text="Minimum Age: " Grid.Row="3" Grid.Column="0"/>
+        <TextBlock Text="Date: " Grid.Row="4" Grid.Column="0"/>
+        <DatePicker SelectedDateChanged="{Binding Date}"
+                  Grid.Row="4" Grid.Column="1"/>
+                
+        <TextBlock Text="Minimum Age: " Grid.Row="6" Grid.Column="0"/>
         <TextBox AcceptsReturn="False"
                 Text="{Binding MinAge}"
                 Watermark="MinAge"
-                Grid.Row="3" Grid.Column="1"/>
+                Grid.Row="6" Grid.Column="1"/>
 
-        <TextBlock Grid.Row="4" Grid.Column="0" Text="Categories:"/>
-        <StackPanel Grid.Row="4" Grid.Column="1" Orientation="Horizontal">
+        <TextBlock Grid.Row="8" Grid.Column="0" Text="Categories:"/>
+        <StackPanel Grid.Row="8" Grid.Column="1" Orientation="Horizontal">
                 <TextBox AcceptsReturn="False"
                         Text="{Binding CategoryText}"
                         Watermark="Enter category"
@@ -49,7 +47,7 @@
                 </Button>
         </StackPanel>
         
-        <ItemsRepeater Grid.Row="5" Grid.Column="1" Items="{Binding Categories}">
+        <ItemsRepeater Grid.Row="10" Grid.Column="1" Items="{Binding Categories}">
           <ItemsRepeater.ItemTemplate>
           <DataTemplate>
             <StackPanel Orientation="Horizontal">
@@ -63,8 +61,8 @@
         </ItemsRepeater>
 
 
-        <TextBlock Grid.Row="6" Grid.Column="0" Text="Fandoms:"/>
-        <StackPanel Grid.Row="6" Grid.Column="1" Orientation="Horizontal">
+        <TextBlock Grid.Row="12" Grid.Column="0" Text="Fandoms:"/>
+        <StackPanel Grid.Row="12" Grid.Column="1" Orientation="Horizontal">
             <TextBox AcceptsReturn="False"
                     Text="{Binding FandomName}"
                     Watermark="Name"
@@ -82,7 +80,7 @@
             </Button>
         </StackPanel>
 
-        <ItemsRepeater Grid.Row="7" Grid.Column="1" Items="{Binding Fandoms}">
+        <ItemsRepeater Grid.Row="14" Grid.Column="1" Items="{Binding Fandoms}">
             <ItemsRepeater.ItemTemplate>
             <DataTemplate>
             <StackPanel Orientation="Horizontal">
