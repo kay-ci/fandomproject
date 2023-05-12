@@ -28,6 +28,9 @@
                 <Button Command="{Binding OpenOutbox}">
                         <Image Source="/Assets/Icons/icons-message.png" Width="20" Height="20"/>
                 </Button>
+                <Button Command="{Binding ViewUsers}">
+                        <Image Source="/Assets/Icons/icons-profile.png" Width="20" Height="20"/>
+                </Button>
                 <Button Command="{Binding Logout}">
                         <Image Source="/Assets/Icons/icons-close.png" Width="20" Height="20"/>
                 </Button>

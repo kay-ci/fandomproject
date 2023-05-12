@@ -30,6 +30,7 @@ namespace FandomAppSpace.ViewModels
         public ReactiveCommand<Unit, Unit> CreateMessage { get; }
         public ReactiveCommand<Unit, Unit> OpenInbox { get; }
         public ReactiveCommand<Unit, Unit> OpenOutbox { get; }
+        public ReactiveCommand<Unit, Unit> ViewUsers {get; }
         public ReactiveCommand<Unit, Unit> Logout { get; }
 
 
@@ -46,6 +47,7 @@ namespace FandomAppSpace.ViewModels
             CreateMessage = ReactiveCommand.Create(() => {Create_Message();});
             OpenInbox = ReactiveCommand.Create(() => {Open_Inbox(UserManager.CurrentUser.Inbox);});
             OpenOutbox = ReactiveCommand.Create(() => {Open_Outbox(UserManager.CurrentUser.Outbox);});
+            ViewUsers = ReactiveCommand.Create(() => {View_Users();});
             Logout = ReactiveCommand.Create(() => {ShowLogin();});
             
             ShowLogin();
@@ -143,6 +145,19 @@ namespace FandomAppSpace.ViewModels
             Content = vm;
         }
 
+        private void Create_Message(User chosen_recipient){
+            var vm = new CreateMessageViewModel(chosen_recipient);
+
+            vm.Ok.Subscribe(x => {
+                vm.CreateMessage(UserManager);
+                Open_Outbox(UserManager.CurrentUser.Outbox);
+            });
+            vm.Cancel.Subscribe(x => {
+                Open_Inbox(UserManager.CurrentUser.Inbox);
+            });
+            Content = vm;
+        }
+
         private void Edit_Message(Message msg){
             var vm = new EditMessageViewModel(msg);
 
@@ -154,6 +169,10 @@ namespace FandomAppSpace.ViewModels
                 Open_Inbox(UserManager.CurrentUser.Inbox);
             });
             Content = vm;
+        }
+
+        public void View_Users(){
+            Content = new AllUsersViewModel();
         }
 
         //Navigate to search view
