@@ -51,31 +51,31 @@ namespace FandomAppSpace.ViewModels
             private set => this.RaiseAndSetIfChanged(ref _badgesText, value);
         }
 
-        [Required]
+        [Required, RegularExpression("^[a-zA-z ]+$", ErrorMessage = ("Only letters are allowed!"))]
         public string Name 
         {
             get => _name;
             private set => this.RaiseAndSetIfChanged(ref _name, value);
         }
-        [Required]
+        [Required, RegularExpression("^[a-zA-z]+/{1}[a-zA-z]+$", ErrorMessage = ("pronoun ex. (she/her)"))]
         public string Pronouns 
         {
             get => _pronouns;
             private set => this.RaiseAndSetIfChanged(ref _pronouns, value);
         }
-        [Required]
+        [Required, Range(0, 130, ErrorMessage=("Age must be 0-130"))]
         public int Age 
         {
             get => _age;
             private set => this.RaiseAndSetIfChanged(ref _age, value);
         }
-        [Required]
+        [Required, RegularExpression("^[a-zA-z ]+$", ErrorMessage = ("Only letters are allowed!"))]
          public string Country 
         {
             get => _country;
             private set => this.RaiseAndSetIfChanged(ref _country, value);
         }
-        [Required]
+        [Required, RegularExpression("^[a-zA-z ]+$", ErrorMessage = ("Only letters are allowed!"))]
          public string City 
         {
             get => _city;

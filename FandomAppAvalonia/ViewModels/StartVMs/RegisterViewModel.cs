@@ -42,7 +42,7 @@ namespace FandomAppSpace.ViewModels
                 
             }
         }
-        [Required, RegularExpression("^[a-zA-z]+$", ErrorMessage = ("Only letters are allowed!"))]
+        [RegularExpression("^[a-zA-z]+$", ErrorMessage = ("Only letters are allowed!"))]
         public string Pronouns 
         {
             get => _pronouns;
@@ -51,7 +51,7 @@ namespace FandomAppSpace.ViewModels
                 
             }
         }
-        [Required, Range(0, 130, ErrorMessage = ("Age must be between 0 and 130"))]
+        [Range(0, 130, ErrorMessage = ("Age must be between 0 and 130"))]
         public int Age 
         {
             get => _age;
