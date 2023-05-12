@@ -8,7 +8,7 @@ using System.Reactive.Linq;
 
 namespace FandomAppSpace.ViewModels
 {
-    public class ProfileEditViewModel : ViewModelBase
+    public class ProfileEditViewModel : MainWindowViewModel
     {
         string _categoryText;
         string _fandomName;
@@ -94,7 +94,6 @@ namespace FandomAppSpace.ViewModels
         List<Category> CategoriesList = new();
         List<Fandom> FandomsList = new();
         List<Badge> BadgesList = new();
-        UserService service = UserService.getInstance();
         public Profile Profile {get; set;}
         public ReactiveCommand<Unit, Unit> Ok { get; }
         public ProfileEditViewModel(Profile p)
@@ -122,7 +121,7 @@ namespace FandomAppSpace.ViewModels
 
         public void UpdateUser(){
             Profile = new Profile(Profile.Name, Profile.Pronouns, Profile.Age, Profile.Country, Profile.City, Categories.ToList(), Fandoms.ToList(), Badges.ToList(), Profile.Description, Profile.Picture, Profile.Interests);
-            service.UpdateProfile(UserManager, Profile);
+            uService.UpdateProfile(UserManager, Profile);
         }
         public void AddBadge(){
             Badge newBadge = new Badge(BadgesText);

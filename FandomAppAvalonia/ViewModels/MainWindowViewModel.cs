@@ -4,7 +4,7 @@ using System.Reactive;
 using UserInfo;
 namespace FandomAppSpace.ViewModels
 {
-    class MainWindowViewModel : ViewModelBase
+    public class MainWindowViewModel : ViewModelBase
     {
         private ViewModelBase _content;
         private Boolean _visibleNavigation;
@@ -30,7 +30,7 @@ namespace FandomAppSpace.ViewModels
         public ReactiveCommand<Unit, Unit> ViewUsers {get; }
         public ReactiveCommand<Unit, Unit> Logout { get; }
 
-
+        public Login? UserManager;
         public MainWindowViewModel()
         {
             //Buttons
@@ -50,7 +50,7 @@ namespace FandomAppSpace.ViewModels
             VisibleNavigation = false;
 
             LogInViewModel vm = new LogInViewModel();
-            vm.Login.Subscribe(x => {vm.LoginUser(); PrepareMainPage();});
+            vm.Login.Subscribe(x => {PrepareMainPage(vm.LoginUser());});
             vm.Register.Subscribe(x => {RegisterPage();});
             Content = vm;
         }
@@ -60,12 +60,15 @@ namespace FandomAppSpace.ViewModels
             var vm = new RegisterViewModel();
             
             vm.Register.Subscribe(x => {
-                Content = dispvm;vm.RegisterUser();});
+                Content = dispvm;
+                vm.RegisterUser();
+            });
             Content = vm;
             vm.Login.Subscribe(x => {ShowLogin();});
         }
-        public void PrepareMainPage(){
+        public void PrepareMainPage(Login login){
             VisibleNavigation = true;
+            UserManager = login;
             DisplayProfile(UserManager.CurrentUser);
         }
 
@@ -73,7 +76,7 @@ namespace FandomAppSpace.ViewModels
         
         private void DisplayProfile(User chosenUser)
         {
-            Content = new ProfileDisplayViewModel(chosenUser);
+            Content = new ProfileDisplayViewModel(UserManager, chosenUser);
         }
 
         //Navigate to edit profile view from profile display view
@@ -106,7 +109,7 @@ namespace FandomAppSpace.ViewModels
         }
 
         private void Create_Message(){
-            var vm = new CreateMessageViewModel();
+            var vm = new CreateMessageViewModel( UserManager);
 
             vm.Ok.Subscribe(x => {
                 vm.CreateMessage();

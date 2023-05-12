@@ -8,12 +8,12 @@ using UserInfo;
 
 namespace FandomAppSpace.ViewModels
 {
-    public class EventDisplayViewModel : ViewModelBase
+    public class EventDisplayViewModel : MainWindowViewModel
     {
         private ViewModelBase _content;
         public Event Event {get;}
         public List<Event> Events {get;}
-        public ReactiveCommand<Unit, Unit> NewEvent { get; }
+        
 
         private Boolean _visibleNavigation;
 
@@ -27,12 +27,14 @@ namespace FandomAppSpace.ViewModels
             get => _content;
             private set => this.RaiseAndSetIfChanged(ref _content, value);
         }
-
-        public ReactiveCommand<Unit, Unit> NewEventPageBtn { get; }
+        public ReactiveCommand<Unit, Unit> CreateEventBtn { get; }
+        public ReactiveCommand<Unit, Unit> EditEventBtn { get; }
+        public ReactiveCommand<Unit, Unit> DeleteEventBtn { get; }
+         public ReactiveCommand<Unit, Unit> SearchEventBtn { get; }
+        public ReactiveCommand<Unit, Unit> EventPageBtn { get; }
         public EventDisplayViewModel()
         {
-            VisibleNavigation = true;
-            NewEventPageBtn =  ReactiveCommand.Create(() => {ShowNewEventPage();});
+            EventPageBtn =  ReactiveCommand.Create(() => {ShowNewEventPage();});
             Events = evService.GetAllEvents();
         }
 
