@@ -8,10 +8,6 @@ namespace FandomAppSpace.ViewModels
     {
         private ViewModelBase _content;
         private Boolean _visibleNavigation;
-<<<<<<< HEAD
-        Login? UserManager;
-=======
->>>>>>> 9560f7e738791306eb47640ff511e8a4d1e32515
 
         public Boolean VisibleNavigation
         {
