@@ -27,10 +27,14 @@ public class MessageService {
         Message? msgFound = null;
         try
         {
-            var query = from message in _context.MESSAGES
-                        where message.Title == title
-                        select message;
-            msgFound = query.First();
+            msgFound = _context.MESSAGES
+            .Include(msg=>msg.Sender)
+            .Include(msg=>msg.Recipients)
+            .Include(msg=>msg.Timesent)
+            .Where(msg=>msg.Title == title)
+            .ToList()
+            .First<Message>();
+            
         }
         catch (Exception)
         {
@@ -41,28 +45,42 @@ public class MessageService {
 
 
     public void AddMessage(Message new_message) {
-
+        var state = _context.Entry(new_message.Sender);
+        state.State = EntityState.Unchanged;
+        foreach(User usr in new_message.Recipients){
+            state = _context.Entry(usr);
+            state.State = EntityState.Unchanged;
+        }
         _context.MESSAGES.Add(new_message);
         _context.SaveChanges();
 
     }
 
-    public void EditMessage(Login login, Message updatedmessage) {
+    public void EditMessage(Login login, Message updatedmessage, string oldTitle) {
 
         User? user = login.CurrentUser;
-        if (user?.Username != updatedmessage.Sender.Username)
-        {
+        if (user?.Username != updatedmessage.Sender.Username){
             throw new ArgumentException("Only the creator of this message can modify it.");
         }
         
         //Verifying that the message wasnt sent
-        if (updatedmessage.Sent != true)
+        Message? msgFound = null;
+        try
         {
-            _context.MESSAGES.Update(updatedmessage);
+            var query = from message in _context.MESSAGES
+                        where message.Title == oldTitle
+                        select message;
+            msgFound = query.First();
+            msgFound.Title = updatedmessage.Title;
+            msgFound.Text = updatedmessage.Text;
+            _context.MESSAGES.Update(msgFound);
             _context.SaveChanges();
-        } else {
-            throw new ArgumentException("Can't edit a message that was already sent!");
         }
+        catch (Exception)
+        {
+            throw new Exception("ERROR: DB ERROR");
+        }
+        
     }
 
 }

@@ -6,26 +6,21 @@
              x:Class="FandomAppSpace.Views.EditMessageView">
   <DockPanel>
   <Button DockPanel.Dock="Bottom" Command="{Binding Cancel}">Cancel</Button>
-    <Button DockPanel.Dock="Bottom" Command="{Binding Ok}">Create Message</Button>
+    <Button DockPanel.Dock="Bottom" Command="{Binding Ok}">Edit Message</Button>
     <TextBlock Text="Edit Message" FontSize="24" DockPanel.Dock="Top"/>
     <StackPanel>    
       <Grid ColumnDefinitions="*,*"
-            RowDefinitions="*,*,*"  
+            RowDefinitions="*,*"  
             Margin="4">
         <TextBlock Text="Title: " Grid.Row="0" Grid.Column="0"/>
         <TextBox Grid.Row="0" Grid.Column="1" AcceptsReturn="False"
-                Text=""
-                Watermark="Message Title"/>
+                Text="{Binding Title}"
+                Watermark="{Binding oldMsg.Title}"/>
 
       <TextBlock Text="Text: " Grid.Row="1" Grid.Column="0"/>
       <TextBox Grid.Row="1" Grid.Column="1" AcceptsReturn="False"
-              Text=""
-              Watermark="Message Text"/>
-
-      <TextBlock Text="Location: " Grid.Row="2" Grid.Column="0"/>
-      <TextBox Grid.Row="2" Grid.Column="1" AcceptsReturn="False"
-              Text=""
-              Watermark="Recipients"/>
+              Text="{Binding Text}"
+              Watermark="{Binding oldMsg.Text}"/>
       </Grid>
     </StackPanel>
   </DockPanel>

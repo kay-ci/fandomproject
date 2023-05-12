@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Reflection;
 using System.Text.RegularExpressions;
 
 namespace UserInfo{
@@ -68,6 +69,12 @@ namespace UserInfo{
             
             return true;
             
+        }
+        public partial class User_Partial{
+            public void Detach()
+            {
+                GetType().GetMethod("Initialize", BindingFlags.Instance | BindingFlags.NonPublic).Invoke(this, null);
+            }
         }
         public override bool Equals(object obj){
             var item = obj as User;
