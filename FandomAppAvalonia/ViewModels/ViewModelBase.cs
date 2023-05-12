@@ -10,9 +10,6 @@ public class ViewModelBase : ReactiveObject
     protected UserService uService = UserService.getInstance();
     protected EventService evService = EventService.getInstance();
     protected MessageService msgService = MessageService.getInstance();
-
-    //property holding the Current User logged in 
-    protected Login? UserManager;
     
     public ViewModelBase()
     {

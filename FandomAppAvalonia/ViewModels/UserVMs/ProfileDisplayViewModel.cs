@@ -7,6 +7,7 @@ using UserInfo;
 namespace FandomAppSpace.ViewModels
 {
     public class ProfileDisplayViewModel : ViewModelBase
+
     {
 
         public Profile Profile { get; }
@@ -17,7 +18,7 @@ namespace FandomAppSpace.ViewModels
             private set => this.RaiseAndSetIfChanged(ref _showEditButton, value);
         }
 
-        public ProfileDisplayViewModel(User chosenUser)
+        public ProfileDisplayViewModel(Login UserManager, User chosenUser)
         {
             if(chosenUser == UserManager.CurrentUser){
                 ShowEditButton = true;

@@ -5,7 +5,7 @@ using UserInfo;
 
 namespace FandomAppSpace.ViewModels
 {
-    public class OutboxDisplayViewModel : ViewModelBase
+    public class OutboxDisplayViewModel : MainWindowViewModel
     {
         public List<Message> Messages { get;}
         public OutboxDisplayViewModel(){

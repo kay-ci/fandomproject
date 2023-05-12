@@ -10,7 +10,7 @@ using System.Collections.ObjectModel;
 
 namespace FandomAppSpace.ViewModels
 {
-    public class NewEventViewModel : ViewModelBase
+    public class NewEventViewModel : MainWindowViewModel
     {
          private int _minAge;
         private string _title;

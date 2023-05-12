@@ -7,7 +7,7 @@ using System.Collections.ObjectModel;
 
 namespace FandomAppSpace.ViewModels
 {
-    public class CreateMessageViewModel : ViewModelBase
+    public class CreateMessageViewModel : MainWindowViewModel
     {
         
         public Message? newMsg {get; set;}
@@ -44,12 +44,14 @@ namespace FandomAppSpace.ViewModels
         //         this.RaiseAndSetIfChanged(ref _recipientText, value);
         //     }
         // }
-        public CreateMessageViewModel(){
+        Login UserManager;
+        public CreateMessageViewModel(Login userManager){
+            UserManager = userManager;
             ObservableRecips = new ObservableCollection<User>(Recipients);
             Database_users = uService.GetUsers();
             ObservableDBUsers = new ObservableCollection<User>(Database_users);
-            Database_users.Remove(UserManager.CurrentUser);
-            ObservableDBUsers.Remove(UserManager.CurrentUser);
+            //Database_users.Remove(UserManager.CurrentUser);
+            //ObservableDBUsers.Remove(UserManager.CurrentUser);
             Ok = ReactiveCommand.Create(() => { });
             Cancel = ReactiveCommand.Create(() => { });
             // RecipientText = "test";
@@ -80,20 +82,20 @@ namespace FandomAppSpace.ViewModels
             msgService.AddMessage(newMsg);
         }
 
-        public void RemoveRecipient(User UserManager){
+        public void RemoveRecipient(User recipient){
             
-            Recipients.Remove(UserManager);
-            Database_users.Add(UserManager);
-            ObservableRecips.Remove(UserManager);
-            ObservableDBUsers.Add(UserManager);
+            Recipients.Remove(recipient);
+            Database_users.Add(recipient);
+            ObservableRecips.Remove(recipient);
+            ObservableDBUsers.Add(recipient);
         }
 
-        public void AddRecipient(User UserManager){
+        public void AddRecipient(User recipient){
             
-            Recipients.Add(UserManager);
-            Database_users.Remove(UserManager);
-            ObservableRecips.Add(UserManager);
-            ObservableDBUsers.Remove(UserManager);
+            Recipients.Add(recipient);
+            Database_users.Remove(recipient);
+            ObservableRecips.Add(recipient);
+            ObservableDBUsers.Remove(recipient);
         }
     }
 }

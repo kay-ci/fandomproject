@@ -43,8 +43,9 @@ namespace FandomAppSpace.ViewModels
             
         }
 
-        public void LoginUser(){
-            UserManager = uService.LogIn(Username, Password);
+        public Login LoginUser(){
+            Login UserManager = uService.LogIn(Username, Password);
+            return UserManager;
         }
     }
 }

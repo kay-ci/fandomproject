@@ -155,10 +155,10 @@ public class EventService
     private IQueryable<Event> GetQueryableEvents()
     {
         var events = _context.EVENTS
-                            .Include(e => e.Categories)
-                            .Include(e => e.Fandoms)
-                            .Include(e => e.Owner)
-                            .Include(e => e.Attendees);
+                    .Include(e => e.Categories)
+                    .Include(e => e.Fandoms)
+                    .Include(e => e.Owner)
+                    .Include(e => e.Attendees);
         
         return events;
     }
