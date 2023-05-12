@@ -94,29 +94,64 @@ namespace FandomAppSpace.ViewModels
         //Display an existing event
         private void DisplayEventPage(){
             var vm = new EventDisplayViewModel();
-
-            vm.CreateEventBtn.Subscribe(x => {
-                var new_vm = vm.ShowNewEventPage();
+            Content=vm;
+            vm.CreateEventPageBtn.Subscribe(x => {
+                var new_vm = vm.AddEventPage();
                 Content=new_vm;
                     new_vm.AddEventBtn.Subscribe(x => {
                         new_vm.AddNewEvent();
                         DisplayEventPage();
                     });
-                EventFormPage(vm.ShowNewEventPage());
             });
 
-            vm.EditEventBtn.Subscribe(x => {vm.ShowNewEventPage();});
-            vm.EditEventBtn.Subscribe(x => {vm.ShowNewEventPage();});
-            Content = vm;
+            vm.EditEventPageBtn.Subscribe(x => {
+                var new_vm = vm.EditEventPage();
+                Content=new_vm;
+                    new_vm.EditBtn.Subscribe(x => {
+                        new_vm.UpdateEvent();
+                        DisplayEventPage();
+                    });
+
+            });
+
+            //Content=vm;
+
+            //vm.EventPageBtn.Subscribe(x => {
+            //    var new_vm = vm.EventPage();
+            //    Content = new_vm;
+            //    
+            //        new_vm.EditEventBtn.Subscribe(x => {
+            //            new_vm.EditEventPage();
+            //            DisplayEventPage();
+            //        });
+            //        new_vm.DeleteEventBtn.Subscribe(x => {
+            //            new_vm.DeleteEvent();
+            //            DisplayEventPage();
+            //        });
+//
+            //});
         }
 
-        private void EventFormPage(NewEventViewModel vm){
-    
-            vm.AddEventBtn.Subscribe(x => {
-                vm.AddNewEvent();
-                DisplayEventPage();
-            });
+        public void DisplaySingleEventPage(Event e)
+        {
+            var dpvm = new EventDisplayViewModel();
+            
+            var vm = new EventPageViewModel(e);
+            vm.EditEventBtn.Subscribe(x => {
+                    var new_vm = vm.EditEventPage();
+                    Content=new_vm;
+                        new_vm.EditBtn.Subscribe(x => {
+                        new_vm.UpdateEvent();
+                        DisplayEventPage();
+                    });
+                    });
+                    vm.DeleteEventBtn.Subscribe(x => {
+                        vm.DeleteEvent();
+                        DisplayEventPage();
+                    });
+            Content=vm;
         }
+
 
         private void View_Message(Message msg){
             Content = new MessageViewModel(msg);
@@ -142,32 +177,6 @@ namespace FandomAppSpace.ViewModels
             });
             Content = vm;
         }
-
-        // private void Create_Message(User chosen_recipient){
-        //     var vm = new CreateMessageViewModel(UserManager, chosen_recipient);
-
-        //     vm.Ok.Subscribe(x => {
-        //         vm.CreateMessage(UserManager);
-        //         Open_Outbox(UserManager.CurrentUser.Outbox);
-        //     });
-        //     vm.Cancel.Subscribe(x => {
-        //         Open_Inbox(UserManager.CurrentUser.Inbox);
-        //     });
-        //     Content = vm;
-        // }
-
-        // private void Edit_Message(Message msg){
-        //     var vm = new EditMessageViewModel(msg);
-
-        //     vm.Ok.Subscribe(x => {
-        //         vm.EditMessage();
-        //         Open_Outbox();
-        //     });
-        //     vm.Cancel.Subscribe(x => {
-        //         Open_Inbox();
-        //     });
-        //     Content = vm;
-        // }
 
         public void View_Users(){
             Content = new AllUsersViewModel();

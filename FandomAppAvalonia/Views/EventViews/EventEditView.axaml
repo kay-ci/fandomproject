@@ -4,63 +4,97 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="200" d:DesignHeight="300"
              x:Class="FandomAppSpace.Views.EventEditView">
-  <DockPanel>
-    <Button DockPanel.Dock="Bottom" Command="{Binding Ok}">Done</Button>
+<DockPanel>
+    <Button DockPanel.Dock="Bottom" Command="{Binding EditEventBtn}">Edit Event</Button>
     <TextBlock Text="Edit Event" FontSize="24" DockPanel.Dock="Top"/>
-    <StackPanel>    
+
+    <StackPanel>  
+
       <Grid ColumnDefinitions="1*,4*"
-            RowDefinitions="*,*,*,*,*,*,*,*,*"  
+            RowDefinitions="*,*,*,*,*,*,*,*,*,*,*,*,*,*"  
             Margin="4">
+        
         <TextBlock Text="Title: " Grid.Row="0" Grid.Column="0"/>
         <TextBox AcceptsReturn="False"
-                Text="{Binding Event.Title}"
-                Watermark="Event Title"
+                Text="{Binding Title}"
+                Watermark="Title"
                 Grid.Row="0" Grid.Column="1"/>
+                
+        <TextBlock Text="Location: " Grid.Row="2" Grid.Column="0"/>
+        <TextBox AcceptsReturn="False"
+                Text="{Binding Location}"
+                Watermark="Location"
+                Grid.Row="2" Grid.Column="1"/>
 
-      <TextBlock Text="Description: " Grid.Row="1" Grid.Column="0"/>
-      <TextBox AcceptsReturn="False"
-              Text="{Binding Event.Description}"
-              Watermark="Event Description"
-              Grid.Row="1" Grid.Column="1"/>
-      
+        <TextBlock Text="Date: " Grid.Row="4" Grid.Column="0"/>
+        <DatePicker SelectedDate="{Binding Date}"
+                  Grid.Row="4" Grid.Column="1"/>
+                
+        <TextBlock Text="Minimum Age: " Grid.Row="6" Grid.Column="0"/>
+        <TextBox AcceptsReturn="False"
+                Text="{Binding MinAge}"
+                Watermark="MinAge"
+                Grid.Row="6" Grid.Column="1"/>
 
-      <TextBlock Text="Location: " Grid.Row="2" Grid.Column="0"/>
-      <TextBox AcceptsReturn="False"
-              Text="{Binding Event.Location}"
-              Watermark="Event Location"
-              Grid.Row="2" Grid.Column="1"/>
-      
-      <TextBlock Text="Subject: " Grid.Row="3" Grid.Column="0"/>
-      <TextBox AcceptsReturn="False"
-              Text="{Binding Event.Subject}"
-              Watermark="Event Subject"
-              Grid.Row="3" Grid.Column="1"/>
+        <TextBlock Grid.Row="8" Grid.Column="0" Text="Categories:"/>
+        <StackPanel Grid.Row="8" Grid.Column="1" Orientation="Horizontal">
+                <TextBox AcceptsReturn="False"
+                        Text="{Binding CategoryText}"
+                        Watermark="Enter category"
+                        Width="300"/>
+                <Button Command="{Binding AddCategory}"> 
+                  <Image Source="/Assets/new.png" Width="15" Height="15"/> 
+                </Button>
+        </StackPanel>
+        
+        <ItemsRepeater Grid.Row="10" Grid.Column="1" Items="{Binding Categories}">
+          <ItemsRepeater.ItemTemplate>
+          <DataTemplate>
+            <StackPanel Orientation="Horizontal">
+                    <TextBlock Padding="2" VerticalAlignment="Center" Text="{Binding Name}"/>
+                    <Button Command="{Binding $parent[UserControl].DataContext.RemoveCategory}" CommandParameter="{Binding}"> 
+                      <Image Source="/Assets/cross.png" Width="15" Height="15"/>
+                    </Button> 
+            </StackPanel>
+          </DataTemplate>
+          </ItemsRepeater.ItemTemplate>
+        </ItemsRepeater>
 
-      <TextBlock Text="Course: " Grid.Row="4" Grid.Column="0"/>
-      <TextBox AcceptsReturn="False"
-              Text="{Binding Event.Course}"
-              Watermark="Event Course"
-              Grid.Row="4" Grid.Column="1"/>
 
-      <TextBlock Text="Program: " Grid.Row="5" Grid.Column="0"/>
-      <TextBox AcceptsReturn="False"
-              Text="{Binding Event.Program}"
-              Watermark="Event Program"
-              Grid.Row="5" Grid.Column="1"/>
+        <TextBlock Grid.Row="12" Grid.Column="0" Text="Fandoms:"/>
+        <StackPanel Grid.Row="12" Grid.Column="1" Orientation="Horizontal">
+            <TextBox AcceptsReturn="False"
+                    Text="{Binding FandomName}"
+                    Watermark="Name"
+                    Width="100"/>
+            <TextBox AcceptsReturn="False"
+                    Text="{Binding FandomCategory}"
+                    Watermark="Category"
+                    Width="100"/>
+            <TextBox AcceptsReturn="False"
+                    Text="{Binding FandomDescription}"
+                    Watermark="Description"
+                    Width="100"/>
+            <Button Command="{Binding AddFandom}">
+              <Image Source="/Assets/new.png" Width="15" Height="15"/>
+            </Button>
+        </StackPanel>
 
-      <TextBlock Text="School: " Grid.Row="6" Grid.Column="0"/>
-      <TextBox AcceptsReturn="False"
-              Text="{Binding Event.School}"
-              Watermark="Event School"
-              Grid.Row="6" Grid.Column="1"/>
-      <TextBlock Text="Date: " Grid.Row="7" Grid.Column="0"/>
-      <DatePicker SelectedDate="{Binding Event.Date}"
-                  Grid.Row="7" Grid.Column="1"/>
+        <ItemsRepeater Grid.Row="14" Grid.Column="1" Items="{Binding Fandoms}">
+            <ItemsRepeater.ItemTemplate>
+            <DataTemplate>
+            <StackPanel Orientation="Horizontal">
+                    <TextBlock Padding="2" VerticalAlignment="Center" Text="{Binding Name}"/>
+                    <Button Command="{Binding $parent[UserControl].DataContext.RemoveFandom}" CommandParameter="{Binding}">
+                      <Image Source="/Assets/cross.png" Width="15" Height="15"/>
+                    </Button> 
+            </StackPanel>
+            </DataTemplate>
+            </ItemsRepeater.ItemTemplate>
+        </ItemsRepeater>
 
-      <TextBlock Text="Time: " Grid.Row="8" Grid.Column="0"/>
-      <TimePicker SelectedTime="{Binding Event.TimeOfDay}"
-                  Grid.Row="8" Grid.Column="1"/>
       </Grid>
+
     </StackPanel>
   </DockPanel>
 </UserControl>
