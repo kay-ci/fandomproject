@@ -20,7 +20,6 @@ namespace FandomAppSpace.ViewModels
         ObservableCollection<User> ObservableRecips {get; set;}
         ObservableCollection<User> ObservableDBUsers {get; set;}
         public List<User> Database_users {get; set;} = new();
-        // public string _recipientText;
         [Required]
         public string Title{
             get => _title;
@@ -37,46 +36,30 @@ namespace FandomAppSpace.ViewModels
                 
             }
         }
-        // [Required]
-        // public string RecipientText {
-        //     get => _recipientText;
-        //     private set {
-        //         this.RaiseAndSetIfChanged(ref _recipientText, value);
-        //     }
-        // }
-      
+        Login UserManager;
         public CreateMessageViewModel(){
+            UserManager = ViewModelBase.UserManager;
             ObservableRecips = new ObservableCollection<User>(Recipients);
             Database_users = uService.GetUsers();
+            Database_users.Remove(uService.GetUser(UserManager.CurrentUser.Username));
             ObservableDBUsers = new ObservableCollection<User>(Database_users);
-            //Database_users.Remove(UserManager.CurrentUser);
-            //ObservableDBUsers.Remove(UserManager.CurrentUser);
             Ok = ReactiveCommand.Create(() => { });
             Cancel = ReactiveCommand.Create(() => { });
-            // RecipientText = "test";
         }
 
-        // public CreateMessageViewModel(Login UserManager, User chosen_recipient){
-        //     Service.setFanAppContext(context);
-        //     U_Service.setFanAppContext(context);
-        //     ObservableRecips = new ObservableCollection<User>(Recipients);
-        //     Database_users = U_Service.GetUsers();
-        //     ObservableDBUsers = new ObservableCollection<User>(Database_users);
-        //     Database_users.Remove(UserManager.CurrentUser);
-        //     ObservableDBUsers.Remove(UserManager.CurrentUser);
-        //     Ok = ReactiveCommand.Create(() => { });
-        //     Cancel = ReactiveCommand.Create(() => { });
-        //     chosen_recipient.Username += ",";
-        //     RecipientText = chosen_recipient.Username;
-        // }
+        public CreateMessageViewModel(User chosen_recipient){
+            UserManager = ViewModelBase.UserManager;
+            ObservableRecips = new ObservableCollection<User>(Recipients);
+            Database_users = new List<User>(uService.GetUsers());
+            ObservableDBUsers = new ObservableCollection<User>(Database_users);
+            AddRecipient(chosen_recipient);
+            
+            Ok = ReactiveCommand.Create(() => { });
+            Cancel = ReactiveCommand.Create(() => { });
+        }
 
         public void CreateMessage(){
-            // string[] str_recipients = RecipientText.Split(",");
-            // foreach(string str_recipient in str_recipients){
-            //     Recipients.Add(U_Service.GetUser(str_recipient));
-            // }
-
-            if(Recipients.Count != 0) newMsg = new Message(ViewModelBase.UserManager.CurrentUser, Recipients, Title, Text);
+            if(Recipients.Count != 0) newMsg = new Message(UserManager.CurrentUser, Recipients, Title, Text);
             else throw new ArgumentException("ERROR : Recipients is empty");
             msgService.AddMessage(newMsg);
         }
@@ -95,6 +78,11 @@ namespace FandomAppSpace.ViewModels
             Database_users.Remove(recipient);
             ObservableRecips.Add(recipient);
             ObservableDBUsers.Remove(recipient);
+        }
+
+        public void RemoveLogin(){
+            Database_users.Remove(UserManager.CurrentUser);
+            ObservableDBUsers.Remove(UserManager.CurrentUser);
         }
     }
 }

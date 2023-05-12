@@ -20,20 +20,22 @@
 
       <StackPanel Width="200" Spacing="5">
         <TextBlock Text="Recipients:"/>
-        <TextBlock Text="{Binding Msg.recipient, StringFormat='recipient: {0}'}"
-                   IsVisible="{Binding Msg.recipient}"/>
-        <ItemsRepeater Items="{Binding Msg.recipients}">
+        <ItemsRepeater Items="{Binding Msg.Recipients}">
             <ItemsRepeater.ItemTemplate>
               <DataTemplate>
               <Border Margin="10,0,0,0" Padding="2">
-                <TextBlock Text="{Binding}"/>
+                <TextBlock Text="{Binding Username}"/>
               </Border>
               </DataTemplate>
             </ItemsRepeater.ItemTemplate>
           </ItemsRepeater>
       </StackPanel>
     </StackPanel>
+    <StackPanel IsVisible="{Binding ShowEditButton}">
       <Button Content="Edit Message"
-              Command="{Binding $parent[Window].DataContext.Edit_Message}"/>       
+              Command="{Binding $parent[Window].DataContext.Edit_Message}"
+              CommandParameter="{Binding Msg}"/>  
+    </StackPanel>
+           
   </StackPanel>
 </UserControl>

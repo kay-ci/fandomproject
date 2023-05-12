@@ -9,7 +9,7 @@ namespace FandomAppSpace.ViewModels
     {
         public List<Message> Messages { get;}
         public InboxDisplayViewModel(){
-            Messages = UserManager.CurrentUser.Inbox;
+            Messages = ViewModelBase.UserManager.CurrentUser.Inbox;
         }
     }
 }

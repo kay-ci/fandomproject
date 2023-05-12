@@ -130,8 +130,11 @@ namespace FandomAppSpace.ViewModels
             });
         }
 
+        private void View_Message_Edit(Message msg){
+            Content = new MessageViewModel(msg, true);
+        }
         private void View_Message(Message msg){
-            Content = new MessageViewModel(msg);
+            Content = new MessageViewModel(msg, false);
         }
 
         private void Open_Outbox(){
@@ -140,6 +143,19 @@ namespace FandomAppSpace.ViewModels
 
         private void Open_Inbox(){
             Content = new InboxDisplayViewModel();
+        }
+
+        private void Create_Message(User chosen_recipient){
+            var vm = new CreateMessageViewModel(chosen_recipient);
+
+            vm.Ok.Subscribe(x => {
+                vm.CreateMessage();
+                Open_Outbox();
+            });
+            vm.Cancel.Subscribe(x => {
+                Open_Inbox();
+            });
+            Content = vm;
         }
 
         private void Create_Message(){
@@ -155,31 +171,18 @@ namespace FandomAppSpace.ViewModels
             Content = vm;
         }
 
-        // private void Create_Message(User chosen_recipient){
-        //     var vm = new CreateMessageViewModel(UserManager, chosen_recipient);
+        private void Edit_Message(Message msg){
+            var vm = new EditMessageViewModel(msg);
 
-        //     vm.Ok.Subscribe(x => {
-        //         vm.CreateMessage(UserManager);
-        //         Open_Outbox(UserManager.CurrentUser.Outbox);
-        //     });
-        //     vm.Cancel.Subscribe(x => {
-        //         Open_Inbox(UserManager.CurrentUser.Inbox);
-        //     });
-        //     Content = vm;
-        // }
-
-        // private void Edit_Message(Message msg){
-        //     var vm = new EditMessageViewModel(msg);
-
-        //     vm.Ok.Subscribe(x => {
-        //         vm.EditMessage();
-        //         Open_Outbox();
-        //     });
-        //     vm.Cancel.Subscribe(x => {
-        //         Open_Inbox();
-        //     });
-        //     Content = vm;
-        // }
+            vm.Ok.Subscribe(x => {
+                vm.EditMessage();
+                Open_Outbox();
+            });
+            vm.Cancel.Subscribe(x => {
+                Open_Inbox();
+            });
+            Content = vm;
+        }
 
         public void View_Users(){
             Content = new AllUsersViewModel();
