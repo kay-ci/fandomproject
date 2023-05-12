@@ -133,7 +133,7 @@ namespace FandomAppSpace.ViewModels
         }
 
         private void Create_Message(){
-            var vm = new CreateMessageViewModel();
+            var vm = new CreateMessageViewModel(UserManager);
 
             vm.Ok.Subscribe(x => {
                 vm.CreateMessage(UserManager);
@@ -145,18 +145,18 @@ namespace FandomAppSpace.ViewModels
             Content = vm;
         }
 
-        private void Create_Message(User chosen_recipient){
-            var vm = new CreateMessageViewModel(chosen_recipient);
+        // private void Create_Message(User chosen_recipient){
+        //     var vm = new CreateMessageViewModel(UserManager, chosen_recipient);
 
-            vm.Ok.Subscribe(x => {
-                vm.CreateMessage(UserManager);
-                Open_Outbox(UserManager.CurrentUser.Outbox);
-            });
-            vm.Cancel.Subscribe(x => {
-                Open_Inbox(UserManager.CurrentUser.Inbox);
-            });
-            Content = vm;
-        }
+        //     vm.Ok.Subscribe(x => {
+        //         vm.CreateMessage(UserManager);
+        //         Open_Outbox(UserManager.CurrentUser.Outbox);
+        //     });
+        //     vm.Cancel.Subscribe(x => {
+        //         Open_Inbox(UserManager.CurrentUser.Inbox);
+        //     });
+        //     Content = vm;
+        // }
 
         private void Edit_Message(Message msg){
             var vm = new EditMessageViewModel(msg);
