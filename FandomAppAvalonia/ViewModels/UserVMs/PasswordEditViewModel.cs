@@ -3,6 +3,8 @@ using ReactiveUI;
 using System.Reactive;
 using System.Reactive.Linq;
 using UserInfo;
+using Avalonia.Data;
+using System.ComponentModel.DataAnnotations;
 
 namespace FandomAppSpace.ViewModels
 {
@@ -12,16 +14,19 @@ namespace FandomAppSpace.ViewModels
         public string _oldPassword;
         public string _newPassword;
         public string _confirm;
+        [Required]
         public string OldPassword
         {
             get => _oldPassword;
             private set => this.RaiseAndSetIfChanged(ref _oldPassword, value);
         }
+        [Required]
         public string NewPassword 
         {
             get => _newPassword;
             private set => this.RaiseAndSetIfChanged(ref _newPassword, value);
         }
+        [Required]
         public string Confirm 
         {
             get => _confirm;
@@ -29,7 +34,6 @@ namespace FandomAppSpace.ViewModels
         }
 
         public ReactiveCommand<Unit, Unit> ChangePassword { get; }
-
 
         public PasswordEditViewModel()
         {
