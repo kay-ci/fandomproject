@@ -12,7 +12,7 @@
                 <DataTemplate>
                 <StackPanel>
                 <Border Margin="10,0,0,0" Padding="2">
-                  <TextBlock Text="{Binding}"/>
+                  <TextBlock Text="{Binding Title}"/>
                 </Border>
                   <Button Content="View Message"
                     Command="{Binding $parent[Window].DataContext.View_Message}"

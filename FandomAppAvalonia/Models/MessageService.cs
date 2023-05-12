@@ -41,7 +41,12 @@ public class MessageService {
 
 
     public void AddMessage(Message new_message) {
-
+        var state = _context.Entry(new_message.Sender);
+        state.State = EntityState.Unchanged;
+        foreach(User usr in new_message.Recipients){
+            state = _context.Entry(usr);
+            state.State = EntityState.Unchanged;
+        }
         _context.MESSAGES.Add(new_message);
         _context.SaveChanges();
 

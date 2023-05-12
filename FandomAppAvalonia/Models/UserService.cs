@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
+using System.Data;
 
 /// <summary>
 /// Class <c>UserService</c> handles interactions with DbSets USERS, PROFILES as well as user authentification.
@@ -32,6 +33,7 @@ public class UserService{
             .Include(user => user.Inbox)
             .Include(user => user.Outbox)
             .OrderBy(user => user.UserID)
+            .AsNoTracking()
             .ToList<User>();
         return usersList;
     }
@@ -48,6 +50,7 @@ public class UserService{
                         .Include(user => user.Inbox)
                         .Include(user => user.Outbox)
                         .Where(user => user.Username == username)
+                        .AsNoTracking()
                         .ToList()
                         .First<User>();
         }
@@ -97,6 +100,7 @@ public class UserService{
             .Include(profile => profile.Badges)
             .Include(profile => profile.user)
             .OrderBy(profile => profile.ProfileID)
+            .AsNoTracking()
             .ToList<Profile>();
         return profilesList;
     }
