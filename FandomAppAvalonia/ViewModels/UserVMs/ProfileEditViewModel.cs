@@ -117,20 +117,16 @@ namespace FandomAppSpace.ViewModels
             Fandoms = new ObservableCollection<Fandom>(FandomsList);
             Badges = new ObservableCollection<Badge>(BadgesList);
             var editEnabled = this.WhenAnyValue(
-                x => x.FandomCategory, x=> x.FandomName, x=>x.FandomDescription, x=>x.BadgesText, x=>x.Name, x=>x.Pronouns, x=>x.Country, x=>x.City,x=>x.Description, x=>x.Age, x=>x.Picture, x=>x.Interests,
-                (fcategory, fname, fdescription, badges, pname, pronouns, country, city, pdescription, age, picture, interests) =>
-                    !string.IsNullOrWhiteSpace(fcategory) &&
-                    !string.IsNullOrWhiteSpace(fname) &&
-                    !string.IsNullOrWhiteSpace(fdescription) &&
-                    !string.IsNullOrWhiteSpace(badges) &&
+                x=>x.Name, x=>x.Pronouns, x=>x.Country, x=>x.City, x=>x.Age,
+                ( pname, pronouns, country, city, age) =>
+                
                     !string.IsNullOrWhiteSpace(pname) &&
                     !string.IsNullOrWhiteSpace(pronouns)&&
                     !string.IsNullOrWhiteSpace(country)&&
                     !string.IsNullOrWhiteSpace(city)&&
-                    !string.IsNullOrWhiteSpace(picture)&&
-                    age >= 0 && age <= 130)
+                    age >= 13 && age <= 130)
             .DistinctUntilChanged();
-            Ok = ReactiveCommand.Create(() => { });
+            Ok = ReactiveCommand.Create(() => { }, editEnabled);
         }
 
         public void UpdateUser(){

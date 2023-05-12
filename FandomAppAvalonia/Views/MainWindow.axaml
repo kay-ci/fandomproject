@@ -5,7 +5,7 @@
         Title="Fandom App"
         Width="1000" Height="800">
         <StackPanel>
-        <ContentControl Width="800" Height="500" Content="{Binding Content}"/>
+        <ContentControl Width="800" Height="700" Content="{Binding Content}"/>
         <StackPanel HorizontalAlignment="Center"
                     VerticalAlignment="Bottom"
                     Orientation="Horizontal"

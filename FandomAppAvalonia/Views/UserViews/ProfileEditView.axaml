@@ -121,7 +121,7 @@
         <TextBlock Text="Picture: " Grid.Row="13" Grid.Column="0"/>
         <TextBox AcceptsReturn="False"
                 Text="{Binding Picture}"
-                Watermark="{Binding Profile.Name}"
+                Watermark="{Binding Profile.Picture}"
                 Grid.Row="13" Grid.Column="1"/>
       </Grid>
       </StackPanel>

@@ -29,8 +29,6 @@ namespace FandomAppSpace.ViewModels
         public ReactiveCommand<Unit, Unit> OpenOutbox { get; }
         public ReactiveCommand<Unit, Unit> ViewUsers {get; }
         public ReactiveCommand<Unit, Unit> Logout { get; }
-
-        //public Login? UserManager;
         public MainWindowViewModel()
         {
             //Buttons
