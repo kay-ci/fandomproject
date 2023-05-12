@@ -96,6 +96,17 @@ namespace FandomAppSpace.ViewModels
                 
             });
         }
+        public void ChangePassword(){
+            var vm = new PasswordEditViewModel();
+            Content = vm;
+            vm.ChangePassword.Subscribe(x => {
+            vm.UpdatePassword();
+            DisplayProfile(ViewModelBase.UserManager.CurrentUser);
+            });
+            vm.Profile.Subscribe(x => {
+                DisplayProfile(ViewModelBase.UserManager.CurrentUser);
+            });
+        }
 
         //Display an existing event
         private void DisplayEventPage(){

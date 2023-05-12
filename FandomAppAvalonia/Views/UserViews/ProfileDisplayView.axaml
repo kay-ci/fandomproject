@@ -76,6 +76,8 @@
               Command="{Binding $parent[Window].DataContext.EditProfile}"/>
       <Button Content="Delete User"
               Command="{Binding DeleteCurrentUser}" />
+      <Button Content="Change Password"
+              Command="{Binding $parent[Window].DataContext.ChangePassword}"/>
     </StackPanel>         
   </StackPanel>
 </UserControl>
