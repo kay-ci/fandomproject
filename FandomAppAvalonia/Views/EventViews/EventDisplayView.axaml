@@ -13,10 +13,6 @@
           <Button Command="{Binding CreateEventBtn}"> 
                   Create New Event
           </Button>
-          <Button Command="{Binding DeleteEventBtn}">
-                  <!--<Image Source="/Assets/Icons/icons-event.png" Width="20" Height="20"/> -->
-                  Delete Event
-          </Button>
           <Button Command="{Binding EditEventBtn}">
                   <!--<Image Source="/Assets/Icons/icons-event.png" Width="20" Height="20"/> -->
                   Edit Event
@@ -40,7 +36,7 @@
               <TextBlock Text="{Binding MinAge}"/>
               <TextBlock Text="{Binding Owner.Username, StringFormat='Organized By: {0}'}"/>
 
-              <Button Command="{Binding $parent[UserControl].DataContext.ShowEvent}"> Show All Infos </Button>
+              <Button Command="{Binding $parent[Window].DataContext.DisplaySingleEventPage}" CommandParameter="{Binding}"> Show more infos </Button>
             </StackPanel>
             </DataTemplate>
           </ItemsRepeater.ItemTemplate>

@@ -106,28 +106,62 @@ namespace FandomAppSpace.ViewModels
         //Display an existing event
         private void DisplayEventPage(){
             var vm = new EventDisplayViewModel();
-
-            vm.CreateEventBtn.Subscribe(x => {
-                var new_vm = vm.ShowNewEventPage();
+            Content=vm;
+            vm.CreateEventPageBtn.Subscribe(x => {
+                var new_vm = vm.AddEventPage();
                 Content=new_vm;
                     new_vm.AddEventBtn.Subscribe(x => {
                         new_vm.AddNewEvent();
                         DisplayEventPage();
                     });
-                EventFormPage(vm.ShowNewEventPage());
             });
 
-            vm.EditEventBtn.Subscribe(x => {vm.ShowNewEventPage();});
-            vm.EditEventBtn.Subscribe(x => {vm.ShowNewEventPage();});
-            Content = vm;
+            vm.EditEventPageBtn.Subscribe(x => {
+                var new_vm = vm.EditEventPage();
+                Content=new_vm;
+                    new_vm.EditBtn.Subscribe(x => {
+                        new_vm.UpdateEvent();
+                        DisplayEventPage();
+                    });
+
+            });
+
+            //Content=vm;
+
+            //vm.EventPageBtn.Subscribe(x => {
+            //    var new_vm = vm.EventPage();
+            //    Content = new_vm;
+            //    
+            //        new_vm.EditEventBtn.Subscribe(x => {
+            //            new_vm.EditEventPage();
+            //            DisplayEventPage();
+            //        });
+            //        new_vm.DeleteEventBtn.Subscribe(x => {
+            //            new_vm.DeleteEvent();
+            //            DisplayEventPage();
+            //        });
+//
+            //});
         }
 
-        private void EventFormPage(NewEventViewModel vm){
-    
-            vm.AddEventBtn.Subscribe(x => {
-                vm.AddNewEvent();
-                DisplayEventPage();
-            });
+        public void DisplaySingleEventPage(Event e)
+        {
+            var dpvm = new EventDisplayViewModel();
+            
+            var vm = new EventPageViewModel(e);
+            vm.EditEventBtn.Subscribe(x => {
+                    var new_vm = vm.EditEventPage();
+                    Content=new_vm;
+                        new_vm.EditBtn.Subscribe(x => {
+                        new_vm.UpdateEvent();
+                        DisplayEventPage();
+                    });
+                    });
+                    vm.DeleteEventBtn.Subscribe(x => {
+                        vm.DeleteEvent();
+                        DisplayEventPage();
+                    });
+            Content=vm;
         }
 
         private void View_Message_Edit(Message msg){

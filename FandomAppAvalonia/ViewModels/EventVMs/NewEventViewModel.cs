@@ -12,9 +12,9 @@ namespace FandomAppSpace.ViewModels
 {
     public class NewEventViewModel : EventDisplayViewModel
     {
-         private int _minAge;
+        private int _minAge;
         private string _title;
-        private DateTime _date;
+        private string _date;
         private string _location;
 
         string _categoryText;
@@ -55,7 +55,7 @@ namespace FandomAppSpace.ViewModels
                 this.RaiseAndSetIfChanged(ref _title, value);
             }
         }
-        public DateTime Date {
+        public string Date {
             get => _date;
             private set { 
                 this.RaiseAndSetIfChanged(ref _date, value);
@@ -74,7 +74,6 @@ namespace FandomAppSpace.ViewModels
                 this.RaiseAndSetIfChanged(ref _minAge, value);
             }
         }
-
         public ReactiveCommand<Unit, Unit> AddEventBtn { get; }
         public NewEventViewModel()
         {
@@ -82,10 +81,11 @@ namespace FandomAppSpace.ViewModels
             Fandoms = new ObservableCollection<Fandom>(FandomsList);
             AddEventBtn = ReactiveCommand.Create(() => { AddNewEvent(); });
         }
+        
 
         public void AddNewEvent()
         {
-            Event new_event = new Event(Title, Date, Location, MinAge, ViewModelBase.UserManager.CurrentUser , Categories.ToList(), FandomsList.ToList());
+            Event new_event = new Event(Title, new DateTime(2030,12,12), Location, MinAge, ViewModelBase.UserManager.CurrentUser , Categories.ToList(), FandomsList.ToList());
             evService.CreateEvent(new_event);
         }
         public void AddCategory(){

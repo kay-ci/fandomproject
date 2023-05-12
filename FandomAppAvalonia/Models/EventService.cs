@@ -27,6 +27,13 @@ public class EventService
     {
         if (GetEvent(new_event.Title) == null)
         {
+            var state = _context.Entry(new_event.Owner);
+            state.State = EntityState.Unchanged;
+            
+            foreach(User attendee in new_event.Attendees){
+            state = _context.Entry(attendee);
+            state.State = EntityState.Unchanged;
+            }
             _context.EVENTS.Add(new_event);
             _context.SaveChanges();
         }
@@ -105,6 +112,21 @@ public class EventService
         }
         
         if (GetEvent(updatedEvent.EventID) != null || GetEvent(updatedEvent.Title) != null)
+        {
+            _context.EVENTS.Update(updatedEvent);
+            _context.SaveChanges();
+        }
+    }
+
+    public void EditEvent(Login login, Event updatedEvent, string old_title) {
+        
+        User? user = login.CurrentUser;
+        if (user?.Username != updatedEvent.Owner.Username)
+        {
+            throw new ArgumentException("Only the creator of this event can modify it.");
+        }
+        
+        if (GetEvent(old_title) != null)
         {
             _context.EVENTS.Update(updatedEvent);
             _context.SaveChanges();
