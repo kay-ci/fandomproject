@@ -44,9 +44,6 @@ namespace FandomAppSpace.ViewModels
         public NewEventViewModel ShowNewEventPage()
         {   
             var vm = new NewEventViewModel();
-            vm.AddEventBtn.Subscribe(x => {
-                vm.AddNewEvent();
-            });
             return vm;
         }
 
