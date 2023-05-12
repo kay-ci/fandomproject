@@ -12,8 +12,8 @@ using UserInfo;
 namespace FandomAppSpace.Migrations
 {
     [DbContext(typeof(FanAppContext))]
-    [Migration("20230511024711_Initial")]
-    partial class Initial
+    [Migration("20230512002515_removeForeignKey")]
+    partial class removeForeignKey
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -216,6 +216,9 @@ namespace FandomAppSpace.Migrations
                     b.Property<bool>("Seen")
                         .HasColumnType("NUMBER(1)");
 
+                    b.Property<int>("SenderUserID")
+                        .HasColumnType("NUMBER(10)");
+
                     b.Property<bool>("Sent")
                         .HasColumnType("NUMBER(1)");
 
@@ -230,12 +233,9 @@ namespace FandomAppSpace.Migrations
                         .IsRequired()
                         .HasColumnType("NVARCHAR2(2000)");
 
-                    b.Property<int>("UserID")
-                        .HasColumnType("NUMBER(10)");
-
                     b.HasKey("MessageID");
 
-                    b.HasIndex("UserID");
+                    b.HasIndex("SenderUserID");
 
                     b.ToTable("MESSAGES");
                 });
@@ -422,7 +422,7 @@ namespace FandomAppSpace.Migrations
                 {
                     b.HasOne("UserInfo.User", "Sender")
                         .WithMany("Outbox")
-                        .HasForeignKey("UserID")
+                        .HasForeignKey("SenderUserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

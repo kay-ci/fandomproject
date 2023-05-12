@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace FandomAppSpace.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class removeForeignKey : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -55,7 +55,7 @@ namespace FandomAppSpace.Migrations
                 {
                     MessageID = table.Column<int>(type: "NUMBER(10)", nullable: false)
                         .Annotation("Oracle:Identity", "START WITH 1 INCREMENT BY 1"),
-                    UserID = table.Column<int>(type: "NUMBER(10)", nullable: false),
+                    SenderUserID = table.Column<int>(type: "NUMBER(10)", nullable: false),
                     Timesent = table.Column<DateTime>(type: "TIMESTAMP(7)", nullable: false),
                     Text = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false),
                     Title = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false),
@@ -66,8 +66,8 @@ namespace FandomAppSpace.Migrations
                 {
                     table.PrimaryKey("PK_MESSAGES", x => x.MessageID);
                     table.ForeignKey(
-                        name: "FK_MESSAGES_USERS_UserID",
-                        column: x => x.UserID,
+                        name: "FK_MESSAGES_USERS_SenderUserID",
+                        column: x => x.SenderUserID,
                         principalTable: "USERS",
                         principalColumn: "UserID",
                         onDelete: ReferentialAction.Cascade);
@@ -320,9 +320,9 @@ namespace FandomAppSpace.Migrations
                 column: "FansUserID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MESSAGES_UserID",
+                name: "IX_MESSAGES_SenderUserID",
                 table: "MESSAGES",
-                column: "UserID");
+                column: "SenderUserID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_MessageUser_RecipientsUserID",

@@ -12,8 +12,8 @@ using UserInfo;
 namespace FandomAppSpace.Migrations
 {
     [DbContext(typeof(FanAppContext))]
-    [Migration("20230511024038_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20230512003134_ForeignKeyAdded")]
+    partial class ForeignKeyAdded
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

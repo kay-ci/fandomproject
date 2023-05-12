@@ -53,6 +53,16 @@ namespace FandomAppSpace.ViewModels
             Categories = new ObservableCollection<Category>(CategoriesList);
             Fandoms = new ObservableCollection<Fandom>(FandomsList);
             Badges = new ObservableCollection<Badge>(BadgesList);
+            var editEnabled = this.WhenAnyValue(
+                x => x.FandomCategory, x=> x.FandomName, x=>x.FandomCategory, x=>x.FandomDescription, x=>x.BadgesText, x=>x.Profile.Name, x=>x.Profile.Pronouns, x=>x.Profile.Country, x=>x.Profile.City,x=>x.Profile.Description, x=>x.Profile.Age,x=>x.Profile.Picture, x=>x.Profile,
+                (user_name, pass_word, country, city, name, age, pronouns) =>
+                    !string.IsNullOrWhiteSpace(user_name) &&
+                    !string.IsNullOrWhiteSpace(pass_word) &&
+                    !string.IsNullOrWhiteSpace(country) &&
+                    !string.IsNullOrWhiteSpace(city) &&
+                    !string.IsNullOrWhiteSpace(name) &&
+                    !string.IsNullOrWhiteSpace(pronouns))
+                .DistinctUntilChanged();
             Ok = ReactiveCommand.Create(() => { });
         }
 
@@ -61,19 +71,28 @@ namespace FandomAppSpace.ViewModels
             service.UpdateProfile(userManager, Profile);
         }
         public void AddBadge(){
-            Badges.Add(new Badge(BadgesText));
+            Badge newBadge = new Badge(BadgesText);
+            if (!Badges.Contains(newBadge)){
+                Badges.Add(newBadge);
+            }
         }
         public void RemoveBadge(Badge badgeToRemove){
             Badges.Remove(badgeToRemove);
         }
         public void AddCategory(){
-            Categories.Add(new Category(CategoryText));
+            Category newCategory = new Category(CategoryText);
+            if (!Categories.Contains(newCategory)){
+                Categories.Add(newCategory);
+            }
         }
         public void RemoveCategory(Category catToRemove){
             Categories.Remove(catToRemove);
         }
         public void AddFandom(){
-            Fandoms.Add(new Fandom(FandomName, FandomCategory, FandomDescription));
+            Fandom newFandom = new Fandom(FandomName, FandomCategory, FandomDescription);
+            if (!Fandoms.Contains(newFandom)){
+                Fandoms.Add(newFandom);
+            }
         }
         public void RemoveFandom(Fandom fandomToRemove){
             Fandoms.Remove(fandomToRemove);

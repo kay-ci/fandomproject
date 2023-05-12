@@ -2,13 +2,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="1080" d:DesignHeight="450"
+             mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="1080"
              x:Class="FandomAppSpace.Views.ProfileEditView">
   <DockPanel>
     <Button DockPanel.Dock="Bottom" Command="{Binding Ok}">Done</Button>
     <TextBlock Text="Edit Profile" FontSize="24" DockPanel.Dock="Top"/>
     <StackPanel>
-    <ScrollViewer>    
+    <ScrollViewer Height="1000" Width="600" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled">    
+      <StackPanel>
       <Grid ColumnDefinitions="1*,4*"
             RowDefinitions="*,*,*,*,*,*,*,*,*,*,*,*,*,*"  
             Margin="4">
@@ -105,7 +106,7 @@
                 <ItemsRepeater.ItemTemplate>
                 <DataTemplate>
                 <StackPanel Orientation="Horizontal">
-                        <TextBlock Padding="2" VerticalAlignment="Center" Text="{Binding Category_name}"/>
+                        <TextBlock Padding="2" VerticalAlignment="Center" Text="{Binding Name}"/>
                         <Button Content="Remove Fandom"
                         Command="{Binding $parent[UserControl].DataContext.RemoveFandom}" CommandParameter="{Binding}"/> 
                 </StackPanel>
@@ -123,6 +124,7 @@
                 Watermark="url for picture"
                 Grid.Row="13" Grid.Column="1"/>
       </Grid>
+      </StackPanel>
       </ScrollViewer>  
     </StackPanel>
   </DockPanel>
