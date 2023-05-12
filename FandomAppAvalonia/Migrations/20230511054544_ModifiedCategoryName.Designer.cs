@@ -12,8 +12,8 @@ using UserInfo;
 namespace FandomAppSpace.Migrations
 {
     [DbContext(typeof(FanAppContext))]
-    [Migration("20230511024711_Initial")]
-    partial class Initial
+    [Migration("20230511054544_ModifiedCategoryName")]
+    partial class ModifiedCategoryName
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -30,23 +30,23 @@ namespace FandomAppSpace.Migrations
                     b.Property<int>("CategoriesCategoryID")
                         .HasColumnType("NUMBER(10)");
 
-                    b.Property<int>("eventsEventId")
+                    b.Property<int>("eventsEventID")
                         .HasColumnType("NUMBER(10)");
 
-                    b.HasKey("CategoriesCategoryID", "eventsEventId");
+                    b.HasKey("CategoriesCategoryID", "eventsEventID");
 
-                    b.HasIndex("eventsEventId");
+                    b.HasIndex("eventsEventID");
 
                     b.ToTable("CategoryEvent");
                 });
 
             modelBuilder.Entity("Event", b =>
                 {
-                    b.Property<int>("EventId")
+                    b.Property<int>("EventID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("NUMBER(10)");
 
-                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EventId"));
+                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EventID"));
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("TIMESTAMP(7)");
@@ -65,7 +65,7 @@ namespace FandomAppSpace.Migrations
                     b.Property<int>("UserID")
                         .HasColumnType("NUMBER(10)");
 
-                    b.HasKey("EventId");
+                    b.HasKey("EventID");
 
                     b.HasIndex("UserID");
 
@@ -74,13 +74,13 @@ namespace FandomAppSpace.Migrations
 
             modelBuilder.Entity("EventFandom", b =>
                 {
-                    b.Property<int>("EventsEventId")
+                    b.Property<int>("EventsEventID")
                         .HasColumnType("NUMBER(10)");
 
                     b.Property<int>("FandomsFandomID")
                         .HasColumnType("NUMBER(10)");
 
-                    b.HasKey("EventsEventId", "FandomsFandomID");
+                    b.HasKey("EventsEventID", "FandomsFandomID");
 
                     b.HasIndex("FandomsFandomID");
 
@@ -92,12 +92,12 @@ namespace FandomAppSpace.Migrations
                     b.Property<int>("AttendeesUserID")
                         .HasColumnType("NUMBER(10)");
 
-                    b.Property<int>("EventsAttendingEventId")
+                    b.Property<int>("EventsAttendingEventID")
                         .HasColumnType("NUMBER(10)");
 
-                    b.HasKey("AttendeesUserID", "EventsAttendingEventId");
+                    b.HasKey("AttendeesUserID", "EventsAttendingEventID");
 
-                    b.HasIndex("EventsAttendingEventId");
+                    b.HasIndex("EventsAttendingEventID");
 
                     b.ToTable("EventUser");
                 });
@@ -162,7 +162,7 @@ namespace FandomAppSpace.Migrations
 
                     OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryID"));
 
-                    b.Property<string>("Category_name")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("NVARCHAR2(2000)");
 
@@ -321,7 +321,7 @@ namespace FandomAppSpace.Migrations
 
                     b.HasOne("Event", null)
                         .WithMany()
-                        .HasForeignKey("eventsEventId")
+                        .HasForeignKey("eventsEventID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -341,7 +341,7 @@ namespace FandomAppSpace.Migrations
                 {
                     b.HasOne("Event", null)
                         .WithMany()
-                        .HasForeignKey("EventsEventId")
+                        .HasForeignKey("EventsEventID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -362,7 +362,7 @@ namespace FandomAppSpace.Migrations
 
                     b.HasOne("Event", null)
                         .WithMany()
-                        .HasForeignKey("EventsAttendingEventId")
+                        .HasForeignKey("EventsAttendingEventID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

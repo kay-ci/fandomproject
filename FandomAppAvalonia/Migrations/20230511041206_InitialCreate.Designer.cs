@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Oracle.EntityFrameworkCore.Metadata;
 using UserInfo;
@@ -11,9 +12,11 @@ using UserInfo;
 namespace FandomAppSpace.Migrations
 {
     [DbContext(typeof(FanAppContext))]
-    partial class FanAppContextModelSnapshot : ModelSnapshot
+    [Migration("20230511041206_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -159,7 +162,7 @@ namespace FandomAppSpace.Migrations
 
                     OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryID"));
 
-                    b.Property<string>("Name")
+                    b.Property<string>("Category_name")
                         .IsRequired()
                         .HasColumnType("NVARCHAR2(2000)");
 

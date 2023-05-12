@@ -1,7 +1,5 @@
-﻿using System;
-using System.Reactive.Linq;
+﻿using System.Reactive.Linq;
 using ReactiveUI;
-using FandomAppSpace;
 using System.Reactive;
 using UserInfo;
 namespace FandomAppSpace.ViewModels
@@ -10,7 +8,10 @@ namespace FandomAppSpace.ViewModels
     {
         private ViewModelBase _content;
         private Boolean _visibleNavigation;
+<<<<<<< HEAD
         Login? UserManager;
+=======
+>>>>>>> 9560f7e738791306eb47640ff511e8a4d1e32515
 
         public Boolean VisibleNavigation
         {
@@ -25,7 +26,7 @@ namespace FandomAppSpace.ViewModels
         }
 
         public ReactiveCommand<Unit, Unit> Profile { get; }
-        public ReactiveCommand<Unit, Unit> NewEvent { get; }
+        public ReactiveCommand<Unit, Unit> MyEvents { get; }
         public ReactiveCommand<Unit, Unit> Search { get; }
         public ReactiveCommand<Unit, Unit> CreateMessage { get; }
         public ReactiveCommand<Unit, Unit> OpenInbox { get; }
@@ -34,15 +35,11 @@ namespace FandomAppSpace.ViewModels
         public ReactiveCommand<Unit, Unit> Logout { get; }
 
 
-
-
-
-
-
         public MainWindowViewModel()
         {
+            //Buttons
             Profile = ReactiveCommand.Create(() => {ShowPersonalProfile();});
-            NewEvent =  ReactiveCommand.Create(() => {CreateEvent();});
+            MyEvents =  ReactiveCommand.Create(() => {DisplayEventPage();});
             Search  = ReactiveCommand.Create(() => {OpenSearch();});
             CreateMessage = ReactiveCommand.Create(() => {Create_Message();});
             OpenInbox = ReactiveCommand.Create(() => {Open_Inbox(UserManager.CurrentUser.Inbox);});
@@ -95,29 +92,15 @@ namespace FandomAppSpace.ViewModels
             ProfileDisplayViewModel dispvm = (ProfileDisplayViewModel) Content;
             var vm = new ProfileEditViewModel(dispvm.Profile);
             
-            vm.Ok.Subscribe(x => {Content = dispvm;});
+            vm.Ok.Subscribe(x => {
+                Content = dispvm;
+                vm.UpdateUser(UserManager);});
             Content = vm;
-        }
-
-        //Create and display a new event
-        private void CreateEvent()
-        {
-        //    DisplayEvent(new Event());
         }
 
         //Display an existing event
-        private void DisplayEvent(Event e){
-            Content = new EventDisplayViewModel(e) ;
-        }
-
-        //Navigate to edit event view from event display view
-        public void EditEvent()
-        {
-            EventDisplayViewModel dispvm = (EventDisplayViewModel) Content;
-            var vm = new EventEditViewModel(dispvm.Event);
-            
-            vm.Ok.Subscribe(x => {Content = dispvm;});
-            Content = vm;
+        private void DisplayEventPage(){
+            Content = new EventDisplayViewModel();
         }
 
         private void View_Message(Message msg){
@@ -180,9 +163,6 @@ namespace FandomAppSpace.ViewModels
         {
             Content = new SearchViewModel();
         }
-
-
-
 
     }
 }
