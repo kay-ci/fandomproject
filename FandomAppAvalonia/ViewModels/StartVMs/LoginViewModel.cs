@@ -24,10 +24,6 @@ namespace FandomAppSpace.ViewModels
         public Profile Profile{
             get => _profile;
         }
-
-        FanAppContext Context = new FanAppContext();
-        UserService service = UserService.getInstance();
-        Login UserManager {get; set;}
         
         public ReactiveCommand<Unit, Unit> Login { get; }
 
@@ -36,7 +32,6 @@ namespace FandomAppSpace.ViewModels
 
         public LogInViewModel()
         {
-            service.setFanAppContext(Context);
             //Enable the register button only when the user has entered a valid username
             var loginEnabled = this.WhenAnyValue(
                 x => x.Username,
@@ -48,9 +43,8 @@ namespace FandomAppSpace.ViewModels
             
         }
 
-        public Login LoginUser(){
-            this.UserManager = service.LogIn(Username, Password);
-            return this.UserManager;
+        public void LoginUser(){
+            UserManager = uService.LogIn(Username, Password);
         }
     }
 }

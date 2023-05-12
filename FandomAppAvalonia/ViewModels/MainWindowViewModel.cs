@@ -50,7 +50,7 @@ namespace FandomAppSpace.ViewModels
             VisibleNavigation = false;
 
             LogInViewModel vm = new LogInViewModel();
-            vm.Login.Subscribe(x => {PrepareMainPage(vm.LoginUser());});
+            vm.Login.Subscribe(x => {vm.LoginUser(); PrepareMainPage();});
             vm.Register.Subscribe(x => {RegisterPage();});
             Content = vm;
         }
@@ -64,22 +64,15 @@ namespace FandomAppSpace.ViewModels
             Content = vm;
             vm.Login.Subscribe(x => {ShowLogin();});
         }
-        public void PrepareMainPage(Login u){
+        public void PrepareMainPage(){
             VisibleNavigation = true;
-            UserManager = u;
-            ShowPersonalProfile();
-        }
-
-        //Show profile of logged in user
-        private void ShowPersonalProfile()
-        {
-            DisplayProfile(UserManager.CurrentUser.UserProfile);
+            DisplayProfile();
         }
 
         //Show profile of a specified user
-        private void DisplayProfile(Profile p)
+        private void DisplayProfile()
         {
-            Content = new ProfileDisplayViewModel(p);
+            Content = new ProfileDisplayViewModel();
         }
 
         //Navigate to edit profile view from profile display view
@@ -90,7 +83,7 @@ namespace FandomAppSpace.ViewModels
             
             vm.Ok.Subscribe(x => {
                 Content = dispvm;
-                vm.UpdateUser(UserManager);});
+                vm.UpdateUser();});
             Content = vm;
         }
 
@@ -112,14 +105,14 @@ namespace FandomAppSpace.ViewModels
         }
 
         private void Create_Message(){
-            var vm = new CreateMessageViewModel(UserManager);
+            var vm = new CreateMessageViewModel();
 
             vm.Ok.Subscribe(x => {
-                vm.CreateMessage(UserManager);
-                Open_Outbox(UserManager.CurrentUser.Outbox);
+                vm.CreateMessage();
+                Open_Outbox();
             });
             vm.Cancel.Subscribe(x => {
-                Open_Inbox(UserManager.CurrentUser.Inbox);
+                Open_Inbox();
             });
             Content = vm;
         }
