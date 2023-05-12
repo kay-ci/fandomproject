@@ -47,7 +47,7 @@
           <ItemsRepeater.ItemTemplate>
             <DataTemplate>
              <Border Margin="10,0,0,0" Padding="2">
-               <TextBlock Text="{Binding}"/>
+              <TextBlock Text="{Binding}"/>
               </Border>
             </DataTemplate>
           </ItemsRepeater.ItemTemplate>
@@ -74,7 +74,10 @@
         </ItemsRepeater>
       </StackPanel>
     </StackPanel>
+    <StackPanel IsVisible="{Binding ShowEditButton}">
       <Button Content="Edit Profile"
-              Command="{Binding $parent[Window].DataContext.EditProfile}"/>       
+              Command="{Binding $parent[Window].DataContext.EditProfile}"/>
+    </StackPanel>
+                     
   </StackPanel>
 </UserControl>

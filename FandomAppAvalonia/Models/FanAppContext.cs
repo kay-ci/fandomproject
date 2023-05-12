@@ -13,6 +13,7 @@ public class FanAppContext : DbContext{
     
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
+        optionsBuilder.EnableSensitiveDataLogging();
         string? oracleUser = Environment.GetEnvironmentVariable("DBUSER");
         string? oraclePassword = Environment.GetEnvironmentVariable("DBPWD");
         string dataSource = @"198.168.52.211:1521/pdbora19c.dawsoncollege.qc.ca";

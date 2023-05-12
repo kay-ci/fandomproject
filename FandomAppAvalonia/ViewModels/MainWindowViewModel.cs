@@ -34,12 +34,12 @@ namespace FandomAppSpace.ViewModels
         public MainWindowViewModel()
         {
             //Buttons
-            Profile = ReactiveCommand.Create(() => {ShowPersonalProfile();});
             MyEvents =  ReactiveCommand.Create(() => {DisplayEventPage();});
+            Profile = ReactiveCommand.Create(() => {DisplayProfile(UserManager.CurrentUser);});
             Search  = ReactiveCommand.Create(() => {OpenSearch();});
             CreateMessage = ReactiveCommand.Create(() => {Create_Message();});
-            OpenInbox = ReactiveCommand.Create(() => {Open_Inbox(UserManager.CurrentUser.Inbox);});
-            OpenOutbox = ReactiveCommand.Create(() => {Open_Outbox(UserManager.CurrentUser.Outbox);});
+            OpenInbox = ReactiveCommand.Create(() => {Open_Inbox();});
+            OpenOutbox = ReactiveCommand.Create(() => {Open_Outbox();});
             ViewUsers = ReactiveCommand.Create(() => {View_Users();});
             Logout = ReactiveCommand.Create(() => {ShowLogin();});
             
@@ -66,13 +66,14 @@ namespace FandomAppSpace.ViewModels
         }
         public void PrepareMainPage(){
             VisibleNavigation = true;
-            DisplayProfile();
+            DisplayProfile(UserManager.CurrentUser);
         }
 
         //Show profile of a specified user
-        private void DisplayProfile()
+        
+        private void DisplayProfile(User chosenUser)
         {
-            Content = new ProfileDisplayViewModel();
+            Content = new ProfileDisplayViewModel(chosenUser);
         }
 
         //Navigate to edit profile view from profile display view
@@ -96,12 +97,12 @@ namespace FandomAppSpace.ViewModels
             Content = new MessageViewModel(msg);
         }
 
-        private void Open_Outbox(List<Message> outbox){
-            Content = new OutboxDisplayViewModel(outbox);
+        private void Open_Outbox(){
+            Content = new OutboxDisplayViewModel();
         }
 
-        private void Open_Inbox(List<Message> inbox){
-            Content = new InboxDisplayViewModel(inbox);
+        private void Open_Inbox(){
+            Content = new InboxDisplayViewModel();
         }
 
         private void Create_Message(){
@@ -130,18 +131,18 @@ namespace FandomAppSpace.ViewModels
         //     Content = vm;
         // }
 
-        private void Edit_Message(Message msg){
-            var vm = new EditMessageViewModel(msg);
+        // private void Edit_Message(Message msg){
+        //     var vm = new EditMessageViewModel(msg);
 
-            vm.Ok.Subscribe(x => {
-                vm.EditMessage(UserManager);
-                Open_Outbox(UserManager.CurrentUser.Outbox);
-            });
-            vm.Cancel.Subscribe(x => {
-                Open_Inbox(UserManager.CurrentUser.Inbox);
-            });
-            Content = vm;
-        }
+        //     vm.Ok.Subscribe(x => {
+        //         vm.EditMessage();
+        //         Open_Outbox();
+        //     });
+        //     vm.Cancel.Subscribe(x => {
+        //         Open_Inbox();
+        //     });
+        //     Content = vm;
+        // }
 
         public void View_Users(){
             Content = new AllUsersViewModel();

@@ -8,8 +8,8 @@ namespace FandomAppSpace.ViewModels
     public class InboxDisplayViewModel : ViewModelBase
     {
         public List<Message> Messages { get;}
-        public InboxDisplayViewModel(List<Message> m){
-            Messages = m;
+        public InboxDisplayViewModel(){
+            Messages = UserManager.CurrentUser.Inbox;
         }
     }
 }

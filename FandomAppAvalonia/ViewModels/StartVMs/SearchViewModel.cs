@@ -11,7 +11,7 @@ namespace FandomAppSpace.ViewModels{
         private Boolean _showEventResults;
         private Boolean _showProfileResults;
         private List<Event> _eventResults;
-        private List<Profile> _profileResults;
+        private List<User> _userResults;
         private string _keyword;
 
         FanAppContext Context = new FanAppContext();
@@ -37,9 +37,9 @@ namespace FandomAppSpace.ViewModels{
             get => _eventResults;
             private set => this.RaiseAndSetIfChanged(ref _eventResults, value);
         }
-        public List<Profile> ProfileResults{
-            get => _profileResults;
-            private set => this.RaiseAndSetIfChanged(ref _profileResults, value);
+        public List<User> UserResults{
+            get => _userResults;
+            private set => this.RaiseAndSetIfChanged(ref _userResults, value);
         }
 
         public ReactiveCommand<Unit, Unit> EventSearch { get; }
@@ -50,7 +50,7 @@ namespace FandomAppSpace.ViewModels{
             ShowEventResults = false;
             ShowProfileResults = false;
             EventResults = new List<Event>();
-            ProfileResults = new List<Profile>();
+            UserResults = new List<User>();
             
             ProfileSearch = ReactiveCommand.Create(() => {DisplayProfileResults();});
             EventSearch = ReactiveCommand.Create(() => {DisplayEventResults();});
@@ -59,7 +59,7 @@ namespace FandomAppSpace.ViewModels{
         private void DisplayProfileResults(){
            ShowEventResults = false;
            ShowProfileResults = true;
-           ProfileResults = SearchProfiles();
+           UserResults = SearchUsers(_keyword);
         }
 
         private void DisplayEventResults(){
@@ -68,26 +68,17 @@ namespace FandomAppSpace.ViewModels{
             // EventResults = SearchEvents(_keyword);
         }
 
-        private List<Profile> SearchProfiles(){
-            List<Profile> profiles = service.GetProfiles();
-            if(string.IsNullOrWhiteSpace(_keyword)) return profiles;
-            List<Profile> filtered_prof = new List<Profile>();
-            foreach(Profile prof in profiles){
-                if(prof.Name.Contains(_keyword)) filtered_prof.Add(prof);
-                else if(prof.Country.Contains(_keyword)) filtered_prof.Add(prof);
-                else if(prof.City.Contains(_keyword)) filtered_prof.Add(prof);
-                try {
-                    if(prof.Age == Int32.Parse(_keyword)) filtered_prof.Add(prof);
-                }catch{}
-                foreach(Fandom fandom in prof.Fandoms){
-                    if(fandom.Name.Contains(_keyword)) filtered_prof.Add(prof);
-                }
-                foreach(Category cat in prof.Categories){
-                    if(cat.Name.Contains(_keyword)) filtered_prof.Add(prof);
-                }
+        private List<User> SearchUsers(string keyword){
+            List<User> users = service.GetUsers();
+            if(string.IsNullOrWhiteSpace(_keyword)) return users;
+            List<User> filteredUsers = new List<User>();
+            foreach(User user in users){
+                if(user.UserProfile.Name.Contains(_keyword)) filteredUsers.Add(user);
+                else if(user.UserProfile.Country.Contains(_keyword)) filteredUsers.Add(user);
+                else if(user.UserProfile.City.Contains(_keyword)) filteredUsers.Add(user);
             }
             
-            return filtered_prof;
+            return filteredUsers;
         }
 
         // private List<Event> SearchEvents(string keyword){
