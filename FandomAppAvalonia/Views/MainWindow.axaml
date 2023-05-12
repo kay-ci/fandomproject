@@ -2,10 +2,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         x:Class="FandomAppSpace.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
-        Width="600" Height="450"
+        Width="1000" Height="800"
         Title="Social Friendship App">
         <StackPanel>
-        <ContentControl Width="600" Height="420" Content="{Binding Content}"/>
+        <ContentControl Width="1000" Height="800" Content="{Binding Content}"/>
         <StackPanel HorizontalAlignment="Center"
                     VerticalAlignment="Bottom"
                     Orientation="Horizontal"
