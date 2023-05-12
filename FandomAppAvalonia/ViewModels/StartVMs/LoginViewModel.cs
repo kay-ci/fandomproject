@@ -48,12 +48,6 @@ namespace FandomAppSpace.ViewModels
             
         }
 
-        public Login RegisterUser(){
-            User newUser = service.CreateUser(Username, Password, Profile);
-            this.UserManager = new Login(newUser);
-            return this.UserManager;
-        }
-
         public Login LoginUser(){
             this.UserManager = service.LogIn(Username, Password);
             return this.UserManager;

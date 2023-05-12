@@ -5,7 +5,7 @@ using System.Linq;
 using System.Security.Cryptography;
 
 /// <summary>
-/// Class <c>UserService</c> handles interactions with DbSets FandomUsers, FandomProfiles as well as user authentification.
+/// Class <c>UserService</c> handles interactions with DbSets USERS, PROFILES as well as user authentification.
 /// </summary>
 public class UserService{
     private static UserService? _instance;
@@ -22,7 +22,7 @@ public class UserService{
         _context = context;
     }
     /// <summary>
-    /// Method <c>GetUsers</c> fetches all users from DbSet FandomUsers.
+    /// Method <c>GetUsers</c> fetches all users from DbSet USERS.
     /// </summary>
     public List<User> GetUsers(){
         List<User> usersList = _context.USERS
@@ -88,7 +88,7 @@ public class UserService{
 
     }
     /// <summary>
-    /// Method <c>GetProfiles</c> fetches all profiles from the table DbSet FandomProfiles.
+    /// Method <c>GetProfiles</c> fetches all profiles from the table DbSet PROFILES.
     /// </summary>
     public List<Profile> GetProfiles(){
         List<Profile> profilesList = _context.PROFILES
@@ -122,24 +122,34 @@ public class UserService{
         if(userManager.CurrentUser == null){
             throw new ArgumentException("Current user is null");}
         if(userManager.CurrentUser.UserProfile == null){
-          throw new ArgumentException("Current user profile is null");}  
+          throw new ArgumentException("Current user profile is null");} 
+        
+        var query = from profile in _context.PROFILES
+           where profile.user == userManager.CurrentUser
+           select profile;
+        try{
+            Profile currentProfile = query.First<Profile>();
+            currentProfile.Name = newProfile.Name;
+            currentProfile.Pronouns = newProfile.Pronouns;
+            currentProfile.Age = newProfile.Age;
+            currentProfile.Country = newProfile.Country;
+            currentProfile.City = newProfile.City;
+            currentProfile.Description = newProfile.Description;
+            currentProfile.Categories = newProfile.Categories;
+            currentProfile.Fandoms = newProfile.Fandoms;
+            currentProfile.Badges = newProfile.Badges;
+            currentProfile.Picture = newProfile.Picture;
+            currentProfile.Interests = newProfile.Interests;
+            userManager.CurrentUser.UserProfile = currentProfile;
+            _context.Update(currentProfile);
+            _context.SaveChanges();
+        }catch(Exception){
+        }
 
-        Profile currentProfile = userManager.CurrentUser.UserProfile; //added for readability
-        currentProfile.Name = newProfile.Name;
-        currentProfile.Pronouns = newProfile.Pronouns;
-        currentProfile.Age = newProfile.Age;
-        currentProfile.Country = newProfile.Country;
-        currentProfile.City = newProfile.City;
-        currentProfile.Description = newProfile.Description;
-        currentProfile.Categories = newProfile.Categories;
-        currentProfile.Fandoms = newProfile.Fandoms;
-        currentProfile.Badges = newProfile.Badges;
-        currentProfile.Picture = newProfile.Picture;
-        currentProfile.Interests = newProfile.Interests;
-        _context.SaveChanges();
+        
     }
     /// <summary>
-    /// Method <c>CreateUser</c> inserts a new user in the DbSet FandomUsers.
+    /// Method <c>CreateUser</c> inserts a new user in the DbSet USERS.
     /// </summary>
     public User CreateUser(string username, string password, Profile profile){
         User newUser;
@@ -156,7 +166,7 @@ public class UserService{
             CreatePassword(newUser, password);
             //profile.userID = newUser.userID;
             _context.USERS.Add(newUser);
-            //_context.FandomProfiles.Add(profile);
+            //_context.PROFILES.Add(profile);
             _context.SaveChanges();
         }
         return newUser;

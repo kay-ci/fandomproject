@@ -79,7 +79,7 @@
                 <ItemsRepeater.ItemTemplate>
                 <DataTemplate>
                 <StackPanel Orientation="Horizontal">
-                        <TextBlock Padding="2" VerticalAlignment="Center" Text="{Binding Category_name}"/>
+                        <TextBlock Padding="2" VerticalAlignment="Center" Text="{Binding Name}"/>
                         <Button Content="Remove Category"
                         Command="{Binding $parent[UserControl].DataContext.RemoveCategory}" CommandParameter="{Binding}"/> 
                 </StackPanel>

@@ -2,21 +2,26 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         x:Class="FandomAppSpace.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
-        Width="1000" Height="800"
-        Title="Social Friendship App">
+        Title="Fandom App"
+        Width="1000" Height="800">
         <StackPanel>
         <ContentControl Width="800" Height="500" Content="{Binding Content}"/>
         <StackPanel HorizontalAlignment="Center"
                     VerticalAlignment="Bottom"
-                    Orientation="Horizontal" IsVisible="{Binding VisibleNavigation}">
+                    Orientation="Horizontal"
+                    IsVisible="{Binding VisibleNavigation}">
+
                 <Button Command="{Binding Profile}"> 
-                        <Image Source="/Assets/Icons/icons-profile.png" Width="20" Height="20"/>
+                        <!--<Image Source="/Assets/Icons/icons-profile.png" Width="20" Height="20"/> -->
+                        My Profile
                 </Button>
-                <Button Command="{Binding NewEvent}">
-                        <Image Source="/Assets/Icons/icons-event.png" Width="20" Height="20"/>
+                <Button Command="{Binding MyEvents}">
+                        <!--<Image Source="/Assets/Icons/icons-event.png" Width="20" Height="20"/> -->
+                        My Events
                 </Button>
                 <Button Command="{Binding Search}">
-                        <Image Source="/Assets/Icons/icons-search.png" Width="20" Height="20"/>
+                        <!--<Image Source="/Assets/Icons/icons-search.png" Width="20" Height="20"/> -->
+                        Search
                 </Button>
                 <Button Command="{Binding CreateMessage}">
                         <Image Source="/Assets/Icons/icons-message.png" Width="20" Height="20"/>
@@ -27,9 +32,14 @@
                 <Button Command="{Binding OpenOutbox}">
                         <Image Source="/Assets/Icons/icons-message.png" Width="20" Height="20"/>
                 </Button>
-                <Button Command="{Binding Logout}">
-                        <Image Source="/Assets/Icons/icons-close.png" Width="20" Height="20"/>
+                <Button Command="{Binding ViewUsers}">
+                        <Image Source="/Assets/Icons/icons-profile.png" Width="20" Height="20"/>
                 </Button>
+                <Button Command="{Binding Logout}">
+                        <!--<Image Source="/Assets/Icons/icons-close.png" Width="20" Height="20"/> -->
+                        Log out
+                </Button>
+
         </StackPanel>
         </StackPanel> 
 </Window>

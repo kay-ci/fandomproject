@@ -2,13 +2,13 @@ namespace UserInfo {
     public class Category {
 
         public int CategoryID {get; set;}
-        public string Category_name {get; set;}
+        public string Name {get; set;}
         public List<Event> events {get;} = new();
 
         public Category(){}
 
         public Category(string name){
-            this.Category_name = name;
+            this.Name = name;
         }
         
         public override bool Equals(object? obj){
@@ -20,7 +20,7 @@ namespace UserInfo {
                 return false;
             }
             return (
-                this.Category_name == item.Category_name
+                this.Name == item.Name
             );
         }
 

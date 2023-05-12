@@ -1,7 +1,5 @@
-﻿using System;
-using System.Reactive.Linq;
+﻿using System.Reactive.Linq;
 using ReactiveUI;
-using FandomAppSpace;
 using System.Reactive;
 using UserInfo;
 namespace FandomAppSpace.ViewModels
@@ -10,7 +8,6 @@ namespace FandomAppSpace.ViewModels
     {
         private ViewModelBase _content;
         private Boolean _visibleNavigation;
-        Login? UserManager;
 
         public Boolean VisibleNavigation
         {
@@ -25,27 +22,24 @@ namespace FandomAppSpace.ViewModels
         }
 
         public ReactiveCommand<Unit, Unit> Profile { get; }
-        public ReactiveCommand<Unit, Unit> NewEvent { get; }
+        public ReactiveCommand<Unit, Unit> MyEvents { get; }
         public ReactiveCommand<Unit, Unit> Search { get; }
         public ReactiveCommand<Unit, Unit> CreateMessage { get; }
         public ReactiveCommand<Unit, Unit> OpenInbox { get; }
         public ReactiveCommand<Unit, Unit> OpenOutbox { get; }
+        public ReactiveCommand<Unit, Unit> ViewUsers {get; }
         public ReactiveCommand<Unit, Unit> Logout { get; }
-
-
-
-
-
 
 
         public MainWindowViewModel()
         {
             Profile = ReactiveCommand.Create(() => {DisplayProfile(UserManager.CurrentUser);});
-            NewEvent =  ReactiveCommand.Create(() => {CreateEvent();});
+            MyEvents =  ReactiveCommand.Create(() => {DisplayEventPage();});
             Search  = ReactiveCommand.Create(() => {OpenSearch();});
             CreateMessage = ReactiveCommand.Create(() => {Create_Message();});
             OpenInbox = ReactiveCommand.Create(() => {Open_Inbox(UserManager.CurrentUser.Inbox);});
             OpenOutbox = ReactiveCommand.Create(() => {Open_Outbox(UserManager.CurrentUser.Outbox);});
+            ViewUsers = ReactiveCommand.Create(() => {View_Users();});
             Logout = ReactiveCommand.Create(() => {ShowLogin();});
             
             ShowLogin();
@@ -65,7 +59,8 @@ namespace FandomAppSpace.ViewModels
             var vm = new RegisterViewModel();
             
             vm.Register.Subscribe(x => {
-                Content = dispvm;vm.RegisterUser();});
+                Content = dispvm;
+                vm.RegisterUser();});
             Content = vm;
             vm.Login.Subscribe(x => {ShowLogin();});
         }
@@ -85,34 +80,17 @@ namespace FandomAppSpace.ViewModels
         //Navigate to edit profile view from profile display view
         public void EditProfile()
         {
-            ProfileDisplayViewModel dispvm = (ProfileDisplayViewModel) Content;
-            var vm = new ProfileEditViewModel(dispvm.Profile);
-            
-            vm.Ok.Subscribe(x => {
-                Content = dispvm;
-                vm.UpdateUser(UserManager);});
+            var vm = new ProfileEditViewModel(UserManager.CurrentUser.UserProfile);
             Content = vm;
-        }
-
-        //Create and display a new event
-        private void CreateEvent()
-        {
-        //    DisplayEvent(new Event());
+            vm.Ok.Subscribe(x => {
+            vm.UpdateUser(UserManager);
+            DisplayProfile(UserManager.CurrentUser);
+            });
         }
 
         //Display an existing event
-        private void DisplayEvent(Event e){
-            Content = new EventDisplayViewModel(e) ;
-        }
-
-        //Navigate to edit event view from event display view
-        public void EditEvent()
-        {
-            EventDisplayViewModel dispvm = (EventDisplayViewModel) Content;
-            var vm = new EventEditViewModel(dispvm.Event);
-            
-            vm.Ok.Subscribe(x => {Content = dispvm;});
-            Content = vm;
+        private void DisplayEventPage(){
+            Content = new EventDisplayViewModel();
         }
 
         private void View_Message(Message msg){
@@ -128,7 +106,7 @@ namespace FandomAppSpace.ViewModels
         }
 
         private void Create_Message(){
-            var vm = new CreateMessageViewModel();
+            var vm = new CreateMessageViewModel(UserManager);
 
             vm.Ok.Subscribe(x => {
                 vm.CreateMessage(UserManager);
@@ -139,6 +117,19 @@ namespace FandomAppSpace.ViewModels
             });
             Content = vm;
         }
+
+        // private void Create_Message(User chosen_recipient){
+        //     var vm = new CreateMessageViewModel(UserManager, chosen_recipient);
+
+        //     vm.Ok.Subscribe(x => {
+        //         vm.CreateMessage(UserManager);
+        //         Open_Outbox(UserManager.CurrentUser.Outbox);
+        //     });
+        //     vm.Cancel.Subscribe(x => {
+        //         Open_Inbox(UserManager.CurrentUser.Inbox);
+        //     });
+        //     Content = vm;
+        // }
 
         private void Edit_Message(Message msg){
             var vm = new EditMessageViewModel(msg);
@@ -153,14 +144,15 @@ namespace FandomAppSpace.ViewModels
             Content = vm;
         }
 
+        public void View_Users(){
+            Content = new AllUsersViewModel();
+        }
+
         //Navigate to search view
         private void OpenSearch()
         {
             Content = new SearchViewModel();
         }
-
-
-
 
     }
 }

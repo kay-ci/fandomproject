@@ -21,25 +21,31 @@
       <TextBox Grid.Row="1" Grid.Column="1" AcceptsReturn="False"
               Text="{Binding Text}"
               Watermark="Message Text"/>
+      <!-- <TextBlock Text="Recipients (separate users by a , ): " Grid.Row="2" Grid.Column="0"/> -->
+      <!-- <TextBox Grid.Row="2" Grid.Column="1" AcceptsReturn="False"
+              Text="{Binding RecipientText}"
+              Watermark="Recipients..."/> -->
+        <TextBlock Text="Recipients: " Grid.Row="2" Grid.Column="0"/>
       <ItemsRepeater Grid.Row="2" Grid.Column="1" Items="{Binding ObservableRecips}">
                 <ItemsRepeater.ItemTemplate>
                 <DataTemplate>
                 <StackPanel Orientation="Horizontal">
                         <TextBlock Padding="2" VerticalAlignment="Center" Text="{Binding Username}"/>
-                        <Button Content="Remove user"
-                        Command="{Binding $parent[UserControl].DataContext.RemoveUser}"
+                        <Button Content="Remove recipient"
+                        Command="{Binding $parent[UserControl].DataContext.RemoveRecipient}"
                         CommandParameter="{Binding}"/> 
                 </StackPanel>
                 </DataTemplate>
                 </ItemsRepeater.ItemTemplate>
         </ItemsRepeater>
+        <TextBlock Text="Users available: " Grid.Row="3" Grid.Column="0"/>
         <ItemsRepeater Grid.Row="3" Grid.Column="1" Items="{Binding ObservableDBUsers}">
                 <ItemsRepeater.ItemTemplate>
                 <DataTemplate>
                 <StackPanel Orientation="Horizontal">
                         <TextBlock Padding="2" VerticalAlignment="Center" Text="{Binding Username}"/>
-                        <Button Content="Add user"
-                        Command="{Binding $parent[UserControl].DataContext.AddUser}"
+                        <Button Content="Add recipient"
+                        Command="{Binding $parent[UserControl].DataContext.AddRecipient}"
                         CommandParameter="{Binding}"/> 
                 </StackPanel>
                 </DataTemplate>

@@ -56,7 +56,7 @@ namespace FandomAppSpace.ViewModels
          public string Pronouns 
         {
             get => _pronouns;
-            private set => this.RaiseAndSetIfChanged(ref _categoryText, value);
+            private set => this.RaiseAndSetIfChanged(ref _pronouns, value);
         }
          public int Age 
         {
@@ -91,14 +91,17 @@ namespace FandomAppSpace.ViewModels
         ObservableCollection<Category> Categories {get; set;}
         ObservableCollection<Fandom> Fandoms {get; set;}
         ObservableCollection<Badge> Badges {get; set;}
-        List<Category> CategoriesList = new();
-        List<Fandom> FandomsList = new();
-        List<Badge> BadgesList = new();
+        List<Category> CategoriesList;
+        List<Fandom> FandomsList;
+        List<Badge> BadgesList;
         UserService service = UserService.getInstance();
         public Profile Profile {get; set;}
         public ReactiveCommand<Unit, Unit> Ok { get; }
         public ProfileEditViewModel(Profile p)
         {
+            CategoriesList = new List<Category>();
+            FandomsList = new List<Fandom>();
+            BadgesList = new List<Badge>();
             Profile = p;
             Categories = new ObservableCollection<Category>(CategoriesList);
             Fandoms = new ObservableCollection<Fandom>(FandomsList);
@@ -121,8 +124,9 @@ namespace FandomAppSpace.ViewModels
         }
 
         public void UpdateUser(Login userManager){
-            Profile = new Profile(Profile.Name, Profile.Pronouns, Profile.Age, Profile.Country, Profile.City, Categories.ToList(), Fandoms.ToList(), Badges.ToList(), Profile.Description, Profile.Picture, Profile.Interests);
-            service.UpdateProfile(userManager, Profile);
+            Profile = new Profile(Name, Pronouns, Age, Country, City, Categories.ToList<Category>(), Fandoms.ToList<Fandom>(), Badges.ToList<Badge>(), Description, Picture, Interests);
+            
+            uService.UpdateProfile(userManager, Profile);
         }
         public void AddBadge(){
             Badge newBadge = new Badge(BadgesText);

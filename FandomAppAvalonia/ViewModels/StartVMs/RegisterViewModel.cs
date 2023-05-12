@@ -101,11 +101,11 @@ namespace FandomAppSpace.ViewModels
             Login = ReactiveCommand.Create(() =>{ });
         }
 
-        public Login RegisterUser(){
+        public void RegisterUser(){
             Profile = new Profile(Name,Pronouns,Age,Country, City);
             User newUser = service.CreateUser(Username, Password, Profile);
-            this.UserManager = new Login(newUser);
-            return this.UserManager;
+            // this.UserManager = new Login(newUser);
+            // return this.UserManager;
         }
         
     }

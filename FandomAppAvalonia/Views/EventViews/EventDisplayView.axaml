@@ -1,0 +1,33 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="200" d:DesignHeight="300"
+             x:Class="FandomAppSpace.Views.EventDisplayView">
+             
+  <StackPanel Margin="10,0,0,0">
+
+    
+    <StackPanel Spacing="10" IsVisible="{Binding VisibleNavigation}">
+      <TextBlock Text="My Events" FontSize="35"/> 
+
+      <ItemsRepeater Items="{Binding Events}">
+          <ItemsRepeater.ItemTemplate>
+            <DataTemplate>
+            <StackPanel>
+              <TextBlock Text="{Binding Title}" FontSize="28"/> 
+              <TextBlock Text="{Binding Date}"/>
+              <TextBlock Text="{Binding Location}"/>
+              <TextBlock Text="{Binding MinAge}"/>
+              <TextBlock Text="{Binding Owner.Username, StringFormat='Organized By: {0}'}"/>
+
+              <Button Command="{Binding $parent[UserControl].DataContext.ShowEvent}"> Show All Infos </Button>
+            </StackPanel>
+            </DataTemplate>
+          </ItemsRepeater.ItemTemplate>
+        </ItemsRepeater>
+
+    </StackPanel>
+    
+  </StackPanel>
+</UserControl>
