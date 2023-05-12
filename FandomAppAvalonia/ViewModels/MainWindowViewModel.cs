@@ -34,12 +34,12 @@ namespace FandomAppSpace.ViewModels
         public MainWindowViewModel()
         {
             //Buttons
-            Profile = ReactiveCommand.Create(() => {ShowPersonalProfile();});
             MyEvents =  ReactiveCommand.Create(() => {DisplayEventPage();});
+            Profile = ReactiveCommand.Create(() => {DisplayProfile(UserManager.CurrentUser);});
             Search  = ReactiveCommand.Create(() => {OpenSearch();});
             CreateMessage = ReactiveCommand.Create(() => {Create_Message();});
-            OpenInbox = ReactiveCommand.Create(() => {Open_Inbox(UserManager.CurrentUser.Inbox);});
-            OpenOutbox = ReactiveCommand.Create(() => {Open_Outbox(UserManager.CurrentUser.Outbox);});
+            OpenInbox = ReactiveCommand.Create(() => {Open_Inbox();});
+            OpenOutbox = ReactiveCommand.Create(() => {Open_Outbox();});
             ViewUsers = ReactiveCommand.Create(() => {View_Users();});
             Logout = ReactiveCommand.Create(() => {ShowLogin();});
             
@@ -50,7 +50,7 @@ namespace FandomAppSpace.ViewModels
             VisibleNavigation = false;
 
             LogInViewModel vm = new LogInViewModel();
-            vm.Login.Subscribe(x => {PrepareMainPage(vm.LoginUser());});
+            vm.Login.Subscribe(x => {vm.LoginUser(); PrepareMainPage();});
             vm.Register.Subscribe(x => {RegisterPage();});
             Content = vm;
         }
@@ -64,22 +64,16 @@ namespace FandomAppSpace.ViewModels
             Content = vm;
             vm.Login.Subscribe(x => {ShowLogin();});
         }
-        public void PrepareMainPage(Login u){
+        public void PrepareMainPage(){
             VisibleNavigation = true;
-            UserManager = u;
-            ShowPersonalProfile();
-        }
-
-        //Show profile of logged in user
-        private void ShowPersonalProfile()
-        {
-            DisplayProfile(UserManager.CurrentUser.UserProfile);
+            DisplayProfile(UserManager.CurrentUser);
         }
 
         //Show profile of a specified user
-        private void DisplayProfile(Profile p)
+        
+        private void DisplayProfile(User chosenUser)
         {
-            Content = new ProfileDisplayViewModel(p);
+            Content = new ProfileDisplayViewModel(chosenUser);
         }
 
         //Navigate to edit profile view from profile display view
@@ -90,7 +84,7 @@ namespace FandomAppSpace.ViewModels
             
             vm.Ok.Subscribe(x => {
                 Content = dispvm;
-                vm.UpdateUser(UserManager);});
+                vm.UpdateUser();});
             Content = vm;
         }
 
@@ -103,23 +97,23 @@ namespace FandomAppSpace.ViewModels
             Content = new MessageViewModel(msg);
         }
 
-        private void Open_Outbox(List<Message> outbox){
-            Content = new OutboxDisplayViewModel(outbox);
+        private void Open_Outbox(){
+            Content = new OutboxDisplayViewModel();
         }
 
-        private void Open_Inbox(List<Message> inbox){
-            Content = new InboxDisplayViewModel(inbox);
+        private void Open_Inbox(){
+            Content = new InboxDisplayViewModel();
         }
 
         private void Create_Message(){
-            var vm = new CreateMessageViewModel(UserManager);
+            var vm = new CreateMessageViewModel();
 
             vm.Ok.Subscribe(x => {
-                vm.CreateMessage(UserManager);
-                Open_Outbox(UserManager.CurrentUser.Outbox);
+                vm.CreateMessage();
+                Open_Outbox();
             });
             vm.Cancel.Subscribe(x => {
-                Open_Inbox(UserManager.CurrentUser.Inbox);
+                Open_Inbox();
             });
             Content = vm;
         }
@@ -137,18 +131,18 @@ namespace FandomAppSpace.ViewModels
         //     Content = vm;
         // }
 
-        private void Edit_Message(Message msg){
-            var vm = new EditMessageViewModel(msg);
+        // private void Edit_Message(Message msg){
+        //     var vm = new EditMessageViewModel(msg);
 
-            vm.Ok.Subscribe(x => {
-                vm.EditMessage(UserManager);
-                Open_Outbox(UserManager.CurrentUser.Outbox);
-            });
-            vm.Cancel.Subscribe(x => {
-                Open_Inbox(UserManager.CurrentUser.Inbox);
-            });
-            Content = vm;
-        }
+        //     vm.Ok.Subscribe(x => {
+        //         vm.EditMessage();
+        //         Open_Outbox();
+        //     });
+        //     vm.Cancel.Subscribe(x => {
+        //         Open_Inbox();
+        //     });
+        //     Content = vm;
+        // }
 
         public void View_Users(){
             Content = new AllUsersViewModel();

@@ -3,6 +3,8 @@ using Avalonia.Controls;
 using FandomAppSpace;
 using ReactiveUI;
 using UserInfo;
+using System.Collections.ObjectModel;
+using System.Reactive.Linq;
 
 namespace FandomAppSpace.ViewModels
 {
@@ -13,6 +15,14 @@ namespace FandomAppSpace.ViewModels
         string _fandomCategory;
         string _fandomDescription;
         string _badgesText;
+        string _name;
+        string _pronouns;
+        int _age;
+        string _country;
+        string _city;
+        string _description;
+        string _interests;
+        string _picture;
         public string CategoryText 
         {
             get => _categoryText;
@@ -38,26 +48,108 @@ namespace FandomAppSpace.ViewModels
             get => _badgesText;
             private set => this.RaiseAndSetIfChanged(ref _badgesText, value);
         }
-        List<Category> Categories = new List<Category>{new Category("Gaming"), new Category("Sports")};
-        List<Fandom> Fandoms;
-        List<Badge> Badges;
+        public string Name 
+        {
+            get => _name;
+            private set => this.RaiseAndSetIfChanged(ref _name, value);
+        }
+         public string Pronouns 
+        {
+            get => _pronouns;
+            private set => this.RaiseAndSetIfChanged(ref _categoryText, value);
+        }
+         public int Age 
+        {
+            get => _age;
+            private set => this.RaiseAndSetIfChanged(ref _age, value);
+        }
+         public string Country 
+        {
+            get => _country;
+            private set => this.RaiseAndSetIfChanged(ref _country, value);
+        }
+         public string City 
+        {
+            get => _city;
+            private set => this.RaiseAndSetIfChanged(ref _city, value);
+        }
+         public string Description 
+        {
+            get => _description;
+            private set => this.RaiseAndSetIfChanged(ref _description, value);
+        }
+         public string Interests 
+        {
+            get => _interests;
+            private set => this.RaiseAndSetIfChanged(ref _interests, value);
+        }
+         public string Picture 
+        {
+            get => _picture;
+            private set => this.RaiseAndSetIfChanged(ref _picture, value);
+        }
+        ObservableCollection<Category> Categories {get; set;}
+        ObservableCollection<Fandom> Fandoms {get; set;}
+        ObservableCollection<Badge> Badges {get; set;}
+        List<Category> CategoriesList = new();
+        List<Fandom> FandomsList = new();
+        List<Badge> BadgesList = new();
         UserService service = UserService.getInstance();
         public Profile Profile {get; set;}
         public ReactiveCommand<Unit, Unit> Ok { get; }
         public ProfileEditViewModel(Profile p)
         {
             Profile = p;
+            Categories = new ObservableCollection<Category>(CategoriesList);
+            Fandoms = new ObservableCollection<Fandom>(FandomsList);
+            Badges = new ObservableCollection<Badge>(BadgesList);
+            // var editEnabled = this.WhenAnyValue(
+            //     x => x.FandomCategory, x=> x.FandomName, x=>x.FandomDescription, x=>x.BadgesText, x=>x.Name, x=>x.Pronouns, x=>x.Country, x=>x.City,x=>x.Description, x=>x.Age, x=>x.Picture, x=>x.Interests,
+            //     (fcategory, fname, fdescription, badges, pname, pronouns, country, city, pdescription, age, picture, interests) =>
+            //         !string.IsNullOrWhiteSpace(fcategory) &&
+            //         !string.IsNullOrWhiteSpace(fname) &&
+            //         !string.IsNullOrWhiteSpace(fdescription) &&
+            //         !string.IsNullOrWhiteSpace(badges) &&
+            //         !string.IsNullOrWhiteSpace(pname) &&
+            //         !string.IsNulOrWhiteSpace(pronouns)&&
+            //         !string.IsNullOrWhiteSpace(country)&&
+            //         !string.IsNullOrWhiteSpace(city)&&
+            //         !string.IsNullOrWhiteSpace(picture)&&
+            //         age >= 0 && age <= 130)
+            // .DistinctUntilChanged();
             Ok = ReactiveCommand.Create(() => { });
         }
 
-        public void UpdateUser(Login userManager){
-            string[] categories = CategoryText.Split(",");
-            foreach(string category in categories) Categories.Add(new Category(category));
-
-            string[] badges = BadgesText.Split(",");
-            foreach(string badge in badges) Badges.Add(new Badge(badge));
-
-            service.UpdateProfile(userManager, Profile);
+        public void UpdateUser(){
+            Profile = new Profile(Profile.Name, Profile.Pronouns, Profile.Age, Profile.Country, Profile.City, Categories.ToList(), Fandoms.ToList(), Badges.ToList(), Profile.Description, Profile.Picture, Profile.Interests);
+            service.UpdateProfile(UserManager, Profile);
+        }
+        public void AddBadge(){
+            Badge newBadge = new Badge(BadgesText);
+            if (!Badges.Contains(newBadge)){
+                Badges.Add(newBadge);
+            }
+        }
+        public void RemoveBadge(Badge badgeToRemove){
+            Badges.Remove(badgeToRemove);
+        }
+        public void AddCategory(){
+            Category newCategory = new Category(CategoryText);
+            if (!Categories.Contains(newCategory)){
+                Categories.Add(newCategory);
+            }
+        }
+        public void RemoveCategory(Category catToRemove){
+            Categories.Remove(catToRemove);
+        }
+        public void AddFandom(){
+            Fandom newFandom = new Fandom(FandomName, FandomCategory, FandomDescription);
+            if (!Fandoms.Contains(newFandom)){
+                Fandoms.Add(newFandom);
+            }
+        }
+        public void RemoveFandom(Fandom fandomToRemove){
+            Fandoms.Remove(fandomToRemove);
         }
     }
 }

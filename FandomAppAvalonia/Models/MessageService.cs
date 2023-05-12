@@ -39,6 +39,7 @@ public class MessageService {
         return msgFound;
     }
 
+
     public void AddMessage(Message new_message) {
 
         if (GetMessage(new_message.Title) == null)
