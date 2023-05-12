@@ -124,36 +124,45 @@ namespace FandomAppSpace.ViewModels
         }
 
         public void UpdateUser(Login userManager){
-            Profile = new Profile(Name, Pronouns, Age, Country, City, Categories.ToList<Category>(), Fandoms.ToList<Fandom>(), Badges.ToList<Badge>(), Description, Picture, Interests);
+            Profile = new Profile(Name, Pronouns, Age, Country, City, CategoriesList, FandomsList, BadgesList, Description, Picture, Interests);
             
             uService.UpdateProfile(userManager, Profile);
         }
         public void AddBadge(){
             Badge newBadge = new Badge(BadgesText);
             if (!Badges.Contains(newBadge)){
+                BadgesList.Add(newBadge);
                 Badges.Add(newBadge);
+                uService.AddBadge(newBadge);
             }
         }
         public void RemoveBadge(Badge badgeToRemove){
             Badges.Remove(badgeToRemove);
+            BadgesList.Remove(badgeToRemove);
         }
         public void AddCategory(){
             Category newCategory = new Category(CategoryText);
             if (!Categories.Contains(newCategory)){
                 Categories.Add(newCategory);
+                uService.AddCategory(newCategory);
+                CategoriesList.Add(newCategory);
             }
         }
         public void RemoveCategory(Category catToRemove){
             Categories.Remove(catToRemove);
+            CategoriesList.Remove(catToRemove);
         }
         public void AddFandom(){
             Fandom newFandom = new Fandom(FandomName, FandomCategory, FandomDescription);
             if (!Fandoms.Contains(newFandom)){
                 Fandoms.Add(newFandom);
+                uService.AddFandom(newFandom);
+                FandomsList.Add(newFandom);
             }
         }
         public void RemoveFandom(Fandom fandomToRemove){
             Fandoms.Remove(fandomToRemove);
+            FandomsList.Remove(fandomToRemove);
         }
     }
 }

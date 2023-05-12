@@ -88,6 +88,13 @@ namespace FandomAppSpace.ViewModels
             });
         }
 
+        public void DeleteUser(){
+            var vm = new ProfileDisplayViewModel(UserManager, UserManager.CurrentUser);
+            vm.DeleteUser.Subscribe(x => {
+                ShowLogin();
+            });
+        }
+
         //Display an existing event
         private void DisplayEventPage(){
             Content = new EventDisplayViewModel();

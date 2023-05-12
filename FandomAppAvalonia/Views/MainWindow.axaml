@@ -39,6 +39,7 @@
                         <!--<Image Source="/Assets/Icons/icons-close.png" Width="20" Height="20"/> -->
                         Log out
                 </Button>
+                
 
         </StackPanel>
         </StackPanel> 

@@ -50,7 +50,7 @@
           <ItemsRepeater.ItemTemplate>
             <DataTemplate>
              <Border Margin="10,0,0,0" Padding="2">
-             <StackPanel>
+             <StackPanel Orientation="Horizontal">
               <TextBlock Text="{Binding Name}"/>
               <TextBlock Text="{Binding Category}"/>
               <TextBlock Text="{Binding Description}"/>
@@ -74,6 +74,8 @@
     <StackPanel IsVisible="{Binding ShowEditButton}">
       <Button Content="Edit Profile"
               Command="{Binding $parent[Window].DataContext.EditProfile}"/>
+      <Button Content="Delete User"
+              Command="{Binding DeleteCurrentUser}"/>
     </StackPanel>
                      
   </StackPanel>

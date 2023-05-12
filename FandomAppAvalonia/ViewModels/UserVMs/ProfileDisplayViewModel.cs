@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Reactive;
 using FandomAppSpace;
 using ReactiveUI;
 using UserInfo;
@@ -16,6 +17,7 @@ namespace FandomAppSpace.ViewModels
             get => _showEditButton;
             private set => this.RaiseAndSetIfChanged(ref _showEditButton, value);
         }
+        public ReactiveCommand<Unit, Unit> DeleteUser { get; }
 
         public ProfileDisplayViewModel(Login UserManager, User chosenUser)
         {
@@ -27,8 +29,11 @@ namespace FandomAppSpace.ViewModels
                 ShowEditButton = false;
                 Profile = chosenUser.UserProfile;
             }
+            DeleteUser = ReactiveCommand.Create(() => { });
         }
 
-    
+        public void DeleteCurrentUser(){
+            uService.DeleteUser(UserManager);
+        }
     }
 }

@@ -148,6 +148,34 @@ public class UserService{
 
         
     }
+    public void AddCategory(Category newCat){
+        _context.CATEGORIES.Add(newCat);
+        _context.SaveChanges();
+    }
+    // public List<Category> GetUserCategories(Profile userProfile){
+    //     List<Category> categoryList = new List<Category>();
+    //     if (userProfile.Categories == null){return categoryList;}
+    //     foreach (Category category in userProfile.Categories)
+    //     {
+    //         try{
+    //             categoryList = _context.CATEGORIES
+    //         .Where(category => category.Name == category.Name)
+    //         .ToList<Category>();
+    //         }
+    //         catch(Exception){
+    //             return null;
+    //         }
+    //     }
+    //     return categoryList;
+    // }
+    public void AddFandom(Fandom newFan){
+        _context.FANDOMS.Add(newFan);
+        _context.SaveChanges();
+    }
+    public void AddBadge(Badge newBadge){
+        _context.BADGES.Add(newBadge);
+        _context.SaveChanges();
+    }
     /// <summary>
     /// Method <c>CreateUser</c> inserts a new user in the DbSet USERS.
     /// </summary>
