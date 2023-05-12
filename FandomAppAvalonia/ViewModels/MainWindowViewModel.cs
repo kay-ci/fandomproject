@@ -97,7 +97,9 @@ namespace FandomAppSpace.ViewModels
         }
 
         private void View_Message(Message msg){
-            Content = new MessageViewModel(msg);
+            bool showEditButton = false;
+            if(msg.Sender.Username.Equals(UserManager.CurrentUser.Username)) showEditButton = true;
+            Content = new MessageViewModel(msg, showEditButton);
         }
 
         private void Open_Outbox(){
@@ -105,7 +107,7 @@ namespace FandomAppSpace.ViewModels
         }
 
         private void Open_Inbox(){
-            Content = new InboxDisplayViewModel();
+            Content = new InboxDisplayViewModel(UserManager);
         }
 
         private void Create_Message(User chosen_recipient){

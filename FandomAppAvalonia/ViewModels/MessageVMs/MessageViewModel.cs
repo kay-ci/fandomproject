@@ -8,8 +8,10 @@ namespace FandomAppSpace.ViewModels
     public class MessageViewModel : ViewModelBase
     {
         public Message Msg { get;}
-        public MessageViewModel(Message m){
+        public bool ShowEditButton {get; set;}
+        public MessageViewModel(Message m, bool showEditButton){
             Msg = m;
+            ShowEditButton = showEditButton;
         }
     }
 }

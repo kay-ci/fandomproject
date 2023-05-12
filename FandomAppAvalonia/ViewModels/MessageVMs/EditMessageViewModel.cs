@@ -40,6 +40,10 @@ namespace FandomAppSpace.ViewModels
 
         public void EditMessage(Login UserManager){
             newMsg = new Message(UserManager.CurrentUser, oldMsg.Recipients, Title, Text);
+            for(int i = 0; i < UserManager.CurrentUser.Outbox.Count; i++){
+                if(UserManager.CurrentUser.Outbox[i] == oldMsg) UserManager.CurrentUser.Outbox[i] = new Message(newMsg.Sender, newMsg.Recipients, Title, Text);
+            }
+
             msgService.EditMessage(UserManager, newMsg, oldMsg.Title);
         }
         

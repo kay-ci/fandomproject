@@ -27,10 +27,14 @@ public class MessageService {
         Message? msgFound = null;
         try
         {
-            var query = from message in _context.MESSAGES
-                        where message.Title == title
-                        select message;
-            msgFound = query.First();
+            msgFound = _context.MESSAGES
+            .Include(msg=>msg.Sender)
+            .Include(msg=>msg.Recipients)
+            .Include(msg=>msg.Timesent)
+            .Where(msg=>msg.Title == title)
+            .ToList()
+            .First<Message>();
+            
         }
         catch (Exception)
         {
