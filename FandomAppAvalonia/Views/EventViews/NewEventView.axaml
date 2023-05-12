@@ -27,7 +27,7 @@
                 Grid.Row="2" Grid.Column="1"/>
 
         <TextBlock Text="Date: " Grid.Row="4" Grid.Column="0"/>
-        <DatePicker SelectedDateChanged="{Binding Date}"
+        <DatePicker SelectedDate="{Binding Date}"
                   Grid.Row="4" Grid.Column="1"/>
                 
         <TextBlock Text="Minimum Age: " Grid.Row="6" Grid.Column="0"/>

@@ -5,8 +5,7 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="FandomAppSpace.Views.RegisterView">
   <DockPanel>
-    <Button DockPanel.Dock="Bottom" Command="{Binding Register}">Register</Button>
-    <Button DockPanel.Dock="Bottom" Command="{Binding Login}">Login</Button>
+  
     <TextBlock Text="Register Account" FontSize="24" DockPanel.Dock="Top"/>
     <StackPanel>    
       <Grid ColumnDefinitions="1*,4*"
@@ -56,6 +55,10 @@
               Grid.Row="6" Grid.Column="1"/>       
       </Grid>
     </StackPanel>
+    <StackPanel Orientation="Horizontal">
+    <Button DockPanel.Dock="Bottom" Command="{Binding Register}">Register</Button>
+    <Button DockPanel.Dock="Bottom" Command="{Binding Login}">Login</Button>
+</StackPanel>
   </DockPanel>
 </UserControl>
 

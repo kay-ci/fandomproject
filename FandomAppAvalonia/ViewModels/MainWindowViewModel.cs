@@ -29,8 +29,6 @@ namespace FandomAppSpace.ViewModels
         public ReactiveCommand<Unit, Unit> OpenOutbox { get; }
         public ReactiveCommand<Unit, Unit> ViewUsers {get; }
         public ReactiveCommand<Unit, Unit> Logout { get; }
-
-        //public Login? UserManager;
         public MainWindowViewModel()
         {
             //Buttons
@@ -61,8 +59,7 @@ namespace FandomAppSpace.ViewModels
             
             vm.Register.Subscribe(x => {
                 Content = dispvm;
-                vm.RegisterUser();
-            });
+                vm.RegisterUser();});
             Content = vm;
             vm.Login.Subscribe(x => {ShowLogin();});
         }
@@ -82,13 +79,28 @@ namespace FandomAppSpace.ViewModels
         //Navigate to edit profile view from profile display view
         public void EditProfile()
         {
-            ProfileDisplayViewModel dispvm = (ProfileDisplayViewModel) Content;
-            var vm = new ProfileEditViewModel(dispvm.Profile);
-            
-            vm.Ok.Subscribe(x => {
-               Content = dispvm;
-                vm.UpdateUser();});
+            var vm = new ProfileEditViewModel(ViewModelBase.UserManager.CurrentUser.UserProfile);
             Content = vm;
+            vm.Ok.Subscribe(x => {
+            vm.UpdateUser();
+            DisplayProfile(ViewModelBase.UserManager.CurrentUser);
+            });
+        }
+
+        public void DeleteUser(){
+            var vm = new ProfileDisplayViewModel( ViewModelBase.UserManager.CurrentUser);
+            vm.DeleteUser.Subscribe(x => {
+                ShowLogin();
+                
+            });
+        }
+        public void ChangePassword(){
+            var vm = new PasswordEditViewModel();
+            Content = vm;
+            vm.ChangePassword.Subscribe(x => {
+            vm.UpdatePassword();
+            DisplayProfile(ViewModelBase.UserManager.CurrentUser);
+            });
         }
 
         //Display an existing event

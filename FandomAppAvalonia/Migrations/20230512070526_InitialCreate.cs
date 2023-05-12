@@ -173,7 +173,7 @@ namespace FandomAppSpace.Migrations
                 {
                     CategoryID = table.Column<int>(type: "NUMBER(10)", nullable: false)
                         .Annotation("Oracle:Identity", "START WITH 1 INCREMENT BY 1"),
-                    Category_name = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false),
+                    Name = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false),
                     ProfileID = table.Column<int>(type: "NUMBER(10)", nullable: true)
                 },
                 constraints: table =>

@@ -73,14 +73,14 @@ namespace FandomAppSpace.ViewModels{
             if(string.IsNullOrWhiteSpace(_keyword)) return users;
             List<User> filteredUsers = new List<User>();
             foreach(User user in users){
-                if(user.UserProfile.Name.Contains(_keyword)) filteredUsers.Add(user);
-                else if(user.UserProfile.Country.Contains(_keyword)) filteredUsers.Add(user);
-                else if(user.UserProfile.City.Contains(_keyword)) filteredUsers.Add(user);
+                if(user.UserProfile.Name.ToLower().Contains(_keyword.ToLower())) filteredUsers.Add(user);
+                else if(user.UserProfile.Country.ToLower().Contains(_keyword.ToLower())) filteredUsers.Add(user);
+                else if(user.UserProfile.City.ToLower().Contains(_keyword.ToLower())) filteredUsers.Add(user);
             }
             
             return filteredUsers;
         }
-
+        
         // private List<Event> SearchEvents(string keyword){
         //     List<Event> profiles = service.GetProfiles();
         //     if(string.IsNullOrWhiteSpace(_keyword)) return profiles;

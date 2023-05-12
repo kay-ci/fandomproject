@@ -28,6 +28,9 @@ public class UserService{
         List<User> usersList = _context.USERS.AsNoTrackingWithIdentityResolution()
             .Include(user => user.UserProfile)
             .Include(user => user.Fandoms)
+            .Include(user => user.UserProfile.Badges)
+            .Include(user => user.UserProfile.Fandoms)
+            .Include(user => user.UserProfile.Categories)
             .Include(user => user.EventsAttending)
             .Include(user => user.Inbox)
             .Include(user => user.Outbox)
@@ -43,6 +46,9 @@ public class UserService{
         try{
             fetcheduser = _context.USERS.AsNoTrackingWithIdentityResolution()
                         .Include(user => user.UserProfile)
+                        .Include(user => user.UserProfile.Badges)
+                        .Include(user => user.UserProfile.Fandoms)
+                        .Include(user => user.UserProfile.Categories)
                         .Include(user => user.Fandoms)
                         .Include(user => user.EventsAttending)
                         .Include(user => user.Inbox)
@@ -81,10 +87,21 @@ public class UserService{
         _context.SaveChanges();
     }
     public void DeleteUser(Login UserManager){
-        Profile profile = GetProfile(UserManager.CurrentUser);
-        _context.PROFILES.Remove(profile);
-        _context.USERS.Remove(UserManager.CurrentUser);
+        // Profile profile = GetProfile(UserManager.CurrentUser);
+        // _context.PROFILES.Remove(UserManager.CurrentUser.UserProfile);
+        // _context.USERS.Remove(UserManager.CurrentUser);
+        // _context.SaveChanges();
+        var user = _context.USERS
+            .OrderBy(e => e.Username)
+            .Where(e => e == UserManager.CurrentUser)
+            .Include(e => e.UserProfile)
+            .Include(e => e.UserProfile.Categories)
+            .Include(e => e.UserProfile.Fandoms)
+            .Include(e => e.UserProfile.Badges)
+            .First();
+        _context.Remove(user);
         _context.SaveChanges();
+
 
     }
     /// <summary>
@@ -122,20 +139,42 @@ public class UserService{
         if(userManager.CurrentUser == null){
             throw new ArgumentException("Current user is null");}
         if(userManager.CurrentUser.UserProfile == null){
-          throw new ArgumentException("Current user profile is null");}  
+          throw new ArgumentException("Current user profile is null");} 
+        
+        var query = from profile in _context.PROFILES
+           where profile.user == userManager.CurrentUser
+           select profile;
+        try{
+            Profile currentProfile = query.First<Profile>();
+            currentProfile.Name = newProfile.Name;
+            currentProfile.Pronouns = newProfile.Pronouns;
+            currentProfile.Age = newProfile.Age;
+            currentProfile.Country = newProfile.Country;
+            currentProfile.City = newProfile.City;
+            currentProfile.Description = newProfile.Description;
+            currentProfile.Categories = newProfile.Categories;
+            currentProfile.Fandoms = newProfile.Fandoms;
+            currentProfile.Badges = newProfile.Badges;
+            currentProfile.Picture = newProfile.Picture;
+            currentProfile.Interests = newProfile.Interests;
+            userManager.CurrentUser.UserProfile = currentProfile;
+            _context.Update(currentProfile);
+            _context.SaveChanges();
+        }catch(Exception){
+        }
 
-        Profile currentProfile = userManager.CurrentUser.UserProfile; //added for readability
-        currentProfile.Name = newProfile.Name;
-        currentProfile.Pronouns = newProfile.Pronouns;
-        currentProfile.Age = newProfile.Age;
-        currentProfile.Country = newProfile.Country;
-        currentProfile.City = newProfile.City;
-        currentProfile.Description = newProfile.Description;
-        currentProfile.Categories = newProfile.Categories;
-        currentProfile.Fandoms = newProfile.Fandoms;
-        currentProfile.Badges = newProfile.Badges;
-        currentProfile.Picture = newProfile.Picture;
-        currentProfile.Interests = newProfile.Interests;
+        
+    }
+    public void AddCategory(Category newCat){
+        _context.CATEGORIES.Add(newCat);
+        _context.SaveChanges();
+    }
+    public void AddFandom(Fandom newFan){
+        _context.FANDOMS.Add(newFan);
+        _context.SaveChanges();
+    }
+    public void AddBadge(Badge newBadge){
+        _context.BADGES.Add(newBadge);
         _context.SaveChanges();
     }
     /// <summary>
@@ -206,7 +245,20 @@ public class UserService{
         Rfc2898DeriveBytes key = new Rfc2898DeriveBytes(password, salt, Iterations);
         byte[] hash = key.GetBytes(32);
 
-        currentUser.Salt = salt;
-        currentUser.Hash = hash;
+        try{
+            User newUser = GetUser(currentUser.Username);
+            newUser.Salt = salt;
+            newUser.Hash = hash;
+            newUser.Username = currentUser.Username;
+            newUser.UserProfile = currentUser.UserProfile;
+            newUser.Inbox = currentUser.Inbox;
+            newUser.Outbox = currentUser.Outbox;
+            newUser.EventsCreated = currentUser.EventsCreated;
+            newUser.EventsAttending = currentUser.EventsCreated;
+            newUser.Fandoms = currentUser.Fandoms;
+            _context.Update(newUser);
+            _context.SaveChanges();
+        }catch(Exception){
+        }
     }
 }

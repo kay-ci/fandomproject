@@ -29,6 +29,9 @@
       
         <TextBlock Text="{Binding Profile.City, StringFormat='City: {0}'}"
                    IsVisible="{Binding Profile.City, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
+        <TextBlock Text="{Binding Profile.Interests, StringFormat='City: {0}'}"
+        IsVisible="{Binding Profile.Interests, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
+        
       </StackPanel>
 
       <StackPanel Width="200" Spacing="5">
@@ -37,7 +40,7 @@
           <ItemsRepeater.ItemTemplate>
             <DataTemplate>
              <Border Margin="10,0,0,0" Padding="2">
-               <TextBlock Text="{Binding}"/>
+               <TextBlock Text="{Binding Name}"/>
               </Border>
             </DataTemplate>
           </ItemsRepeater.ItemTemplate>
@@ -47,7 +50,11 @@
           <ItemsRepeater.ItemTemplate>
             <DataTemplate>
              <Border Margin="10,0,0,0" Padding="2">
-              <TextBlock Text="{Binding}"/>
+             <StackPanel Orientation="Horizontal">
+              <TextBlock Text="{Binding Name}"/>
+              <TextBlock Text="{Binding Category}"/>
+              <TextBlock Text="{Binding Description}"/>
+            </StackPanel>
               </Border>
             </DataTemplate>
           </ItemsRepeater.ItemTemplate>
@@ -57,17 +64,7 @@
           <ItemsRepeater.ItemTemplate>
             <DataTemplate>
              <Border Margin="10,0,0,0" Padding="2">
-               <TextBlock Text="{Binding}"/>
-              </Border>
-            </DataTemplate>
-          </ItemsRepeater.ItemTemplate>
-        </ItemsRepeater>
-        <TextBlock Text="Interests:"/>
-        <ItemsRepeater Items="{Binding Profile.Interests}">
-          <ItemsRepeater.ItemTemplate>
-            <DataTemplate>
-             <Border Margin="10,0,0,0" Padding="2">
-               <TextBlock Text="{Binding}"/>
+               <TextBlock Text="{Binding BadgeName}"/>
               </Border>
             </DataTemplate>
           </ItemsRepeater.ItemTemplate>
@@ -77,7 +74,10 @@
     <StackPanel IsVisible="{Binding ShowEditButton}">
       <Button Content="Edit Profile"
               Command="{Binding $parent[Window].DataContext.EditProfile}"/>
-    </StackPanel>
-                     
+      <Button Content="Delete User"
+              Command="{Binding DeleteCurrentUser}" />
+      <Button Content="Change Password"
+              Command="{Binding $parent[Window].DataContext.ChangePassword}"/>
+    </StackPanel>         
   </StackPanel>
 </UserControl>

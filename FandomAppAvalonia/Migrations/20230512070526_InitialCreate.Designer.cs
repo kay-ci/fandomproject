@@ -12,8 +12,8 @@ using UserInfo;
 namespace FandomAppSpace.Migrations
 {
     [DbContext(typeof(FanAppContext))]
-    [Migration("20230511054544_ModifiedCategoryName")]
-    partial class ModifiedCategoryName
+    [Migration("20230512070526_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
