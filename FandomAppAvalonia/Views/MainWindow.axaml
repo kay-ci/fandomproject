@@ -1,0 +1,50 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="FandomAppSpace.Views.MainWindow"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="Fandom App"
+        Width="1000" Height="800">
+        <StackPanel>
+        <ContentControl Width="800" Height="700" Content="{Binding Content}"/>
+        <StackPanel HorizontalAlignment="Center"
+                    VerticalAlignment="Bottom"
+                    Orientation="Horizontal"
+                    IsVisible="{Binding VisibleNavigation}">
+
+                <Button Command="{Binding Profile}"> 
+                        <!--<Image Source="/Assets/Icons/icons-profile.png" Width="20" Height="20"/> -->
+                        My Profile
+                </Button>
+                <Button Command="{Binding MyEvents}">
+                        <!--<Image Source="/Assets/Icons/icons-event.png" Width="20" Height="20"/> -->
+                        My Events
+                </Button>
+                <Button Command="{Binding Search}">
+                        <!--<Image Source="/Assets/Icons/icons-search.png" Width="20" Height="20"/> -->
+                        Search
+                </Button>
+                <Button Command="{Binding CreateMessage}">
+                        <!--<Image Source="/Assets/Icons/icons-message.png" Width="20" Height="20"/> -->
+                        Create Message
+                </Button>
+                <Button Command="{Binding OpenInbox}">
+                        <!--<Image Source="/Assets/Icons/icons-message.png" Width="20" Height="20"/> -->        
+                        Inbox
+                </Button>
+                <Button Command="{Binding OpenOutbox}">
+                        <!--<Image Source="/Assets/Icons/icons-message.png" Width="20" Height="20"/> -->
+                        Outbox
+                </Button>
+                <Button Command="{Binding ViewUsers}">
+                        <!--<Image Source="/Assets/Icons/icons-profile.png" Width="20" Height="20"/> -->
+                        View Users
+                </Button>
+                <Button Command="{Binding Logout}">
+                        <!--<Image Source="/Assets/Icons/icons-close.png" Width="20" Height="20"/> -->
+                        Log out
+                </Button>
+                
+
+        </StackPanel>
+        </StackPanel> 
+</Window>

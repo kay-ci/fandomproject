@@ -1,0 +1,3 @@
+dotnet new avalonia.usercontrol -o Views -n [RegisterView] --namespace FandomAppSpace.Views
+
+dotnet new avalonia.usercontrol -na FandomAppSpace.Views -n EventPageViews

@@ -17,7 +17,7 @@ public class EventServiceTests{
 
         var mockSet = new Mock<DbSet<Event>>();
         var mockContext = new Mock<FanAppContext>();
-        mockContext.Setup(m => m.FandomEvents).Returns(mockSet.Object);
+        mockContext.Setup(m => m.EVENTS).Returns(mockSet.Object);
 
         EventService service = EventService.getInstance();
         service.setFanAppContext(mockContext.Object);
@@ -51,7 +51,7 @@ public class EventServiceTests{
         mockSet.As<IQueryable<Event>>().Setup(m => m.GetEnumerator()).Returns(data.GetEnumerator());
 
         var mockContext = new Mock<FanAppContext>();
-        mockContext.Setup(m => m.FandomEvents).Returns(mockSet.Object);
+        mockContext.Setup(m => m.EVENTS).Returns(mockSet.Object);
 
         EventService service = EventService.getInstance();
         service.setFanAppContext(mockContext.Object);
@@ -85,7 +85,7 @@ public class EventServiceTests{
         mockSet.As<IQueryable<Event>>().Setup(m => m.GetEnumerator()).Returns(data.GetEnumerator());
 
         var mockContext = new Mock<FanAppContext>();
-        mockContext.Setup(m => m.FandomEvents).Returns(mockSet.Object);
+        mockContext.Setup(m => m.EVENTS).Returns(mockSet.Object);
 
         EventService service = EventService.getInstance();
         service.setFanAppContext(mockContext.Object);
@@ -120,7 +120,7 @@ public class EventServiceTests{
         mockSet.As<IQueryable<Event>>().Setup(m => m.GetEnumerator()).Returns(data.GetEnumerator());
 
         var mockContext = new Mock<FanAppContext>();
-        mockContext.Setup(m => m.FandomEvents).Returns(mockSet.Object);
+        mockContext.Setup(m => m.EVENTS).Returns(mockSet.Object);
 
         EventService service = EventService.getInstance();
         service.setFanAppContext(mockContext.Object);
@@ -141,7 +141,7 @@ public class EventServiceTests{
         //Arrange
         var mockSet = new Mock<DbSet<Event>>();
         var mockContext = new Mock<FanAppContext>();
-        mockContext.Setup(m => m.FandomEvents).Returns(mockSet.Object);
+        mockContext.Setup(m => m.EVENTS).Returns(mockSet.Object);
 
         EventService service = EventService.getInstance();
         service.setFanAppContext(mockContext.Object);

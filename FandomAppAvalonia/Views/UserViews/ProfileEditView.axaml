@@ -1,0 +1,131 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="1080"
+             x:Class="FandomAppSpace.Views.ProfileEditView">
+  <DockPanel>
+    <Button DockPanel.Dock="Bottom" Command="{Binding Ok}">Done</Button>
+    <TextBlock Text="Edit Profile" FontSize="24" DockPanel.Dock="Top"/>
+    <StackPanel>
+    <ScrollViewer Height="1000" Width="600" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled">    
+      <StackPanel>
+      <Grid ColumnDefinitions="1*,4*"
+            RowDefinitions="*,*,*,*,*,*,*,*,*,*,*,*,*,*"  
+            Margin="4">
+        <TextBlock Text="Name: " Grid.Row="0" Grid.Column="0"/>
+        <TextBox AcceptsReturn="False"
+                Text="{Binding Name}"
+                Watermark="{Binding Profile.Name}"
+                Grid.Row="0" Grid.Column="1"/>
+      <TextBlock Text="Pronouns: " Grid.Row="1" Grid.Column="0"/>
+      <TextBox AcceptsReturn="False"
+              Text="{Binding Pronouns}"
+              Watermark="{Binding Profile.Pronouns}"
+              Grid.Row="1" Grid.Column="1"/>
+      
+
+      <TextBlock Text="Age: " Grid.Row="2" Grid.Column="0"/>
+      <TextBox AcceptsReturn="False"
+              Text="{Binding Age}"
+              Watermark="{Binding Profile.Name}"
+              Grid.Row="2" Grid.Column="1"/>
+      
+      <TextBlock Text="Country: " Grid.Row="3" Grid.Column="0"/>
+      <TextBox AcceptsReturn="False"
+              Text="{Binding Country}"
+              Watermark="{Binding Profile.Country}"
+              Grid.Row="3" Grid.Column="1"/>
+
+      <TextBlock Text="City: " Grid.Row="4" Grid.Column="0"/>
+      <TextBox AcceptsReturn="False"
+              Text="{Binding City}"
+              Watermark="{Binding Profile.City}"
+              Grid.Row="4" Grid.Column="1"/>
+
+      <TextBlock Text="Description: " Grid.Row="5" Grid.Column="0"/>
+      <TextBox AcceptsReturn="False"
+              Text="{Binding Description}"
+              Watermark="{Binding Profile.Description}"
+              Grid.Row="5" Grid.Column="1"/>
+        <TextBlock Grid.Row="6" Grid.Column="0" Text="Badges:"/>
+        <StackPanel Grid.Row="6" Grid.Column="1" Orientation="Horizontal">     
+                <TextBox AcceptsReturn="False"
+                        Text="{Binding BadgesText}"
+                        Watermark="Enter Badge Title"
+                        Width="300"/>
+                <Button Command="{Binding AddBadge}" > Add Badge</Button>
+        </StackPanel>
+        <ItemsRepeater Grid.Row="7" Grid.Column="1" Items="{Binding Badges}">
+                <ItemsRepeater.ItemTemplate>
+                <DataTemplate>
+                <StackPanel Orientation="Horizontal">
+                        <TextBlock Padding="2" VerticalAlignment="Center" Text="{Binding BadgeName}"/>
+                        <Button Content="Remove Badge"
+                        Command="{Binding $parent[UserControl].DataContext.RemoveBadge}" CommandParameter="{Binding}"/> 
+                </StackPanel>
+                </DataTemplate>
+                </ItemsRepeater.ItemTemplate>
+        </ItemsRepeater>
+        <TextBlock Grid.Row="8" Grid.Column="0" Text="Categories:"/>
+        <StackPanel Grid.Row="8" Grid.Column="1" Orientation="Horizontal">
+                <TextBox AcceptsReturn="False"
+                        Text="{Binding CategoryText}"
+                        Watermark="Enter category"
+                        Width="300"/>
+                <Button Command="{Binding AddCategory}">Add Category</Button>
+        </StackPanel>
+        <ItemsRepeater Grid.Row="9" Grid.Column="1" Items="{Binding Categories}">
+                <ItemsRepeater.ItemTemplate>
+                <DataTemplate>
+                <StackPanel Orientation="Horizontal">
+                        <TextBlock Padding="2" VerticalAlignment="Center" Text="{Binding Name}"/>
+                        <Button Content="Remove Category"
+                        Command="{Binding $parent[UserControl].DataContext.RemoveCategory}" CommandParameter="{Binding}"/> 
+                </StackPanel>
+                </DataTemplate>
+                </ItemsRepeater.ItemTemplate>
+        </ItemsRepeater>
+        <TextBlock Grid.Row="10" Grid.Column="0" Text="Fandoms:"/>
+        <StackPanel Grid.Row="10" Grid.Column="1" Orientation="Horizontal">
+                <TextBox AcceptsReturn="False"
+                        Text="{Binding FandomName}"
+                        Watermark="Name"
+                        Width="100"/>
+                <TextBox AcceptsReturn="False"
+                        Text="{Binding FandomCategory}"
+                        Watermark="Category"
+                        Width="100"/>
+                <TextBox AcceptsReturn="False"
+                        Text="{Binding FandomDescription}"
+                        Watermark="Description"
+                        Width="100"/>
+                <Button Command="{Binding AddFandom}">Add Fandom</Button>
+        </StackPanel>
+        <ItemsRepeater Grid.Row="11" Grid.Column="1" Items="{Binding Fandoms}">
+                <ItemsRepeater.ItemTemplate>
+                <DataTemplate>
+                <StackPanel Orientation="Horizontal">
+                        <TextBlock Padding="2" VerticalAlignment="Center" Text="{Binding Name}"/>
+                        <Button Content="Remove Fandom"
+                        Command="{Binding $parent[UserControl].DataContext.RemoveFandom}" CommandParameter="{Binding}"/> 
+                </StackPanel>
+                </DataTemplate>
+                </ItemsRepeater.ItemTemplate>
+        </ItemsRepeater>
+        <TextBlock Text="Interests: " Grid.Row="12" Grid.Column="0"/>
+        <TextBox AcceptsReturn="False"
+                Text="{Binding Interests}"
+                Watermark="{Binding Profile.Interests}"
+                Grid.Row="12" Grid.Column="1"/>
+        <TextBlock Text="Picture: " Grid.Row="13" Grid.Column="0"/>
+        <TextBox AcceptsReturn="False"
+                Text="{Binding Picture}"
+                Watermark="{Binding Profile.Picture}"
+                Grid.Row="13" Grid.Column="1"/>
+      </Grid>
+      </StackPanel>
+      </ScrollViewer>  
+    </StackPanel>
+  </DockPanel>
+</UserControl>

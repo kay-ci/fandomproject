@@ -1,0 +1,58 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="FandomAppSpace.Views.CreateMessageView">
+  <DockPanel>
+  <Button DockPanel.Dock="Bottom" Command="{Binding Cancel}">Cancel</Button>
+    <Button DockPanel.Dock="Bottom" Command="{Binding Ok}">Create Message</Button>
+    <TextBlock Text="Create Message" FontSize="24" DockPanel.Dock="Top"/>
+    <StackPanel>    
+      <Grid ColumnDefinitions="*,*"
+            RowDefinitions="*,*,*,*"  
+            Margin="4">
+        <TextBlock Text="Title: " Grid.Row="0" Grid.Column="0"/>
+        <TextBox Grid.Row="0" Grid.Column="1" AcceptsReturn="False"
+                Text="{Binding Title}"
+                Watermark="Message Title"/>
+
+      <TextBlock Text="Text: " Grid.Row="1" Grid.Column="0"/>
+      <TextBox Grid.Row="1" Grid.Column="1" AcceptsReturn="False"
+              Text="{Binding Text}"
+              Watermark="Message Text"/>
+      <!-- <TextBlock Text="Recipients (separate users by a , ): " Grid.Row="2" Grid.Column="0"/> -->
+      <!-- <TextBox Grid.Row="2" Grid.Column="1" AcceptsReturn="False"
+              Text="{Binding RecipientText}"
+              Watermark="Recipients..."/> -->
+        <TextBlock Text="Recipients: " Grid.Row="2" Grid.Column="0"/>
+      <ItemsRepeater Grid.Row="2" Grid.Column="1" Items="{Binding ObservableRecips}">
+                <ItemsRepeater.ItemTemplate>
+                <DataTemplate>
+                <StackPanel Orientation="Horizontal">
+                        <TextBlock Padding="2" VerticalAlignment="Center" Text="{Binding Username}"/>
+                        <Button Content="Remove recipient"
+                        Command="{Binding $parent[UserControl].DataContext.RemoveRecipient}"
+                        CommandParameter="{Binding}"/> 
+                </StackPanel>
+                </DataTemplate>
+                </ItemsRepeater.ItemTemplate>
+        </ItemsRepeater>
+        <TextBlock Text="Users available: " Grid.Row="3" Grid.Column="0"/>
+        <ItemsRepeater Grid.Row="3" Grid.Column="1" Items="{Binding ObservableDBUsers}">
+                <ItemsRepeater.ItemTemplate>
+                <DataTemplate>
+                <StackPanel Orientation="Horizontal">
+                        <TextBlock Padding="2" VerticalAlignment="Center" Text="{Binding Username}"/>
+                        <Button Content="Add recipient"
+                        Command="{Binding $parent[UserControl].DataContext.AddRecipient}"
+                        CommandParameter="{Binding}"/> 
+                </StackPanel>
+                </DataTemplate>
+                </ItemsRepeater.ItemTemplate>
+        </ItemsRepeater>
+
+      </Grid>
+    </StackPanel>
+  </DockPanel>
+</UserControl>

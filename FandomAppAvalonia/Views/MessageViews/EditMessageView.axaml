@@ -1,0 +1,27 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="FandomAppSpace.Views.EditMessageView">
+  <DockPanel>
+  <Button DockPanel.Dock="Bottom" Command="{Binding Cancel}">Cancel</Button>
+    <Button DockPanel.Dock="Bottom" Command="{Binding Ok}">Edit Message</Button>
+    <TextBlock Text="Edit Message" FontSize="24" DockPanel.Dock="Top"/>
+    <StackPanel>    
+      <Grid ColumnDefinitions="*,*"
+            RowDefinitions="*,*"  
+            Margin="4">
+        <TextBlock Text="Title: " Grid.Row="0" Grid.Column="0"/>
+        <TextBox Grid.Row="0" Grid.Column="1" AcceptsReturn="False"
+                Text="{Binding Title}"
+                Watermark="{Binding oldMsg.Title}"/>
+
+      <TextBlock Text="Text: " Grid.Row="1" Grid.Column="0"/>
+      <TextBox Grid.Row="1" Grid.Column="1" AcceptsReturn="False"
+              Text="{Binding Text}"
+              Watermark="{Binding oldMsg.Text}"/>
+      </Grid>
+    </StackPanel>
+  </DockPanel>
+</UserControl>
