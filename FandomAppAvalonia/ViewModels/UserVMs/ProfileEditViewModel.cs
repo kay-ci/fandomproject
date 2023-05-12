@@ -6,6 +6,8 @@ using UserInfo;
 using System.Collections.ObjectModel;
 using System.Reactive.Linq;
 
+using System.ComponentModel.DataAnnotations;
+
 namespace FandomAppSpace.ViewModels
 {
     public class ProfileEditViewModel : MainWindowViewModel
@@ -48,26 +50,32 @@ namespace FandomAppSpace.ViewModels
             get => _badgesText;
             private set => this.RaiseAndSetIfChanged(ref _badgesText, value);
         }
+
+        [Required]
         public string Name 
         {
             get => _name;
             private set => this.RaiseAndSetIfChanged(ref _name, value);
         }
-         public string Pronouns 
+        [Required]
+        public string Pronouns 
         {
             get => _pronouns;
             private set => this.RaiseAndSetIfChanged(ref _pronouns, value);
         }
-         public int Age 
+        [Required]
+        public int Age 
         {
             get => _age;
             private set => this.RaiseAndSetIfChanged(ref _age, value);
         }
+        [Required]
          public string Country 
         {
             get => _country;
             private set => this.RaiseAndSetIfChanged(ref _country, value);
         }
+        [Required]
          public string City 
         {
             get => _city;
@@ -108,20 +116,20 @@ namespace FandomAppSpace.ViewModels
             Categories = new ObservableCollection<Category>(CategoriesList);
             Fandoms = new ObservableCollection<Fandom>(FandomsList);
             Badges = new ObservableCollection<Badge>(BadgesList);
-            // var editEnabled = this.WhenAnyValue(
-            //     x => x.FandomCategory, x=> x.FandomName, x=>x.FandomDescription, x=>x.BadgesText, x=>x.Name, x=>x.Pronouns, x=>x.Country, x=>x.City,x=>x.Description, x=>x.Age, x=>x.Picture, x=>x.Interests,
-            //     (fcategory, fname, fdescription, badges, pname, pronouns, country, city, pdescription, age, picture, interests) =>
-            //         !string.IsNullOrWhiteSpace(fcategory) &&
-            //         !string.IsNullOrWhiteSpace(fname) &&
-            //         !string.IsNullOrWhiteSpace(fdescription) &&
-            //         !string.IsNullOrWhiteSpace(badges) &&
-            //         !string.IsNullOrWhiteSpace(pname) &&
-            //         !string.IsNulOrWhiteSpace(pronouns)&&
-            //         !string.IsNullOrWhiteSpace(country)&&
-            //         !string.IsNullOrWhiteSpace(city)&&
-            //         !string.IsNullOrWhiteSpace(picture)&&
-            //         age >= 0 && age <= 130)
-            // .DistinctUntilChanged();
+            var editEnabled = this.WhenAnyValue(
+                x => x.FandomCategory, x=> x.FandomName, x=>x.FandomDescription, x=>x.BadgesText, x=>x.Name, x=>x.Pronouns, x=>x.Country, x=>x.City,x=>x.Description, x=>x.Age, x=>x.Picture, x=>x.Interests,
+                (fcategory, fname, fdescription, badges, pname, pronouns, country, city, pdescription, age, picture, interests) =>
+                    !string.IsNullOrWhiteSpace(fcategory) &&
+                    !string.IsNullOrWhiteSpace(fname) &&
+                    !string.IsNullOrWhiteSpace(fdescription) &&
+                    !string.IsNullOrWhiteSpace(badges) &&
+                    !string.IsNullOrWhiteSpace(pname) &&
+                    !string.IsNullOrWhiteSpace(pronouns)&&
+                    !string.IsNullOrWhiteSpace(country)&&
+                    !string.IsNullOrWhiteSpace(city)&&
+                    !string.IsNullOrWhiteSpace(picture)&&
+                    age >= 0 && age <= 130)
+            .DistinctUntilChanged();
             Ok = ReactiveCommand.Create(() => { });
         }
 
