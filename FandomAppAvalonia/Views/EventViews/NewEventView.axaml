@@ -27,11 +27,7 @@
                 Grid.Row="2" Grid.Column="1"/>
 
         <TextBlock Text="Date: " Grid.Row="4" Grid.Column="0"/>
-<<<<<<< HEAD
         <TextBox Text="{Binding Date}"
-=======
-        <DatePicker SelectedDate="{Binding Date}"
->>>>>>> ae8d2a3056d58ac8c6215c98d3b816c23dcc8ce4
                   Grid.Row="4" Grid.Column="1"/>
                 
         <TextBlock Text="Minimum Age: " Grid.Row="6" Grid.Column="0"/>
