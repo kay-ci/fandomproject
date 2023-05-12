@@ -5,6 +5,8 @@ using Avalonia.Data;
 using FandomAppSpace;
 using ReactiveUI;
 using UserInfo;
+using System.Collections.ObjectModel;
+
 
 namespace FandomAppSpace.ViewModels
 {
@@ -43,10 +45,8 @@ namespace FandomAppSpace.ViewModels
 
         ObservableCollection<Category> Categories {get; set;}
         ObservableCollection<Fandom> Fandoms {get; set;}
-
         List<Category> CategoriesList = new();
         List<Fandom> FandomsList = new();
-        List<Badge> BadgesList = new();
 
         public string Title 
         {
@@ -55,7 +55,6 @@ namespace FandomAppSpace.ViewModels
                 this.RaiseAndSetIfChanged(ref _title, value);
             }
         }
-
         public DateTime Date {
             get => _date;
             private set { 
@@ -76,20 +75,18 @@ namespace FandomAppSpace.ViewModels
             }
         }
 
-        public ReactiveCommand<Unit, Unit> AddEvent { get; }
-       
+        public ReactiveCommand<Unit, Unit> AddEventBtn { get; }
         public NewEventViewModel()
         {
             Categories = new ObservableCollection<Category>(CategoriesList);
             Fandoms = new ObservableCollection<Fandom>(FandomsList);
-            Ok = ReactiveCommand.Create(() => { });
+            AddEventBtn = ReactiveCommand.Create(() => { AddNewEvent(); });
         }
 
-        public void AddNewEvent(){
-            Profile = new Profile(Name,Pronouns,Age,Country, City);
-            User newUser = service.CreateUser(Username, Password, Profile);
-            this.UserManager = new Login(newUser);
-            return this.UserManager;
+        public void AddNewEvent()
+        {
+            Event new_event = new Event(Title, Date, Location, MinAge, UserManager.CurrentUser , CategoriesList, FandomsList);
+            evService.CreateEvent(new_event);
         }
         public void AddCategory(){
             Categories.Add(new Category(CategoryText));
@@ -104,6 +101,5 @@ namespace FandomAppSpace.ViewModels
             Fandoms.Remove(fandomToRemove);
         }
 
-        
     }
 }

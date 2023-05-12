@@ -16,7 +16,7 @@
                         <!--<Image Source="/Assets/Icons/icons-profile.png" Width="20" Height="20"/> -->
                         My Profile
                 </Button>
-                <Button Command="{Binding NewEvent}">
+                <Button Command="{Binding MyEvents}">
                         <!--<Image Source="/Assets/Icons/icons-event.png" Width="20" Height="20"/> -->
                         My Events
                 </Button>

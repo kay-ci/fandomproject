@@ -1,5 +1,8 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Reactive.Linq;
+using ReactiveUI;
+using System.Reactive;
 using FandomAppSpace;
 using UserInfo;
 
@@ -7,6 +10,7 @@ namespace FandomAppSpace.ViewModels
 {
     public class EventDisplayViewModel : ViewModelBase
     {
+        private ViewModelBase _content;
         public Event Event {get;}
         public List<Event> Events {get;}
         public ReactiveCommand<Unit, Unit> NewEvent { get; }
@@ -23,40 +27,33 @@ namespace FandomAppSpace.ViewModels
             get => _content;
             private set => this.RaiseAndSetIfChanged(ref _content, value);
         }
+
+        public ReactiveCommand<Unit, Unit> NewEventPageBtn { get; }
         public EventDisplayViewModel()
         {
             VisibleNavigation = true;
-
-            NewEvent =  ReactiveCommand.Create(() => {CreateEvent();});
-
+            NewEventPageBtn =  ReactiveCommand.Create(() => {ShowNewEventPage();});
             Events = evService.GetAllEvents();
         }
 
         public void ShowEvent(Event e) 
         {
 
-
         }
 
         //Create and display a new event
-        private void CreateEvent()
+        private void ShowNewEventPage()
         {
-            Profile owner_profile = new Profile("Owner", "they/them", 21, "Canada", "Montreal");
-            List<Category> categories = new List<Category>(){new Category("Music")};
-
-            User owner = new User("userOwner", owner_profile);
-            
-            ShowEvent(new Event("Title", new DateTime(2023, 12, 12), "Montreal", categories, 15, owner));
+            Content = new NewEventViewModel();
         }
 
         //Navigate to edit event view from event display view
         public void EditEvent()
         {
-            EventDisplayViewModel dispvm = (EventDisplayViewModel) Content;
-            var vm = new EventEditViewModel(dispvm.Event);
-            
-            vm.Ok.Subscribe(x => {Content = dispvm;});
-            Content = vm;
+            //EventDisplayViewModel dispvm = (EventDisplayViewModel) Content;
+            //var vm = new EventEditViewModel(dispvm.Event);
+            //vm.Ok.Subscribe(x => {Content = dispvm;});
+            //Content = vm;
         }
         
     }

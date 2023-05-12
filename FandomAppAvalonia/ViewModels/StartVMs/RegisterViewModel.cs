@@ -78,8 +78,7 @@ namespace FandomAppSpace.ViewModels
                 
             }
         }
-        UserService service = UserService.getInstance();
-        Login UserManager;
+
         public Profile Profile {get; set;}
         public ReactiveCommand<Unit, Unit> Register { get; }
         public ReactiveCommand<Unit, Unit> Login {get;}
@@ -103,9 +102,9 @@ namespace FandomAppSpace.ViewModels
 
         public Login RegisterUser(){
             Profile = new Profile(Name,Pronouns,Age,Country, City);
-            User newUser = service.CreateUser(Username, Password, Profile);
-            this.UserManager = new Login(newUser);
-            return this.UserManager;
+            User newUser = uService.CreateUser(Username, Password, Profile);
+            UserManager = new Login(newUser);
+            return UserManager;
         }
         
     }
