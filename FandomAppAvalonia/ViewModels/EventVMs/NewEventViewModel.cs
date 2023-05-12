@@ -10,7 +10,7 @@ using System.Collections.ObjectModel;
 
 namespace FandomAppSpace.ViewModels
 {
-    public class NewEventViewModel : MainWindowViewModel
+    public class NewEventViewModel : EventDisplayViewModel
     {
          private int _minAge;
         private string _title;
@@ -85,7 +85,7 @@ namespace FandomAppSpace.ViewModels
 
         public void AddNewEvent()
         {
-            Event new_event = new Event(Title, Date, Location, MinAge, UserManager.CurrentUser , CategoriesList, FandomsList);
+            Event new_event = new Event(Title, Date, Location, MinAge, ViewModelBase.UserManager.CurrentUser , Categories.ToList(), FandomsList.ToList());
             evService.CreateEvent(new_event);
         }
         public void AddCategory(){

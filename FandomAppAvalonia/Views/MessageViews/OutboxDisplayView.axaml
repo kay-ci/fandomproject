@@ -15,7 +15,7 @@
                   <TextBlock Text="{Binding Title}"/>
                 </Border>
                   <Button Content="View Message"
-                    Command="{Binding $parent[Window].DataContext.View_Message}"
+                    Command="{Binding $parent[Window].DataContext.View_Message_Edit}"
                     CommandParameter="{Binding}"/> 
                     </StackPanel>
                 </DataTemplate>

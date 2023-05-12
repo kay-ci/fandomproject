@@ -8,8 +8,8 @@ namespace FandomAppSpace.ViewModels
     public class OutboxDisplayViewModel : MainWindowViewModel
     {
         public List<Message> Messages { get;}
-        public OutboxDisplayViewModel(Login UserManager){
-            Messages = UserManager.CurrentUser.Outbox;
+        public OutboxDisplayViewModel(){
+            Messages = ViewModelBase.UserManager.CurrentUser.Outbox;
         }
     }
 }

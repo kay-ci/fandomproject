@@ -32,13 +32,15 @@ namespace FandomAppSpace.ViewModels
                 
             }
         }
+        Login UserManager;
         public EditMessageViewModel(Message msg){
+            UserManager = ViewModelBase.UserManager;
             oldMsg = msg;
             Ok = ReactiveCommand.Create(() => { });
             Cancel = ReactiveCommand.Create(() => { });
         }
 
-        public void EditMessage(Login UserManager){
+        public void EditMessage(){
             newMsg = new Message(UserManager.CurrentUser, oldMsg.Recipients, Title, Text);
             for(int i = 0; i < UserManager.CurrentUser.Outbox.Count; i++){
                 if(UserManager.CurrentUser.Outbox[i] == oldMsg) UserManager.CurrentUser.Outbox[i] = new Message(newMsg.Sender, newMsg.Recipients, Title, Text);

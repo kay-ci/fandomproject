@@ -7,7 +7,7 @@ using System.Collections.ObjectModel;
 
 namespace FandomAppSpace.ViewModels
 {
-    public class CreateMessageViewModel : MainWindowViewModel
+    public class CreateMessageViewModel : ViewModelBase
     {
         
         public Message? newMsg {get; set;}
@@ -37,17 +37,18 @@ namespace FandomAppSpace.ViewModels
             }
         }
         Login UserManager;
-        public CreateMessageViewModel(Login userManager){
-            UserManager = userManager;
+        public CreateMessageViewModel(){
+            UserManager = ViewModelBase.UserManager;
             ObservableRecips = new ObservableCollection<User>(Recipients);
             Database_users = uService.GetUsers();
+            Database_users.Remove(uService.GetUser(UserManager.CurrentUser.Username));
             ObservableDBUsers = new ObservableCollection<User>(Database_users);
             Ok = ReactiveCommand.Create(() => { });
             Cancel = ReactiveCommand.Create(() => { });
         }
 
-        public CreateMessageViewModel(Login userManager, User chosen_recipient){
-            UserManager = userManager;
+        public CreateMessageViewModel(User chosen_recipient){
+            UserManager = ViewModelBase.UserManager;
             ObservableRecips = new ObservableCollection<User>(Recipients);
             Database_users = new List<User>(uService.GetUsers());
             ObservableDBUsers = new ObservableCollection<User>(Database_users);

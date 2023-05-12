@@ -18,11 +18,11 @@ namespace FandomAppSpace.ViewModels
             private set => this.RaiseAndSetIfChanged(ref _showEditButton, value);
         }
 
-        public ProfileDisplayViewModel(Login UserManager, User chosenUser)
+        public ProfileDisplayViewModel(User chosenUser)
         {
-            if(chosenUser == UserManager.CurrentUser){
+            if(chosenUser == ViewModelBase.UserManager.CurrentUser){
                 ShowEditButton = true;
-                Profile = UserManager.CurrentUser.UserProfile;
+                Profile = ViewModelBase.UserManager.CurrentUser.UserProfile;
             }
             else{
                 ShowEditButton = false;
