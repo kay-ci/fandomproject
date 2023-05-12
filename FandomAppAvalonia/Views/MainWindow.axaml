@@ -5,11 +5,10 @@
         Width="1000" Height="800"
         Title="Social Friendship App">
         <StackPanel>
-        <ContentControl Width="1000" Height="800" Content="{Binding Content}"/>
+        <ContentControl Width="800" Height="500" Content="{Binding Content}"/>
         <StackPanel HorizontalAlignment="Center"
                     VerticalAlignment="Bottom"
-                    Orientation="Horizontal"
-                    IsVisible="{Binding VisibleNavigation}">
+                    Orientation="Horizontal" IsVisible="{Binding VisibleNavigation}">
                 <Button Command="{Binding Profile}"> 
                         <Image Source="/Assets/Icons/icons-profile.png" Width="20" Height="20"/>
                 </Button>
