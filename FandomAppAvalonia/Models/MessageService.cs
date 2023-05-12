@@ -39,13 +39,12 @@ public class MessageService {
         return msgFound;
     }
 
+
     public void AddMessage(Message new_message) {
 
-        if (GetMessage(new_message.Title) == null)
-        {
-            _context.MESSAGES.Add(new_message);
-            _context.SaveChanges();
-        }
+        _context.MESSAGES.Add(new_message);
+        _context.SaveChanges();
+
     }
 
     public void EditMessage(Login login, Message updatedmessage) {

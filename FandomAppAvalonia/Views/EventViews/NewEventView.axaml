@@ -5,7 +5,7 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
              x:Class="FandomAppSpace.Views.NewEventView">
 <DockPanel>
-    <Button DockPanel.Dock="Bottom" Command="{Binding AddEventBtn}">Add</Button>
+    <Button DockPanel.Dock="Bottom" Command="{Binding AddEventBtn}">Add Event</Button>
     <TextBlock Text="Create an Event" FontSize="24" DockPanel.Dock="Top"/>
 
     <StackPanel>  
@@ -17,40 +17,24 @@
         <TextBlock Text="Title: " Grid.Row="0" Grid.Column="0"/>
         <TextBox AcceptsReturn="False"
                 Text="{Binding Title}"
-                Watermark="Name"
+                Watermark="Title"
                 Grid.Row="0" Grid.Column="1"/>
                 
-        <TextBlock Text="Location: " Grid.Row="1" Grid.Column="0"/>
+        <TextBlock Text="Location: " Grid.Row="2" Grid.Column="0"/>
         <TextBox AcceptsReturn="False"
                 Text="{Binding Location}"
                 Watermark="Location"
-                Grid.Row="1" Grid.Column="1"/>
-        
+                Grid.Row="2" Grid.Column="1"/>
 
-        <TextBlock Text="Minimum Age: " Grid.Row="2" Grid.Column="0"/>
+        <TextBlock Text="Date: " Grid.Row="4" Grid.Column="0"/>
+        <DatePicker SelectedDateChanged="{Binding Date}"
+                  Grid.Row="4" Grid.Column="1"/>
+                
+        <TextBlock Text="Minimum Age: " Grid.Row="6" Grid.Column="0"/>
         <TextBox AcceptsReturn="False"
                 Text="{Binding MinAge}"
-                Watermark="Minimum Age"
-                Grid.Row="2" Grid.Column="1"/>
-        
-        <TextBlock Text="Country: " Grid.Row="3" Grid.Column="0"/>
-        <TextBox AcceptsReturn="False"
-                Text="{Binding Profile.Country}"
-                Watermark="Country"
-                Grid.Row="3" Grid.Column="1"/>
-
-        <TextBlock Text="City: " Grid.Row="4" Grid.Column="0"/>
-        <TextBox AcceptsReturn="False"
-                Text="{Binding Profile.City}"
-                Watermark="City"
-                Grid.Row="4" Grid.Column="1"/>
-
-        <TextBlock Text="Description: " Grid.Row="5" Grid.Column="0"/>
-
-        <TextBox AcceptsReturn="False"
-                Text="{Binding Profile.Description}"
-                Watermark="Description"
-                Grid.Row="5" Grid.Column="1"/>
+                Watermark="MinAge"
+                Grid.Row="6" Grid.Column="1"/>
 
         <TextBlock Grid.Row="8" Grid.Column="0" Text="Categories:"/>
         <StackPanel Grid.Row="8" Grid.Column="1" Orientation="Horizontal">
@@ -63,11 +47,11 @@
                 </Button>
         </StackPanel>
         
-        <ItemsRepeater Grid.Row="9" Grid.Column="1" Items="{Binding Categories}">
+        <ItemsRepeater Grid.Row="10" Grid.Column="1" Items="{Binding Categories}">
           <ItemsRepeater.ItemTemplate>
           <DataTemplate>
             <StackPanel Orientation="Horizontal">
-                    <TextBlock Padding="2" VerticalAlignment="Center" Text="{Binding Category_name}"/>
+                    <TextBlock Padding="2" VerticalAlignment="Center" Text="{Binding Name}"/>
                     <Button Command="{Binding $parent[UserControl].DataContext.RemoveCategory}" CommandParameter="{Binding}"> 
                       <Image Source="/Assets/cross.png" Width="15" Height="15"/>
                     </Button> 
@@ -77,8 +61,8 @@
         </ItemsRepeater>
 
 
-        <TextBlock Grid.Row="10" Grid.Column="0" Text="Fandoms:"/>
-        <StackPanel Grid.Row="10" Grid.Column="1" Orientation="Horizontal">
+        <TextBlock Grid.Row="12" Grid.Column="0" Text="Fandoms:"/>
+        <StackPanel Grid.Row="12" Grid.Column="1" Orientation="Horizontal">
             <TextBox AcceptsReturn="False"
                     Text="{Binding FandomName}"
                     Watermark="Name"
@@ -96,11 +80,11 @@
             </Button>
         </StackPanel>
 
-        <ItemsRepeater Grid.Row="11" Grid.Column="1" Items="{Binding Fandoms}">
+        <ItemsRepeater Grid.Row="14" Grid.Column="1" Items="{Binding Fandoms}">
             <ItemsRepeater.ItemTemplate>
             <DataTemplate>
             <StackPanel Orientation="Horizontal">
-                    <TextBlock Padding="2" VerticalAlignment="Center" Text="{Binding Category_name}"/>
+                    <TextBlock Padding="2" VerticalAlignment="Center" Text="{Binding Name}"/>
                     <Button Command="{Binding $parent[UserControl].DataContext.RemoveFandom}" CommandParameter="{Binding}">
                       <Image Source="/Assets/cross.png" Width="15" Height="15"/>
                     </Button> 

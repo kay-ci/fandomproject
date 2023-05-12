@@ -2,13 +2,32 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="200" d:DesignHeight="300"
              x:Class="FandomAppSpace.Views.EventDisplayView">
              
   <StackPanel Margin="10,0,0,0">
 
-    
-    <StackPanel Spacing="10" IsVisible="{Binding VisibleNavigation}">
+    <StackPanel HorizontalAlignment="Center"
+                    VerticalAlignment="Bottom"
+                    Orientation="Horizontal">
+
+          <Button Command="{Binding CreateEventBtn}"> 
+                  Create New Event
+          </Button>
+          <Button Command="{Binding DeleteEventBtn}">
+                  <!--<Image Source="/Assets/Icons/icons-event.png" Width="20" Height="20"/> -->
+                  Delete Event
+          </Button>
+          <Button Command="{Binding EditEventBtn}">
+                  <!--<Image Source="/Assets/Icons/icons-event.png" Width="20" Height="20"/> -->
+                  Edit Event
+          </Button>
+          <Button Command="{Binding SearchEventBtn}">
+                  <!--<Image Source="/Assets/Icons/icons-search.png" Width="20" Height="20"/> -->
+                  Search Events
+          </Button>
+    </StackPanel>
+
+    <StackPanel Spacing="10">
       <TextBlock Text="My Events" FontSize="35"/> 
 
       <ItemsRepeater Items="{Binding Events}">

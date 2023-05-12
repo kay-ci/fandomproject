@@ -19,9 +19,6 @@ namespace FandomAppSpace.ViewModels
 
         ObservableCollection<User> ObservableRecips {get; set;}
         ObservableCollection<User> ObservableDBUsers {get; set;}
-        MessageService Service = MessageService.getInstance();
-        UserService U_Service = UserService.getInstance();
-        FanAppContext context = new FanAppContext();
         public List<User> Database_users {get; set;} = new();
         // public string _recipientText;
         [Required]
@@ -47,58 +44,57 @@ namespace FandomAppSpace.ViewModels
         //         this.RaiseAndSetIfChanged(ref _recipientText, value);
         //     }
         // }
-        public CreateMessageViewModel(Login usr){
-            Service.setFanAppContext(context);
-            U_Service.setFanAppContext(context);
+      
+        public CreateMessageViewModel(){
             ObservableRecips = new ObservableCollection<User>(Recipients);
-            Database_users = U_Service.GetUsers();
+            Database_users = uService.GetUsers();
             ObservableDBUsers = new ObservableCollection<User>(Database_users);
-            Database_users.Remove(usr.CurrentUser);
-            ObservableDBUsers.Remove(usr.CurrentUser);
+            //Database_users.Remove(UserManager.CurrentUser);
+            //ObservableDBUsers.Remove(UserManager.CurrentUser);
             Ok = ReactiveCommand.Create(() => { });
             Cancel = ReactiveCommand.Create(() => { });
             // RecipientText = "test";
         }
 
-        // public CreateMessageViewModel(Login usr, User chosen_recipient){
+        // public CreateMessageViewModel(Login UserManager, User chosen_recipient){
         //     Service.setFanAppContext(context);
         //     U_Service.setFanAppContext(context);
         //     ObservableRecips = new ObservableCollection<User>(Recipients);
         //     Database_users = U_Service.GetUsers();
         //     ObservableDBUsers = new ObservableCollection<User>(Database_users);
-        //     Database_users.Remove(usr.CurrentUser);
-        //     ObservableDBUsers.Remove(usr.CurrentUser);
+        //     Database_users.Remove(UserManager.CurrentUser);
+        //     ObservableDBUsers.Remove(UserManager.CurrentUser);
         //     Ok = ReactiveCommand.Create(() => { });
         //     Cancel = ReactiveCommand.Create(() => { });
         //     chosen_recipient.Username += ",";
         //     RecipientText = chosen_recipient.Username;
         // }
 
-        public void CreateMessage(Login user){
+        public void CreateMessage(){
             // string[] str_recipients = RecipientText.Split(",");
             // foreach(string str_recipient in str_recipients){
             //     Recipients.Add(U_Service.GetUser(str_recipient));
             // }
 
-            if(Recipients.Count != 0) newMsg = new Message(user.CurrentUser, Recipients, Title, Text);
+            if(Recipients.Count != 0) newMsg = new Message(ViewModelBase.UserManager.CurrentUser, Recipients, Title, Text);
             else throw new ArgumentException("ERROR : Recipients is empty");
-            Service.AddMessage(newMsg);
+            msgService.AddMessage(newMsg);
         }
 
-        public void RemoveRecipient(User usr){
+        public void RemoveRecipient(User recipient){
             
-            Recipients.Remove(usr);
-            Database_users.Add(usr);
-            ObservableRecips.Remove(usr);
-            ObservableDBUsers.Add(usr);
+            Recipients.Remove(recipient);
+            Database_users.Add(recipient);
+            ObservableRecips.Remove(recipient);
+            ObservableDBUsers.Add(recipient);
         }
 
-        public void AddRecipient(User usr){
+        public void AddRecipient(User recipient){
             
-            Recipients.Add(usr);
-            Database_users.Remove(usr);
-            ObservableRecips.Add(usr);
-            ObservableDBUsers.Remove(usr);
+            Recipients.Add(recipient);
+            Database_users.Remove(recipient);
+            ObservableRecips.Add(recipient);
+            ObservableDBUsers.Remove(recipient);
         }
     }
 }

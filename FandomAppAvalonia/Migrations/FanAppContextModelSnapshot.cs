@@ -34,7 +34,7 @@ namespace FandomAppSpace.Migrations
 
                     b.HasIndex("eventsEventID");
 
-                    b.ToTable("CategoryEvent");
+                    b.ToTable("CategoryEvent", (string)null);
                 });
 
             modelBuilder.Entity("Event", b =>
@@ -66,7 +66,7 @@ namespace FandomAppSpace.Migrations
 
                     b.HasIndex("UserID");
 
-                    b.ToTable("EVENTS");
+                    b.ToTable("EVENTS", (string)null);
                 });
 
             modelBuilder.Entity("EventFandom", b =>
@@ -81,7 +81,7 @@ namespace FandomAppSpace.Migrations
 
                     b.HasIndex("FandomsFandomID");
 
-                    b.ToTable("EventFandom");
+                    b.ToTable("EventFandom", (string)null);
                 });
 
             modelBuilder.Entity("EventUser", b =>
@@ -96,7 +96,7 @@ namespace FandomAppSpace.Migrations
 
                     b.HasIndex("EventsAttendingEventID");
 
-                    b.ToTable("EventUser");
+                    b.ToTable("EventUser", (string)null);
                 });
 
             modelBuilder.Entity("FandomUser", b =>
@@ -111,7 +111,7 @@ namespace FandomAppSpace.Migrations
 
                     b.HasIndex("FansUserID");
 
-                    b.ToTable("FandomUser");
+                    b.ToTable("FandomUser", (string)null);
                 });
 
             modelBuilder.Entity("MessageUser", b =>
@@ -126,7 +126,7 @@ namespace FandomAppSpace.Migrations
 
                     b.HasIndex("RecipientsUserID");
 
-                    b.ToTable("MessageUser");
+                    b.ToTable("MessageUser", (string)null);
                 });
 
             modelBuilder.Entity("UserInfo.Badge", b =>
@@ -148,7 +148,7 @@ namespace FandomAppSpace.Migrations
 
                     b.HasIndex("ProfileID");
 
-                    b.ToTable("BADGES");
+                    b.ToTable("BADGES", (string)null);
                 });
 
             modelBuilder.Entity("UserInfo.Category", b =>
@@ -170,7 +170,7 @@ namespace FandomAppSpace.Migrations
 
                     b.HasIndex("ProfileID");
 
-                    b.ToTable("CATEGORIES");
+                    b.ToTable("CATEGORIES", (string)null);
                 });
 
             modelBuilder.Entity("UserInfo.Fandom", b =>
@@ -199,7 +199,7 @@ namespace FandomAppSpace.Migrations
 
                     b.HasIndex("ProfileID");
 
-                    b.ToTable("FANDOMS");
+                    b.ToTable("FANDOMS", (string)null);
                 });
 
             modelBuilder.Entity("UserInfo.Message", b =>
@@ -234,7 +234,7 @@ namespace FandomAppSpace.Migrations
 
                     b.HasIndex("UserID");
 
-                    b.ToTable("MESSAGES");
+                    b.ToTable("MESSAGES", (string)null);
                 });
 
             modelBuilder.Entity("UserInfo.Profile", b =>
@@ -281,7 +281,7 @@ namespace FandomAppSpace.Migrations
                     b.HasIndex("UserID")
                         .IsUnique();
 
-                    b.ToTable("PROFILES");
+                    b.ToTable("PROFILES", (string)null);
                 });
 
             modelBuilder.Entity("UserInfo.User", b =>
@@ -305,7 +305,7 @@ namespace FandomAppSpace.Migrations
 
                     b.HasKey("UserID");
 
-                    b.ToTable("USERS");
+                    b.ToTable("USERS", (string)null);
                 });
 
             modelBuilder.Entity("CategoryEvent", b =>
