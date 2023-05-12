@@ -79,7 +79,7 @@
                 <ItemsRepeater.ItemTemplate>
                 <DataTemplate>
                 <StackPanel Orientation="Horizontal">
-                        <TextBlock Padding="2" VerticalAlignment="Center" Text="{Binding Category_name}"/>
+                        <TextBlock Padding="2" VerticalAlignment="Center" Text="{Binding Name}"/>
                         <Button Content="Remove Category"
                         Command="{Binding $parent[UserControl].DataContext.RemoveCategory}" CommandParameter="{Binding}"/> 
                 </StackPanel>
@@ -121,7 +121,7 @@
         <TextBlock Text="Picture: " Grid.Row="13" Grid.Column="0"/>
         <TextBox AcceptsReturn="False"
                 Text="{Binding Picture}"
-                Watermark="{Binding Profile.Name}"
+                Watermark="{Binding Profile.Picture}"
                 Grid.Row="13" Grid.Column="1"/>
       </Grid>
       </StackPanel>

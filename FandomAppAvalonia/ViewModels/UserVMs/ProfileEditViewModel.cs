@@ -6,6 +6,8 @@ using UserInfo;
 using System.Collections.ObjectModel;
 using System.Reactive.Linq;
 
+using System.ComponentModel.DataAnnotations;
+
 namespace FandomAppSpace.ViewModels
 {
     public class ProfileEditViewModel : MainWindowViewModel
@@ -48,26 +50,32 @@ namespace FandomAppSpace.ViewModels
             get => _badgesText;
             private set => this.RaiseAndSetIfChanged(ref _badgesText, value);
         }
+
+        [Required, RegularExpression("^[a-zA-z ]+$", ErrorMessage = ("Only letters are allowed!"))]
         public string Name 
         {
             get => _name;
             private set => this.RaiseAndSetIfChanged(ref _name, value);
         }
-         public string Pronouns 
+        [Required, RegularExpression("^[a-zA-z]+/{1}[a-zA-z]+$", ErrorMessage = ("pronoun ex. (she/her)"))]
+        public string Pronouns 
         {
             get => _pronouns;
-            private set => this.RaiseAndSetIfChanged(ref _categoryText, value);
+            private set => this.RaiseAndSetIfChanged(ref _pronouns, value);
         }
-         public int Age 
+        [Required, Range(0, 130, ErrorMessage=("Age must be 0-130"))]
+        public int Age 
         {
             get => _age;
             private set => this.RaiseAndSetIfChanged(ref _age, value);
         }
+        [Required, RegularExpression("^[a-zA-z ]+$", ErrorMessage = ("Only letters are allowed!"))]
          public string Country 
         {
             get => _country;
             private set => this.RaiseAndSetIfChanged(ref _country, value);
         }
+        [Required, RegularExpression("^[a-zA-z ]+$", ErrorMessage = ("Only letters are allowed!"))]
          public string City 
         {
             get => _city;
@@ -98,57 +106,69 @@ namespace FandomAppSpace.ViewModels
         public ReactiveCommand<Unit, Unit> Ok { get; }
         public ProfileEditViewModel(Profile p)
         {
+            if(p.Categories == null)CategoriesList = new List<Category>();
+            else CategoriesList = p.Categories;
+            if(p.Fandoms == null)FandomsList = new List<Fandom>();
+            else FandomsList = p.Fandoms;
+            if(p.Badges == null)BadgesList = new List<Badge>();
+            else BadgesList = p.Badges;
             Profile = p;
             Categories = new ObservableCollection<Category>(CategoriesList);
             Fandoms = new ObservableCollection<Fandom>(FandomsList);
             Badges = new ObservableCollection<Badge>(BadgesList);
-            // var editEnabled = this.WhenAnyValue(
-            //     x => x.FandomCategory, x=> x.FandomName, x=>x.FandomDescription, x=>x.BadgesText, x=>x.Name, x=>x.Pronouns, x=>x.Country, x=>x.City,x=>x.Description, x=>x.Age, x=>x.Picture, x=>x.Interests,
-            //     (fcategory, fname, fdescription, badges, pname, pronouns, country, city, pdescription, age, picture, interests) =>
-            //         !string.IsNullOrWhiteSpace(fcategory) &&
-            //         !string.IsNullOrWhiteSpace(fname) &&
-            //         !string.IsNullOrWhiteSpace(fdescription) &&
-            //         !string.IsNullOrWhiteSpace(badges) &&
-            //         !string.IsNullOrWhiteSpace(pname) &&
-            //         !string.IsNulOrWhiteSpace(pronouns)&&
-            //         !string.IsNullOrWhiteSpace(country)&&
-            //         !string.IsNullOrWhiteSpace(city)&&
-            //         !string.IsNullOrWhiteSpace(picture)&&
-            //         age >= 0 && age <= 130)
-            // .DistinctUntilChanged();
-            Ok = ReactiveCommand.Create(() => { });
+            var editEnabled = this.WhenAnyValue(
+                x=>x.Name, x=>x.Pronouns, x=>x.Country, x=>x.City, x=>x.Age,
+                ( pname, pronouns, country, city, age) =>
+                
+                    !string.IsNullOrWhiteSpace(pname) &&
+                    !string.IsNullOrWhiteSpace(pronouns)&&
+                    !string.IsNullOrWhiteSpace(country)&&
+                    !string.IsNullOrWhiteSpace(city)&&
+                    age >= 13 && age <= 130)
+            .DistinctUntilChanged();
+            Ok = ReactiveCommand.Create(() => { }, editEnabled);
         }
 
         public void UpdateUser(){
-            Profile = new Profile(Profile.Name, Profile.Pronouns, Profile.Age, Profile.Country, Profile.City, Categories.ToList(), Fandoms.ToList(), Badges.ToList(), Profile.Description, Profile.Picture, Profile.Interests);
-            uService.UpdateProfile(UserManager, Profile);
+            Profile = new Profile(Name, Pronouns, Age, Country, City, CategoriesList, FandomsList, BadgesList, Description, Picture, Interests);
+            
+            uService.UpdateProfile(ViewModelBase.UserManager, Profile);
         }
         public void AddBadge(){
             Badge newBadge = new Badge(BadgesText);
             if (!Badges.Contains(newBadge)){
+                BadgesList.Add(newBadge);
                 Badges.Add(newBadge);
+                uService.AddBadge(newBadge);
             }
         }
         public void RemoveBadge(Badge badgeToRemove){
             Badges.Remove(badgeToRemove);
+            BadgesList.Remove(badgeToRemove);
         }
         public void AddCategory(){
             Category newCategory = new Category(CategoryText);
             if (!Categories.Contains(newCategory)){
                 Categories.Add(newCategory);
+                uService.AddCategory(newCategory);
+                CategoriesList.Add(newCategory);
             }
         }
         public void RemoveCategory(Category catToRemove){
             Categories.Remove(catToRemove);
+            CategoriesList.Remove(catToRemove);
         }
         public void AddFandom(){
             Fandom newFandom = new Fandom(FandomName, FandomCategory, FandomDescription);
             if (!Fandoms.Contains(newFandom)){
                 Fandoms.Add(newFandom);
+                uService.AddFandom(newFandom);
+                FandomsList.Add(newFandom);
             }
         }
         public void RemoveFandom(Fandom fandomToRemove){
             Fandoms.Remove(fandomToRemove);
+            FandomsList.Remove(fandomToRemove);
         }
     }
 }

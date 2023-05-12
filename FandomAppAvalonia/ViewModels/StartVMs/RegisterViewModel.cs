@@ -33,7 +33,8 @@ namespace FandomAppSpace.ViewModels
             get => _password;
             private set => this.RaiseAndSetIfChanged(ref _password, value);
         }
-        [Required, RegularExpression("^[a-zA-z]+$", ErrorMessage = ("Only letters are allowed!"))]
+        [Required, RegularExpression("^[a-zA-z ]+$", ErrorMessage = ("Only letters are allowed!"))]
+
         public string Name 
         {
             get => _name;
@@ -42,7 +43,7 @@ namespace FandomAppSpace.ViewModels
                 
             }
         }
-        [Required, RegularExpression("^[a-zA-z]+$", ErrorMessage = ("Only letters are allowed!"))]
+        [Required, RegularExpression("^[a-zA-z]+/{1}[a-zA-z]+$", ErrorMessage = ("pronoun ex. (she/her)"))]
         public string Pronouns 
         {
             get => _pronouns;
@@ -51,7 +52,7 @@ namespace FandomAppSpace.ViewModels
                 
             }
         }
-        [Required, Range(0, 130, ErrorMessage = ("Age must be between 0 and 130"))]
+        [Required, Range(0, 130, ErrorMessage=("Age must be 0-130"))]
         public int Age 
         {
             get => _age;
@@ -60,7 +61,7 @@ namespace FandomAppSpace.ViewModels
                 
             }
         }
-        [Required, RegularExpression("^[a-zA-z]+$", ErrorMessage = ("Only letters are allowed!"))]
+        [Required, RegularExpression("^[a-zA-z ]+$", ErrorMessage = ("Only letters are allowed!"))]
         public string Country 
         {
             get => _country;
@@ -69,7 +70,7 @@ namespace FandomAppSpace.ViewModels
                 
             }
         }
-        [Required, RegularExpression("^[a-zA-z]+$", ErrorMessage = ("Only letters are allowed!"))]
+        [Required, RegularExpression("^[a-zA-z ]+$", ErrorMessage = ("Only letters are allowed!"))]
         public string City 
         {
             get => _city;
@@ -101,10 +102,10 @@ namespace FandomAppSpace.ViewModels
         }
 
         public void RegisterUser(){
-            Profile = new Profile(Name,Pronouns,Age,Country, City);
-            User newUser = uService.CreateUser(Username, Password, Profile);
-            // this.UserManager = new Login(newUser);
-            // return this.UserManager;
+            try{
+                Profile = new Profile(Name,Pronouns,Age,Country, City);
+                User newUser = uService.CreateUser(Username, Password, Profile);
+            }catch(Exception){}
         }
         
     }
