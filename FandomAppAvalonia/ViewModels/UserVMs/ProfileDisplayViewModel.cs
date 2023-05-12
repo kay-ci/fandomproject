@@ -8,6 +8,7 @@ using UserInfo;
 namespace FandomAppSpace.ViewModels
 {
     public class ProfileDisplayViewModel : ViewModelBase
+
     {
 
         public Profile Profile { get; }
@@ -19,11 +20,11 @@ namespace FandomAppSpace.ViewModels
         }
         public ReactiveCommand<Unit, Unit> DeleteUser { get; }
 
-        public ProfileDisplayViewModel(Login UserManager, User chosenUser)
+        public ProfileDisplayViewModel(User chosenUser)
         {
-            if(chosenUser == UserManager.CurrentUser){
+            if(chosenUser == ViewModelBase.UserManager.CurrentUser){
                 ShowEditButton = true;
-                Profile = UserManager.CurrentUser.UserProfile;
+                Profile = ViewModelBase.UserManager.CurrentUser.UserProfile;
             }
             else{
                 ShowEditButton = false;
@@ -33,7 +34,7 @@ namespace FandomAppSpace.ViewModels
         }
 
         public void DeleteCurrentUser(){
-            uService.DeleteUser(UserManager);
+            uService.DeleteUser(ViewModelBase.UserManager);
         }
     }
 }

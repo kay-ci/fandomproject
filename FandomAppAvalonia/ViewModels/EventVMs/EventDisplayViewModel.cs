@@ -8,43 +8,43 @@ using UserInfo;
 
 namespace FandomAppSpace.ViewModels
 {
-    public class EventDisplayViewModel : ViewModelBase
+    public class EventDisplayViewModel : MainWindowViewModel
     {
-        private ViewModelBase _content;
+        //private ViewModelBase _content;
         public Event Event {get;}
         public List<Event> Events {get;}
-        public ReactiveCommand<Unit, Unit> NewEvent { get; }
-
-        private Boolean _visibleNavigation;
-
-        public Boolean VisibleNavigation
-        {
-            get => _visibleNavigation;
-            private set => this.RaiseAndSetIfChanged(ref _visibleNavigation, value);
-        }
-        public ViewModelBase Content
-        {
-            get => _content;
-            private set => this.RaiseAndSetIfChanged(ref _content, value);
-        }
-
-        public ReactiveCommand<Unit, Unit> NewEventPageBtn { get; }
+        ///private Boolean _visibleNavigation;
+///
+        ///public Boolean VisibleNavigation
+        ///{
+        ///    get => _visibleNavigation;
+        ///    private set => this.RaiseAndSetIfChanged(ref _visibleNavigation, value);
+        ///}
+        ///public ViewModelBase Content
+        ///{
+        ///    get => _content;
+        ///    private set => this.RaiseAndSetIfChanged(ref _content, value);
+        ///}
+        public ReactiveCommand<Unit, Unit> CreateEventBtn { get; }
+        public ReactiveCommand<Unit, Unit> EditEventBtn { get; }
+        public ReactiveCommand<Unit, Unit> DeleteEventBtn { get; }
+        public ReactiveCommand<Unit, Unit> SearchEventBtn { get; }
+    
         public EventDisplayViewModel()
         {
-            VisibleNavigation = true;
-            NewEventPageBtn =  ReactiveCommand.Create(() => {ShowNewEventPage();});
+            CreateEventBtn =  ReactiveCommand.Create(() => { ShowNewEventPage(); });
+            EditEventBtn =  ReactiveCommand.Create(() => { ShowNewEventPage(); });
+            DeleteEventBtn =  ReactiveCommand.Create(() => { ShowNewEventPage(); });
+            SearchEventBtn =  ReactiveCommand.Create(() => { ShowNewEventPage(); });
+            
             Events = evService.GetAllEvents();
         }
 
-        public void ShowEvent(Event e) 
-        {
-
-        }
-
         //Create and display a new event
-        private void ShowNewEventPage()
-        {
-            Content = new NewEventViewModel();
+        public NewEventViewModel ShowNewEventPage()
+        {   
+            var vm = new NewEventViewModel();
+            return vm;
         }
 
         //Navigate to edit event view from event display view

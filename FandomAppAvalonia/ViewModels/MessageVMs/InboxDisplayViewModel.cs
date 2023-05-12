@@ -5,11 +5,11 @@ using UserInfo;
 
 namespace FandomAppSpace.ViewModels
 {
-    public class InboxDisplayViewModel : ViewModelBase
+    public class InboxDisplayViewModel : MainWindowViewModel
     {
         public List<Message> Messages { get;}
-        public InboxDisplayViewModel(List<Message> m){
-            Messages = m;
+        public InboxDisplayViewModel(){
+            Messages = UserManager.CurrentUser.Inbox;
         }
     }
 }

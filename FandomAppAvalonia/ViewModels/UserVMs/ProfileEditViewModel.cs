@@ -8,7 +8,7 @@ using System.Reactive.Linq;
 
 namespace FandomAppSpace.ViewModels
 {
-    public class ProfileEditViewModel : ViewModelBase
+    public class ProfileEditViewModel : MainWindowViewModel
     {
         string _categoryText;
         string _fandomName;
@@ -91,17 +91,19 @@ namespace FandomAppSpace.ViewModels
         ObservableCollection<Category> Categories {get; set;}
         ObservableCollection<Fandom> Fandoms {get; set;}
         ObservableCollection<Badge> Badges {get; set;}
-        List<Category> CategoriesList;
-        List<Fandom> FandomsList;
-        List<Badge> BadgesList;
-        UserService service = UserService.getInstance();
+        List<Category> CategoriesList = new();
+        List<Fandom> FandomsList = new();
+        List<Badge> BadgesList = new();
         public Profile Profile {get; set;}
         public ReactiveCommand<Unit, Unit> Ok { get; }
         public ProfileEditViewModel(Profile p)
         {
-            CategoriesList = new List<Category>();
-            FandomsList = new List<Fandom>();
-            BadgesList = new List<Badge>();
+            if(p.Categories == null)CategoriesList = new List<Category>();
+            else CategoriesList = p.Categories;
+            if(p.Fandoms == null)FandomsList = new List<Fandom>();
+            else FandomsList = p.Fandoms;
+            if(p.Badges == null)BadgesList = new List<Badge>();
+            else BadgesList = p.Badges;
             Profile = p;
             Categories = new ObservableCollection<Category>(CategoriesList);
             Fandoms = new ObservableCollection<Fandom>(FandomsList);
@@ -123,10 +125,10 @@ namespace FandomAppSpace.ViewModels
             Ok = ReactiveCommand.Create(() => { });
         }
 
-        public void UpdateUser(Login userManager){
+        public void UpdateUser(){
             Profile = new Profile(Name, Pronouns, Age, Country, City, CategoriesList, FandomsList, BadgesList, Description, Picture, Interests);
             
-            uService.UpdateProfile(userManager, Profile);
+            uService.UpdateProfile(ViewModelBase.UserManager, Profile);
         }
         public void AddBadge(){
             Badge newBadge = new Badge(BadgesText);

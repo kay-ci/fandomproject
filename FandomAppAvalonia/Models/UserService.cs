@@ -25,9 +25,12 @@ public class UserService{
     /// Method <c>GetUsers</c> fetches all users from DbSet USERS.
     /// </summary>
     public List<User> GetUsers(){
-        List<User> usersList = _context.USERS
+        List<User> usersList = _context.USERS.AsNoTrackingWithIdentityResolution()
             .Include(user => user.UserProfile)
             .Include(user => user.Fandoms)
+            .Include(user => user.UserProfile.Badges)
+            .Include(user => user.UserProfile.Fandoms)
+            .Include(user => user.UserProfile.Categories)
             .Include(user => user.EventsAttending)
             .Include(user => user.Inbox)
             .Include(user => user.Outbox)
@@ -41,8 +44,11 @@ public class UserService{
     public User? GetUser(string username){
         User fetcheduser;
         try{
-            fetcheduser = _context.USERS
+            fetcheduser = _context.USERS.AsNoTrackingWithIdentityResolution()
                         .Include(user => user.UserProfile)
+                        .Include(user => user.UserProfile.Badges)
+                        .Include(user => user.UserProfile.Fandoms)
+                        .Include(user => user.UserProfile.Categories)
                         .Include(user => user.Fandoms)
                         .Include(user => user.EventsAttending)
                         .Include(user => user.Inbox)
@@ -81,10 +87,21 @@ public class UserService{
         _context.SaveChanges();
     }
     public void DeleteUser(Login UserManager){
-        Profile profile = GetProfile(UserManager.CurrentUser);
-        _context.PROFILES.Remove(profile);
-        _context.USERS.Remove(UserManager.CurrentUser);
+        // Profile profile = GetProfile(UserManager.CurrentUser);
+        // _context.PROFILES.Remove(UserManager.CurrentUser.UserProfile);
+        // _context.USERS.Remove(UserManager.CurrentUser);
+        // _context.SaveChanges();
+        var user = _context.USERS
+            .OrderBy(e => e.Username)
+            .Where(e => e == UserManager.CurrentUser)
+            .Include(e => e.UserProfile)
+            .Include(e => e.UserProfile.Categories)
+            .Include(e => e.UserProfile.Fandoms)
+            .Include(e => e.UserProfile.Badges)
+            .First();
+        _context.Remove(user);
         _context.SaveChanges();
+
 
     }
     /// <summary>
@@ -152,22 +169,6 @@ public class UserService{
         _context.CATEGORIES.Add(newCat);
         _context.SaveChanges();
     }
-    // public List<Category> GetUserCategories(Profile userProfile){
-    //     List<Category> categoryList = new List<Category>();
-    //     if (userProfile.Categories == null){return categoryList;}
-    //     foreach (Category category in userProfile.Categories)
-    //     {
-    //         try{
-    //             categoryList = _context.CATEGORIES
-    //         .Where(category => category.Name == category.Name)
-    //         .ToList<Category>();
-    //         }
-    //         catch(Exception){
-    //             return null;
-    //         }
-    //     }
-    //     return categoryList;
-    // }
     public void AddFandom(Fandom newFan){
         _context.FANDOMS.Add(newFan);
         _context.SaveChanges();

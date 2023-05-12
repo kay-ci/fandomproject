@@ -6,7 +6,10 @@
              x:Class="FandomAppSpace.Views.SearchView">
   <StackPanel>
     <StackPanel Orientation="Horizontal">
-        
+        <StackPanel>
+          <TextBlock Text="Search by Country, Name or City for profiles"/>
+          <TextBlock Text="Search by Country, Name or City for profiles"/>
+        </StackPanel>
         <TextBox AcceptsReturn="False"
                 Text="{Binding Keyword}"
                 Watermark="Enter Search"
