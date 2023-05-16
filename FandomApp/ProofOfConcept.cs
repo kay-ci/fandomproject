@@ -64,8 +64,10 @@ public class Proof
         Console.WriteLine($"User {Proof.login.CurrentUser.Username} is logged in");
 
         // Step 3. Create event for user1
-        List<Category> categories1 = new List<Category>(){new Category("music")};
-        Event event1 = new Event("User1 Event", new DateTime(2023, 12, 12), "Toronto", categories1, 18, user1);
+        List<Category> categories1 = new List<Category>(){new Category("Music"), new Category("Kpop")};
+        List<Fandom> fandoms1 = new List<Fandom>(){new Fandom("Army", "Music","BTS fans")};
+
+        Event event1 = new Event("User1 Event", new DateTime(2023, 12, 12), "Toronto",  18, user1, categories1, fandoms1);
         evService.CreateEvent(event1);
 
         // Step 4. Log out of user1

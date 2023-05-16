@@ -1,4 +1,6 @@
 namespace FandomAppTests;
+
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using UserInfo;
 
 [TestClass]

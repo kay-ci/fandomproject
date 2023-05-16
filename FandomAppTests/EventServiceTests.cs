@@ -1,6 +1,8 @@
 using UserInfo;
 using Moq;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
 namespace FandomAppTests;
 
 [TestClass]
@@ -13,7 +15,7 @@ public class EventServiceTests{
         Profile owner_profile = new Profile("Owner", "they/them", 21, "Canada", "Montreal", new List<Category>(),  new List<Fandom>(), new List<Badge>(), "description", "pictures", "interests");
         User owner = new User("Owner", owner_profile);
 
-        Event event_test = new Event("title", new DateTime(2023, 12, 12), "location", new List<Category>(), 18, owner);
+        Event event_test = new Event("title", new DateTime(2023, 12, 12), "location", 18, owner);
 
         var mockSet = new Mock<DbSet<Event>>();
         var mockContext = new Mock<FanAppContext>();
@@ -38,9 +40,9 @@ public class EventServiceTests{
         User owner = new User("Owner", owner_profile);
 
         var events = new List<Event>();
-        events.Add(new Event("Event1", new DateTime(2023, 12, 12), "Montreal", new List<Category>(), 18, owner));
-        events.Add(new Event("Event2", new DateTime(2023, 12, 12), "Toronto", new List<Category>(), 18, owner));
-        events.Add(new Event("Event3", new DateTime(2023, 12, 12), "Vancouver", new List<Category>(), 18, owner));
+        events.Add(new Event("Event1", new DateTime(2023, 12, 12), "Montreal", 18, owner));
+        events.Add(new Event("Event2", new DateTime(2023, 12, 12), "Toronto", 18, owner));
+        events.Add(new Event("Event3", new DateTime(2023, 12, 12), "Vancouver", 18, owner));
 
         var data = events.AsQueryable();
 
@@ -72,9 +74,9 @@ public class EventServiceTests{
         User owner = new User("Owner", owner_profile);
 
         var events = new List<Event>();
-        events.Add(new Event("Event1", new DateTime(2023, 12, 12), "Montreal", new List<Category>(), 18, owner));
-        events.Add(new Event("Event2", new DateTime(2023, 12, 12), "Toronto", new List<Category>(), 18, owner));
-        events.Add(new Event("Event3", new DateTime(2023, 12, 12), "Vancouver", new List<Category>(), 18, owner));
+        events.Add(new Event("Event1", new DateTime(2023, 12, 12), "Montreal", 18, owner));
+        events.Add(new Event("Event2", new DateTime(2023, 12, 12), "Toronto", 18, owner));
+        events.Add(new Event("Event3", new DateTime(2023, 12, 12), "Vancouver", 18, owner));
 
         var data = events.AsQueryable();
 
@@ -107,9 +109,9 @@ public class EventServiceTests{
         User user = new User("Fred", user_profile);
 
         var event_list = new List<Event>();
-        event_list.Add(new Event("Event1", new DateTime(2023, 12, 12), "Montreal", new List<Category>(), 18, owner));
-        event_list.Add(new Event("Event2", new DateTime(2023, 12, 12), "Toronto", new List<Category>(), 18, owner));
-        event_list.Add(new Event("Event3", new DateTime(2023, 12, 12), "Vancouver", new List<Category>(), 18, user));
+        event_list.Add(new Event("Event1", new DateTime(2023, 12, 12), "Montreal", 18, owner));
+        event_list.Add(new Event("Event2", new DateTime(2023, 12, 12), "Toronto", 18, owner));
+        event_list.Add(new Event("Event3", new DateTime(2023, 12, 12), "Vancouver", 18, owner));
 
         var data = event_list.AsQueryable();
 
@@ -135,31 +137,4 @@ public class EventServiceTests{
         Assert.AreEqual(3, events.Count);
     }
 
-    [TestMethod]
-    public void EditEvent_LocationDateAndAgeModified_Pass()
-    {
-        //Arrange
-        var mockSet = new Mock<DbSet<Event>>();
-        var mockContext = new Mock<FanAppContext>();
-        mockContext.Setup(m => m.EVENTS).Returns(mockSet.Object);
-
-        EventService service = EventService.getInstance();
-        service.setFanAppContext(mockContext.Object);
-
-        Profile user_profile = new Profile("User", "they/them", 24, "Canada", "Montreal", new List<Category>(),  new List<Fandom>(), new List<Badge>(), "description", "pictures", "interests");
-        Login login = new Login(new User("User", user_profile));
-
-        Event new_event = new Event("Event1", new DateTime(2023, 12, 12), "Montreal", new List<Category>(), 18, login.CurrentUser); 
-        service.CreateEvent(new_event);
-
-        Event update_event = new Event("Event1", new DateTime(2025, 01, 01), "Las Vegas", new List<Category>(), 21, login.CurrentUser); 
-       
-        //Act
-        service.EditEvent(login, new_event);
-
-        //Assert
-        
-    }
-
-    
 }

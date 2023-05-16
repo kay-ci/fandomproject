@@ -1,3 +1,4 @@
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using UserInfo;
 namespace FandomAppTests;
 
@@ -21,7 +22,7 @@ public class EventTests{
         User owner = new User("userOwner", owner_profile, events);
 
         DateTime date = new DateTime(2023, 12, 12);
-        Event event_test = new Event("title", date, "location", categories, 21, owner);
+        Event event_test = new Event("title", date, "location", 21, owner);
 
         //Act
         //this should throw error because Attendee is under minimum age
@@ -40,7 +41,7 @@ public class EventTests{
 
         //Act
         //this should throw error because minimum age can't be under 13
-        Event event_test = new Event("title", new DateTime(2023, 12, 12), "location", categories, 12, user);
+        Event event_test = new Event("title", new DateTime(2023, 12, 12), "location", 12, user);
 
     }
 
@@ -54,7 +55,7 @@ public class EventTests{
        
         //Act
         //Assert
-        Exception exception = Assert.ThrowsException<ArgumentNullException>(() => new Event("",new DateTime(2023, 12, 12), "location", categories, 12, user));
+        Exception exception = Assert.ThrowsException<ArgumentNullException>(() => new Event("",new DateTime(2023, 12, 12), "location", 12, user));
         
     }
 
@@ -69,7 +70,7 @@ public class EventTests{
         DateTime old_date = new DateTime(2021, 12, 12);
        
         //Act
-        Exception exception = Assert.ThrowsException<ArgumentException>(() => new Event("title", old_date, "location", categories, 12, user));
+        Exception exception = Assert.ThrowsException<ArgumentException>(() => new Event("title", old_date, "location", 12, user));
 
         //Assert
          Assert.AreEqual("Date must be set in the future", exception.Message);
@@ -85,7 +86,7 @@ public class EventTests{
         User user3 = new User("user3", new Profile("User3", "she/her", 20, "US", "Detroit"));
 
         //Act
-        Event ev =  new Event("title", new DateTime(2023, 12, 12), "Montreal", new List<Category>(), 18, user);
+        Event ev =  new Event("title", new DateTime(2023, 12, 12), "Montreal", 18, user);
         ev.AddAttendee(user);
         ev.AddAttendee(user2);
         ev.AddAttendee(user3);
