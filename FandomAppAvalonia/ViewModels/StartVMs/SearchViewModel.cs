@@ -77,6 +77,7 @@ namespace FandomAppSpace.ViewModels{
         
         private List<Event> SearchEvents(string keyword){
             List<Event> events = evService.GetAllEvents();
+            keyword = keyword.ToLower();
 
             if(string.IsNullOrWhiteSpace(_keyword)) return events;
 
@@ -84,11 +85,11 @@ namespace FandomAppSpace.ViewModels{
 
             foreach(Event e in events)
             {
-                if(e.Title.Contains(_keyword)) events_found.Add(e);
-                else if(e.Location.Contains(_keyword)) events_found.Add(e);
-                else if(e.Categories.Any(c => c.Name.Contains(_keyword))) events_found.Add(e);
-                else if(e.Fandoms.Any(f => f.Name.Equals(_keyword))) events_found.Add(e);
-                else if(e.Owner.Username.Contains(_keyword)) events_found.Add(e);
+                if(e.Title.ToLower().Contains(_keyword)) events_found.Add(e);
+                else if(e.Location.ToLower().Contains(_keyword)) events_found.Add(e);
+                else if(e.Categories.Any(c => c.Name.ToLower().Contains(_keyword))) events_found.Add(e);
+                else if(e.Fandoms.Any(f => f.Name.ToLower().Equals(_keyword))) events_found.Add(e);
+                else if(e.Owner.Username.ToLower().Contains(_keyword)) events_found.Add(e);
             }
             return events_found;
         }
