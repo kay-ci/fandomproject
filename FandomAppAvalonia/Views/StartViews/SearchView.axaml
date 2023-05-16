@@ -6,16 +6,17 @@
              x:Class="FandomAppSpace.Views.SearchView">
   <StackPanel>
     <StackPanel Orientation="Horizontal">
-        <StackPanel Orientation="Vertical">
-          <TextBlock Text="Search by Country, Name or City for profiles"/>
-          <TextBlock Text="Search by Location, title, minimun age, fandoms and catgories for profiles"/>
-        </StackPanel>
         <TextBox AcceptsReturn="False"
                 Text="{Binding Keyword}"
                 Watermark="Enter Search"
                 Width="300"/>
+        
       <Button Command="{Binding EventSearch}">Search Events</Button>
       <Button Command="{Binding ProfileSearch}">Search Profiles</Button>
+      <StackPanel Orientation="Vertical">
+          <TextBlock Text="Search by Country, Name or City for profiles"/>
+          <TextBlock Text="Search by Location, title, minimun age, fandoms and catgories for profiles"/>
+        </StackPanel>
     </StackPanel>
     <StackPanel IsVisible="{Binding ShowEventResults}">
       <TextBlock Text="Results:"/>

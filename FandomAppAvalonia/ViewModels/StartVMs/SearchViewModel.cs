@@ -12,10 +12,6 @@ namespace FandomAppSpace.ViewModels{
         private List<User> _userResults;
         private string _keyword;
 
-        FanAppContext Context = new FanAppContext();
-        UserService service = UserService.getInstance();
-        // EventService evService = EventService.();
-
         public string Keyword{
             get => _keyword;
             private set => this.RaiseAndSetIfChanged(ref _keyword, value);
@@ -63,11 +59,11 @@ namespace FandomAppSpace.ViewModels{
         private void DisplayEventResults(){
             ShowProfileResults = false;
             ShowEventResults = true;
-            // EventResults = SearchEvents(_keyword);
+            EventResults = SearchEvents(_keyword);
         }
 
         private List<User> SearchUsers(string keyword){
-            List<User> users = service.GetUsers();
+            List<User> users = uService.GetUsers();
             if(string.IsNullOrWhiteSpace(_keyword)) return users;
             List<User> filteredUsers = new List<User>();
             foreach(User user in users){
@@ -79,16 +75,22 @@ namespace FandomAppSpace.ViewModels{
             return filteredUsers;
         }
         
-        // private List<Event> SearchEvents(string keyword){
-        //     List<Event> profiles = service.GetProfiles();
-        //     if(string.IsNullOrWhiteSpace(_keyword)) return profiles;
-        //     List<Event> filtered_prof = new List<Event>();
-        //     foreach(Event prof in profiles){
-        //         if(prof.Name.Contains(_keyword)) filtered_prof.Add(prof);
-        //         else if(prof.Country.Contains(_keyword)) filtered_prof.Add(prof);
-        //         else if(prof.City.Contains(_keyword)) filtered_prof.Add(prof);
-        //     }
-        //     return filtered_prof;
-        // }
+        private List<Event> SearchEvents(string keyword){
+            List<Event> events = evService.GetAllEvents();
+
+            if(string.IsNullOrWhiteSpace(_keyword)) return events;
+
+            List<Event> events_found = new List<Event>();
+
+            foreach(Event e in events)
+            {
+                if(e.Title.Contains(_keyword)) events_found.Add(e);
+                else if(e.Location.Contains(_keyword)) events_found.Add(e);
+                else if(e.Categories.Any(c => c.Name.Contains(_keyword))) events_found.Add(e);
+                else if(e.Fandoms.Any(f => f.Name.Equals(_keyword))) events_found.Add(e);
+                else if(e.Owner.Username.Contains(_keyword)) events_found.Add(e);
+            }
+            return events_found;
+        }
     }
 }
