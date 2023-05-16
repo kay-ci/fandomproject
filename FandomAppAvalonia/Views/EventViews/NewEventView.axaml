@@ -4,10 +4,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
              x:Class="FandomAppSpace.Views.NewEventView">
-<DockPanel>
-    <Button DockPanel.Dock="Bottom" Command="{Binding Cancel}">Cancel</Button>      
-    <Button DockPanel.Dock="Bottom" Command="{Binding Ok}">Add Event</Button>
-    
+<DockPanel >
+        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal"> 
+                <Button Command="{Binding Cancel}" Classes="cancel">Cancel</Button>
+                <Button Command="{Binding Ok}" Classes="ok">Add Event</Button>
+        </StackPanel> 
+        
     <TextBlock Text="Create an Event" FontSize="24" DockPanel.Dock="Top"/>
     <StackPanel>  
 

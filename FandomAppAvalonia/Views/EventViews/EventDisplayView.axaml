@@ -5,7 +5,7 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
              x:Class="FandomAppSpace.Views.EventDisplayView">
 
-  <StackPanel Margin="10,0,0,0">
+  <StackPanel Margin="10,0,0,0" >
 
     <StackPanel Spacing="10" Orientation="Horizontal">
 
@@ -50,7 +50,12 @@
       </StackPanel>
 
     </StackPanel>
+    <Grid ColumnDefinitions="*,*,*,*,*,*" Margin="10"> 
+        <Button Grid.Column="5" Command="{Binding CreateEventPageBtn}"> 
+            <Image Source="/Assets/add-button.png" Width="50" Height="50"/> 
+        </Button>
+    </Grid>
 
-    <Button Command="{Binding CreateEventPageBtn}"> Create New Event </Button>
+    
   </StackPanel>
 </UserControl>

@@ -33,9 +33,9 @@
 
         <StackPanel IsVisible="{Binding ShowButtons}">
           <Button Content="Edit Event"
-                  Command="{Binding $parent[Window].DataContext.EditEventView}"/>
+                  Command="{Binding $parent[Window].DataContext.EditEventView}" Classes="ok"/>
           <Button Content="Delete Event"
-                  Command="{Binding DeleteEventBtn}" />
+                  Command="{Binding DeleteEventBtn}" Classes="cancel"/>
         </StackPanel>
 
     </StackPanel>
