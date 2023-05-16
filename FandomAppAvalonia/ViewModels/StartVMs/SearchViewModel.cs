@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
 using ReactiveUI;
-using System.Collections.ObjectModel;
-using FandomAppSpace;
 using System.Reactive;
 using UserInfo;
 
