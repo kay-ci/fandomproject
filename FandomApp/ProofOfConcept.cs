@@ -27,12 +27,13 @@ public class Proof
         //Proof of Concept
         Proof proof = new Proof();
         //user clearTable if tables arent empty
-        clearTables();
+        //clearTables();
 
         UserService uService = proof.uService;
         EventService evService = proof.evService;
         MessageService mService = proof.mService;
 
+        //setData(uService, evService);
         createUser1(uService, evService);
         createUser2(uService, evService, mService);
         modifyUser1(uService, evService, mService);
@@ -55,12 +56,40 @@ public class Proof
         Proof.context.SaveChanges();
     }
 
+    private static void setData(UserService uService, EventService evService)
+    {
+        
+        List<Category> categories = new List<Category>(){new Category("Music"), new Category("Kpop")};
+        List<Category> categories1 = new List<Category>(){new Category("Anime"), new Category("Animation")};
+
+        List<Fandom> fandoms = new List<Fandom>(){new Fandom("Regular Kpop enjoyer", "Music","Kpop fans")};
+        List<Fandom> fandoms1 = new List<Fandom>(){new Fandom("Anime", "Anime","Regular Anime enjoyer")};
+        List<Fandom> fandoms2 = new List<Fandom>(){new Fandom("Army", "Music","BTS fans")};
+
+        User kc = uService.AddUser("Kayci", "12345", new Profile("Kayci Nicole Davila", "She/Her", 19, "Canada", "Montreal", categories, fandoms));
+        User karekin = uService.AddUser("Karekin", "12345", new Profile("Karekin Kiyici", "He/him", 22, "Canada", "Montreal"));
+        User user = uService.AddUser("User", "12345", new Profile("User", "They/Them", 18, "Canada", "Montreal"));
+        User fred = uService.AddUser("Fred", "12345", new Profile("Fred-Dgennie Louis", "They/Them", 22, "Canada", "Montreal", categories, fandoms2));
+        
+        Event event1 = new Event("Kpop concert", new DateTime(2024, 05, 01), "Vancouver",  14, kc, categories, fandoms);
+        event1.AddAttendee(karekin);
+        event1.AddAttendee(fred);
+        evService.CreateEvent(event1);
+
+        Event event2 = new Event("Anime Convention", new DateTime(2024, 05, 01), "New York",  16, karekin, categories1, fandoms1);
+        event2.AddAttendee(kc);
+        //event2.AddAttendee(fred);
+        event2.AddAttendee(user);
+        evService.CreateEvent(event2);
+
+    }
+
     private static void createUser1(UserService uService, EventService evService) 
     {
          // Step 1 and 2. User1 Account and Profile
         Profile profile1 = new Profile("User1", "they/them", 18, "Canada", "Montreal");
-        User user1 = uService.CreateUser("User1", "hello123", profile1);
-        Proof.login = uService.LogIn("User1", "hello123");
+        User user1 = uService.AddUser("User1", "12345", profile1);
+        Proof.login = uService.LogIn("User1", "12345");
         Console.WriteLine($"User {Proof.login.CurrentUser.Username} is logged in");
 
         // Step 3. Create event for user1
@@ -78,8 +107,8 @@ public class Proof
     {
         // Step 5 and 6. Create user2 account and profile
         Profile profile2 = new Profile("User2", "they/them", 24, "Canada", "Vancouver");
-        User user2 = uService.CreateUser("User2", "hello123", profile2);
-        Proof.login = uService.LogIn("User2", "hello123");
+        User user2 = uService.AddUser("User2", "12345", profile2);
+        Proof.login = uService.LogIn("User2", "12345");
         Console.WriteLine($"User {Proof.login.CurrentUser.Username} is now logged in");
 
         // Step 7. Perform a search to find the event created by user1
@@ -132,13 +161,13 @@ public class Proof
     private static void modifyUser1(UserService uService, EventService evService, MessageService mService) 
     {
         // 13. Log in as user1
-        Proof.login = uService.LogIn("User1", "hello123");
+        Proof.login = uService.LogIn("User1", "12345");
         Console.WriteLine($"User {Proof.login.CurrentUser.Username} is now logged in");
 
         // 14. Change user1’s password
         try
         {
-            uService.ChangePassword(Proof.login, "hello123", "abc12345");
+            uService.ChangePassword(Proof.login, "12345", "hello123");
             Console.WriteLine($"User {Proof.login.CurrentUser.Username} password changed");
         }
         catch (Exception e)
