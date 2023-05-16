@@ -12,17 +12,17 @@ namespace FandomAppSpace.ViewModels
         ObservableCollection<Event> MyEvents {get; set;}
        
         public ReactiveCommand<Unit, Unit> CreateEventPageBtn { get; }
-        public ReactiveCommand<Unit, Unit> SearchEventBtn { get; }
-    
         public EventDisplayViewModel()
         {
             CreateEventPageBtn =  ReactiveCommand.Create(() => { });
-            SearchEventBtn =  ReactiveCommand.Create(() => { });
             
             EventList = evService.GetAllEvents();
             AllEvents = new ObservableCollection<Event>(EventList);
             //Filtering events
-            var MyEventList = evService.GetAllEvents(ViewModelBase.UserManager.CurrentUser);
+            List<Event> MyEventList = new List<Event>();
+            foreach(Event e in EventList){
+                if(e.Attendees.Any(a => a.Username.Contains(ViewModelBase.UserManager.CurrentUser.Username))) MyEventList.Add(e);
+            }
             MyEvents = new ObservableCollection<Event>(MyEventList);
         }
 

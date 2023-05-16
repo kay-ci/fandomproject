@@ -75,7 +75,8 @@ namespace FandomAppSpace.ViewModels{
             return filteredUsers;
         }
         
-        private List<Event> SearchEvents(string keyword){
+        private List<Event> SearchEvents(string keyword)
+        {
             List<Event> events = evService.GetAllEvents();
             keyword = keyword.ToLower();
 

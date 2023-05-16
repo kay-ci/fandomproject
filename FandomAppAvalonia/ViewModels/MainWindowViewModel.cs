@@ -113,9 +113,6 @@ namespace FandomAppSpace.ViewModels
                 DisplayCreateEventPage();
             });
 
-            vm.SearchEventBtn.Subscribe(x => {
-                
-            });
         }
 
         public void DisplaySingleEventPage(Event e)

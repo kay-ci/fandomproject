@@ -35,6 +35,7 @@ public class EventService
             //state.State = EntityState.Unchanged;
             //}
             _context.EVENTS.Add(new_event);
+            _context.ChangeTracker.Clear();
             _context.SaveChanges();
         }
        
@@ -94,23 +95,6 @@ public class EventService
                             .Include(e => e.Fandoms)
                             .Include(e => e.Owner)
                             .Include(e => e.Attendees)
-                            .ToList<Event>();
-        
-        return events;
-    }
-
-    /// <summary>
-    /// This method fetches all the Events where the User from DbSet EVENTS.
-    /// </summary>
-    /// <returns> A list of <typeparamref name="Event"/> </returns>
-    public List<Event> GetAllEvents(User u)
-    {
-        List<Event> events = _context.EVENTS
-                            .Include(e => e.Categories)
-                            .Include(e => e.Fandoms)
-                            .Include(e => e.Owner)
-                            .Include(e => e.Attendees)
-                            .Where(e=> e.Attendees.Contains(u))
                             .ToList<Event>();
         
         return events;
