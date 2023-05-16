@@ -5,8 +5,9 @@
              mc:Ignorable="d" d:DesignWidth="200" d:DesignHeight="300"
              x:Class="FandomAppSpace.Views.EventEditView">
 <DockPanel>
-    <Button DockPanel.Dock="Bottom" Command="{Binding EditEventBtn}">Edit Event</Button>
-    <TextBlock Text="Edit Event" FontSize="24" DockPanel.Dock="Top"/>
+        <Button DockPanel.Dock="Bottom" Command="{Binding Cancel}">Cancel</Button>
+        <Button DockPanel.Dock="Bottom" Command="{Binding Ok}">Edit Event</Button>
+        <TextBlock Text="Edit Event" FontSize="24" DockPanel.Dock="Top"/>
 
     <StackPanel>  
 

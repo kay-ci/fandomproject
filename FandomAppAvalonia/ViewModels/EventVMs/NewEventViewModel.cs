@@ -74,12 +74,16 @@ namespace FandomAppSpace.ViewModels
                 this.RaiseAndSetIfChanged(ref _minAge, value);
             }
         }
-        public ReactiveCommand<Unit, Unit> AddEventBtn { get; }
+
+        public ReactiveCommand<Unit, Unit> Cancel { get; }
+        public ReactiveCommand<Unit, Unit> Ok { get; }
         public NewEventViewModel()
         {
             Categories = new ObservableCollection<Category>(CategoriesList);
             Fandoms = new ObservableCollection<Fandom>(FandomsList);
-            AddEventBtn = ReactiveCommand.Create(() => { AddNewEvent(); });
+           
+            Ok = ReactiveCommand.Create(() => { });
+            Cancel = ReactiveCommand.Create(() => { });
         }
         
 

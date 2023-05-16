@@ -32,7 +32,7 @@ namespace FandomAppSpace.ViewModels
         public MainWindowViewModel()
         {
             //Buttons
-            MyEvents =  ReactiveCommand.Create(() => {DisplayEventPage();});
+            MyEvents =  ReactiveCommand.Create(() => {DisplayAllEventsPage();});
             Profile = ReactiveCommand.Create(() => {DisplayProfile(ViewModelBase.UserManager.CurrentUser);});
             Search  = ReactiveCommand.Create(() => {OpenSearch();});
             CreateMessage = ReactiveCommand.Create(() => {Create_Message();});
@@ -103,66 +103,64 @@ namespace FandomAppSpace.ViewModels
             });
         }
 
-        //Display an existing event
-        private void DisplayEventPage(){
+        //EVENTS
+        private void DisplayAllEventsPage()
+        {
             var vm = new EventDisplayViewModel();
             Content=vm;
+
             vm.CreateEventPageBtn.Subscribe(x => {
-                var new_vm = vm.AddEventPage();
-                Content=new_vm;
-                    new_vm.AddEventBtn.Subscribe(x => {
-                        new_vm.AddNewEvent();
-                        DisplayEventPage();
-                    });
+                DisplayCreateEventPage();
             });
 
-            vm.EditEventPageBtn.Subscribe(x => {
-                var new_vm = vm.EditEventPage();
-                Content=new_vm;
-                    new_vm.EditBtn.Subscribe(x => {
-                        new_vm.UpdateEvent();
-                        DisplayEventPage();
-                    });
-
+            vm.SearchEventBtn.Subscribe(x => {
+                
             });
-
-            //Content=vm;
-
-            //vm.EventPageBtn.Subscribe(x => {
-            //    var new_vm = vm.EventPage();
-            //    Content = new_vm;
-            //    
-            //        new_vm.EditEventBtn.Subscribe(x => {
-            //            new_vm.EditEventPage();
-            //            DisplayEventPage();
-            //        });
-            //        new_vm.DeleteEventBtn.Subscribe(x => {
-            //            new_vm.DeleteEvent();
-            //            DisplayEventPage();
-            //        });
-//
-            //});
         }
 
         public void DisplaySingleEventPage(Event e)
         {
-            var dpvm = new EventDisplayViewModel();
-            
             var vm = new EventPageViewModel(e);
-            vm.EditEventBtn.Subscribe(x => {
-                    var new_vm = vm.EditEventPage();
-                    Content=new_vm;
-                        new_vm.EditBtn.Subscribe(x => {
-                        new_vm.UpdateEvent();
-                        DisplayEventPage();
-                    });
-                    });
-                    vm.DeleteEventBtn.Subscribe(x => {
-                        vm.DeleteEvent();
-                        DisplayEventPage();
-                    });
-            Content=vm;
+            Content = vm;
+            vm.AttendEventBtn.Subscribe(x => {
+                vm.AttendEvent();
+                DisplayAllEventsPage();
+                });
+
+            vm.DeleteEventBtn.Subscribe(x => {
+                DisplayAllEventsPage();
+                });
         }
+        public void DisplayCreateEventPage()
+        {   
+            var vm = new NewEventViewModel();
+            Content = vm;
+
+            vm.Ok.Subscribe(x => {
+                vm.AddNewEvent();
+                DisplayAllEventsPage();
+                });
+
+            vm.Cancel.Subscribe(x => {
+                DisplayAllEventsPage();
+                });
+        }
+        
+        public void EditEventView(Event e)
+        {
+            var vm = new EventEditViewModel(e);;
+            Content = vm;
+            vm.Ok.Subscribe(x => {
+                vm.UpdateEvent();
+                DisplayAllEventsPage();
+                });
+
+            vm.Cancel.Subscribe(x => {
+                DisplayAllEventsPage();
+                });
+        }
+
+        //MESSAGES
 
         private void View_Message_Edit(Message msg){
             Content = new MessageViewModel(msg, true);

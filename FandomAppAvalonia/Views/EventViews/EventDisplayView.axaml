@@ -10,12 +10,8 @@
                     VerticalAlignment="Bottom"
                     Orientation="Horizontal">
 
-          <Button Command="{Binding CreateEventBtn}"> 
+          <Button Command="{Binding CreateEventPageBtn}"> 
                   Create New Event
-          </Button>
-          <Button Command="{Binding EditEventBtn}">
-                  <!--<Image Source="/Assets/Icons/icons-event.png" Width="20" Height="20"/> -->
-                  Edit Event
           </Button>
           <Button Command="{Binding SearchEventBtn}">
                   <!--<Image Source="/Assets/Icons/icons-search.png" Width="20" Height="20"/> -->
@@ -23,24 +19,47 @@
           </Button>
     </StackPanel>
 
-    <StackPanel Spacing="10">
-      <TextBlock Text="My Events" FontSize="35"/> 
+    <StackPanel Spacing="10" Orientation="Horizontal">
 
-      <ItemsRepeater Items="{Binding Events}">
-          <ItemsRepeater.ItemTemplate>
-            <DataTemplate>
-            <StackPanel>
-              <TextBlock Text="{Binding Title}" FontSize="28"/> 
-              <TextBlock Text="{Binding Date}"/>
-              <TextBlock Text="{Binding Location}"/>
-              <TextBlock Text="{Binding MinAge}"/>
-              <TextBlock Text="{Binding Owner.Username, StringFormat='Organized By: {0}'}"/>
+      <StackPanel Spacing="10">
+        <TextBlock Text="All Events" FontSize="30"/> 
 
-              <Button Command="{Binding $parent[Window].DataContext.DisplaySingleEventPage}" CommandParameter="{Binding}"> Show more infos </Button>
-            </StackPanel>
-            </DataTemplate>
-          </ItemsRepeater.ItemTemplate>
-        </ItemsRepeater>
+        <ItemsRepeater Items="{Binding AllEvents}">
+            <ItemsRepeater.ItemTemplate>
+              <DataTemplate>
+              <StackPanel>
+                <TextBlock Text="{Binding Title}" FontSize="20"/> 
+                <TextBlock Text="{Binding Date,  StringFormat='Date: {0}'}"/>
+                <TextBlock Text="{Binding Location, StringFormat='Location: {0}'}"/>
+                <TextBlock Text="{Binding MinAge, StringFormat='Minimum Age: {0}'}"/>
+                <TextBlock Text="{Binding Owner.Username, StringFormat='Organized By: {0}'}"/>
+
+                <Button Command="{Binding $parent[Window].DataContext.DisplaySingleEventPage}" CommandParameter="{Binding}"> Show more infos </Button>
+              </StackPanel>
+              </DataTemplate>
+            </ItemsRepeater.ItemTemplate>
+          </ItemsRepeater>
+      </StackPanel>
+
+      <StackPanel Spacing="10">
+        <TextBlock Text="My Events" FontSize="30"/> 
+
+        <ItemsRepeater Items="{Binding MyEvents}">
+            <ItemsRepeater.ItemTemplate>
+              <DataTemplate>
+              <StackPanel>
+                <TextBlock Text="{Binding Title}" FontSize="20"/> 
+                <TextBlock Text="{Binding Date,  StringFormat='Date: {0}'}"/>
+                <TextBlock Text="{Binding Location, StringFormat='Location: {0}'}"/>
+                <TextBlock Text="{Binding MinAge, StringFormat='Minimum Age: {0}'}"/>
+                <TextBlock Text="{Binding Owner.Username, StringFormat='Organized By: {0}'}"/>
+
+                <Button Command="{Binding $parent[Window].DataContext.DisplaySingleEventPage}" CommandParameter="{Binding}"> Show more infos </Button>
+              </StackPanel>
+              </DataTemplate>
+            </ItemsRepeater.ItemTemplate>
+          </ItemsRepeater>
+      </StackPanel>
 
     </StackPanel>
     

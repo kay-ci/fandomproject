@@ -28,9 +28,12 @@
           </ItemsRepeater.ItemTemplate>
         </ItemsRepeater>
 
+        <Button IsVisible="{Binding ShowAttendButton}" Content="Attend Event"
+                  Command="{Binding AttendEventBtn}"/>
+
         <StackPanel IsVisible="{Binding ShowButtons}">
           <Button Content="Edit Event"
-                  Command="{Binding EditEventBtn}"/>
+                  Command="{Binding $parent[Window].DataContext.EditEventView}"/>
           <Button Content="Delete Event"
                   Command="{Binding DeleteEventBtn}" />
         </StackPanel>

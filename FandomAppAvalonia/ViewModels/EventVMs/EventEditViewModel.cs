@@ -74,17 +74,20 @@ namespace FandomAppSpace.ViewModels
         public Event? new_event;
         public Event old_event;
         public ReactiveCommand<Unit, Unit> Cancel { get; }
-        public ReactiveCommand<Unit, Unit> EditBtn { get; }
+        public ReactiveCommand<Unit, Unit> Ok { get; }
 
         public EventEditViewModel(Event e){
             old_event = e;
+
             if(e.Categories==null)CategoriesList= new List<Category>();
             else CategoriesList=e.Categories;
             if(e.Fandoms==null)FandomsList= new List<Fandom>();
             else FandomsList=e.Fandoms;
+
             Categories = new ObservableCollection<Category>(CategoriesList);
             Fandoms = new ObservableCollection<Fandom>(FandomsList);
-            EditBtn = ReactiveCommand.Create(() => { });
+
+            Ok = ReactiveCommand.Create(() => { });
             Cancel = ReactiveCommand.Create(() => { });
         }
 

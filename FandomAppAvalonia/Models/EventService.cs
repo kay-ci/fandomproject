@@ -100,6 +100,23 @@ public class EventService
     }
 
     /// <summary>
+    /// This method fetches all the Events where the User from DbSet EVENTS.
+    /// </summary>
+    /// <returns> A list of <typeparamref name="Event"/> </returns>
+    public List<Event> GetAllEvents(User u)
+    {
+        List<Event> events = _context.EVENTS
+                            .Include(e => e.Categories)
+                            .Include(e => e.Fandoms)
+                            .Include(e => e.Owner)
+                            .Include(e => e.Attendees)
+                            .Where(e=> e.Attendees.Contains(u))
+                            .ToList<Event>();
+        
+        return events;
+    }
+
+    /// <summary>
     /// This method allows the owner of an event to edit it and update the DbSet EVENTS. 
     /// <para> It verifies first that the <paramref name="login"/>'s Current user is the <paramref name="updatedEvent"/>'s Owner </para>
     /// </summary>
@@ -128,6 +145,16 @@ public class EventService
         
         if (GetEvent(old_title) != null)
         {
+            _context.EVENTS.Update(updatedEvent);
+            _context.SaveChanges();
+        }
+    }
+
+    public void UpdateEvent(Event updatedEvent) {
+        
+        if (GetEvent(updatedEvent.EventID) != null || GetEvent(updatedEvent.Title) != null)
+        {
+            //_context.ChangeTracker.Clear();
             _context.EVENTS.Update(updatedEvent);
             _context.SaveChanges();
         }

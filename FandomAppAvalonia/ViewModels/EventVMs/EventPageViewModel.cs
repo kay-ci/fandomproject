@@ -17,30 +17,41 @@ namespace FandomAppSpace.ViewModels
             private set => this.RaiseAndSetIfChanged(ref _showButtons, value);
         }
 
+        private Boolean _showAttendButton;
+        public Boolean ShowAttendButton
+        {
+            get => _showAttendButton;
+            private set => this.RaiseAndSetIfChanged(ref _showAttendButton, value);
+        }
+
         private Event _e;
         public Event Event{get;set;}
 
-        public ReactiveCommand<Unit, Unit> EditEventBtn { get; }
+        public ReactiveCommand<Unit, Unit> AttendEventBtn { get; }
         public ReactiveCommand<Unit, Unit> DeleteEventBtn { get; }
        
         public EventPageViewModel(Event e)
         {
-            Event = e;
+            Event = evService.GetEvent(e.Title);
+            ShowButtons = false;
+            ShowAttendButton = true;
+
             if(e.Owner.UserID == ViewModelBase.UserManager.CurrentUser.UserID){
                 ShowButtons = true;
             }
-            else{
-                ShowButtons = false;
+
+            if(e.Attendees.Any(e=> e.UserID == ViewModelBase.UserManager.CurrentUser.UserID)){
+                ShowAttendButton = false;
             }
             
-            EditEventBtn =  ReactiveCommand.Create(() => { EditEventPage(); });
-            DeleteEventBtn =  ReactiveCommand.Create(() => { DeleteEvent(); });
+            AttendEventBtn =  ReactiveCommand.Create(() => { });
+            DeleteEventBtn =  ReactiveCommand.Create(() => { });
             
         }
-        public EventEditViewModel EditEventPage()
+        public void AttendEvent()
         {
-            var vm = new EventEditViewModel(Event);
-            return vm;
+            Event.AddAttendee(ViewModelBase.UserManager.CurrentUser);
+            evService.UpdateEvent(Event);
         }
 
         public void DeleteEvent()
