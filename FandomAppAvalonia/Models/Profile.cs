@@ -112,6 +112,23 @@ namespace UserInfo{
             Picture = "default/pic/url";
             Interests = "";
         }
+
+        public Profile(string name, string pronouns, int age, string country,string city, List<Category>categories, List<Fandom> fandoms){
+            if (!IsValid(name) || !IsValid(pronouns) || !IsValid(country) || !IsValid(city)){
+                throw new ArgumentException ("String field cannot be null");
+            }
+            if (age < 0 || age > 130){
+                throw new ArgumentException ("Age should be between 0-130");
+            }
+            _name = name;
+            _pronouns = pronouns;
+            _age = age;
+            _country = country;
+            _city = city;
+            Categories = categories;
+            Fandoms = fandoms;
+
+        }
         // this is only to clear the data for visuals but will not be applied to the database
         // this might get split into smaller methods 
         public void ClearProfile(Login UserManager){

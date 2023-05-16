@@ -204,6 +204,35 @@ public class UserService{
         }
         return newUser;
     }
+
+    public User AddUser(string username, string password, Profile profile){
+        User newUser;
+        if(string.IsNullOrWhiteSpace(password)){
+            throw new ArgumentNullException();
+        }
+        // Make sure username is not already taken
+        User? checkUser = GetUser(username);
+        if (checkUser != null){
+            throw new ArgumentException("User with that username already exist");
+        }
+        else{
+            newUser = new User(username, profile);
+            //creating hashed password
+            byte[] salt = new byte[8];
+            using (RNGCryptoServiceProvider rngCsp = new RNGCryptoServiceProvider()){
+                rngCsp.GetBytes(salt);
+            }
+            Rfc2898DeriveBytes key = new Rfc2898DeriveBytes(password, salt, Iterations);
+            byte[] hash = key.GetBytes(32);
+
+            newUser.Salt = salt;
+            newUser.Hash = hash;
+            
+            _context.USERS.Add(newUser);
+            _context.SaveChanges();
+        }
+        return newUser;
+    }
     /// <summary>
     /// Method <c>LogIn</c> takes in a <param>username</param> and <param>password</param> to store the currently logged in user.
     /// </summary>

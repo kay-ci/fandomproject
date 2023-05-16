@@ -12,7 +12,7 @@ using UserInfo;
 namespace FandomAppSpace.Migrations
 {
     [DbContext(typeof(FanAppContext))]
-    [Migration("20230512070526_InitialCreate")]
+    [Migration("20230516182647_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
