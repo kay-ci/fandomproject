@@ -3,26 +3,67 @@
         x:Class="FandomAppSpace.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
         Title="Fandom App"
-        Width="1000" Height="800">
-        <StackPanel>
-        <ContentControl Width="700" Height="500" Content="{Binding Content}"/>
+        Width="800" Height="700">
+
+<Window.Styles>
+      <Style Selector="Grid.menu">
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <!--<Setter Property="Background" Value="#ACBCFF"/> -->
+      </Style>
+      <Style Selector="Grid.menu > Button">
+          <Setter Property="FontSize" Value="15"/>
+          <Setter Property="Margin" Value="5"/>
+          <Setter Property="MinWidth" Value="50"/>
+          <Setter Property="MinHeight" Value="30"/>
+          <Setter Property="Background" Value="#B4E4FF"/>
+      </Style>
+      <Style Selector="Button.cancel">
+        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="Margin" Value="5"/>
+        <Setter Property="MinHeight" Value="35"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Background" Value="#E90064"/>
+      </Style>
+      <Style Selector="Grid > ContentControl.content">
+                <Setter Property="Margin" Value="5"/>
+                <Setter Property="Padding" Value="10"/>
+                <Setter Property="Width" Value="800"/>
+                <Setter Property="MinHeight" Value="600"/>
+                <Setter Property="MaxHeight" Value="700"/>
+                <Setter Property="Background" Value="#95BDFF"/>
+      </Style>
+</Window.Styles>
+
+<StackPanel>
+
+        <Grid RowDefinitions="Auto, *, Auto" Background="Blue"> 
+                <Grid ColumnDefinitions=" *, *, *, *, *" Grid.Row="0" Height="40" 
+                        IsVisible="{Binding VisibleNavigation}" Margin="10" Classes="menu"> 
+
+                        <Button Grid.Column="0" Command="{Binding Profile}" Content="My Profile" /> 
+                        <Button Grid.Column="1" Command="{Binding ViewUsers}" Content="View Users" />
+                        <Button Grid.Column="2" Command="{Binding MyEvents}" Content="My Events" />
+                        <Button Grid.Column="3" Command="{Binding Search}" Content="Search" />
+                        <Button Grid.Column="4" Command="{Binding OpenInbox}" Content="Messages" />
+                </Grid>
+
+                <Grid Grid.Row="1" Background="#95BDFF"> 
+                        <ContentControl Content="{Binding Content}" Classes="content"/>
+                </Grid>
+
+                <Grid ColumnDefinitions="*,*,*,*,*,*" Grid.Row="2" IsVisible="{Binding VisibleNavigation}" Margin="10" Height="40" > 
+                        <Button Grid.Column="5" Command="{Binding Logout}" Content="Log out" Classes="cancel"/>
+                </Grid>
+
+        </Grid>
+        
+        
         <StackPanel HorizontalAlignment="Center"
                     VerticalAlignment="Bottom"
                     Orientation="Horizontal"
-                    IsVisible="{Binding VisibleNavigation}">
+                    IsVisible="False">
 
-                <Button Command="{Binding Profile}"> 
-                        <!--<Image Source="/Assets/Icons/icons-profile.png" Width="20" Height="20"/> -->
-                        My Profile
-                </Button>
-                <Button Command="{Binding MyEvents}">
-                        <!--<Image Source="/Assets/Icons/icons-event.png" Width="20" Height="20"/> -->
-                        My Events
-                </Button>
-                <Button Command="{Binding Search}">
-                        <!--<Image Source="/Assets/Icons/icons-search.png" Width="20" Height="20"/> -->
-                        Search
-                </Button>
                 <Button Command="{Binding CreateMessage}">
                         <!--<Image Source="/Assets/Icons/icons-message.png" Width="20" Height="20"/> -->
                         Create Message
@@ -35,16 +76,7 @@
                         <!--<Image Source="/Assets/Icons/icons-message.png" Width="20" Height="20"/> -->
                         Outbox
                 </Button>
-                <Button Command="{Binding ViewUsers}">
-                        <!--<Image Source="/Assets/Icons/icons-profile.png" Width="20" Height="20"/> -->
-                        View Users
-                </Button>
-                <Button Command="{Binding Logout}">
-                        <!--<Image Source="/Assets/Icons/icons-close.png" Width="20" Height="20"/> -->
-                        Log out
-                </Button>
                 
-
         </StackPanel>
-        </StackPanel> 
+</StackPanel> 
 </Window>

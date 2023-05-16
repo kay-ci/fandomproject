@@ -2,22 +2,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
              x:Class="FandomAppSpace.Views.EventDisplayView">
-             
+
   <StackPanel Margin="10,0,0,0">
-
-    <StackPanel HorizontalAlignment="Center"
-                    VerticalAlignment="Bottom"
-                    Orientation="Horizontal">
-
-          <Button Command="{Binding CreateEventPageBtn}"> 
-                  Create New Event
-          </Button>
-          <Button Command="{Binding SearchEventBtn}">
-                  <!--<Image Source="/Assets/Icons/icons-search.png" Width="20" Height="20"/> -->
-                  Search Events
-          </Button>
-    </StackPanel>
 
     <StackPanel Spacing="10" Orientation="Horizontal">
 
@@ -27,15 +15,15 @@
         <ItemsRepeater Items="{Binding AllEvents}">
             <ItemsRepeater.ItemTemplate>
               <DataTemplate>
-              <StackPanel>
-                <TextBlock Text="{Binding Title}" FontSize="20"/> 
-                <TextBlock Text="{Binding Date,  StringFormat='Date: {0}'}"/>
-                <TextBlock Text="{Binding Location, StringFormat='Location: {0}'}"/>
-                <TextBlock Text="{Binding MinAge, StringFormat='Minimum Age: {0}'}"/>
-                <TextBlock Text="{Binding Owner.Username, StringFormat='Organized By: {0}'}"/>
+                <StackPanel>
+                  <TextBlock Text="{Binding Title}" FontSize="20"/> 
+                  <TextBlock Text="{Binding Date,  StringFormat='Date: {0}'}"/>
+                  <TextBlock Text="{Binding Location, StringFormat='Location: {0}'}"/>
+                  <TextBlock Text="{Binding MinAge, StringFormat='Minimum Age: {0}'}"/>
+                  <TextBlock Text="{Binding Owner.Username, StringFormat='Organized By: {0}'}"/>
 
-                <Button Command="{Binding $parent[Window].DataContext.DisplaySingleEventPage}" CommandParameter="{Binding}"> Show more infos </Button>
-              </StackPanel>
+                  <Button Command="{Binding $parent[Window].DataContext.DisplayEventPage}" CommandParameter="{Binding}"> Show more infos </Button>
+                </StackPanel>
               </DataTemplate>
             </ItemsRepeater.ItemTemplate>
           </ItemsRepeater>
@@ -47,21 +35,22 @@
         <ItemsRepeater Items="{Binding MyEvents}">
             <ItemsRepeater.ItemTemplate>
               <DataTemplate>
-              <StackPanel>
-                <TextBlock Text="{Binding Title}" FontSize="20"/> 
-                <TextBlock Text="{Binding Date,  StringFormat='Date: {0}'}"/>
-                <TextBlock Text="{Binding Location, StringFormat='Location: {0}'}"/>
-                <TextBlock Text="{Binding MinAge, StringFormat='Minimum Age: {0}'}"/>
-                <TextBlock Text="{Binding Owner.Username, StringFormat='Organized By: {0}'}"/>
+                <StackPanel>
+                  <TextBlock Text="{Binding Title}" FontSize="20"/> 
+                  <TextBlock Text="{Binding Date,  StringFormat='Date: {0}'}"/>
+                  <TextBlock Text="{Binding Location, StringFormat='Location: {0}'}"/>
+                  <TextBlock Text="{Binding MinAge, StringFormat='Minimum Age: {0}'}"/>
+                  <TextBlock Text="{Binding Owner.Username, StringFormat='Organized By: {0}'}"/>
 
-                <Button Command="{Binding $parent[Window].DataContext.DisplaySingleEventPage}" CommandParameter="{Binding}"> Show more infos </Button>
-              </StackPanel>
+                  <Button Command="{Binding $parent[Window].DataContext.DisplayEventPage}" CommandParameter="{Binding}"> Show more infos </Button>
+                </StackPanel>
               </DataTemplate>
             </ItemsRepeater.ItemTemplate>
           </ItemsRepeater>
       </StackPanel>
 
     </StackPanel>
-    
+
+    <Button Command="{Binding CreateEventPageBtn}"> Create New Event </Button>
   </StackPanel>
 </UserControl>

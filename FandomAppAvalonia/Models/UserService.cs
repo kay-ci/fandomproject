@@ -46,7 +46,7 @@ public class UserService{
     public User? GetUser(string username){
         User fetcheduser;
         try{
-            fetcheduser = _context.USERS.AsNoTrackingWithIdentityResolution()
+            fetcheduser = _context.USERS
                         .Include(user => user.UserProfile)
                         .Include(user => user.UserProfile.Badges)
                         .Include(user => user.UserProfile.Fandoms)

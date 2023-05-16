@@ -115,7 +115,7 @@ namespace FandomAppSpace.ViewModels
 
         }
 
-        public void DisplaySingleEventPage(Event e)
+        public void DisplayEventPage(Event e)
         {
             var vm = new EventPageViewModel(e);
             Content = vm;

@@ -5,7 +5,9 @@ using System.Reactive;
 using UserInfo;
 
 namespace FandomAppSpace.ViewModels{
-    public class SearchViewModel : ViewModelBase{
+    public class SearchViewModel : ViewModelBase
+    {
+        private Boolean _showResults;
         private Boolean _showEventResults;
         private Boolean _showProfileResults;
         private List<Event> _eventResults;
@@ -15,6 +17,11 @@ namespace FandomAppSpace.ViewModels{
         public string Keyword{
             get => _keyword;
             private set => this.RaiseAndSetIfChanged(ref _keyword, value);
+        }
+
+        public Boolean ShowResults{
+            get => _showResults;
+            private set => this.RaiseAndSetIfChanged(ref _showResults, value);
         }
 
         public Boolean ShowEventResults{
@@ -36,30 +43,29 @@ namespace FandomAppSpace.ViewModels{
             private set => this.RaiseAndSetIfChanged(ref _userResults, value);
         }
 
-        public ReactiveCommand<Unit, Unit> EventSearch { get; }
+        public ReactiveCommand<Unit, Unit> SearchBtn { get; }
 
-        public ReactiveCommand<Unit, Unit> ProfileSearch { get; }
 
         public SearchViewModel(){
+            ShowResults = false;
             ShowEventResults = false;
             ShowProfileResults = false;
             EventResults = new List<Event>();
             UserResults = new List<User>();
-            
-            ProfileSearch = ReactiveCommand.Create(() => {DisplayProfileResults();});
-            EventSearch = ReactiveCommand.Create(() => {DisplayEventResults();});
+
+            SearchBtn = ReactiveCommand.Create(() => {DisplayResults();});
         }
 
-        private void DisplayProfileResults(){
-           ShowEventResults = false;
-           ShowProfileResults = true;
-           UserResults = SearchUsers(_keyword);
-        }
-
-        private void DisplayEventResults(){
-            ShowProfileResults = false;
-            ShowEventResults = true;
-            EventResults = SearchEvents(_keyword);
+        private void DisplayResults()
+        {
+            ShowResults = true;
+            if (ShowProfileResults){
+                UserResults = SearchUsers(_keyword);
+            }
+           
+            if (ShowEventResults){
+                EventResults = SearchEvents(_keyword);
+            }
         }
 
         private List<User> SearchUsers(string keyword){

@@ -5,37 +5,55 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="FandomAppSpace.Views.SearchView">
   <StackPanel>
-    <StackPanel Orientation="Horizontal">
-        <TextBox AcceptsReturn="False"
-                Text="{Binding Keyword}"
-                Watermark="Enter Search"
-                Width="300"/>
-        
-      <Button Command="{Binding EventSearch}">Search Events</Button>
-      <Button Command="{Binding ProfileSearch}">Search Profiles</Button>
+
+    <StackPanel>
+
+      <StackPanel Orientation="Horizontal">
+          <TextBox AcceptsReturn="False"
+              Text="{Binding Keyword}"
+              Watermark="Enter Search"
+              Width="300"/>
+          <Button Command="{Binding SearchBtn}">Search</Button>
+      </StackPanel>
+      
+
+      <StackPanel Orientation="Horizontal">
+          <RadioButton IsChecked="{Binding ShowEventResults}"
+                GroupName="Search Options"
+                Content="Events"/>
+          <RadioButton IsChecked="{Binding ShowProfileResults}"
+                GroupName="Search Options"
+                Content="Users"/>
+      </StackPanel>
+
+      
       <StackPanel Orientation="Vertical">
-          <TextBlock Text="Search by Country, Name or City for profiles"/>
-          <TextBlock Text="Search by Location, title, minimun age, fandoms and catgories for profiles"/>
-        </StackPanel>
+          <TextBlock Text="Search profiles by Country, Name or City"/>
+          <TextBlock Text="Search event by Location, Title, Fandoms or Categories"/>
+      </StackPanel>
+
     </StackPanel>
-    <StackPanel IsVisible="{Binding ShowEventResults}">
-      <TextBlock Text="Results:"/>
+
+    <StackPanel IsVisible="{Binding ShowResults}">
+      <TextBlock Text="Event Results:"/>
+
       <ItemsRepeater Items="{Binding EventResults}">
         <ItemsRepeater.ItemTemplate>
           <DataTemplate>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Padding="2" VerticalAlignment="Center" Text="{Binding Title}"/>
                 <Button Content="View Event"
-                Command="{Binding $parent[Window].DataContext.DisplayEvent}"
+                Command="{Binding $parent[Window].DataContext.DisplayEventPage}"
                 CommandParameter="{Binding}"/> 
-              </StackPanel>
+            </StackPanel>
           </DataTemplate>
         </ItemsRepeater.ItemTemplate>
       </ItemsRepeater>
       </StackPanel>
 
-      <StackPanel IsVisible="{Binding ShowProfileResults}">
-      <TextBlock Text="Results:"/>
+      <StackPanel IsVisible="{Binding ShowResults}">
+      <TextBlock Text="User Results:"/>
+
       <ItemsRepeater Items="{Binding UserResults}">
         <ItemsRepeater.ItemTemplate>
           <DataTemplate>
@@ -44,10 +62,11 @@
                 <Button Content="View Profile"
                 Command="{Binding $parent[Window].DataContext.DisplayProfile}"
                 CommandParameter="{Binding}"/> 
-              </StackPanel>
+            </StackPanel>
           </DataTemplate>
         </ItemsRepeater.ItemTemplate>
       </ItemsRepeater>
       </StackPanel>
+      
   </StackPanel>
 </UserControl>

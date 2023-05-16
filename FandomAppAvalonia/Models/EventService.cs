@@ -27,15 +27,15 @@ public class EventService
     {
         if (GetEvent(new_event.Title) == null)
         {
-            //var state = _context.Entry(new_event.Owner);
-            //state.State = EntityState.Unchanged;
+            var state = _context.Entry(new_event.Owner);
+            state.State = EntityState.Unchanged;
             
             //foreach(User attendee in new_event.Attendees){
             //state = _context.Entry(attendee);
             //state.State = EntityState.Unchanged;
             //}
+    
             _context.EVENTS.Add(new_event);
-            _context.ChangeTracker.Clear();
             _context.SaveChanges();
         }
        
