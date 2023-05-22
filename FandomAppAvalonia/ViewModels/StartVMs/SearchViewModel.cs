@@ -47,6 +47,8 @@ namespace FandomAppSpace.ViewModels{
 
 
         public SearchViewModel(){
+            //uService.setFanAppContext(new FanAppContext());
+            //evService.setFanAppContext(new FanAppContext());
             ShowResults = false;
             ShowEventResults = false;
             ShowProfileResults = false;

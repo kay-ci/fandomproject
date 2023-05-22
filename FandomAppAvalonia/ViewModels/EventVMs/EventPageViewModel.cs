@@ -8,7 +8,7 @@ using UserInfo;
 
 namespace FandomAppSpace.ViewModels
 {
-    public class EventPageViewModel : EventDisplayViewModel
+    public class EventPageViewModel : ViewModelBase
     {
         private Boolean _showButtons;
         public Boolean ShowButtons
@@ -24,7 +24,6 @@ namespace FandomAppSpace.ViewModels
             private set => this.RaiseAndSetIfChanged(ref _showAttendButton, value);
         }
 
-        private Event _e;
         public Event Event{get;set;}
 
         public ReactiveCommand<Unit, Unit> AttendEventBtn { get; }
@@ -33,6 +32,7 @@ namespace FandomAppSpace.ViewModels
         public EventPageViewModel(Event e)
         {
             Event = evService.GetEvent(e.Title);
+
             ShowButtons = false;
             ShowAttendButton = true;
 
@@ -51,7 +51,7 @@ namespace FandomAppSpace.ViewModels
         public void AttendEvent()
         {
             Event.AddAttendee(ViewModelBase.UserManager.CurrentUser);
-            evService.UpdateEvent(Event);
+            evService.UpdateEvent(ViewModelBase.UserManager, Event);
         }
 
         public void DeleteEvent()

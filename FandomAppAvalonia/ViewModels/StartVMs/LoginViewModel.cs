@@ -32,6 +32,7 @@ namespace FandomAppSpace.ViewModels
 
         public LogInViewModel()
         {
+            uService.setFanAppContext(new FanAppContext());
             //Enable the register button only when the user has entered a valid username
             var loginEnabled = this.WhenAnyValue(
                 x => x.Username, x=>x.Password,
@@ -45,9 +46,8 @@ namespace FandomAppSpace.ViewModels
             
         }
 
-        public Login LoginUser(){
-            Login UserManager = uService.LogIn(Username, Password);
-            return UserManager;
+        public void LoginUser(){
+            ViewModelBase.UserManager = uService.LogIn(Username, Password);
         }
     }
 }

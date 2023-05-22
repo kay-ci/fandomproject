@@ -6,7 +6,7 @@ namespace FandomAppSpace.ViewModels;
 
 public class ViewModelBase : ReactiveObject
 {
-    protected FanAppContext context = new FanAppContext();
+    
     protected UserService uService = UserService.getInstance();
     protected EventService evService = EventService.getInstance();
     protected MessageService msgService = MessageService.getInstance();
@@ -15,13 +15,7 @@ public class ViewModelBase : ReactiveObject
     public static Login UserManager 
     {
         get => _login;
-        set => _login=value;
-        //protected set => this.RaiseAndSetIfChanged(ref _login, value);
+        protected set => _login=value;
     }
-    public ViewModelBase()
-    {
-        uService.setFanAppContext(context);
-        evService.setFanAppContext(context);
-        msgService.setFanAppContext(context);
-    }
+    public ViewModelBase(){}
 }

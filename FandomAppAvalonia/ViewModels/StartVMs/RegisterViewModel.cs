@@ -84,6 +84,7 @@ namespace FandomAppSpace.ViewModels
         public ReactiveCommand<Unit, Unit> Register { get; }
         public ReactiveCommand<Unit, Unit> Login {get;}
         public RegisterViewModel(){
+            uService.setFanAppContext(new FanAppContext());
             Profile = new Profile("...", "...",0,"...", "...");
             var registerEnabled = this.WhenAnyValue(
                 x => x.Username, x=> x.Password, x=>x.Country, x=>x.City, x=>x.Name, x=>x.Age, x=>x.Pronouns,

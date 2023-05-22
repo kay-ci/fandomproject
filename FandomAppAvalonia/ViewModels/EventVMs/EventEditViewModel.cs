@@ -6,7 +6,7 @@ using UserInfo;
 
 namespace FandomAppSpace.ViewModels
 {
-    public class EventEditViewModel : EventDisplayViewModel
+    public class EventEditViewModel : ViewModelBase
     {
         private int _minAge;
         private string _title;
@@ -71,13 +71,17 @@ namespace FandomAppSpace.ViewModels
             }
         }
 
-        public Event? new_event;
-        public Event old_event;
+        public Event my_event;
         public ReactiveCommand<Unit, Unit> Cancel { get; }
         public ReactiveCommand<Unit, Unit> Ok { get; }
 
-        public EventEditViewModel(Event e){
-            old_event = e;
+        public EventEditViewModel(Event e)
+        {
+            this.Title = e.Title;
+            this.Date = e.Date;
+            this.Location = e.Location;
+            this.MinAge = e.MinAge;
+            my_event = e;
 
             if(e.Categories==null)CategoriesList= new List<Category>();
             else CategoriesList=e.Categories;
@@ -93,7 +97,7 @@ namespace FandomAppSpace.ViewModels
 
         public void UpdateEvent(){
             Event new_event = new Event(Title, new DateTime(2030,12,12), Location, MinAge, ViewModelBase.UserManager.CurrentUser , Categories.ToList(), FandomsList.ToList());
-            evService.EditEvent(ViewModelBase.UserManager, new_event, old_event.Title);
+            evService.UpdateEvent(ViewModelBase.UserManager, new_event);
         }
         public void AddCategory(){
             Categories.Add(new Category(CategoryText));

@@ -8,13 +8,11 @@ namespace FandomAppSpace.ViewModels
     {
         private static ViewModelBase _content;
         private Boolean _visibleNavigation;
-
         public Boolean VisibleNavigation
         {
             get => _visibleNavigation;
             private set => this.RaiseAndSetIfChanged(ref _visibleNavigation, value);
         }
-
         public ViewModelBase Content
         {
             get => _content;
@@ -48,7 +46,9 @@ namespace FandomAppSpace.ViewModels
             VisibleNavigation = false;
 
             LogInViewModel vm = new LogInViewModel();
-            vm.Login.Subscribe(x => {PrepareMainPage(vm.LoginUser()); });
+            vm.Login.Subscribe(x => {
+                vm.LoginUser();
+                PrepareMainPage(); });
             vm.Register.Subscribe(x => {RegisterPage();});
             Content = vm;
         }
@@ -63,9 +63,8 @@ namespace FandomAppSpace.ViewModels
             Content = vm;
             vm.Login.Subscribe(x => {ShowLogin();});
         }
-        public void PrepareMainPage(Login login){
+        public void PrepareMainPage(){
             VisibleNavigation = true;
-            ViewModelBase.UserManager = login;
             DisplayProfile(ViewModelBase.UserManager.CurrentUser);
         }
 

@@ -41,7 +41,7 @@ namespace FandomAppSpace.ViewModels
             UserManager = ViewModelBase.UserManager;
             ObservableRecips = new ObservableCollection<User>(Recipients);
             Database_users = uService.GetUsers();
-            Database_users.Remove(uService.GetUser(UserManager.CurrentUser.Username));
+            Database_users.Remove(UserManager.CurrentUser);
             ObservableDBUsers = new ObservableCollection<User>(Database_users);
             Ok = ReactiveCommand.Create(() => { });
             Cancel = ReactiveCommand.Create(() => { });

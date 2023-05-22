@@ -44,14 +44,16 @@
 <StackPanel>
 
         <Grid RowDefinitions="Auto, *, Auto" Background="Blue"> 
-                <Grid ColumnDefinitions=" *, *, *, *, *" Grid.Row="0" Height="40" 
+                <Grid ColumnDefinitions=" *, *, *, *, *,*,*" Grid.Row="0" Height="40" 
                         IsVisible="{Binding VisibleNavigation}" Margin="10" Classes="menu"> 
 
                         <Button Grid.Column="0" Command="{Binding Profile}" Content="My Profile" /> 
                         <Button Grid.Column="1" Command="{Binding ViewUsers}" Content="View Users" />
                         <Button Grid.Column="2" Command="{Binding MyEvents}" Content="My Events" />
                         <Button Grid.Column="3" Command="{Binding Search}" Content="Search" />
-                        <Button Grid.Column="4" Command="{Binding OpenInbox}" Content="Messages" />
+                        <Button Grid.Column="4" Command="{Binding CreateMessage}" Content="Create Message" />
+                        <Button Grid.Column="5" Command="{Binding OpenInbox}" Content="Inbox" />
+                        <Button Grid.Column="6" Command="{Binding OpenOutbox}" Content="Inbox" />
                 </Grid>
 
                 <Grid Grid.Row="1" Background="#95BDFF"> 
@@ -63,26 +65,6 @@
                 </Grid>
 
         </Grid>
-        
-        
-        <StackPanel HorizontalAlignment="Center"
-                    VerticalAlignment="Bottom"
-                    Orientation="Horizontal"
-                    IsVisible="False">
 
-                <Button Command="{Binding CreateMessage}">
-                        <!--<Image Source="/Assets/Icons/icons-message.png" Width="20" Height="20"/> -->
-                        Create Message
-                </Button>
-                <Button Command="{Binding OpenInbox}">
-                        <!--<Image Source="/Assets/Icons/icons-message.png" Width="20" Height="20"/> -->        
-                        Inbox
-                </Button>
-                <Button Command="{Binding OpenOutbox}">
-                        <!--<Image Source="/Assets/Icons/icons-message.png" Width="20" Height="20"/> -->
-                        Outbox
-                </Button>
-                
-        </StackPanel>
 </StackPanel> 
 </Window>

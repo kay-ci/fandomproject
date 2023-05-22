@@ -26,27 +26,30 @@ public class UserService{
     /// Method <c>GetUsers</c> fetches all users from DbSet USERS.
     /// </summary>
     public List<User> GetUsers(){
-        List<User> usersList = _context.USERS.AsNoTrackingWithIdentityResolution()
-            .Include(user => user.UserProfile)
-            .Include(user => user.Fandoms)
-            .Include(user => user.UserProfile.Badges)
-            .Include(user => user.UserProfile.Fandoms)
-            .Include(user => user.UserProfile.Categories)
-            .Include(user => user.EventsAttending)
-            .Include(user => user.Inbox)
-            .Include(user => user.Outbox)
-            .OrderBy(user => user.UserID)
-            .AsNoTracking()
-            .ToList<User>();
-        return usersList;
+        using (_context = new FanAppContext())
+        {
+            List<User> usersList = _context.USERS.AsNoTracking()
+                                .Include(user => user.UserProfile)
+                                .Include(user => user.Fandoms)
+                                .Include(user => user.UserProfile.Badges)
+                                .Include(user => user.UserProfile.Fandoms)
+                                .Include(user => user.UserProfile.Categories)
+                                .Include(user => user.Inbox)
+                                .Include(user => user.Outbox)
+                                .OrderBy(user => user.UserID)
+                                .ToList<User>();
+            return usersList;
+        }
     }
     /// <summary>
     /// Method <c>GetUser</c> returns a user with a given username.
     /// </summary> 
     public User? GetUser(string username){
         User fetcheduser;
-        try{
-            fetcheduser = _context.USERS
+        using (_context = new FanAppContext()){
+            try
+            {
+                fetcheduser = _context.USERS.AsNoTracking()
                         .Include(user => user.UserProfile)
                         .Include(user => user.UserProfile.Badges)
                         .Include(user => user.UserProfile.Fandoms)
@@ -56,61 +59,66 @@ public class UserService{
                         .Include(user => user.Inbox)
                         .Include(user => user.Outbox)
                         .Where(user => user.Username == username)
-                        .AsNoTracking()
                         .ToList()
                         .First<User>();
         }
         catch (InvalidOperationException){
             return null;}
+        }
+        
         return fetcheduser;
     }
     /// <summary>
     /// Method <c>UpdateUser</c> updates a user.
     /// </summary>
     public void UpdateUser(Login userManager, User UpdatedUser){
-        if (userManager.CurrentUser != null){
-        userManager.CurrentUser.UserProfile = UpdatedUser.UserProfile;
-        userManager.CurrentUser.EventsAttending = UpdatedUser.EventsAttending;
-        userManager.CurrentUser.Fandoms = UpdatedUser.Fandoms;
-        _context.SaveChanges();}
+        using (_context = new FanAppContext())
+        {
+            if (userManager.CurrentUser != null){
+            userManager.CurrentUser.UserProfile = UpdatedUser.UserProfile;
+            userManager.CurrentUser.EventsAttending = UpdatedUser.EventsAttending;
+            userManager.CurrentUser.Fandoms = UpdatedUser.Fandoms;
+            _context.SaveChanges();}
+        }
     }
     /// <summary>
     /// Method <c>ChangePassword</c> updates a user's password, using their old password to authentificate.
     /// </summary>
     public void ChangePassword(Login userManager, string oldPassword, string newPassword){
-        if (string.IsNullOrWhiteSpace(newPassword) || string.IsNullOrWhiteSpace(oldPassword)){
+        using (_context = new FanAppContext())
+        {
+            if (string.IsNullOrWhiteSpace(newPassword) || string.IsNullOrWhiteSpace(oldPassword)){
             throw new ArgumentException("Password field cannot be null");}
-        if (userManager.CurrentUser == null){
-            throw new ArgumentException("Current user is null");} 
-        //Validating current user's old password before allowing a new password
-        if (!validPassword(userManager.CurrentUser, oldPassword)){
-            throw new ArgumentException("Old password is not correct");
+            if (userManager.CurrentUser == null){
+                throw new ArgumentException("Current user is null");} 
+            //Validating current user's old password before allowing a new password
+            if (!validPassword(userManager.CurrentUser, oldPassword)){
+                throw new ArgumentException("Old password is not correct");
+            }
+            CreatePassword(userManager.CurrentUser, newPassword);
+            _context.SaveChanges();
         }
-        CreatePassword(userManager.CurrentUser, newPassword);
-        _context.SaveChanges();
     }
     public void DeleteUser(Login UserManager){
-        // Profile profile = GetProfile(UserManager.CurrentUser);
-        // _context.PROFILES.Remove(UserManager.CurrentUser.UserProfile);
-        // _context.USERS.Remove(UserManager.CurrentUser);
-        // _context.SaveChanges();
-        var user = _context.USERS
-            .OrderBy(e => e.Username)
-            .Where(e => e == UserManager.CurrentUser)
-            .Include(e => e.UserProfile)
-            .Include(e => e.UserProfile.Categories)
-            .Include(e => e.UserProfile.Fandoms)
-            .Include(e => e.UserProfile.Badges)
-            .First();
-        _context.Remove(user);
-        _context.SaveChanges();
-
-
+        using (_context = new FanAppContext())
+        {
+            var user = _context.USERS
+                    .OrderBy(e => e.Username)
+                    .Where(e => e == UserManager.CurrentUser)
+                    .Include(e => e.UserProfile)
+                    .Include(e => e.UserProfile.Categories)
+                    .Include(e => e.UserProfile.Fandoms)
+                    .Include(e => e.UserProfile.Badges)
+                    .First();
+            _context.Remove(user);
+            _context.SaveChanges();
+        }
     }
     /// <summary>
     /// Method <c>GetProfiles</c> fetches all profiles from the table DbSet PROFILES.
     /// </summary>
     public List<Profile> GetProfiles(){
+        
         List<Profile> profilesList = _context.PROFILES
             .Include(profile => profile.Categories)
             .Include(profile => profile.Fandoms)
@@ -145,67 +153,56 @@ public class UserService{
         if(userManager.CurrentUser.UserProfile == null){
           throw new ArgumentException("Current user profile is null");} 
         
-        var query = from profile in _context.PROFILES
-           where profile.user == userManager.CurrentUser
-           select profile;
-        try{
-            Profile currentProfile = query.First<Profile>();
-            currentProfile.Name = newProfile.Name;
-            currentProfile.Pronouns = newProfile.Pronouns;
-            currentProfile.Age = newProfile.Age;
-            currentProfile.Country = newProfile.Country;
-            currentProfile.City = newProfile.City;
-            currentProfile.Description = newProfile.Description;
-            currentProfile.Categories = newProfile.Categories;
-            currentProfile.Fandoms = newProfile.Fandoms;
-            currentProfile.Badges = newProfile.Badges;
-            currentProfile.Picture = newProfile.Picture;
-            currentProfile.Interests = newProfile.Interests;
-            userManager.CurrentUser.UserProfile = currentProfile;
-            _context.Update(currentProfile);
-            _context.SaveChanges();
-        }catch(Exception){
+        using (_context = new FanAppContext())
+        {
+            var query = from profile in _context.PROFILES
+                        where profile.user == userManager.CurrentUser
+                        select profile;
+            try{
+                Profile currentProfile = query.First<Profile>();
+                currentProfile.Name = newProfile.Name;
+                currentProfile.Pronouns = newProfile.Pronouns;
+                currentProfile.Age = newProfile.Age;
+                currentProfile.Country = newProfile.Country;
+                currentProfile.City = newProfile.City;
+                currentProfile.Description = newProfile.Description;
+                currentProfile.Categories = newProfile.Categories;
+                currentProfile.Fandoms = newProfile.Fandoms;
+                currentProfile.Badges = newProfile.Badges;
+                currentProfile.Picture = newProfile.Picture;
+                currentProfile.Interests = newProfile.Interests;
+                userManager.CurrentUser.UserProfile = currentProfile;
+                _context.Update(currentProfile);
+                _context.SaveChanges();
+            }catch(Exception){
+            }
         }
-
-        
     }
     public void AddCategory(Category newCat){
-        _context.CATEGORIES.Add(newCat);
-        _context.SaveChanges();
+        using (_context = new FanAppContext())
+        {
+            _context.CATEGORIES.Add(newCat);
+            _context.SaveChanges();
+        }
     }
     public void AddFandom(Fandom newFan){
-        _context.FANDOMS.Add(newFan);
-        _context.SaveChanges();
+        using (_context = new FanAppContext())
+        {
+            _context.FANDOMS.Add(newFan);
+            _context.SaveChanges();
+        }
     }
     public void AddBadge(Badge newBadge){
-        _context.BADGES.Add(newBadge);
-        _context.SaveChanges();
+        using (_context = new FanAppContext())
+        {
+            _context.BADGES.Add(newBadge);
+            _context.SaveChanges();
+        }
     }
     /// <summary>
     /// Method <c>CreateUser</c> inserts a new user in the DbSet USERS.
     /// </summary>
     public User CreateUser(string username, string password, Profile profile){
-        User newUser;
-        if(string.IsNullOrWhiteSpace(password)){
-            throw new ArgumentNullException();
-        }
-        // Make sure username is not already taken
-        User? checkUser = GetUser(username);
-        if (checkUser != null){
-            throw new ArgumentException("User with that username already exist");
-        }
-        else{
-            newUser = new User(username, profile);
-            CreatePassword(newUser, password);
-            //profile.userID = newUser.userID;
-            _context.USERS.Add(newUser);
-            //_context.PROFILES.Add(profile);
-            _context.SaveChanges();
-        }
-        return newUser;
-    }
-
-    public User AddUser(string username, string password, Profile profile){
         User newUser;
         if(string.IsNullOrWhiteSpace(password)){
             throw new ArgumentNullException();
@@ -227,12 +224,15 @@ public class UserService{
 
             newUser.Salt = salt;
             newUser.Hash = hash;
-            
-            _context.USERS.Add(newUser);
-            _context.SaveChanges();
+            using (_context = new FanAppContext())
+            {
+                _context.USERS.Add(newUser);
+                _context.SaveChanges();
+            }
         }
         return newUser;
     }
+
     /// <summary>
     /// Method <c>LogIn</c> takes in a <param>username</param> and <param>password</param> to store the currently logged in user.
     /// </summary>
@@ -242,9 +242,11 @@ public class UserService{
             throw new ArgumentException("Invalid User, Create account");}
 
         if(validPassword(currentUser, password)){
-            return new Login(currentUser);}
+            return new Login(currentUser);
+        }
         else{
-            throw new ArgumentException("Wrong credentials provided");}
+            throw new ArgumentException("Wrong credentials provided");
+        }
     }
     /// <summary>
     /// Method <c>LogOff</c> sets the currently logged in user to null.
@@ -289,8 +291,12 @@ public class UserService{
             newUser.EventsCreated = currentUser.EventsCreated;
             newUser.EventsAttending = currentUser.EventsCreated;
             newUser.Fandoms = currentUser.Fandoms;
-            _context.Update(newUser);
-            _context.SaveChanges();
+            using (_context = new FanAppContext())
+            {
+                _context.Update(newUser);
+                _context.SaveChanges();
+            }
+            
         }catch(Exception){
         }
     }

@@ -44,16 +44,13 @@ public class MessageService {
     }
 
 
-    public void AddMessage(Message new_message) {
-        var state = _context.Entry(new_message.Sender);
-        state.State = EntityState.Unchanged;
-        foreach(User usr in new_message.Recipients){
-            state = _context.Entry(usr);
-            state.State = EntityState.Unchanged;
+    public void AddMessage(Message new_message) 
+    {
+        using (var context = new FanAppContext())
+        {
+            context.MESSAGES.Attach(new_message);
+            context.SaveChanges();
         }
-        _context.MESSAGES.Add(new_message);
-        _context.SaveChanges();
-
     }
 
     public void EditMessage(Login login, Message updatedmessage, string oldTitle) {
@@ -63,23 +60,34 @@ public class MessageService {
             throw new ArgumentException("Only the creator of this message can modify it.");
         }
         
-        //Verifying that the message wasnt sent
-        Message? msgFound = null;
-        try
+        //Verifying that the message wasn't sent
+        using (_context = new FanAppContext())
         {
-            var query = from message in _context.MESSAGES
-                        where message.Title == oldTitle
-                        select message;
-            msgFound = query.First();
-            msgFound.Title = updatedmessage.Title;
-            msgFound.Text = updatedmessage.Text;
-            _context.MESSAGES.Update(msgFound);
-            _context.SaveChanges();
+            if (updatedmessage.Sent != true)
+            {
+                _context.MESSAGES.Update(updatedmessage);
+                _context.SaveChanges();
+            } 
+            else {
+                throw new ArgumentException("Can't edit a message that was already sent!");
+            }
         }
-        catch (Exception)
-        {
-            throw new Exception("ERROR: DB ERROR");
-        }
+        //Message? msgFound = null;
+        //try
+        //{
+        //    var query = from message in _context.MESSAGES
+        //                where message.Title == oldTitle
+        //                select message;
+        //    msgFound = query.First();
+        //    msgFound.Title = updatedmessage.Title;
+        //    msgFound.Text = updatedmessage.Text;
+        //    _context.MESSAGES.Update(msgFound);
+        //    _context.SaveChanges();
+        //}
+        //catch (Exception)
+        //{
+        //    throw new Exception("ERROR: DB ERROR");
+        //}
         
     }
 

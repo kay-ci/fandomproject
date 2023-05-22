@@ -1,10 +1,10 @@
 using System.Collections.ObjectModel;
 using ReactiveUI;
 using System.Reactive;
-
+using UserInfo;
 namespace FandomAppSpace.ViewModels
 {
-    public class EventDisplayViewModel : MainWindowViewModel
+    public class EventDisplayViewModel : ViewModelBase
     {
 
         public List<Event> EventList {get;}

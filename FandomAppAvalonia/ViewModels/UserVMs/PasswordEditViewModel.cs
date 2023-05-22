@@ -37,6 +37,7 @@ namespace FandomAppSpace.ViewModels
 
         public PasswordEditViewModel()
         {
+            uService.setFanAppContext(new FanAppContext());
             //Enable the register button only when the user has entered a valid username
             var loginEnabled = this.WhenAnyValue(
                 x => x.OldPassword, x => x.NewPassword,
