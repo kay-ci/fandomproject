@@ -65,7 +65,7 @@ public class MessageService {
         {
             if (updatedmessage.Sent != true)
             {
-                _context.MESSAGES.Update(updatedmessage);
+                _context.MESSAGES.Attach(updatedmessage);
                 _context.SaveChanges();
             } 
             else {

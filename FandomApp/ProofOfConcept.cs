@@ -92,7 +92,7 @@ public class Proof
         Console.WriteLine("User2 will attempt to edit user1's event.\n");
         try
         {
-            evService.UpdateEvent(Proof.login, user1_event);
+            evService.EditEvent(Proof.login, user1_event);
         }
         catch (Exception e)
         {
@@ -203,7 +203,7 @@ public class Proof
         {
             Event ev = evService.GetEvent("User1 event");
             ev.Location= "Las Vegas";
-            evService.UpdateEvent(Proof.login, ev);
+            evService.EditEvent(Proof.login, ev);
             Console.WriteLine("User1 event updated");
         }
         catch (Exception e)

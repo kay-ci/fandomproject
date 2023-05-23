@@ -96,8 +96,14 @@ namespace FandomAppSpace.ViewModels
         }
 
         public void UpdateEvent(){
-            Event new_event = new Event(Title, new DateTime(2030,12,12), Location, MinAge, ViewModelBase.UserManager.CurrentUser , Categories.ToList(), FandomsList.ToList());
-            evService.UpdateEvent(ViewModelBase.UserManager, new_event);
+            my_event.Title = this.Title;
+            //my_event.Date = this.Date;
+            my_event.Location = this.Location;
+            my_event.MinAge = this.MinAge;
+            my_event.Categories = this.Categories.ToList();
+            my_event.Fandoms = this.Fandoms.ToList();
+
+            evService.EditEvent(ViewModelBase.UserManager, my_event);
         }
         public void AddCategory(){
             Categories.Add(new Category(CategoryText));

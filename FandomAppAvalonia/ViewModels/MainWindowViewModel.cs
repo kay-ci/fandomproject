@@ -108,7 +108,7 @@ namespace FandomAppSpace.ViewModels
             var vm = new EventDisplayViewModel();
             Content=vm;
 
-            vm.CreateEventPageBtn.Subscribe(x => {
+            vm.CreateNewEventBtn.Subscribe(x => {
                 DisplayCreateEventPage();
             });
 
@@ -120,6 +120,10 @@ namespace FandomAppSpace.ViewModels
             Content = vm;
             vm.AttendEventBtn.Subscribe(x => {
                 vm.AttendEvent();
+                DisplayAllEventsPage();
+                });
+            vm.RemoveAttendEventBtn.Subscribe(x => {
+                vm.RemoveAttendEvent();
                 DisplayAllEventsPage();
                 });
 

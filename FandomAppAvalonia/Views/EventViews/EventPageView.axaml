@@ -7,7 +7,7 @@
 
  
   <StackPanel Orientation="Vertical" Spacing="10">
-    <TextBlock Text="{Binding Event.Title}" FontSize="28"/>
+    <TextBlock Classes="h2" Text="{Binding Event.Title}"/>
         <TextBlock Text="{Binding Event.Date}"/>
         <TextBlock Text="{Binding Event.Location}"/>
         <TextBlock Text="{Binding Event.MinAge}"/>
@@ -18,25 +18,27 @@
           <ItemsRepeater.ItemTemplate>
             <DataTemplate>
 
-            <StackPanel>
-             <Border Margin="10,0,0,0" Padding="2">
-               <TextBlock Text="{Binding Username}"/>
-              </Border>
-            </StackPanel>
+              <StackPanel>
+                <Border Margin="10,0,0,0" Padding="2">
+                  <TextBlock Text="{Binding Username}"/>
+                </Border>
+              </StackPanel>
 
             </DataTemplate>
           </ItemsRepeater.ItemTemplate>
         </ItemsRepeater>
 
-        <Button IsVisible="{Binding ShowAttendButton}" Content="Attend Event"
+        <Button IsVisible="{Binding ShowAttendButton}" Content="Mark as Attending"
                   Command="{Binding AttendEventBtn}"/>
+        <Button IsVisible="{Binding ShowRemoveAttendButton}" Content="Not Attending"
+                  Command="{Binding RemoveAttendEventBtn}"/>
 
-        <StackPanel IsVisible="{Binding ShowButtons}">
-          <Button Content="Edit Event"
+        <Grid IsVisible="{Binding ShowButtons}" ColumnDefinitions="*,*,*,*">
+          <Button Grid.Column="0" Content="Edit Event"
                   Command="{Binding $parent[Window].DataContext.EditEventView}" CommandParameter="{Binding Event}" Classes="ok"/>
-          <Button Content="Delete Event"
+          <Button Grid.Column="3" Content="Delete Event"
                   Command="{Binding DeleteEventBtn}" Classes="cancel"/>
-        </StackPanel>
+        </Grid>
 
     </StackPanel>
 </UserControl>

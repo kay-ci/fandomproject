@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 /// </summary>
 public class EventService
 {
-    //private FanAppContext context = null!;
+    private FanAppContext _context = null!;
     private static EventService? _instance;
     private EventService(){}
     public static EventService getInstance(){
@@ -15,9 +15,9 @@ public class EventService
         }
         return _instance;
     }
-    //public void setFanAppContext(FanAppContext context){
-    //    this.context = context;
-    //}
+    public void setFanAppContext(FanAppContext context){
+        this._context = context;
+    }
     
     /// <summary>
     /// This method add an event to the DbSet EVENTS. 
@@ -35,7 +35,6 @@ public class EventService
         }
     }
 
-
     /// <summary>
     /// This method retrieve a single event from the database by using it's <paramref name="title"/>. 
     /// </summary>
@@ -47,10 +46,13 @@ public class EventService
             Event? eventFound = null;
             try
             {
-                var query = from ev in context.EVENTS
-                            where ev.Title == title
-                            select ev;
-                eventFound = query.First();
+                eventFound = context.EVENTS
+                            .Include(e => e.Categories)
+                            .Include(e => e.Fandoms)
+                            .Include(e => e.Owner)
+                            .Include(e => e.Attendees)
+                            .Where(e => e.Title == title)
+                            .First();
             }
             catch (Exception)
             {
@@ -58,7 +60,6 @@ public class EventService
             }
             return eventFound;
         }
-        
     }
 
     /// <summary>
@@ -83,7 +84,7 @@ public class EventService
     /// This method allows the owner of an event to edit it and update the DbSet EVENTS. 
     /// <para> It verifies first that the <paramref name="login"/>'s Current user is the <paramref name="updatedEvent"/>'s Owner </para>
     /// </summary>
-    public void UpdateEvent(Login login, Event updatedEvent) 
+    public void EditEvent(Login login, Event updatedEvent) 
     {
         User? user = login.CurrentUser;
         if (user?.Username != updatedEvent.Owner.Username)
@@ -93,6 +94,17 @@ public class EventService
         using (var context = new FanAppContext())
         {
             context.EVENTS.Update(updatedEvent);
+            context.SaveChanges();
+        }
+    }
+
+    
+    public void UpdateAttendees(Login login, Event updatedEvent) 
+    {
+        using (var context = new FanAppContext())
+        {
+            context.Entry(login.CurrentUser).State = EntityState.Modified;
+            context.Entry(updatedEvent).State = EntityState.Modified;
             context.SaveChanges();
         }
     }
@@ -111,6 +123,7 @@ public class EventService
         }
         using (var context = new FanAppContext())
         {
+            context.EVENTS.Attach(fandomEvent);
             context.EVENTS.Remove(fandomEvent);
             context.SaveChanges();
         }

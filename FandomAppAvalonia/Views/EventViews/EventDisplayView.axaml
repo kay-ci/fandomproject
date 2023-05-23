@@ -4,58 +4,103 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
              x:Class="FandomAppSpace.Views.EventDisplayView">
+<UserControl.Styles>
+      
+      <Style Selector="StackPanel.event-panel">
+                <Setter Property="Margin" Value="5"/>
+                <Setter Property="MinWidth" Value="200"/>
+                <Setter Property="Background" Value="#F8E8EE"/>
+      </Style>
+      <Style Selector="Border">
+                <Setter Property="Margin" Value="5"/> 
+                <Setter Property="CornerRadius" Value="3"/>
+                <Setter Property="Background" Value="#F8E8EE"/>
+      </Style>
+      <Style Selector="Border:pointerover">
+                <Setter Property="BorderBrush" Value="#F2BED1"/>
+                <Setter Property="BorderThickness" Value="2"/>
+                <Setter Property="CornerRadius" Value="3"/>
+                <Setter Property="Background" Value="#F8E8EE"/>
+      </Style>
+</UserControl.Styles>
+  <StackPanel Margin="10,0,0,0">
 
-  <StackPanel Margin="10,0,0,0" >
+    <Grid ColumnDefinitions="*,*" RowDefinitions="*" >
 
-    <StackPanel Spacing="10" Orientation="Horizontal">
-
-      <StackPanel Spacing="10">
-        <TextBlock Text="All Events" FontSize="30"/> 
+      <StackPanel Spacing="10" Grid.Column="0" Grid.Row="0">
+        <TextBlock Classes="h2" Text="All Events"/> 
 
         <ItemsRepeater Items="{Binding AllEvents}">
             <ItemsRepeater.ItemTemplate>
               <DataTemplate>
-                <StackPanel>
+              <Border>
+                <StackPanel Classes="event-panel">
                   <TextBlock Text="{Binding Title}" FontSize="20"/> 
                   <TextBlock Text="{Binding Date,  StringFormat='Date: {0}'}"/>
                   <TextBlock Text="{Binding Location, StringFormat='Location: {0}'}"/>
                   <TextBlock Text="{Binding MinAge, StringFormat='Minimum Age: {0}'}"/>
                   <TextBlock Text="{Binding Owner.Username, StringFormat='Organized By: {0}'}"/>
 
-                  <Button Command="{Binding $parent[Window].DataContext.DisplayEventPage}" CommandParameter="{Binding}"> Show more infos </Button>
+                  <Button Classes="more" Command="{Binding $parent[Window].DataContext.DisplayEventPage}" CommandParameter="{Binding}"> Show more infos </Button>
                 </StackPanel>
+              </Border>
               </DataTemplate>
             </ItemsRepeater.ItemTemplate>
           </ItemsRepeater>
       </StackPanel>
 
-      <StackPanel Spacing="10">
-        <TextBlock Text="My Events" FontSize="30"/> 
+      <StackPanel Spacing="10" Grid.Column="1" Grid.Row="0">
+        <TextBlock Classes="h2" Text="My Events"/> 
 
-        <ItemsRepeater Items="{Binding MyEvents}">
-            <ItemsRepeater.ItemTemplate>
-              <DataTemplate>
-                <StackPanel>
-                  <TextBlock Text="{Binding Title}" FontSize="20"/> 
-                  <TextBlock Text="{Binding Date,  StringFormat='Date: {0}'}"/>
-                  <TextBlock Text="{Binding Location, StringFormat='Location: {0}'}"/>
-                  <TextBlock Text="{Binding MinAge, StringFormat='Minimum Age: {0}'}"/>
-                  <TextBlock Text="{Binding Owner.Username, StringFormat='Organized By: {0}'}"/>
+          <StackPanel Spacing="10">
+            <TextBlock Text="Created By Me" FontSize="18"/> 
 
-                  <Button Command="{Binding $parent[Window].DataContext.DisplayEventPage}" CommandParameter="{Binding}"> Show more infos </Button>
-                </StackPanel>
-              </DataTemplate>
-            </ItemsRepeater.ItemTemplate>
-          </ItemsRepeater>
+            <ItemsRepeater Items="{Binding MyCreatedEvents}">
+                <ItemsRepeater.ItemTemplate>
+                  <DataTemplate>
+                  <Border>
+                    <StackPanel Classes="event-panel">
+                      <TextBlock Text="{Binding Title}" FontSize="20"/> 
+                      <TextBlock Text="{Binding Date,  StringFormat='Date: {0}'}"/>
+                      <TextBlock Text="{Binding Location, StringFormat='Location: {0}'}"/>
+                      <TextBlock Text="{Binding MinAge, StringFormat='Minimum Age: {0}'}"/>
+                      <TextBlock Text="{Binding Owner.Username, StringFormat='Organized By: {0}'}"/>
+
+                      <Button Classes="more" Command="{Binding $parent[Window].DataContext.DisplayEventPage}" CommandParameter="{Binding}"> Show more infos </Button>
+                    </StackPanel>
+                  </Border>
+                  </DataTemplate>
+                </ItemsRepeater.ItemTemplate>
+              </ItemsRepeater>
+          </StackPanel>
+
+          <StackPanel Spacing="10"  >
+            <TextBlock Text="Attending" FontSize="18"/> 
+
+            <ItemsRepeater Items="{Binding MyAttendingEvents}">
+                <ItemsRepeater.ItemTemplate>
+                  <DataTemplate>
+                  <Border>
+                    <StackPanel Classes="event-panel">
+                      <TextBlock Text="{Binding Title}" FontSize="20"/> 
+                      <TextBlock Text="{Binding Date,  StringFormat='Date: {0}'}"/>
+                      <TextBlock Text="{Binding Location, StringFormat='Location: {0}'}"/>
+                      <TextBlock Text="{Binding MinAge, StringFormat='Minimum Age: {0}'}"/>
+                      <TextBlock Text="{Binding Owner.Username, StringFormat='Organized By: {0}'}"/>
+
+                      <Button Classes="more" Command="{Binding $parent[Window].DataContext.DisplayEventPage}" CommandParameter="{Binding}"> Show more infos </Button>
+                    </StackPanel>
+                  </Border>
+                  </DataTemplate>
+                </ItemsRepeater.ItemTemplate>
+              </ItemsRepeater>
+          </StackPanel>
+
+          <Button Classes="ok" Command="{Binding CreateNewEventBtn}"> 
+                Create New Event
+          </Button>
       </StackPanel>
-
-    </StackPanel>
-    <Grid ColumnDefinitions="*,*,*,*,*,*" Margin="10"> 
-        <Button Grid.Column="5" Command="{Binding CreateEventPageBtn}"> 
-            <Image Source="/Assets/add-button.png" Width="50" Height="50"/> 
-        </Button>
     </Grid>
 
-    
   </StackPanel>
 </UserControl>

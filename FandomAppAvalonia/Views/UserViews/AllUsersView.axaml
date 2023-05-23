@@ -14,10 +14,10 @@
                 <Border Margin="10,0,0,0" Padding="2">
                   <TextBlock Text="{Binding Username}"/>
                 </Border>
-                  <Button Content="View User Profile"
+                  <Button Content="Show Profile"
                     Command="{Binding $parent[Window].DataContext.DisplayProfile}"
                     CommandParameter="{Binding}"/> 
-                  <Button Content="Send User Message"
+                  <Button Content="Send Message"
                     Command="{Binding $parent[Window].DataContext.Create_Message}"
                     CommandParameter="{Binding}"/>
                     </StackPanel> 

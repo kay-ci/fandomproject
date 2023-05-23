@@ -23,35 +23,50 @@ namespace FandomAppSpace.ViewModels
             get => _showAttendButton;
             private set => this.RaiseAndSetIfChanged(ref _showAttendButton, value);
         }
+        private Boolean _showRemoveAttendButton;
+        public Boolean ShowRemoveAttendButton
+        {
+            get => _showAttendButton;
+            private set => this.RaiseAndSetIfChanged(ref _showAttendButton, value);
+        }
 
         public Event Event{get;set;}
 
         public ReactiveCommand<Unit, Unit> AttendEventBtn { get; }
+        public ReactiveCommand<Unit, Unit> RemoveAttendEventBtn { get; }
         public ReactiveCommand<Unit, Unit> DeleteEventBtn { get; }
        
         public EventPageViewModel(Event e)
         {
-            Event = evService.GetEvent(e.Title);
+            Event = e;
 
             ShowButtons = false;
+            ShowRemoveAttendButton = false;
             ShowAttendButton = true;
 
             if(e.Owner.UserID == ViewModelBase.UserManager.CurrentUser.UserID){
                 ShowButtons = true;
             }
 
-            if(e.Attendees.Any(e=> e.UserID == ViewModelBase.UserManager.CurrentUser.UserID)){
+            if(e.Attendees.Contains(ViewModelBase.UserManager.CurrentUser)){
+                ShowRemoveAttendButton = true;
                 ShowAttendButton = false;
             }
             
             AttendEventBtn =  ReactiveCommand.Create(() => { });
-            DeleteEventBtn =  ReactiveCommand.Create(() => { });
+            RemoveAttendEventBtn =  ReactiveCommand.Create(() => { });
+            DeleteEventBtn =  ReactiveCommand.Create(() => { DeleteEvent();});
             
         }
         public void AttendEvent()
         {
             Event.AddAttendee(ViewModelBase.UserManager.CurrentUser);
-            evService.UpdateEvent(ViewModelBase.UserManager, Event);
+            evService.UpdateAttendees(ViewModelBase.UserManager,Event);
+        }
+        public void RemoveAttendEvent()
+        {
+            Event.RemoveAttendee(ViewModelBase.UserManager.CurrentUser);
+            evService.UpdateAttendees(ViewModelBase.UserManager,Event);
         }
 
         public void DeleteEvent()

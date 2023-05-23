@@ -40,7 +40,7 @@ public class Event
     }
     public int MinAge {
         get{ return _minAge; } 
-        private set
+        set
         {
             const int MinimumAge = 13;
             if (value < MinimumAge) {
